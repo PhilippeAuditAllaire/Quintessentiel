@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quintessentiel | Nouveau compte</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/css/style_header.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/style_body.css"/>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+ 	<%include ./includes/navbar.ejs%>
+
+	<div class="connection-page">
+		<div class="left-menu-bar">
+			
+		</div>
+		<div class="right-user-form">
+			<form class="user-form" id="formConnection">
+				<h2>Connexion</h2>
+				<p class="success-request" id="success-connexion"></p>
+				<p class="warning-error" id="warning-error"></p>
+				<div class="user-form-inner-wrapper">
+					<div class="wrapper-label-input"> <!-- Une ligne -->
+						<div class="wrapper-label"> <!-- wrapper du label -->
+							<label>Courriel: </label>
+						</div>
+						<div class="wrapper-input"> <!-- wrapper du input -->
+							<input type="text" placeholder="Courriel" name="email" id="email" class="form-control" required/>
+						</div>
+					</div>
+					<div class="wrapper-label-input"> <!-- Une ligne -->
+						<div class="wrapper-label"> <!-- wrapper du label -->
+							<label>Mot de passe: </label>
+						</div>
+						<div class="wrapper-input"> <!-- wrapper du input -->
+							<input type="password" name="password" id="password" class="form-control" required/>
+						</div>
+					</div>
+					<div class="wrapper-submit-button"><input type="submit" class="btn btn-success" value="Connexion"/></div>
+					<a href="#" id="userConnectForgot" onclick="$('#bp-modal-forgot').modal()">Mot de passe oublié?</a>		
+				</div>
+			</form>
+			
+		</div>
+	</div>
+
+
+	<!-- Forgot password modal -->
+	<div class="modal fade" id="bp-modal-forgot" tabindex="-1" role="dialog" >
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Mot de passe oublié</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <div class="wrapper-modal-forgot">
+	        	<p class="success-request" id="success-request"></p>
+	        	<p class="error-request" id="error-request"></p>
+	        	<div class="modal-input-label">
+	        		<div class="modal-lbl">
+	        			<label>Entrez votre adresse courriel</label>
+	        		</div>
+	        		<div class="modal-input">
+	        			<input type="text" placeholder="Courriel" name="forgotEmail" id="recoverEmail" class="form-control" required />
+	        		</div>
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button id="btnRecoverPassword" type="button" class="btn btn-primary btn-success">Envoyer le courriel de récupération</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		let email = $("#email");
+		let password = $("#password");
+
+		$("#formConnection").on("submit",connectUser);
+		//Connects the user
+		function connectUser(e){
+			
+			$("#success-connexion").html("");
+			$("#warning-error").html("");
+
+			e.preventDefault();
+
+			$.ajax({
+				url: "http://localhost:8000/ajaxRequest/userConnection",
+				method: "POST",
+				data:{
+					email:email.val(),
+					password:password.val(),
+				},
+				success: function(response){
+					console.log(response);
+					if(response == true){ //Connection successfull
+						document.location.href = "./index";
+					}
+					else{ //Coudlnt connect (bad infos)
+						$("#warning-error").html("Le courriel/mot de passe ne correspondent pas.");
+					}
+					
+				}
+			});
+
+		}
+
+		//Loads and displays the civilities
+		function loadCivilities(_callback)
+		{
+			$.ajax({
+				url: "http://localhost:8000/getCivilities",
+				method: "POST",
+				success: function(response){
+					$("#selectCivility").html(response);
+				}
+			});		
+		}
+
+	</script>
+	<script>
+		let btnRecoverPassword = $("#btnRecoverPassword");
+		let recoverPasswordEmail = $("#recoverEmail");
+		let emailPattern =  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+		$(btnRecoverPassword).on("click",sendRecoverPassword)
+
+		//Sends the recover password
+		function sendRecoverPassword()
+		{
+			$("#success-request").html("");
+			$(".error-request").html("");
+			$("#success-connexion").html("");
+
+			if(recoverPasswordEmail.val().match(recoverPasswordEmail) != null){ //If this is a valid email
+				
+
+				$.ajax({
+					url: "http://localhost:8000/ajaxRequest/userRecoverPassword",
+					method: "POST",
+					data:{
+						email:recoverPasswordEmail.val(),
+					},
+					success: function(emailSent){
+						if(emailSent){
+							$("#success-request").html("Courriel de récupération envoyé!")
+						}
+						else{
+							$(".error-request").html("le courriel n'a pas été envoyé.")
+						}
+					}
+				});
+			}
+			else{
+				$(".error-request").html("Le courriel entré est invalide.");
+			}
+
+		}
+	</script>
+	<script>
+		checkIfJustAdded();
+		//Checks if the user has just been added
+		function checkIfJustAdded()
+		{
+			let newUserUrl = location.search.split("newAccount=")[1];
+
+			if(newUserUrl != undefined){ //If the parameter exists
+
+				if(newUserUrl == "true"){ //This is a new user
+					$("#success-connexion").html("Votre compte a été crée avec succès!");
+				}
+			}
+		}
+
+
+		checkIfPasswordChanged()
+
+		//Checks if the user has just changed its password
+		function checkIfPasswordChanged()
+		{
+			let passwordChangedUrl = location.search.split("changedPassword=")[1];
+
+			if(passwordChangedUrl != undefined){ //If the parameter exists
+
+				if(passwordChangedUrl == "true"){ //This is a new user
+					$("#success-connexion").html("Votre mot de passe a été modifié avec succès!");
+				}
+			}
+		}		
+
+	
+		//let params = new URLSearchParams(url.search.slice(1));
+	</script>
+		<!-- Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

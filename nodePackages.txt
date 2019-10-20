@@ -1,0 +1,5 @@
+- Express
+- Mysql
+- Ejs
+- bcrypt
+- express-session

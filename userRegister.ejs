@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quintessentiel | Nouveau compte</title>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="/css/style_header.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/style_body.css"/>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<%include ./includes/navbar%>
+	<div class="inscription-page">
+		<div class="left-menu-bar">
+			
+		</div>
+		<div class="right-user-form">
+			<form class="inscription-form" id="formRegister">
+				<h2>Inscription</h2>
+				<p class="warning-error" id="warning-error"></p>
+				<div class="user-form-inner-wrapper">
+					<div class="wrapper-row">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-prenom"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-label"> <!-- wrapper du label -->
+								<label for="firstName">Prénom: </label>
+							</div>
+							<div class="wrapper-input"> <!-- wrapper du input -->
+								<input type="text" placeholder="Prénom" name="firstName" id="firstName" class="form-control" required/>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-row">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-nom"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-label"> <!-- wrapper du label -->
+								<label for="lastName">Nom: </label>
+							</div>
+							<div class="wrapper-input"> <!-- wrapper du input -->
+								<input type="text" placeholder="Nom" name="lastName" id="lastName" class="form-control" required/>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-row">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-email"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-label"> <!-- wrapper du label -->
+								<label for="email">Courriel: </label>
+							</div>
+							<div class="wrapper-input"> <!-- wrapper du input -->
+								<input type="text" placeholder="Courriel" name="email" id="email" class="form-control" required/>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-row">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-birth"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-label"> <!-- wrapper du label -->
+								<label for="birthDate">Date de naissance: </label>
+							</div>
+							<div class="wrapper-input"> <!-- wrapper du input -->
+								<input type="date" name="birthDate" id="birthDate" class="form-control" required/>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-row">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-civility"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-label"> <!-- wrapper du label -->
+								<label for="selectCivility">Civilité: </label>
+							</div>
+							<div class="wrapper-input"> <!-- wrapper du select -->
+								<select name="idCivility" id="selectCivility" class="form-control" required>
+
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-label-input wrapper-trouble-total"> <!-- Une ligne -->
+						<div class="wrapper-label"> <!-- wrapper du label -->
+							<label>Troubles: </label>
+						</div>
+						<div class="wrapper-input"> <!-- wrapper du div select -->
+							<div class="select-trouble">
+								<div class="wrapper-check-label" id="wrapper-check-label">
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-row">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-password"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-label"> <!-- wrapper du label -->
+								<label for="password">Mot de passe: </label>
+							</div>
+							<div class="wrapper-input"> <!-- wrapper du input -->
+								<input type="password" name="password" id="password" class="form-control" required/>
+							</div>
+						</div>
+					</div>
+					<div class="wrapper-row">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-confirmPassword"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-label"> <!-- wrapper du label -->
+								<label for="confirmPassword">Confirmer le mot de passe: </label>
+							</div>
+							<div class="wrapper-input"> <!-- wrapper du input -->
+								<input type="password" name="confirmPassword" id="confirmPassword" class="form-control"  required/>
+							</div>
+						</div>
+					</div>
+					<div id="wrapper-infolettre" class="wrapper-label-input"> <!-- Une ligne -->
+						<div class="wrapper-label"> <!-- wrapper du label -->
+							<label for="newsletter">Abonnez-vous à l'infolettre: </label>
+						</div>
+						<div class="wrapper-input infolettre"> <!-- wrapper du input -->
+							<div class="sub-wrapper-chck"> <!-- wrapper du input -->
+								<input type="checkbox" name="newsletter" id="newsletter" checked="" />
+							</div>
+							<div class="sub-wrapper-lbl">
+								<label for="newsletter">Je souhaite m'abonner</label>
+							</div>		
+						</div>
+					</div>
+					<div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter"></div>
+			</div>
+			</form>
+			
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		let firstName = $("#firstName");
+		let lastName = $("#lastName");
+		let email = $("#email");
+		let birthDate = $("#birthDate");
+		let selectCivility = $("#selectCivility");
+		let password = $("#password");
+		let confirmPassword = $("#confirmPassword");
+		let newsletter = $("#newsletter")[0];
+
+		$("#formRegister").on("submit",registerUser);
+
+		//Adds the user to the database
+		function registerUser(e)
+		{
+			e.preventDefault();
+
+			resetInputError();
+
+			if(isFormValid())
+			{
+				$.ajax({
+					url: "http://localhost:8000/ajaxRequest/userRegister",
+					method: "POST",
+					data:{
+						firstName:firstName.val(),
+						lastName:lastName.val(),
+						email:email.val(),
+						birthDate:birthDate.val(),
+						idCivility:selectCivility.val(),
+						password:password.val(),
+						newsletter:newsletter.checked,
+						conditionsCheckbox: getCheckedConditions()
+					},
+					success: function(responseCode){
+						resetGeneralError();
+
+						if(responseCode == 1){ //The user has been added
+							document.location.href = "./userConnection?newAccount=true"
+						}
+						else if(responseCode == 2){ //An error occured while adding the user
+							$("#warning-error").html("Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer plus tard.");
+						}
+						else if(responseCode == 3){ //The email already exists in the db
+							$("#error-email").html("L'addresse courriel entrée est déjà utilisée.");
+						}
+
+						
+					}
+				});		
+			}
+
+
+		}
+
+		function resetGeneralError()
+		{
+			$("#warning-error").html("");
+		}
+
+		//Loads and displays the civilities
+		function loadCivilities(_callback)
+		{
+			$.ajax({
+				url: "http://localhost:8000/ajaxRequest/getCivilities",
+				method: "POST",
+				success: function(response){
+					$("#selectCivility").html(response);
+				}
+			});		
+		}
+
+
+		let firstNamePattern = /^(?=.{1,50}$)[a-zÀ-ÿ]+(?:['_.\s][a-zÀ-ÿ]+)*$/i;
+		let lastNamePattern = /^(?=.{1,50}$)[a-zÀ-ÿ]+(?:['_.\s][a-zÀ-ÿ]+)*$/i;
+		let emailPattern =  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+		let passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+
+		function isFormValid()
+		{
+			let isValid = true;
+
+			if(firstName.val().match(firstNamePattern) == null){
+				$("#error-prenom").html('Veuillez entrer un prénom valide.');
+				isValid = false;
+			}
+
+			if(lastName.val().match(lastNamePattern) == null){
+				$("#error-nom").html('Veuillez entrer un nom valide.');
+				isValid = false;
+			}
+
+			if(email.val().match(emailPattern) == null)
+			{
+				$("#error-email").html("L'adresse email entré est invalide.");
+				isValid = false;
+			}
+
+			if(password.val().match(passwordPattern) == null){
+				$("#error-password").html("Mot de passe invalide. Le mot de pase doit contenir un minimum de 6 lettre, ainsi qu'une majuscule et un chiffre.");
+				isValid = false;
+			}
+			else{
+				if(password.val() != confirmPassword.val()){
+					$("#error-confirmPassword").html("Les mots de passes ne correspondent pas.");
+					isValid = false;
+				}
+			}
+
+			return isValid;
+			
+		}
+
+
+		function resetInputError()
+		{
+			for(let i = 0;i < $(".error-input").length;i++)
+			{
+				$(".error-input").eq(i).html("");
+			}
+		}
+
+
+		function loadConditions()
+		{
+			$.ajax({
+				url: "http://localhost:8000/ajaxRequest/getConditions",
+				method: "POST",
+				data:{
+					firstName:firstName.val(),
+				},
+				success: function(htmlConditions){
+					resetGeneralError();
+					$("#wrapper-check-label").html(htmlConditions)
+				}
+			});		
+		}
+
+
+		loadCivilities();
+		loadConditions();
+
+		//Gets the checked conditions and
+		//puts them in an array for the backend
+		function getCheckedConditions()
+		{
+			let troubleCheckbox = $(".trouble-checkbox");
+			let checkedConditionsArray = [];
+
+			for(let i = 0;i < troubleCheckbox.length;i++)
+			{
+				if(troubleCheckbox[i].checked){
+					checkedConditionsArray.push(troubleCheckbox[i].getAttribute("data-id"));
+				}
+			}
+
+			return checkedConditionsArray;
+		}
+	</script>
+		<!-- Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

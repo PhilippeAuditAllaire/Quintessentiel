@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quintessentiel | Connexion</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+</head>
+<body>
+	<header id="test" class="application-header">
+		<nav>
+			<div class="wrapper-buttons">
+				<img src="./images/icons/minimize.png" id="minimize"/>
+				<img src="./images/icons/resize.png" id="maximize"/>
+				<img src="./images/icons/close.png" id="close"/>
+			</div>
+			<div class="wrapper-title">
+				<h2>Quintessentiel - Connexion</h2>
+			</div>
+			<div class="wrapper-empty">
+			</div>
+		</nav>
+	</header>
+	<section class="wrapper-content-connection">
+		<div class="wrapper-body-connection">
+			<div class="wrapper-logo">
+				<img src="./images/logo.png"/>
+			</div>
+			<p class="warning-error" id="warning-error"></p>
+			<div class="wrapper-form">
+
+				<form id="formSubmit">
+					<div class="wrapper-label-input">
+						<div class="wrapper-label">
+							<label>Adresse courriel</label>
+						</div>
+						<div class="wrapper-input">
+							<input type="text" class="form-control" name="email" id="userEmail" required />
+						</div>
+					</div>
+					<div class="wrapper-label-input" id="wrapperPassword">
+						<div class="wrapper-label">
+							<label>Mot de passe</label>
+						</div>
+						<div class="wrapper-input">
+							<input type="password" class="form-control" name="password" id="userPassword" required/>
+						</div>
+					</div>
+					<div class="wrapper-btn-submit">
+						<div class="wrapper-submit-button"><input type="submit" class="btn btn-success" id="submitBtn" value="Connexion"/></div>
+					</div>
+				</form>
+			</div>		
+		</div>
+
+	</section>
+	<script src="./javascript/renderer.js"></script>
+	<script>
+
+		let email = $("#userEmail");
+		let password = $("#userPassword");
+
+		$("#formSubmit").on("submit",function(e){
+			e.preventDefault();
+			$("#warning-error").html("");
+
+			
+			$.ajax({
+				url: "http://localhost:5000/ajaxRequest/adminConnection",
+				method: "POST",
+				data:{
+					email:email.val(),
+					password:password.val(),
+				},
+				success: function(response){
+	
+					if(response == true){ //Connection successfull
+						console.log("Connected successfully")
+						//document.location.href = "./index.html";
+					}
+					else{ //Coudlnt connect (bad infos)
+						$("#warning-error").html("Le courriel/mot de passe ne correspondent pas.");
+					}
+					
+				}
+			});
+			console.log("Submitting..")
+		});
+	</script>
+</body>
+</html>

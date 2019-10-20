@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quintessentiel | contact</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="/css/style_header.css" />
+        <link rel="stylesheet" type="text/css" href="/css/style_body.css" />
+        <link rel="stylesheet" type="text/css" href="/css/style_contact.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+        <script src="/javascript/contact.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body>
+      <%include ./includes/navbar.ejs%>
+      <div class="connection-page">
+          <div class="left-menu-bar">
+              
+          </div>
+        <div class="contact-page">
+            <div class="contact-row">
+                <div class="contact-col">
+                    <div class="contact-row-centered">
+                            <h1>Notre point de vente</h1>
+                    </div>
+                    <div class="contact-row-centered">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2805.943269506276!2d-72.67858918409303!3d45.30957157909945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc9cf738e41a865%3A0xf9f5e9f1cfe86199!2sZAYAT%20AROMA!5e0!3m2!1sen!2sca!4v1571197211977!5m2!1sen!2sca" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                    </div>
+                </div>
+                <div class="contact-col">
+                    <div class="contact-row-centered">
+                            <h1>Nous contacter</h1>
+                            <hr>
+                    </div>
+                    <form action="https://formspree.io/mdqjankx" method="POST">
+                        <div class="contact-row form-group">
+                            <div class="contact-col">
+                                <input type="text" class="f-name" name="first_name" placeholder="Prenom">
+                            </div>
+                            <div class="contact-col"> 
+                                <input type="text" class="name" name="last_name" placeholder="Nom de famille">
+                            </div>
+                        </div>
+                        <div class="contact-row form-group">
+                            <div class="contact-col">
+                                <input type="email" class="email" name="_replyto" placeholder="Adresse courriel">
+                            </div>
+                            <div class="contact-col">
+                                <input type="text" class="phone-number" name="phone_number" placeholder="Numero de telephone">
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-single-col">
+                                    <select name="reason">
+                                            <option value="sensitiveSkin">Peau sensible</option>
+                                            <option value="allergy">Allergies</option>
+                                            <option value="info">Renseignements</option>
+                                            <option value="personalizedSerum">Serum Personalisé</option>
+                                    </select>
+                            </div>   
+                        </div>
+                        <div class="contact-row-centered">
+                                <h2>Question</h2>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-single-col">
+                                <input type="file" name="upload" class="upload-file">
+                            </div>
+                        </div>
+                        <div class="contact-row">
+                            <div class="contact-single-col">
+                                <textarea class="message" name="message"cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="contact-row-centered">
+                            <button type="submit" class="btn btn-primary btn-success">Envoyer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>  
+    </body>
+</html>

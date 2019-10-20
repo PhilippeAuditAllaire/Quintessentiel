@@ -1,0 +1,153 @@
+.produit {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.produit-infos {
+    flex-direction: row;
+    display: flex;
+}
+
+.produit-image {
+    max-width: 500px;
+}
+
+.produit-details {
+    padding: 10px;
+}
+
+.produit-details-prix {
+    padding: 0px;
+}
+
+.produit-details-cart {}
+
+.produit-details-description {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.produit-cart-button {
+    background-color: #bcd13f;
+}
+
+.produit-commentaires {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.produit-commentaires-recommandations {
+    display: flex;
+    flex-direction: row;
+}
+
+.produit-commentaires-recommandation {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.produit-commentaires-recommandation-image {
+    max-height: 100px;
+}
+
+.produit-commentaires-titre {
+    display: flex;
+}
+
+
+/*
+
+
+*/
+
+.manager-button {
+    width: 150px;
+    height: 50px;
+}
+
+.manager-button:hover {
+    background-color: #7c8c34;
+}
+
+.catalogue-produit-etoile {
+    padding-right: 10px;
+    display: flex;
+}
+
+.catalogue-produit-etoiles {
+    max-height: 15px;
+}
+
+.catalogue-produit-review {
+    display: flex;
+}
+
+
+/**/
+
+.line {
+    border: 1px solid #292323;
+    width: 100%;
+}
+
+.commentaire {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.commentaire-titre {
+    display: flex;
+}
+
+.commentaire-barre {
+    display: flex;
+    align-self: flex-start;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+
+.commentaires-liste {
+    display: flex;
+    width: 90%;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.comm {
+    border: 1px solid #292323;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.comm-top {
+    display: flex;
+    flex-direction: row;
+}
+
+.comm-name {
+    font-size: 20px;
+}
+
+.comm-middle {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comm-desc {
+    display: flex;
+    width: 75%;
+}
+
+.comm-author {
+    display: flex;
+    align-self: center;
+}

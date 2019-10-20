@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Quintessentiel | Catalogue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/style_header.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style_body.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style_index.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style_productInfo.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body onload="load()">
+     <%include ./includes/navbar.ejs%>=
+    <div class="produit">
+        <div class="produit-infos" id="produit">
+
+        </div>
+        <div class="produit-commentaires">
+
+            <div class="produit-commentaires-titre">
+                <h2>Recommandations pour ce produit</h2>
+            </div>
+
+            <div class="produit-commentaires-recommandations">
+                <div class="produit-commentaires-recommandation">
+                    <img class="produit-commentaires-recommandation-image" src="./images/default.jpg" alt="FML">
+                    <div class="produit-commentaires-nom">
+                        Nom du produit
+                    </div>
+                    <div class="produit-commentaires-prix">
+                        $10.00 CAD
+                    </div>
+                </div>
+                <div class="produit-commentaires-recommandation">
+                    <img class="produit-commentaires-recommandation-image" src="./images/default.jpg" alt="FML">
+                    <div class="produit-commentaires-nom">
+                        Nom du produit
+                    </div>
+                    <div class="produit-commentaires-prix">
+                        $10.00 CAD
+                    </div>
+                </div>
+                <div class="produit-commentaires-recommandation">
+                    <img class="produit-commentaires-recommandation-image" src="./images/default.jpg" alt="FML">
+                    <div class="produit-commentaires-nom">
+                        Nom du produit
+                    </div>
+                    <div class="produit-commentaires-prix">
+                        $10.00 CAD
+                    </div>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="commentaire">
+                <div class="commentaire-titre">
+                    <h2>Commentaires</h2>
+                </div>
+                <div class="commentaires-liste">
+                    <div class="commentaire-barre">
+                        <div>
+                            <button class="manager-button produit-cart-button">Écrire un commentaire</button>
+                        </div>
+                    </div>
+                    <div class="comm">
+                        <div class="comm-top">
+                            <div class="catalogue-produit-etoile">
+                                <img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">
+                                <img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">
+                                <img class="catalogue-produit-etoiles" src="./images/icons/star_empty.png" alt="Star">
+                                <img class="catalogue-produit-etoiles" src="./images/icons/star_empty.png" alt="Star">
+                                <img class="catalogue-produit-etoiles" src="./images/icons/star_empty.png" alt="Star">
+                            </div>
+                            <div class="comm-name ">
+                                Titre du commentaire
+                            </div>
+                        </div>
+                        <div class="comm-middle">
+                            <div class="comm-desc">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, perferendis sequi? Voluptate itaque officia dolore in ad error eaque voluptatibus, dicta architecto consectetur nulla quae quia iusto inventore sunt doloribus. Lorem ipsum dolor sit amet
+                                consectetur, adipisicing elit. Sit dicta inventore doloribus hic velit perferendis laboriosam enim pariatur libero ad ipsum itaque natus assumenda, aut doloremque neque nihil? Ipsam, totam!
+                            </div>
+                            <div class="comm-author">
+                                John Doe
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        function findGetParameter(parameterName) {
+            let result = null,
+                tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function(item) {
+                    tmp = item.split("=");
+                    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                });
+            return result;
+        }
+
+        function load() {
+            let id_product = findGetParameter('id');
+            $.ajax({
+                url: "http://localhost:8000/ajaxRequest/produitInfo",
+                method: "POST",
+                data: {
+                    id: id_product
+                },
+                success: function(response) {
+                    console.log(response);
+
+                    $("#produit").html(response);
+
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur dans l'affichage du produit");
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

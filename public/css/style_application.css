@@ -1,0 +1,142 @@
+body{
+	margin:0;
+	overflow-y: hidden;
+}
+
+html,body{
+	height:100%;
+}
+
+
+/* ====================
+  		<Menu>
+  =====================
+*/
+
+.application-header{
+	background-color:#292323;
+
+}
+
+.application-header nav{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	-webkit-app-region: drag;
+}
+
+.application-header .wrapper-buttons,.application-header .wrapper-title,.application-header .wrapper-empty{
+	display: flex;
+	flex-grow:1;
+	flex-basis: 0;
+	align-self: center;
+}
+
+.application-header .wrapper-title{
+	flex-grow:2;
+	justify-content: center;
+}
+
+
+.application-header .wrapper-buttons img{
+	width:20px;
+	height:20px;
+	-webkit-app-region: no-drag;
+	margin-right:2.5px;
+	margin-left:2.5px;
+	cursor:pointer;
+	border-radius: 22.5px;
+}
+
+.application-header h2{
+	margin:0;
+	padding:0;
+	color:white;
+	overflow:;
+	font-size:20px;
+}
+
+.application-header .wrapper-buttons{
+	transition-duration: 1s;
+}
+
+.application-header .wrapper-buttons img:hover{
+	background-color:#bcd13f;
+}
+
+
+/* ===========================
+  		<AdminConnection>
+  ==============================
+*/
+
+
+.wrapper-content-connection{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height:100%;
+}
+
+.wrapper-logo{
+	margin-bottom:10px;
+}
+
+.wrapper-logo img{
+	width:80%;
+}
+
+.wrapper-body-connection{
+	text-align: center;
+	width:50%;
+	max-width:600px;
+	margin:auto;
+	margin-top:5%;
+}
+
+.wrapper-form{
+	background-color:#342c2c;
+	color:white;
+	border-radius:20px;
+	font-size:18px;
+	padding-top:25px;
+	padding-bottom:25px;
+}
+
+#wrapperPassword{
+	margin-top:30px;
+}
+
+.wrapper-form input{
+	height:38px;
+	width:80%;
+	max-width:600px;
+}
+
+.wrapper-btn-submit{
+	margin-top:30px;
+}
+
+.wrapper-btn-submit input[type=submit]{
+	background-color:#bcd13f;
+	width:40%;
+	border:0;
+	outline:0;
+}
+
+.wrapper-input{
+	display: flex;
+    justify-content: center;
+}
+
+.form-control:focus {
+  border-color: #bcd13f!important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(188, 209, 63, 0.6)!important;
+}
+
+.warning-error{
+	color:red;
+	font-size:20px;
+	text-align: center;
+	margin-bottom:0;
+}

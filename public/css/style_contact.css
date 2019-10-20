@@ -1,0 +1,83 @@
+.contact{}
+
+.contact-page{
+    margin: 30px !important;
+    width: -webkit-fill-available;
+    display: flex;
+    padding:10px;
+    flex-wrap: wrap;
+    margin:auto 0;
+    text-align: center;
+}
+
+.contact-row{
+    width: 100%;
+    display: flex;
+}
+
+.contact-row element{
+    margin:  0;
+}
+
+.contact-col{
+    flex:50%;
+}
+
+.contact-col input{
+    width:85%;
+    height:40px;
+    border-radius: 10px;
+}
+
+.contact-row-centered{
+    text-align: center;
+}
+
+.contact-row-centered h1{
+    margin-bottom: 35px;
+}
+
+.contact-row-centered h2{
+    margin-bottom: 5px;
+    margin-top:5px;
+}
+
+.contact-row-centered hr{
+    border-width: 3px;
+    border-color: #212529;
+}
+.contact-single-col{
+    display: flex;
+    flex:100%;
+}
+
+.contact-single-col select{
+    width: 92%;
+    height:40px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.contact-single-col textarea{
+    width: 92%;
+    margin:auto;
+    border-radius: 10px;
+}
+
+.contact-single-col input{
+    width: 92%;
+    margin:auto;
+    border-radius: 0px;
+}
+
+.upload-file{
+    width:100%;
+}
+
+.btn-primary{
+    background-color: #bcd13f !important;
+    border-color: #bcd13f !important;
+    width: 150px;
+    margin: 15px;
+}
+
