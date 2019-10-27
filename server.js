@@ -24,11 +24,10 @@ website.set("views",path.join(__dirname, './'));
 app.use(session({secret: 'your secret', saveUninitialized: true, resave: false}));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-website.set("views",path.join(__dirname, './'));
+app.set("views",path.join(__dirname, './'));
 
 website.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //Website routes
 website.get("/",function(req,res){
@@ -174,12 +173,11 @@ app.post("/ajaxRequest/adminConnection",function(req,res){
 
 //Application routes
 app.get("/",function(req,res){
-	res.render("adminConnection.ejs");
+	res.redirect("adminConnection");
 });
 
-app.get("/adminConnection.html",function(req,res){
-	console.log("Connection sur l'application")
-	res.end();
+app.get("/adminConnection",function(req,res){
+	res.render("adminConnection.ejs");
 });
 
 
