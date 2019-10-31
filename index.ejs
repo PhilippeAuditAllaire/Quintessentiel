@@ -18,26 +18,26 @@
         <section>
             <div class="slider-main">
                 <div class="slider-main-item">
-                    <div>
+                    <div class="slider-main-item-a">
                         <section class="center-aligned">
                             <img class="background-image" src="./images/default.jpg" />
-                            <div class="text">Acheter maintenant</div>
+                            <div class="text" onclick="sliderMainClick(1)">Acheter maintenant</div>
                         </section>
                     </div>
                 </div>
                 <div class="slider-main-item">
-                    <div>
+                    <div class="slider-main-item-a">
                         <section class=" center-aligned">
                             <img class="background-image" src="./images/default.jpg" />
-                            <div class="text">Acheter maintenant</div>
+                            <div class="text" onclick="sliderMainClick(2)">Acheter maintenant</div>
                         </section>
                     </div>
                 </div>
                 <div class="slider-main-item">
-                    <div>
+                    <div class="slider-main-item-a">
                         <section class="center-aligned">
                             <img class="background-image" src="./images/default.jpg" />
-                            <div class="text">Acheter maintenant</div>
+                            <div class="text" onclick="sliderMainClick(3)">Acheter maintenant</div>
                         </section>
                     </div>
                 </div>
@@ -53,11 +53,16 @@
             $(document).ready(function() {
                 $('.slider-main').slick({
                     infinite: true,
-                    dots: true,
-                    autoplay: true,
-                    autoplaySpeed: 3000,
+                    dots: true
+                        /*,
+                                            autoplay: true,
+                                            autoplaySpeed: 3000,*/
                 });
             });
+
+            function sliderMainClick(id) {
+                console.log(id);
+            }
         </script>
 </body>
 

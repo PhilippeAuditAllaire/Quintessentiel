@@ -1,6 +1,14 @@
+.slider-main {
+    display: flex;
+}
+
 .slider-main-item {
-    left: 50%;
-    top: 50%;
+    display: flex;
+}
+
+.slider-main-item-a {
+    display: flex;
+    justify-content: center;
 }
 
 .center-aligned {
