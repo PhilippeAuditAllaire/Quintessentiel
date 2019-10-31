@@ -20,7 +20,7 @@
                 <div class="slider-main-item">
                     <div class="slider-main-item-a">
                         <section class="center-aligned">
-                            <img class="background-image" src="./images/default.jpg" />
+                            <img class="background-image" src="./images/test.jpg" />
                             <div class="text" onclick="sliderMainClick(1)">Acheter maintenant</div>
                         </section>
                     </div>
@@ -42,6 +42,37 @@
                     </div>
                 </div>
             </div>
+            <div class="index-title">
+                Produits vedettes
+            </div>
+            <div class="slider-featured">
+                <div class="slider-featured-item">
+                    <div class="slider-main-item-a">
+                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
+                    </div>
+                </div>
+
+                <div class="slider-featured-item">
+                    <div class="slider-main-item-a">
+                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
+                    </div>
+                </div>
+
+                <div class="slider-featured-item">
+                    <div class="slider-main-item-a">
+                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
+                    </div>
+                </div>
+                <div class="slider-featured-item">
+                    <div class="slider-main-item-a ">
+                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
+                    </div>
+                </div>
+            </div>
+
+            <div class="index-title">
+                <a href="#" download>Téléchargez notre ebook</a>
+            </div>
         </section>
         <footer>
         </footer>
@@ -53,12 +84,35 @@
             $(document).ready(function() {
                 $('.slider-main').slick({
                     infinite: true,
-                    dots: true
-                        /*,
-                                            autoplay: true,
-                                            autoplaySpeed: 3000,*/
+                    dots: true,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    arrows: true
                 });
             });
+            let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                $(document).ready(function() {
+                    $('.slider-featured').slick({
+                        infinite: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
+                        arrows: true
+                    });
+                });
+            } else {
+                $(document).ready(function() {
+                    $('.slider-featured').slick({
+                        infinite: true,
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        arrows: true
+                    });
+                });
+            }
+
 
             function sliderMainClick(id) {
                 console.log(id);
