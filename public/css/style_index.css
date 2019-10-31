@@ -1,0 +1,20 @@
+.slider-main-item {
+    left: 50%;
+    top: 50%;
+}
+
+.center-aligned {
+    display: inline-block;
+    position: relative;
+}
+
+.text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    background-color: #bcd13f;
+    padding: 4px;
+    border: 1px solid black;
+}
