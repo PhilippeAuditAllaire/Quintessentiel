@@ -1,4 +1,4 @@
-const { app, shell, BrowserWindow } = require('electron')
+const { app, shell, BrowserWindow,ipcMain } = require('electron');
 const nativeImage = require('electron').nativeImage;
 
 require('electron-reload')(__dirname);
@@ -19,6 +19,11 @@ require('electron-reload')(__dirname);
       event.preventDefault();
       shell.openExternal(url);
     });
+
+    ipcMain.on('resize-window', (event, size) => {
+      win.setSize(size.width,size.height)
+    });
+
   }
   
   app.on('ready', createWindow)

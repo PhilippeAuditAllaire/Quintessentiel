@@ -47,10 +47,6 @@ body{
 }
 
 
-.list-group-item-action.active{
-	background-color:rgba(188,209,63,0.8);
-	border-color:#7c8c34;
-}
 
 .list-group{
 	max-height:300px;

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quintessentiel | Connexion</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
+	<link rel="stylesheet" type="text/css" href="./css/style_manageCategory.css"/>
+	<script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+</head>
+<body>
+	<%include ./includes/appNavbar.ejs%>
+		<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Ajout d'une catégorie</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Inscrivez le nom de la nouvelle catégorie</p>
+	        <input type="text" class="form-control" placeholder="ex: Peau douce" />
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success">Ajouter</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<section class="wrapper-content-manageProduct">
+		<div class="wrapper-body-manage-category">
+			<h2>Gestion des catégories</h2>
+
+			<section class="wrapper-section-category">
+				<h3>Liste des catégories</h3>
+				<div class="list-group" id="categoryList">
+				  <a href="#" class="list-group-item list-group-item-action"">
+				    Cras justo odio
+				  </a>
+				  <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+				  <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+				  <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+				</div>
+			</section>
+			<div class="wrapper-btn-end">
+				<a href="#" id="btnDelete" class="btnApp disabled">-</a>
+				<a href="#" id="btnAdd" class="btnApp">+</a>
+			</div>
+		</div>
+	</section>
+	<script src="./javascript/renderer.js"></script>
+	<script src="./javascript/tableProducts.js"></script>
+	<script src="./javascript/resizeWindow.js"></script>
+	<script>
+		resizeWindow(600,400);
+		let addBtn = $("#btnAdd")
+		let addModal = $("#addModal");
+
+		addBtn.on("click",function(e){
+			$(addModal).modal();
+		});
+
+
+
+		/*
+			Delete category
+		*/
+		let selectedCategory = "";
+		let deleteBtn = $("#btnDelete");
+		//On the delete button click
+		deleteBtn.on("click",function(e){
+			e.preventDefault();
+
+			if(selectedCategory != "") //If something is selected
+			{
+				sendConfirmDeleteDialog(selectedCategory.innerText);
+				deleteBtn[0].classList.add("disabled");
+				selectedCategory.classList.remove("active");
+				selectedCategory = ""
+			}
+
+		});
+
+		//When clicking on the document
+		$(document).on("click",function(e){
+			let selectedItemIndex = $(".list-group-item").index(e.target);
+
+			if(selectedItemIndex < 0){ //If it's not an item from the list
+
+				if(selectedCategory != ""){
+					selectedCategory.classList.remove("active");
+				}
+
+
+				selectedCategory = "";
+				deleteBtn[0].classList.add("disabled")
+			}
+		})
+
+		//When clicking on one of the list element
+		$(".list-group-item").on("click",function(e){
+			if(selectedCategory != ""){
+				selectedCategory.classList.remove("active");
+			}
+
+			selectedCategory = e.target;
+			deleteBtn[0].classList.remove("disabled");
+			selectedCategory.classList.add("active");
+		});
+
+		//Sends a confirm dialog box to the user
+		function sendConfirmDeleteDialog(categoryName){
+			showDialog('warning',['Annuler',"Confirmer"],
+				"Supression de catégorie",
+				"Souhaitez-vous cacher la catégorie '"+categoryName+"' ?",
+				"Les produits appartenants à cette catégorie ne seront plus visibles par les visiteurs du site web.",confirmDeleteCategory);
+		}
+
+		//Callback from the dialog message
+		function confirmDeleteCategory(resp){
+			if(resp == 1) //Clicked on confirm 
+			{
+				alert("deleted")
+			}
+		}
+	</script>
+			<!-- Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

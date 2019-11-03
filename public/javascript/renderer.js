@@ -1,4 +1,5 @@
 (function() {
+	
 	var remote = require('electron').remote;  //Permet d'accéder au main process de Electron
 
 	let btn_min = document.getElementById("minimize");
@@ -19,5 +20,6 @@
 		let main_window = remote.getCurrentWindow();
 		main_window.close();
 	},false);
+
 })();
 

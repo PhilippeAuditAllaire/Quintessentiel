@@ -16,9 +16,12 @@ function selectCurrentPage()
 	}
 }
 
-menuSelect.addEventListener("change",function(e){
-	let selectedValue = menuSelectOption[e.target.selectedIndex].value;
-	console.log(selectedValue);
 
-	document.location = selectedValue;
-});
+if(menuSelect != undefined){ //If the menu exists on this bar
+
+	menuSelect.addEventListener("change",function(e){
+		let selectedValue = menuSelectOption[e.target.selectedIndex].value;
+		document.location = selectedValue;
+	});
+
+}

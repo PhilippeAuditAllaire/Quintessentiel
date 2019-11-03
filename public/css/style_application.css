@@ -63,6 +63,11 @@ html,body{
 	-webkit-app-region: no-drag;
 }
 
+.wrapper-select select:focus{
+	outline:0;
+	border:0;
+}
+
 .wrapper-select option{
 	outline:0;
 }
@@ -117,6 +122,10 @@ html,body{
 	background-color:#bcd13f;
 }
 
+
+a.disabled{
+	opacity:0.5;
+}
 
 /* ===========================
   		<AdminConnection>

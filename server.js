@@ -206,6 +206,16 @@ app.get("/addProduct",function(req,res){
 	}
 });
 
+app.get("/manageCategory",function(req,res){
+	if(req.session.userId != undefined && req.session.isAdmin == 1)
+	{
+		res.render("manageCategory.ejs");	
+	}
+	else{
+		res.redirect("/adminConnection?pleaseConnect=true");
+	}
+});
+
 
 
 
