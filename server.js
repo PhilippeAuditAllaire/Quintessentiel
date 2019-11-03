@@ -164,6 +164,8 @@ app.post("/ajaxRequest/adminConnection",function(req,res){
 			if(result[0]){ //The admin connection worked
 				req.session.userId = result[1];
 				req.session.isAdmin = 1;
+
+				res.redirect("manageProduct")
 			}
 			
 			res.send(result[0]);
@@ -179,6 +181,19 @@ app.get("/",function(req,res){
 app.get("/adminConnection",function(req,res){
 	res.render("adminConnection.ejs");
 });
+
+app.get("/manageProduct",function(req,res){
+	console.log(req.session.userId);
+
+	if(req.session.userId != undefined && req.session.isAdmin == 1)
+	{
+		res.render("manageProduct.ejs");	
+	}
+	else{
+		res.redirect("adminConnection?pleaseConnect=true");
+	}
+});
+
 
 
 

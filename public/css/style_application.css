@@ -18,6 +18,19 @@ html,body{
 
 }
 
+.wrapper-select select{
+	background-color:#292323;
+	border:0;
+	color:white;
+	outline:0;
+	cursor:pointer;
+	-webkit-app-region: no-drag;
+}
+
+.wrapper-select option{
+	outline:0;
+}
+
 .application-header nav{
 	display: flex;
 	flex-direction: row;
@@ -25,11 +38,15 @@ html,body{
 	-webkit-app-region: drag;
 }
 
-.application-header .wrapper-buttons,.application-header .wrapper-title,.application-header .wrapper-empty{
+.application-header .wrapper-buttons,.application-header .wrapper-title,.application-header .wrapper-select{
 	display: flex;
 	flex-grow:1;
 	flex-basis: 0;
 	align-self: center;
+}
+
+.wrapper-buttons{
+	justify-content: flex-end;
 }
 
 .application-header .wrapper-title{
