@@ -21,6 +21,11 @@ body{
 
 /* <User forms page> */
 
+
+.wrapper-label-input label{
+	font-size:23px;
+}
+
 .user-form{
 	display: flex;
 	flex-direction: column;
@@ -40,7 +45,7 @@ body{
 }
 
 .wrapper-label-input{
-	width:600px;
+	width:700px;
 }
 
 .wrapper-label,.wrapper-input{
@@ -49,6 +54,10 @@ body{
 
 .wrapper-input{
 	width:70%;
+}
+
+.wrapper-input input{
+	height:50px;
 }
 
 .wrapper-input{
@@ -141,7 +150,7 @@ body{
 	margin-top:50px;
 }
 
-#userConnectForgot{
+#userConnectForgot,#userCreate{
 	display: block;
 	width:100%;
 	text-align:center;
@@ -152,7 +161,7 @@ body{
 .wrapper-submit-button{
 	display: flex;
 	justify-content: center;
-	margin-top:30px;
+	margin-top:10px;
 }
 
 .wrapper-submit-button button{
