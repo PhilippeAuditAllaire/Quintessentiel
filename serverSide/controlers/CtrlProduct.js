@@ -6,14 +6,52 @@ class CtrlProduct {
         this._mgrProduct = new MgrProduct();
     }
 
+    getCommentsIndex(code_lang) {
+        let products = this._mgrProduct.loadCommentSlider();
+
+        return products.then(function(val) {
+            let catalogue_product = [];
+
+            val.forEach(function(product) {
+
+                let ele = '<div class="slider-temoignage-item">';
+                ele += '<div class="temoignage-person">';
+                ele += product.firstName + ' ' + product.lastName;
+                ele += '</div>';
+                ele += '<div class="temoignage-texte">';
+                ele += product.commentTxt;
+                ele += '</div></div>';
+                catalogue_product.push(ele);
+            });
+
+            return catalogue_product;
+        });
+    }
+
+    getProductFeatured() {
+        let products = this._mgrProduct.loadProductFeatured();
+
+        return products.then(function(val) {
+            let catalogue_product = [];
+
+            val.forEach(function(product) {
+
+                let ele = '<div class="slider-featured-item">';
+                ele += '<div class="slider-main-item-a" onclick="sliderFeaturedClick(' + product.id + ')">';
+                ele += '<img class="slider-featured-image" src="./images/' + product.image + '" alt="' + product.image + '">';
+                ele += "</div></div>";
+                catalogue_product.push(ele);
+            });
+
+            return catalogue_product;
+        });
+    }
 
     getProductInfo(id, code_lang) {
         let products = this._mgrProduct.loadProductbyId(id, code_lang);
 
         return products.then(function(val) {
             let catalogue_product = [];
-
-
 
             let ele = '<div class="produit-div-image">';
             ele += '<img class="produit-image" src="./images/' + val[0].image + '" alt="' + val[0].value + '">';

@@ -1,6 +1,7 @@
 .slider-main {
     display: flex;
     padding-right: 50px;
+    padding-left: 50px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -68,4 +69,22 @@
     padding-left: 300px;
     padding-right: 300px;
     text-align: justify;
+}
+
+.slider-temoignages {}
+
+.slider-temoignage-item {}
+
+.temoignage-person {
+    font-size: 20px;
+    font-style: italic;
+    justify-content: center;
+    display: flex;
+}
+
+.temoignage-texte {
+    font-size: 12px;
+    word-wrap: break-word;
+    justify-content: center;
+    display: flex;
 }

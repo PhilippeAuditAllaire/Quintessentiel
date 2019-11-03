@@ -16,7 +16,7 @@
 <body>
     <%include ./includes/navbar.ejs%>
         <section>
-            <div class="slider-main">
+            <div class="slider-main" id="slider-main">
                 <div class="slider-main-item">
                     <div class="slider-main-item-a">
                         <section class="center-aligned">
@@ -45,29 +45,8 @@
             <div class="index-title">
                 Produits vedettes
             </div>
-            <div class="slider-featured">
-                <div class="slider-featured-item">
-                    <div class="slider-main-item-a">
-                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
-                    </div>
-                </div>
+            <div class="slider-featured" id="slider-featured">
 
-                <div class="slider-featured-item">
-                    <div class="slider-main-item-a">
-                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
-                    </div>
-                </div>
-
-                <div class="slider-featured-item">
-                    <div class="slider-main-item-a">
-                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
-                    </div>
-                </div>
-                <div class="slider-featured-item">
-                    <div class="slider-main-item-a ">
-                        <img class="slider-featured-image" src="./images/default.jpg" alt="picture">
-                    </div>
-                </div>
             </div>
 
             <div class="index-download">
@@ -87,21 +66,26 @@
             <div class="index-title">
                 Témoignages
             </div>
+            <div class="slider-temoignages" id="slider-temoignages">
+
+            </div>
+
         </section>
         <footer>
         </footer>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="slick/slick.min.js"></script>
         <script>
             $(document).ready(function() {
                 $('.slider-main').slick({
                     infinite: true,
-                    dots: true,
-                    autoplay: true,
-                    autoplaySpeed: 3000,
-                    arrows: true
+                    dots: true
+                        /*autoplay: true,
+                        autoplaySpeed: 3000,*/
+
                 });
             });
             let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -111,8 +95,8 @@
                         infinite: true,
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        autoplay: true,
-                        autoplaySpeed: 3000,
+                        /* autoplay: true,
+                         autoplaySpeed: 3000,*/
                         arrows: true
                     });
                 });
@@ -126,10 +110,56 @@
                     });
                 });
             }
+            $(document).ready(function() {
+                $('.slider-temoignages').slick({
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true
+                        /*autoplay: true,
+                        autoplaySpeed: 3000,*/
 
+                });
+            });
+
+            $.ajax({
+                url: "http://localhost:8000/ajaxRequest/sliderFeature",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    alert("good");
+                    $("#slider-featured").html(response);
+
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur dans l'affichage du slider featured");
+                }
+            });
+
+            $.ajax({
+                url: "http://localhost:8000/ajaxRequest/sliderTemoignages",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    alert("good");
+                    $("#slider-temoignages").html(response);
+
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur dans l'affichage du slider featured");
+                }
+            });
 
             function sliderMainClick(id) {
                 console.log(id);
+            }
+
+            function sliderFeaturedClick(id) {
+                document.location.href = './productInfo?id=' + id;
             }
         </script>
 </body>
