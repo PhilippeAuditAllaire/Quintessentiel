@@ -165,17 +165,20 @@ app.post("/ajaxRequest/adminConnection",function(req,res){
 				req.session.userId = result[1];
 				req.session.isAdmin = 1;
 
-				res.redirect("manageProduct")
+				res.send(true);
+			}
+			else{
+				res.send(result[0]);	
 			}
 			
-			res.send(result[0]);
+			
 		});
 		
 });
 
 //Application routes
 app.get("/",function(req,res){
-	res.redirect("adminConnection");
+	res.redirect("/adminConnection");
 });
 
 app.get("/adminConnection",function(req,res){
@@ -183,14 +186,23 @@ app.get("/adminConnection",function(req,res){
 });
 
 app.get("/manageProduct",function(req,res){
-	console.log(req.session.userId);
-
 	if(req.session.userId != undefined && req.session.isAdmin == 1)
 	{
 		res.render("manageProduct.ejs");	
 	}
 	else{
-		res.redirect("adminConnection?pleaseConnect=true");
+		res.redirect("/adminConnection?pleaseConnect=true");
+	}
+});
+
+
+app.get("/addProduct",function(req,res){
+	if(req.session.userId != undefined && req.session.isAdmin == 1)
+	{
+		res.render("addproduct.ejs");	
+	}
+	else{
+		res.redirect("/adminConnection?pleaseConnect=true");
 	}
 });
 
