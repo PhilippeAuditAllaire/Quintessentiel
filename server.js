@@ -134,6 +134,7 @@ website.post("/ajaxRequest/produitInfo", function(req, res) {
 
 });
 
+
 website.post("/ajaxRequest/sliderFeature", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
@@ -175,16 +176,17 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
 app.post("/ajaxRequest/adminConnection", function(req, res) {
     let ctrlUserObj = new CtrlUser();
 
-
     ctrlUserObj.connectUser(req.body, true).then(function(result) {
         if (result[0]) { //The admin connection worked
             req.session.userId = result[1];
             req.session.isAdmin = 1;
 
-            res.redirect("manageProduct")
+            res.send(true);
+        } else {
+            res.send(result[0]);
         }
 
-        res.send(result[0]);
+
     });
 
 });
@@ -215,8 +217,21 @@ app.get("/addProduct", function(req, res) {
     }
 });
 
+app.get("/manageRecipe", function(req, res) {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+        res.render("manageRecipe.ejs");
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
 
-
+app.get("/addRecipe", function(req, res) {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+        res.render("addRecipe.ejs");
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
 
 website.listen(8000);
 app.listen(5000);
