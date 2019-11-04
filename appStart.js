@@ -21,7 +21,7 @@ require('electron-reload')(__dirname);
     });
 
     ipcMain.on('resize-window', (event, size) => {
-      win.setSize(size.width,size.height)
+      win.setSize(size.width,size.height);
     });
 
   }

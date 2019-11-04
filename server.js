@@ -216,6 +216,15 @@ app.get("/manageCategory",function(req,res){
 	}
 });
 
+app.get("/modifyProduct",function(req,res){
+	if(req.session.userId != undefined && req.session.isAdmin == 1)
+	{
+		res.render("modifyproduct.ejs");	
+	}
+	else{
+		res.redirect("/adminConnection?pleaseConnect=true");
+	}
+});
 
 
 

@@ -1,0 +1,98 @@
+			<div class="wrapper-form-add-product">
+				<div class="wrapper-input-label">
+					<div class="wrapper-label">
+						<label>Nom</label>
+					</div>
+					<div class="wrapper-input">
+						<input type="text" class="form-control"/>
+					</div>
+				</div>
+				<div class="wrapper-input-label">
+					<div class="wrapper-label">
+						<label>Prix</label>
+					</div>
+					<div class="wrapper-input">
+						<input type="number" id="inputPrice" class="form-control" min="0.00" step="0.01" value="0.00"/>
+					</div>
+				</div>
+				<div class="wrapper-input-label">
+					<div class="wrapper-label">
+						<label>Quantité</label>
+					</div>
+					<div class="wrapper-input">
+						<input type="number" id="inputQty" class="form-control" min="0"/>
+					</div>
+				</div>
+				<div class="wrapper-input-label">
+					<div class="wrapper-label">
+						<label>Image</label>
+					</div>
+					<div class="wrapper-input">
+						<input type="file" />
+					</div>
+				</div>
+				<div class="wrapper-input-label" id="wrapperCategory">
+					<div class="wrapper-label">
+						<label>Catégorie</label>
+					</div>
+					<div class="wrapper-input">
+						<select class="form-control">
+							<option>Peau mature</option>
+						</select>
+					</div>
+				</div>
+				<div class="wrapper-input-label" id="wrapperInputLabelTags">
+					<div class="wrapper-label">
+						<label>Étiquettes</label>
+					</div>
+					<div class="wrapper-input">
+						<div class="availableTags">
+							<div class="left-available-wrapper">
+								<p>Étiquettes disponibles</p>		
+								<div class="list-group">
+								  <a href="#" class="list-group-item list-group-item-action active">
+								    Cras justo odio
+								  </a>
+								  <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+								  <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+								  <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+								</div>
+							</div>
+							</div>
+
+						<div class="wrapper-btnChange">
+							<button>></button>
+							<button><</button>
+						</div>
+						<div class="choosenTags">
+							<div class="right-choosen-wrapper">
+								<p>Étiquettes attribuées</p>		
+								<div class="list-group">
+								  <a href="#" class="list-group-item list-group-item-action active">
+								    Cras justo odio
+								  </a>
+								  <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+								  <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+								  <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="wrapper-input-label" id="wrapperDescription">
+					<div class="wrapper-label">
+						<label>Description</label>
+					</div>
+					<div class="wrapper-input">
+						<textarea class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="wrapper-input-label" id="wrapperVedette">
+						
+						<label><input type="checkbox"/><span>Item vedette</span></label>
+				</div>
+				<div class="wrapperBtnEnd">
+					<div class="wrapper-cancel"><input type="submit" class="btn btn-success" value="Annuler" onclick="self.close()"></div>
+					<div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter"></div>
+				</div>
+			</div>

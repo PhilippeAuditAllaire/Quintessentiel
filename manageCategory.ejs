@@ -36,19 +36,34 @@
 		<div class="wrapper-body-manage-category">
 			<h2>Gestion des catégories</h2>
 
-			<section class="wrapper-section-category">
-				<h3>Liste des catégories</h3>
-				<div class="list-group" id="categoryList">
-				  <a href="#" class="list-group-item list-group-item-action"">
-				    Cras justo odio
-				  </a>
-				  <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-				  <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-				  <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-				</div>
-			</section>
+		<div class="table">
+            <div class="border">
+                <table class="table-product">
+                    <thead class="table-product-header">
+                        <tr>
+                            <th>Catégorie</th>
+                            <th>Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ondblclick="openUpdateProduct(this)" data-product-id="1">
+                            <th>Catégorie A</th>
+                            <th><input type="checkbox" class="chckboxActive" disabled="" /></th>
+                        </tr>
+                        <tr>
+                            <th>Catégorie B</th>
+                            <th><input type="checkbox" class="chckboxActive" checked="" disabled="" /></th>
+                        </tr>
+                        <tr>
+                            <th>Catégorie C</th>
+                            <th><input type="checkbox" class="chckboxActive" disabled=""/></th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
 			<div class="wrapper-btn-end">
-				<a href="#" id="btnDelete" class="btnApp disabled">-</a>
 				<a href="#" id="btnAdd" class="btnApp">+</a>
 			</div>
 		</div>
@@ -59,73 +74,69 @@
 	<script>
 		resizeWindow(600,400);
 		let addBtn = $("#btnAdd")
+		let tr = document.getElementsByTagName("tr");
 		let addModal = $("#addModal");
 
 		addBtn.on("click",function(e){
 			$(addModal).modal();
 		});
 
+		$(tr).on("click",function(e){
+			let element = e.target.parentNode;
 
 
-		/*
-			Delete category
-		*/
-		let selectedCategory = "";
-		let deleteBtn = $("#btnDelete");
-		//On the delete button click
-		deleteBtn.on("click",function(e){
-			e.preventDefault();
-
-			if(selectedCategory != "") //If something is selected
-			{
-				sendConfirmDeleteDialog(selectedCategory.innerText);
-				deleteBtn[0].classList.add("disabled");
-				selectedCategory.classList.remove("active");
-				selectedCategory = ""
+			if(e.target.tagName == "INPUT"){
+				element = e.target.parentNode.parentNode;
 			}
 
-		});
+			let categoryName = element.getElementsByTagName("th")[0].innerText;
+			let chckbox = element.getElementsByClassName("chckboxActive")[0];
 
-		//When clicking on the document
-		$(document).on("click",function(e){
-			let selectedItemIndex = $(".list-group-item").index(e.target);
+			if(chckbox != undefined){
+				let isChecked = chckbox.checked;
+				
 
-			if(selectedItemIndex < 0){ //If it's not an item from the list
-
-				if(selectedCategory != ""){
-					selectedCategory.classList.remove("active");
+				if(isChecked){ //if its checked, send a confirmation to hide it
+					sendConfirmHideDialog(categoryName);
 				}
-
-
-				selectedCategory = "";
-				deleteBtn[0].classList.add("disabled")
+				else{ //if its not checked, send a confirmation to show it
+					sendConfirmUnHideDialog(categoryName);
+				}				
 			}
-		})
-
-		//When clicking on one of the list element
-		$(".list-group-item").on("click",function(e){
-			if(selectedCategory != ""){
-				selectedCategory.classList.remove("active");
-			}
-
-			selectedCategory = e.target;
-			deleteBtn[0].classList.remove("disabled");
-			selectedCategory.classList.add("active");
 		});
+
+
+		function sendConfirmUnHideDialog(categoryName){
+			showDialog('warning',['Annuler',"Confirmer"],
+				"Désarchivage de catégorie",
+				"Souhaitez-vous montrer la catégorie '"+categoryName+"' ?",
+				"Les produits appartenants à cette catégorie seront désormais visibles par les visiteurs du site web.",confirmShowCategory);
+		}
+
 
 		//Sends a confirm dialog box to the user
-		function sendConfirmDeleteDialog(categoryName){
+		function sendConfirmHideDialog(categoryName){
 			showDialog('warning',['Annuler',"Confirmer"],
-				"Supression de catégorie",
-				"Souhaitez-vous cacher la catégorie '"+categoryName+"' ?",
-				"Les produits appartenants à cette catégorie ne seront plus visibles par les visiteurs du site web.",confirmDeleteCategory);
+				"Archivage de catégorie",
+				"Souhaitez-vous archiver la catégorie '"+categoryName+"' ?",
+				"Les produits appartenants à cette catégorie ne seront plus visibles par les visiteurs du site web.",confirmArchiveCategory);
+		}
+
+
+		function confirmShowCategory(resp)
+		{
+			if(resp == 1) //Clicked on confirm 
+			{
+				alert("showing")
+
+			}
 		}
 
 		//Callback from the dialog message
-		function confirmDeleteCategory(resp){
+		function confirmArchiveCategory(resp){
 			if(resp == 1) //Clicked on confirm 
 			{
-				alert("deleted")
+				alert("archiving")
 			}
 		}
 	</script>

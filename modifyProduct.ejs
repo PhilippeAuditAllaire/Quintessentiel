@@ -17,12 +17,18 @@
 			<p class="warning-error" id="warning-error"></p>
 		</div>
 		<div class="wrapper-manageProduct-section">
-			<h2>Ajout d'un produit</h2>
+			<h2>Modification d'un produit</h2>
 			<%include ./includes/templateProduct.ejs%>
 		</div>
 	</section>
 	<script src="./javascript/renderer.js"></script>
-	<script src="./javascript/tableProducts.js"></script>
-	<script src="./javascript/resizeWindow.js"></script>
+	<script>
+		getProductId();
+
+		function getProductId()
+		{
+			let productId = document.location.href.split("=")[1];
+		}
+	</script>
 </body>
 </html>
