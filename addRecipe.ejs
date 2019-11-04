@@ -23,12 +23,17 @@
                 <div class="wrapper-form-add-product">
                     <div class="wrapper-input-label">
                         <div class="wrapper-label">
-                            <label>Nom</label>
+                            <label>Produit créé</label>
                         </div>
                         <div class="wrapper-input">
-                            <input type="text" class="form-control" />
+                            <select class="form-control" id="name">
+									<option id="product-1">Produit A</option>
+							</select>
                         </div>
                     </div>
+
+                    <a href="./addProduct" class="wrapper-input-label">Ajouter un produit</a>
+
                     <div class="wrapper-input-label">
                         <div class="wrapper-label">
                             <label>Prix</label>
@@ -38,17 +43,9 @@
                         </div>
                     </div>
 
-                    <div class="wrapper-input-label">
-                        <div class="wrapper-label">
-                            <label>Image</label>
-                        </div>
-                        <div class="wrapper-input">
-                            <input type="file" />
-                        </div>
-                    </div>
                     <div class="wrapper-input-label" id="wrapperCategory">
                         <div class="wrapper-label">
-                            <label>Catégorie</label>
+                            <label>Type</label>
                         </div>
                         <div class="wrapper-input">
                             <select class="form-control">
@@ -65,10 +62,36 @@
                                 <div class="left-available-wrapper">
                                     <p>Produits disponibles</p>
                                     <div class="list-group" id="list-group-not-chosen">
-                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="1">Cras justo odio</a>
-                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="2">Dapibus ac facilisis in</a>
-                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="3">Morbi leo risus</a>
-                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="4">Porta ac consectetur ac</a>
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="1">
+												Cras justo odio
+												<input type="number" id="qty-1" class="qty-pro" min="0.00" step="1" value="0.00" >
+												<label for="">mg</label>
+											</a>
+
+                                        </div>
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="2">
+												Cras justo odio
+												<input type="number" id="qty-2" class="qty-pro" min="0.00" step="1" value="0.00" />
+												<label for="">mg</label>
+											</a>
+                                        </div>
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="3">
+												Cras justo odio
+												<input type="number" id="qty-3" class="qty-pro" min="0.00" step="1" value="0.00" />
+												<label for="">mg</label>
+											</a>
+
+                                        </div>
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="4">
+												Cras justo odio
+												<input type="number" id="qty-4" class="qty-pro" min="0.00" step="1" value="0.00" />
+												<label for="">mg</label>
+											</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +115,7 @@
                             <label>Description</label>
                         </div>
                         <div class="wrapper-input">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" id="description"></textarea>
                         </div>
                     </div>
                     <div class="wrapper-input-label" id="wrapperInstructions">
@@ -105,17 +128,19 @@
                     </div>
                     <div class="wrapper-input-label" id="wrapperVedette">
 
-                        <label><input type="checkbox"/><span>Item vedette</span></label>
+                        <label><input type="checkbox"id="custom"/><span>Recette personnalisée</span></label>
                     </div>
                     <div class="wrapperBtnEnd">
                         <div class="wrapper-cancel"><input type="submit" class="btn btn-success" value="Annuler" onclick="self.close()"></div>
-                        <div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter"></div>
+                        <div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter" onclick="add()"></div>
                     </div>
                 </div>
             </div>
         </section>
         <script src="./javascript/renderer.js"></script>
         <script src="./javascript/tableProducts.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script>
             let oldClicked = "";
             let idClick = "";
@@ -132,7 +157,6 @@
                     oldClicked = ele;
                     idClick = ele.id;
                     console.log(idClick);
-
                 }
             }
 
@@ -146,6 +170,34 @@
                 let list = document.getElementById("list-group-not-chosen");
                 let child = document.getElementById(idClick);
                 list.appendChild(child);
+            }
+
+            function add() {
+                let custom = 0;
+                if ($('#custom').checked) {
+                    custom = 1;
+                }
+
+                $.ajax({
+                    url: "http://localhost:8000/ajaxRequest/addRecipe",
+                    method: "POST",
+                    data: {
+                        name: $('#name').find(":selected").text(),
+                        desc: $('#description').value,
+                        is_custom: custom,
+                        product: $('#name').find(":selected").text()
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        //alert("good");
+                        $("#slider-temoignages").html(response);
+
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'affichage du slider featured");
+                    }
+                });
             }
         </script>
 </body>
