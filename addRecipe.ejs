@@ -64,29 +64,24 @@
                             <div class="availableTags">
                                 <div class="left-available-wrapper">
                                     <p>Produits disponibles</p>
-                                    <div class="list-group">
-                                        <a href="#" class="list-group-item list-group-item-action active">
-								    Cras justo odio
-								  </a>
-                                        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                                        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                                        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                                    <div class="list-group" id="list-group-not-chosen">
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="1">Cras justo odio</a>
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="2">Dapibus ac facilisis in</a>
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="3">Morbi leo risus</a>
+                                        <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="4">Porta ac consectetur ac</a>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="wrapper-btnChange">
-                                <button>></button>
-                                <button><</button>
+                                <button onclick="moveRight()">></button>
+                                <button onclick="moveLeft()"><</button>
                             </div>
                             <div class="choosenTags">
                                 <div class="right-choosen-wrapper">
-                                    <p>Produits attribuées</p>
-                                    <div class="list-group">
-                                        <a href="#" class="list-group-item list-group-item-action active">Cras justo odio</a>
-                                        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                                        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                                        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                                    <p>Produits attribués</p>
+                                    <div class="list-group" id="list-group-chosen">
+
                                     </div>
                                 </div>
                             </div>
@@ -121,6 +116,38 @@
         </section>
         <script src="./javascript/renderer.js"></script>
         <script src="./javascript/tableProducts.js"></script>
+        <script>
+            let oldClicked = "";
+            let idClick = "";
+
+            function active(ele) {
+                console.log(ele);
+                if (oldClicked == ele) {
+
+                } else {
+                    ele.classList.add("active");
+                    if (oldClicked != "") {
+                        oldClicked.classList.remove("active");
+                    }
+                    oldClicked = ele;
+                    idClick = ele.id;
+                    console.log(idClick);
+
+                }
+            }
+
+            function moveRight() {
+                let list = document.getElementById("list-group-chosen");
+                let child = document.getElementById(idClick);
+                list.appendChild(child);
+            }
+
+            function moveLeft() {
+                let list = document.getElementById("list-group-not-chosen");
+                let child = document.getElementById(idClick);
+                list.appendChild(child);
+            }
+        </script>
 </body>
 
 </html>
