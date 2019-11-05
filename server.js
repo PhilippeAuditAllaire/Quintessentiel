@@ -31,6 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //Website routes
+
+website.get("/serum",function(req,res){
+	res.render("serum.ejs")
+});
+
 website.get("/",function(req,res){
 	res.redirect("/index")
 });
