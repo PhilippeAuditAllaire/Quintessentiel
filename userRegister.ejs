@@ -27,7 +27,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="firstName">Prénom: </label>
+								<label for="firstName">Prénom* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="text" placeholder="Prénom" name="firstName" id="firstName" class="form-control" required/>
@@ -40,7 +40,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="lastName">Nom: </label>
+								<label for="lastName">Nom* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="text" placeholder="Nom" name="lastName" id="lastName" class="form-control" required/>
@@ -53,7 +53,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="email">Courriel: </label>
+								<label for="email">Courriel* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="text" placeholder="Courriel" name="email" id="email" class="form-control" required/>
@@ -66,7 +66,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="birthDate">Date de naissance: </label>
+								<label for="birthDate">Date de naissance* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="date" name="birthDate" id="birthDate" class="form-control" required/>
@@ -79,7 +79,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="selectCivility">Civilité: </label>
+								<label for="selectCivility">Civilité* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du select -->
 								<select name="idCivility" id="selectCivility" class="form-control" required>
@@ -88,6 +88,78 @@
 							</div>
 						</div>
 					</div>
+					<div class="wrapper-announce-address">
+						<h4>Adresse</h4>	
+					</div>
+					<hr>
+					<div class="wrapper-row wrapper-address">
+						<div class="wrapper-error-label">
+							<p class="error-input" id="error-address"></p>
+						</div>
+						<div class="wrapper-label-input"> <!-- Une ligne -->
+							<div class="wrapper-left-address">
+								<div class="wrapper-label"> <!-- wrapper du label -->
+									<label for="street">Rue* </label>
+								</div>
+								<div class="wrapper-input"> <!-- wrapper du input -->
+									<input type="text" id="street" class="form-control" required/>
+								</div>
+							</div>
+							<div class="wrapper-right-address">
+								<div class="wrapper-label"> <!-- wrapper du label -->
+									<label for="noApp">No app.</label>
+								</div>
+								<div class="wrapper-input"> <!-- wrapper du input -->
+									<input type="text" id="noApp" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="wrapper-label-input wrapper-under-address"> <!-- Une ligne -->
+							<div class="wrapper-left-address">
+								<div class="wrapper-label"> <!-- wrapper du label -->
+									<label for="postalCode">Code postal* </label>
+								</div>
+								<div class="wrapper-input"> <!-- wrapper du input -->
+									<input type="text" id="postalCode" class="form-control" required/>
+								</div>
+							</div>
+							<div id="wrapperCivic" class="wrapper-right-address">
+								<div class="wrapper-label"> <!-- wrapper du label -->
+									<label for="noCivic">No civique*</label>
+								</div>
+								<div class="wrapper-input"> <!-- wrapper du input -->
+									<input type="text" id="noCivic" class="form-control" required/>
+								</div>
+							</div>
+						</div>
+						<div id="wrapperLocation" class="wrapper-label-input wrapper-under-address"> <!-- Une ligne -->
+							<div class="wrapper-left-address">
+								<div class="wrapper-label"> <!-- wrapper du label -->
+									<label for="idCountry">Pays* </label>
+								</div>
+								<div class="wrapper-input"> <!-- wrapper du input -->
+									<select name="idCountry" id="idCountry" class="form-control" required>
+										<option>Canada</option>
+										<option>France</option>
+										<option>États-Unis</option>
+									</select>
+								</div>
+							</div>
+							<div class="wrapper-right-address">
+								<div class="wrapper-label"> <!-- wrapper du label -->
+									<label for="idProvince">Province* </label>
+								</div>
+								<div class="wrapper-input"> <!-- wrapper du input -->
+									<select name="idProvince" id="idProvince" class="form-control" required>
+										<option>Québec</option>
+										<option>Ontario</option>
+										<option>Manitoba</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr id="bottomHr">
 					<div class="wrapper-label-input wrapper-trouble-total"> <!-- Une ligne -->
 						<div class="wrapper-label"> <!-- wrapper du label -->
 							<label>Troubles: </label>
@@ -106,7 +178,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="password">Mot de passe: </label>
+								<label for="password">Mot de passe* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="password" name="password" id="password" class="form-control" required/>
@@ -119,7 +191,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="confirmPassword">Confirmer le mot de passe: </label>
+								<label for="confirmPassword">Confirmer le mot de passe* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="password" name="confirmPassword" id="confirmPassword" class="form-control"  required/>

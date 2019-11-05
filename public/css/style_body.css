@@ -291,6 +291,71 @@ body{
 }
 
 
+/*
+no civique, rue, appartement, code postal, ville, province, pays
+*/
+.wrapper-under-address{
+	margin-top:30px;
+}
+.wrapper-trouble-total{
+	margin-top:30px;
+}
+
+.wrapper-left-address{
+	width:45%;
+}
+
+#wrapperCivic{
+	width:35%;
+}
+
+.wrapper-right-address .wrapper-input{
+	width:100%;
+}
+
+#wrapperLocation .wrapper-left-address,#wrapperLocation .wrapper-right-address{
+		width:40%;
+}
+
+#wrapperLocation .wrapper-left-address .wrapper-input{
+		width:100%;
+}
+
+.wrapper-announce-address{
+	margin-top:20px;
+}
+
+.wrapper-announce-address h4{
+	margin-bottom:0;
+	text-align: center;
+}
+
+hr{
+	margin-top:5px;
+	margin-bottom:0;
+}
+
+.wrapper-address{
+	padding-bottom:30px;
+}
+
+.wrapper-left-address{
+	display: flex;
+	flex-direction: column;	
+	width:75%;
+}
+
+.wrapper-right-address{
+		width:25%;
+}
+
+.wrapper-right-address .wrapper-label{
+	width:100%;
+}
+
+.wrapper-left-address .wrapper-label{
+	width:30%;
+}
 
 @media screen and (max-width: 991px)
 {
@@ -325,6 +390,19 @@ body{
 
 	#formConnection{
 		margin-top:10px;
+	}
+
+	.wrapper-address .wrapper-label-input{
+		display: flex;
+		flex-direction: row;
+	}
+
+	.wrapper-address .wrapper-left-address{
+		width: 55%;
+	}
+
+	#wrapperCivic{
+		width:30%;
 	}
 }
 
