@@ -123,7 +123,7 @@
                             <label>Instructions</label>
                         </div>
                         <div class="wrapper-input">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" id="instru"></textarea>
                         </div>
                     </div>
                     <div class="wrapper-input-label" id="wrapperVedette">
@@ -163,39 +163,47 @@
             function moveRight() {
                 let list = document.getElementById("list-group-chosen");
                 let child = document.getElementById(idClick);
+                child.classList.add("ingredient");
                 list.appendChild(child);
             }
 
             function moveLeft() {
                 let list = document.getElementById("list-group-not-chosen");
                 let child = document.getElementById(idClick);
+                child.classList.remove("ingredient");
                 list.appendChild(child);
             }
 
             function add() {
-                let custom = 0;
+                let custom = '0';
                 if ($('#custom').checked) {
-                    custom = 1;
+                    custom = '1';
                 }
+                let ingredients = [];
 
+                let element = document.getElementsByClassName("ingredient");
+                console.log(element);
+                for (let ing of element) {
+                    ingredients.push(ing.id);
+                }
+                console.log(ingredients);
                 $.ajax({
-                    url: "http://localhost:8000/ajaxRequest/addRecipe",
+                    url: "http://localhost:5000/ajaxRequest/addRecipeHandler",
                     method: "POST",
                     data: {
                         name: $('#name').find(":selected").text(),
-                        desc: $('#description').value,
+                        desc: $('#description').val(),
+                        instru: $('#instru').val(),
                         is_custom: custom,
-                        product: $('#name').find(":selected").text()
+                        product: $('#name').find(":selected").text(),
+                        ingre: ingredients
                     },
                     success: function(response) {
                         console.log(response);
-                        //alert("good");
-                        $("#slider-temoignages").html(response);
-
                     },
                     error: function(response) {
                         console.log(response);
-                        alert("Erreur dans l'affichage du slider featured");
+                        alert("Erreur dans l'ajout de la recette");
                     }
                 });
             }

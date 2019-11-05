@@ -7,7 +7,7 @@ class CtrlRecipe {
     }
 
     addRecipe(name, desc, instru, is_custom, product, ingre) {
-        this._mgrRecipe.addRecipe(name, desc, instru, is_custom, product, ingre);
+        return this._mgrRecipe.addRecipe(name, desc, instru, is_custom, product, ingre);
     }
 
 }

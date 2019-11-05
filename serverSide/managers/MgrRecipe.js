@@ -6,24 +6,29 @@ class MgrRecipe {
     }
 
     addRecipe(name, desc, instru, is_custom, product, ingre) {
-        let query = "INSERT INTO `recipe` (`description`, `instruction`, `isCustom`, `productName`) VALUES (?, ?, ?, ?)";
-        let param = [desc, instru, is_custom, product];
-        this._queryEngine.executeQuery(query, param);
-        let lastid = "SELECT LAST_INSERT_ID()";
-        let ids = this._queryEngine.executeQuery(lastid);
-        let lastInsert = "";
-        ids.then(function(val) {
-            val.forEach(function(id) {
-                lastInsert = id.LAST_INSERT_ID;
-            });
-        });
 
-        ingre.forEach(function(ing) {
-            let query2 = "INSERT INTO ta_ingredients_recipe (idIngredient, idRecipe) VALUES (?,?)";
-            let param2 = [ing, lastInsert];
-            this._queryEngine.executeQuery(query2, param2);
+        let query = "INSERT INTO recipe (description, instruction, isCustom, productName) VALUES (?, ?, b?, ?)";
+        let param = [desc, instru, is_custom, product];
+        let currentQueryEngine = this._queryEngine;
+        return this._queryEngine.executeQuery(query, param).then(function(res) {
+            let lastid = res.insertId;
+            console.log(ingre);
+
+            ingre.forEach(function(ing) {
+                console.log(lastid);
+                let query2 = "INSERT INTO ta_ingredients_recipe (idIngredient, idRecipe) VALUES (?,?)";
+                let param2 = [ing, lastid];
+                currentQueryEngine.executeQuery(query2, param2).then(function(res) {
+                    console.log("et2");
+                    console.log(res);
+                });
+            });
+
+        }).then(function() {
+            return true;
+        }).catch(function() {
+            return false;
         });
-        return true;
     }
 
     updateRecipe(id, name, desc, instru, is_custom, product, ingre) {

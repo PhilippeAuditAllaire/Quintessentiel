@@ -8,6 +8,7 @@ const ejs = require("ejs");
 const QueryEngine = require("./serverSide/scripts/QueryEngine.js");
 const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
+const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
 
 let website = express();
 let app = express();
@@ -187,6 +188,15 @@ app.post("/ajaxRequest/adminConnection", function(req, res) {
         }
 
 
+    });
+
+});
+
+app.post("/ajaxRequest/addRecipeHandler", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.addRecipe(req.body.name, req.body.desc, req.body.instru, req.body.is_custom, req.body.product, req.body.ingre).then(function(result) {
+        res.send(result);
     });
 
 });
