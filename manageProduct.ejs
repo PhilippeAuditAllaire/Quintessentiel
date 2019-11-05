@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quintessentiel | Connexion</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
+	<script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+</head>
+<body>
+	<%include ./includes/appNavbar.ejs%>
+	<section class="wrapper-content-manageProduct">
+		<div class="wrapper-body-mgProduct">
+			<div class="wrapper-logo">
+				<img src="./images/logo.png"/>
+			</div>
+			<p class="warning-error" id="warning-error"></p>
+		</div>
+		<div class="wrapper-manageProduct-section">
+			<h2>Gestion de l'inventaire</h2>
+			<div class="mg-product-top-line">
+				<div class="wrapper-left-qty">
+					<div class="sub-left-wrapper">
+						<label>Trier par:</label>
+						<select id="orderBySelect">
+							<option>Quantité</option>
+						</select>
+					</div>
+				</div>
+				<div class="wrapper-right-btn">
+					<div class="wrapper-btn">
+						<a href="./addProduct" class="btnApp" target="_blank">+</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrapper-gridProduct">
+			<div class="wrapper-column">
+				<div class="header-wrapper">Produit</div>
+				<div class="wrapper-info">
+					<div class="wrapper-row" onmouseenter="itemHover(this)" onmouseout="itemOut(this)">
+						<p>Full too much infos and blabla and things and so on and so one </p>
+					</div>
+				</div>
+			</div>
+			<div class="wrapper-column">
+				<div class="header-wrapper">Description</div>
+				<div class="wrapper-info">
+					<div class="wrapper-row" onmouseenter="itemHover(this)" onmouseout="itemOut(this)">
+						A product description is known to be at least 200 characters, how will that fit?
+					</div>
+				</div>
+			</div>
+			<div class="wrapper-column">
+				<div class="header-wrapper">Image</div>
+				<div class="wrapper-info">
+					<div class="wrapper-row" onmouseenter="itemHover(this)" onmouseout="itemOut(this)">
+						../produit.png
+					</div>
+				</div>
+			</div>
+			<div class="wrapper-column">
+				<div class="header-wrapper">Catégorie</div>
+				<div class="wrapper-info">
+					<div class="wrapper-row" onmouseenter="itemHover(this)" onmouseout="itemOut(this)">
+						Here are the categories
+					</div>
+				</div>
+			</div>
+			<div class="wrapper-column">
+				<div class="header-wrapper" >Qté</div>
+				<div class="wrapper-info">
+					<div class="wrapper-row" onmouseenter="itemHover(this)" onmouseout="itemOut(this)">
+						10
+					</div>
+				</div>
+			</div>
+			<div class="wrapper-column">
+				<div class="header-wrapper">Prix</div>
+				<div class="wrapper-info">
+					<div class="wrapper-row" onmouseenter="itemHover(this)" onmouseout="itemOut(this)">
+						10,99$
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="./javascript/renderer.js"></script>
+	<script src="./javascript/tableProducts.js"></script>
+</body>
+</html>

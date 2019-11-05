@@ -24,11 +24,10 @@ website.set("views",path.join(__dirname, './'));
 app.use(session({secret: 'your secret', saveUninitialized: true, resave: false}));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-website.set("views",path.join(__dirname, './'));
+app.set("views",path.join(__dirname, './'));
 
 website.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //Website routes
 
@@ -170,22 +169,48 @@ app.post("/ajaxRequest/adminConnection",function(req,res){
 			if(result[0]){ //The admin connection worked
 				req.session.userId = result[1];
 				req.session.isAdmin = 1;
+
+				res.send(true);
+			}
+			else{
+				res.send(result[0]);	
 			}
 			
-			res.send(result[0]);
+			
 		});
 		
 });
 
 //Application routes
 app.get("/",function(req,res){
+	res.redirect("/adminConnection");
+});
+
+app.get("/adminConnection",function(req,res){
 	res.render("adminConnection.ejs");
 });
 
-app.get("/adminConnection.html",function(req,res){
-	console.log("Connection sur l'application")
-	res.end();
+app.get("/manageProduct",function(req,res){
+	if(req.session.userId != undefined && req.session.isAdmin == 1)
+	{
+		res.render("manageProduct.ejs");	
+	}
+	else{
+		res.redirect("/adminConnection?pleaseConnect=true");
+	}
 });
+
+
+app.get("/addProduct",function(req,res){
+	if(req.session.userId != undefined && req.session.isAdmin == 1)
+	{
+		res.render("addproduct.ejs");	
+	}
+	else{
+		res.redirect("/adminConnection?pleaseConnect=true");
+	}
+});
+
 
 
 

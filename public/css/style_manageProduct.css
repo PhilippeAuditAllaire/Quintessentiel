@@ -1,0 +1,109 @@
+.wrapper-body-mgProduct{
+	width:30%;
+	margin:auto;
+
+}
+
+.wrapper-body-mgProduct img{
+	width:100%;
+}
+
+.wrapper-content-manageProduct{
+	margin:10px;
+}
+
+.wrapper-manageProduct-section h2{
+	text-align: center
+}
+
+.mg-product-top-line{
+	display:flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.mg-product-top-line .sub-left-wrapper{
+	display:flex;
+	flex-direction: column;
+}
+
+.mg-product-top-line .sub-left-wrapper select{
+	width:200px;
+}
+
+.sub-left-wrapper label{
+	margin-bottom:0;
+}
+
+.btnApp{
+	border:0;
+	outline:0;
+	background-color:#292323;
+	color:white;
+	width:30px;
+	font-size:30px;
+	padding-right:20px;
+	padding-left:20px;
+	border-radius:5px;
+}
+
+.btnApp:hover{
+	color:white;
+	text-decoration: none;
+}
+
+.btnApp:focus{
+	outline:0;
+}
+
+.wrapper-gridProduct{
+	display:flex;
+	border:1px solid black;
+	justify-content: space-between;
+	margin-top:25px;
+}
+
+.header-wrapper{
+	background-color:#292323;
+	color:white;
+	padding:5px;
+}
+
+.wrapper-row{
+	padding-top:5px;
+	display:flex;
+	flex-wrap: wrap;
+	height:50px;
+	overflow-y: hidden;
+}
+
+.header-wrapper,.wrapper-row{
+	padding-right:5px;
+}
+
+.wrapper-gridProduct .wrapper-column{
+	flex-grow: 1;
+}
+
+.wrapper-gridProduct{
+	overflow-y:scroll;
+}
+
+.hovered{
+	background-color: rgba(188,209,63,0.8);
+	cursor:pointer;
+}
+
+.wrapperBtnEnd{
+	display: flex;
+	justify-content: flex-end;
+}
+
+.wrapper-cancel{
+	margin-right:20px;
+}
+
+
+#wrapperInputLabelTags .wrapper-input{
+	justify-content: center;
+}

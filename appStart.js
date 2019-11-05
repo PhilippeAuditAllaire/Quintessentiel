@@ -1,5 +1,8 @@
-const { app, BrowserWindow } = require('electron')
+const { app, shell, BrowserWindow } = require('electron')
 const nativeImage = require('electron').nativeImage;
+
+require('electron-reload')(__dirname);
+
   function createWindow () {
 
   	var image = nativeImage.createFromPath(__dirname + '/public/images/logoApp2.png'); 
@@ -12,6 +15,10 @@ const nativeImage = require('electron').nativeImage;
     //Load the file
     win.loadURL('http://localhost:5000/')
 
+    win.on("new-window", function(event, url) {
+      event.preventDefault();
+      shell.openExternal(url);
+    });
   }
   
   app.on('ready', createWindow)
