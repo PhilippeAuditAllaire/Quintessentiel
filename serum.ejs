@@ -15,11 +15,91 @@
     </head>
     <body>
         <%include ./includes/navbar.ejs%>
-        <div class="serum-page">
+        <div class="connection-page">
             <div class="left-menu-bar">
             </div>
-            
-        </div>
+            <div class="serum-page">
+
+                <div class="serum-form-window">
+                        <h3>Bienvenue dans ce formulaire pour la conception d'un serum personalisé à vos besoins.</h3>
+                        <p>Veuillez répondre à chaque questions et cliquez ensuite sur le bouton d'envoi pour nous envoyer votre fiche personalisée.</p>
+                        <ul class="nav nav-pills">
+                                <li class="active"><a data-toggle="pill" href="#start">Début</a></li>
+                                <li><a data-toggle="pill" href="#trouble">Maux & troubles</a></li>
+                                <li><a data-toggle="pill" href="#smellTexture">Fragrences & textures</a></li>
+                                <li><a data-toggle="pill" href="#allergie">Allergies</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <form action="https://formspree.io/mdqjankx"></form>
+                                <div id="start" class="tab-pane fade in active">
+                                    <div class="serum-row">
+                                        <div class="serum-col-50">
+                                           <label>Prenom</label> 
+                                        </div>
+                                        <div class="serum-col-50">
+                                            <input type="text" class="f-name" name="Prenom" placeholder="Prénom">
+                                        </div>
+                                    </div>
+                                    <div class="serum-row">
+                                        <div class="serum-col-50">
+                                            <label>Nom</label> 
+                                        </div>
+                                        <div class="serum-col-50">
+                                            <input type="text" class="name" name="Nom" placeholder="Nom">
+                                        </div>
+                                    </div>
+                                    <div class="serum-row">
+                                        <div class="serum-col-50">
+                                            <label>Age</label> 
+                                        </div>
+                                        <div class="serum-col-50">
+                                            <input type="number" class="age" name="Age" placeholder="Age">
+                                        </div>
+                                    </div>
+                                    <div class="serum-row">
+                                        <div class="serum-col-50">
+                                            <label>Adresse courriel</label> 
+                                        </div>
+                                        <div class="serum-col-50">
+                                            <input type="email" class="email" name="_replyto" placeholder="Adresse courriel">
+                                        </div>
+                                    </div>
+                                    <div class="serum-row">
+                                        <div class="serum-col-50">
+                                            <label>Êtes-vous membre du site Quintessentiel?</label> 
+                                        </div>
+                                        <div class="serum-col-50">
+                                            <input type="radio" name="registered" value="yes">Oui<br>
+                                            <input type="radio" name="registered" value="no">Non<br>
+                                        </div>
+                                    </div>
+                                    <div class="serum-row">
+                                        <div class="serum-col-100">
+                                            <p>Souhaitez-vous vous inscrire?<a href="userRegister.ejs" target="_blank"> Oui</a> / <a href="">Non</a>.</p>
+                                        </div>
+                                    </div>
+                                    <div class="serum-row">
+                                            <div class="serum-col-100">
+                                                <button class="btn btn-secondary">Continuer</button>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div id="trouble" class="tab-pane fade">
+                                    <h3>Menu 1</h3>
+                                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                                <div id="smellTexture" class="tab-pane fade">
+                                    <h3>Menu 2</h3>
+                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                                </div>
+                                <div id="allergie" class="tab-pane fade">
+                                    <h3>Menu 3</h3>
+                                    <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                                </div>
+                            </div>
+                </div>
+                    
+            </div>
     </body>
     
 </html>

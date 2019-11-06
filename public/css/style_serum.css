@@ -1,0 +1,49 @@
+.serum-page{
+    margin: 30px !important;
+    width: -webkit-fill-available;
+    display: flex;
+    padding:10px;
+    flex-wrap: wrap;
+    margin:auto 0;
+    text-align: center;
+}
+
+.serum-form-window{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.nav-pills{
+    margin: auto;
+    width:max-content;
+}
+.nav-pills li{
+    width: 250px;
+    padding: 20px;
+    margin: 5px;
+    background-color: #E8E1E1 !important;
+    
+}
+
+.nav-pills li a{
+    color: #212529!important;
+    font-weight: bold;
+}
+
+.serum-row{
+    widows: 100%;
+    display: flex;
+}
+
+.serum-col-50{
+    flex: 50%;
+    height: 80px;
+}
+
+.serum-col-100{
+    flex:100%;
+}
+
+
+
