@@ -41,7 +41,7 @@ class MgrRecipe {
             console.log("he");
             let queryDel = "DELETE FROM ta_ingredients_recipe WHERE idRecipe = ?";
             let paramDel = [id];
-            this._queryEngine.executeQuery(query, param).then(function(res) {
+            currentQueryEngine.executeQuery(queryDel, paramDel).then(function(res) {
                 console.log("delete ingre");
                 ingre.forEach(function(ing) {
 
@@ -68,12 +68,13 @@ class MgrRecipe {
         });
     }
 
-    deleterecipe(id) {
+    deleteRecipe(id) {
         this.deleteIngre(id);
-        let query = "DELETE * FROM recipe WHERE id = ?";
+        let query = "DELETE FROM recipe WHERE id = ?";
         let param = [id];
         return this._queryEngine.executeQuery(query, param).then(function(res) {
             console.log("delete recipe");
+            console.log(res);
         }).then(function() {
             return true;
         }).catch(function() {
@@ -83,9 +84,10 @@ class MgrRecipe {
 
     deleteIngre(id) {
         console.log("he");
-        let queryDel = "DELETE * FROM ta_ingredients_recipe WHERE idRecipe = ?";
+        let queryDel = "DELETE FROM ta_ingredients_recipe WHERE idRecipe = ?";
         let paramDel = [id];
-        return this._queryEngine.executeQuery(query, param).then(function(res) {
+        return this._queryEngine.executeQuery(queryDel, paramDel).then(function(res) {
+            console.log(res);            
             console.log("delete ingre");
         }).then(function() {
             return true;

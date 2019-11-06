@@ -19,7 +19,7 @@
                 <p class="warning-error" id="warning-error"></p>
             </div>
             <div class="wrapper-manageProduct-section">
-                <h2>Ajout d'une recette</h2>
+                <h2>Modification d'une recette <img src="./images/icons/delete.png" alt="Supprimer" onclick="deleteRecipe()"></h2>
                 <div class="wrapper-form-add-product">
                     <div class="wrapper-input-label">
                         <div class="wrapper-label">
@@ -141,6 +141,25 @@
             let oldClicked = "";
             let idClick = "";
             let id_recipe = findGetParameter('id');
+
+            function deleteRecipe() {
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/deleteRecipeHandler",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        
+
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+            }
 
             function load() {
 
