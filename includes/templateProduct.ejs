@@ -2,7 +2,7 @@
 				<form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST">
 				<div class="wrapper-input-label">
 					<div class="wrapper-label">
-						<label>Nom</label>
+						<label for="inputName">Nom</label>
 					</div>
 					<div class="wrapper-input">
 						<input type="text" id="inputName" class="form-control" required/>
@@ -10,15 +10,23 @@
 				</div>
 				<div class="wrapper-input-label">
 					<div class="wrapper-label">
-						<label>Prix</label>
+						<label for="inputCostPrice">Prix coûtant</label>
 					</div>
 					<div class="wrapper-input">
-						<input type="number" id="inputPrice" class="form-control" min="0.00" step="0.01" value="0.00"/>
+						<input type="number" id="inputCostPrice" class="form-control" min="0.00" step="0.01" value="0.00"/>
 					</div>
 				</div>
 				<div class="wrapper-input-label">
 					<div class="wrapper-label">
-						<label>Quantité</label>
+						<label for="inputRetailPrice">Prix au détail</label>
+					</div>
+					<div class="wrapper-input">
+						<input type="number" id="inputRetailPrice" class="form-control" min="0.00" step="0.01" value="0.00"/>
+					</div>
+				</div>
+				<div class="wrapper-input-label">
+					<div class="wrapper-label">
+						<label for="inputQty">Quantité</label>
 					</div>
 					<div class="wrapper-input">
 						<input type="number" id="inputQty" class="form-control" min="0" required/>
@@ -26,7 +34,7 @@
 				</div>
 				<div class="wrapper-input-label">
 					<div class="wrapper-label">
-						<label>Image</label>
+						<label for="inputFile">Image</label>
 					</div>
 					<div class="wrapper-input">
 						<input type="file" id="inputFile" name="imgProduct" required/>
@@ -34,13 +42,21 @@
 				</div>
 				<div class="wrapper-input-label" id="wrapperCategory">
 					<div class="wrapper-label">
-						<label>Catégorie</label>
+						<label for="selectCategory">Catégorie</label>
 					</div>
 					<div class="wrapper-input">
 						<select class="form-control" id="selectCategory" required>
 							<option disabled selected>Veuillez sélectionner une catégorie</option>
 							<option value="1">Peau mature</option>
 						</select>
+					</div>
+				</div>
+				<div class="wrapper-input-label" id="wrapperWeight">
+					<div class="wrapper-label">
+						<label for="inputWeight">Poid (gr)</label>
+					</div>
+					<div class="wrapper-input">
+						<input type="number" id="inputWeight" class="form-control" min="0.00" step="0.01" value="0.00"/>
 					</div>
 				</div>
 				<div class="wrapper-input-label" id="wrapperInputLabelTags">
@@ -78,7 +94,7 @@
 				</div>
 				<div class="wrapper-input-label" id="wrapperDescription">
 					<div class="wrapper-label">
-						<label>Description</label>
+						<label for="txtAreaDescription">Description</label>
 					</div>
 					<div class="wrapper-input">
 						<textarea id="txtAreaDescription" class="form-control" required></textarea>
@@ -86,7 +102,7 @@
 				</div>
 				<div class="wrapper-input-label" id="wrapperDescription">
 					<div class="wrapper-label">
-						<label>Conseils d'utilisation</label>
+						<label for="txtAreaAdvice">Conseils d'utilisation</label>
 					</div>
 					<div class="wrapper-input">
 						<textarea class="form-control" id="txtAreaAdvice" required></textarea>

@@ -26,7 +26,7 @@ body{
 }
 
 
-#inputPrice,#inputQty{
+#inputPrice,#inputQty,#inputWeight,#inputPriceRetail{
 	width:100px;
 }
 

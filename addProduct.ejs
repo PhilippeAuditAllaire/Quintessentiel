@@ -24,7 +24,8 @@
 	<script src="http://malsup.github.com/jquery.form.js"></script> 
 	<script>
 		let inputName = document.getElementById("inputName");
-		let inputPrice = document.getElementById("inputPrice");
+		let inputCostPrice = document.getElementById("inputCostPrice");
+		let inputRetailPrice = document.getElementById("inputRetailPrice");
 		let inputQty = document.getElementById("inputQty");
 		let inputImage = document.getElementById("inputFile");
 		let inputCategory = document.getElementById("selectCategory");
@@ -32,6 +33,7 @@
 		let inputAdvice = document.getElementById("txtAreaAdvice");
 		let inputVedette = document.getElementById("inputVedette");
 		let inputVisible = document.getElementById("inputVisible");
+		let inputWeight = document.getElementById("inputWeight");
 
 		let selectedTags;
 
@@ -42,13 +44,15 @@
 	     $(this).ajaxSubmit({
 	       data: {
 	       	name: inputName.value,
-	       	price: inputPrice.value,
+	       	costPrice: inputCostPrice.value,
+	       	retailPrice: inputRetailPrice.value,
 	       	qty: inputQty.value,
 	       	category: inputCategory.value,
 	       	description: inputDescription.value,
 	       	advice: inputAdvice.value,
 	       	isVedette: inputVedette.checked,
 	       	tags: getAttributedListboxId(),
+	       	weight: inputWeight.value,
 	       	isVisible: inputVisible.checked
 	       },
 	       contentType: 'application/json',

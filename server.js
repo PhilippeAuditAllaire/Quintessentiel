@@ -216,7 +216,7 @@ app.get("/manageProduct",function(req,res){
 app.get("/addProduct",function(req,res){
 	if(req.session.userId != undefined && req.session.isAdmin == 1)
 	{
-		res.render("addproduct.ejs");	
+		res.render("addProduct.ejs");	
 	}
 	else{
 		res.redirect("/adminConnection?pleaseConnect=true");
