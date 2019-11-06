@@ -201,6 +201,60 @@ app.post("/ajaxRequest/addRecipeHandler", function(req, res) {
 
 });
 
+app.post("/ajaxRequest/updateRecipeHandler", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.updateRecipe(req.body.id, req.body.name, req.body.desc, req.body.instru, req.body.is_custom, req.body.product, req.body.ingre).then(function(result) {
+        res.send(result);
+    });
+
+});
+
+app.post("/ajaxRequest/updateRecipeHandlerDesc", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getDescription(req.body.id).then(function(result) {
+        res.send(result);
+    });
+
+});
+
+app.post("/ajaxRequest/updateRecipeHandlerInstru", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getDescription(req.body.id).then(function(result) {
+        res.send(result);
+    });
+
+});
+
+app.post("/ajaxRequest/updateRecipeHandlerName", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getName(req.body.id).then(function(result) {
+        res.send(result);
+    });
+
+});
+
+app.post("/ajaxRequest/updateRecipeHandlerCustom", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getCustom(req.body.id).then(function(result) {
+        res.send(result);
+    });
+
+});
+
+app.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.deleteRecipe(req.body.id).then(function(result) {
+        res.send(result);
+    });
+
+});
+
 //Application routes
 app.get("/", function(req, res) {
     res.redirect("/adminConnection");
@@ -242,6 +296,15 @@ app.get("/addRecipe", function(req, res) {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
 });
+
+app.get("/updateRecipe", function(req, res) {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+        res.render("updateRecipe.ejs");
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
+
 
 website.listen(8000);
 app.listen(5000);
