@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%include ./includes/appNavbar.ejs%>
-		<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+	<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -26,7 +26,46 @@
 	        <input type="text" class="form-control" placeholder="ex: Peau douce" />
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-success">Ajouter</button>
+	        <button type="button" id="confirmAddBtn" class="btn btn-success">Ajouter</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div id="modifyModal" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Modification d'une catégorie</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Inscrivez le nouveau nom pour la catégorie '<span class='modalCategoryName'></span>'</p>
+	        <input type="text" class="form-control" placeholder="ex: Peau douce" />
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="confirmUpdateBtn" class="btn btn-success">Modifier</button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div id="activateModal" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="confirmActivateBtn" class="btn btn-success" onclick="changeActiveState()"></button>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
 	      </div>
 	    </div>
@@ -46,17 +85,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ondblclick="openUpdateProduct(this)" data-product-id="1">
-                            <th>Catégorie A</th>
-                            <th><input type="checkbox" class="chckboxActive" disabled="" /></th>
+                        <tr data-category-id="1" class="rowCategory">
+                            <th class="categoryName">Catégorie A</th>
+                            <th><input type="checkbox" class="chckboxActive"/></th>
                         </tr>
-                        <tr>
-                            <th>Catégorie B</th>
-                            <th><input type="checkbox" class="chckboxActive" checked="" disabled="" /></th>
+                        <tr class="rowCategory" data-category-id="2">
+                            <th class="categoryName">Catégorie B</th>
+                            <th><input type="checkbox" class="chckboxActive" checked=""/></th>
                         </tr>
-                        <tr>
-                            <th>Catégorie C</th>
-                            <th><input type="checkbox" class="chckboxActive" disabled=""/></th>
+                        <tr class="rowCategory" data-category-id="3">
+                            <th class="categoryName">Catégorie C</th>
+                            <th><input type="checkbox" class="chckboxActive"/></th>
                         </tr>
 
                     </tbody>
@@ -72,73 +111,71 @@
 	<script src="./javascript/tableProducts.js"></script>
 	<script src="./javascript/resizeWindow.js"></script>
 	<script>
-		resizeWindow(600,400);
 		let addBtn = $("#btnAdd")
 		let tr = document.getElementsByTagName("tr");
+
+		//modals
 		let addModal = $("#addModal");
+		let modifyModal = $("#modifyModal");
+		let activateModal = $("#activateModal");
+
+		//modals confirm buttons
+		let confirmAddBtn = $("#confirmAddBtn");
+		let confirmUpdateBtn = $("#confirmUpdateBtn");
+		let confirmActivateBtn = $("#confirmActivateBtn")
+
+		let rows = $(".rowCategory");
 
 		addBtn.on("click",function(e){
 			$(addModal).modal();
 		});
 
-		$(tr).on("click",function(e){
-			let element = e.target.parentNode;
+		rows.on("dblclick",function(e){
+			let target = e.target;
+			let targetId = target.parentNode.getAttribute("data-category-id");
+
+			let categoryName = target.parentNode.getElementsByClassName("categoryName")[0].innerHTML;
+			$(".modalCategoryName").html(categoryName)
+			$(modifyModal).modal();
+		});
 
 
-			if(e.target.tagName == "INPUT"){
-				element = e.target.parentNode.parentNode;
+
+		let selectedCategoryId;
+
+		$(".chckboxActive").on("click",function(e){
+			e.preventDefault();
+
+			let isChecked = e.target.checked;
+
+			selectedCategoryId = e.target.parentNode.parentNode.getAttribute("data-category-id");
+
+			if(!isChecked){
+				$("#activateModal .modal-title").html("Désactivation d'une catégorie");
+				$("#activateModal .modal-body p").html("Souhaitez-vous vraiment désactiver cette catégorie?");
+				$("#confirmActivateBtn").html("Désactiver");
+				$("#activateModal").modal();
 			}
-
-			let categoryName = element.getElementsByTagName("th")[0].innerText;
-			let chckbox = element.getElementsByClassName("chckboxActive")[0];
-
-			if(chckbox != undefined){
-				let isChecked = chckbox.checked;
-				
-
-				if(isChecked){ //if its checked, send a confirmation to hide it
-					sendConfirmHideDialog(categoryName);
-				}
-				else{ //if its not checked, send a confirmation to show it
-					sendConfirmUnHideDialog(categoryName);
-				}				
+			else{
+				$("#activateModal .modal-title").html("Activation d'une catégorie");
+				$("#activateModal .modal-body p").html("Souhaitez-vous vraiment activer cette catégorie?");
+				$("#confirmActivateBtn").html("Activer");
+				$("#activateModal").modal();	
 			}
 		});
 
 
-		function sendConfirmUnHideDialog(categoryName){
-			showDialog('warning',['Annuler',"Confirmer"],
-				"Désarchivage de catégorie",
-				"Souhaitez-vous montrer la catégorie '"+categoryName+"' ?",
-				"Les produits appartenants à cette catégorie seront désormais visibles par les visiteurs du site web.",confirmShowCategory);
+		//Calls the backend to change the active state of the given category
+		function changeActiveState(){
+			
+
+			$.ajax({
+				
+			})
 		}
 
 
-		//Sends a confirm dialog box to the user
-		function sendConfirmHideDialog(categoryName){
-			showDialog('warning',['Annuler',"Confirmer"],
-				"Archivage de catégorie",
-				"Souhaitez-vous archiver la catégorie '"+categoryName+"' ?",
-				"Les produits appartenants à cette catégorie ne seront plus visibles par les visiteurs du site web.",confirmArchiveCategory);
-		}
 
-
-		function confirmShowCategory(resp)
-		{
-			if(resp == 1) //Clicked on confirm 
-			{
-				alert("showing")
-
-			}
-		}
-
-		//Callback from the dialog message
-		function confirmArchiveCategory(resp){
-			if(resp == 1) //Clicked on confirm 
-			{
-				alert("archiving")
-			}
-		}
 	</script>
 			<!-- Bootstrap -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

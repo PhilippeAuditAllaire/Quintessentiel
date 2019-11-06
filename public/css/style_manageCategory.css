@@ -54,3 +54,7 @@ th:nth-child(2) input[type=checkbox]{
 	background-color: white;
 	color:white;
 }
+
+.modalCategoryName{
+	font-weight: bold;
+}
