@@ -202,3 +202,7 @@ th{
 	font-size:14px;
 }
 
+.list-group{
+	min-height:200px;
+}
+

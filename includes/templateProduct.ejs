@@ -1,10 +1,11 @@
 			<div class="wrapper-form-add-product">
+				<form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST">
 				<div class="wrapper-input-label">
 					<div class="wrapper-label">
 						<label>Nom</label>
 					</div>
 					<div class="wrapper-input">
-						<input type="text" class="form-control"/>
+						<input type="text" id="inputName" class="form-control" required/>
 					</div>
 				</div>
 				<div class="wrapper-input-label">
@@ -20,7 +21,7 @@
 						<label>Quantité</label>
 					</div>
 					<div class="wrapper-input">
-						<input type="number" id="inputQty" class="form-control" min="0"/>
+						<input type="number" id="inputQty" class="form-control" min="0" required/>
 					</div>
 				</div>
 				<div class="wrapper-input-label">
@@ -28,7 +29,7 @@
 						<label>Image</label>
 					</div>
 					<div class="wrapper-input">
-						<input type="file" />
+						<input type="file" id="inputFile" name="imgProduct" required/>
 					</div>
 				</div>
 				<div class="wrapper-input-label" id="wrapperCategory">
@@ -36,8 +37,9 @@
 						<label>Catégorie</label>
 					</div>
 					<div class="wrapper-input">
-						<select class="form-control">
-							<option>Peau mature</option>
+						<select class="form-control" id="selectCategory" required>
+							<option disabled selected>Veuillez sélectionner une catégorie</option>
+							<option value="1">Peau mature</option>
 						</select>
 					</div>
 				</div>
@@ -49,31 +51,26 @@
 						<div class="availableTags">
 							<div class="left-available-wrapper">
 								<p>Étiquettes disponibles</p>		
-								<div class="list-group">
-								  <a href="#" class="list-group-item list-group-item-action active">
+								<div class="list-group" id="available-listbox">
+								  <a href="#" class="list-group-item list-group-item-action" data-id="0">
 								    Cras justo odio
 								  </a>
-								  <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-								  <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-								  <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+								  <a href="#" class="list-group-item list-group-item-action" data-id="1">Dapibus ac facilisis in</a>
+								  <a href="#" class="list-group-item list-group-item-action" data-id="2">Morbi leo risus</a>
+								  <a href="#" class="list-group-item list-group-item-action" data-id="3">Porta ac consectetur ac</a>
 								</div>
 							</div>
 							</div>
 
 						<div class="wrapper-btnChange">
-							<button>></button>
-							<button><</button>
+							<button id="btnRight">></button>
+							<button id="btnLeft"><</button>
 						</div>
 						<div class="choosenTags">
 							<div class="right-choosen-wrapper">
 								<p>Étiquettes attribuées</p>		
-								<div class="list-group">
-								  <a href="#" class="list-group-item list-group-item-action active">
-								    Cras justo odio
-								  </a>
-								  <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-								  <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-								  <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+								<div class="list-group" id="attributed-listbox">
+			  						<a href="#" class="list-group-item list-group-item-action" data-id="4">Porta ac consectetur ac</a>
 								</div>
 							</div>
 						</div>
@@ -84,15 +81,24 @@
 						<label>Description</label>
 					</div>
 					<div class="wrapper-input">
-						<textarea class="form-control"></textarea>
+						<textarea id="txtAreaDescription" class="form-control" required></textarea>
+					</div>
+				</div>
+				<div class="wrapper-input-label" id="wrapperDescription">
+					<div class="wrapper-label">
+						<label>Conseils d'utilisation</label>
+					</div>
+					<div class="wrapper-input">
+						<textarea class="form-control" id="txtAreaAdvice" required></textarea>
 					</div>
 				</div>
 				<div class="wrapper-input-label" id="wrapperVedette">
 						
-						<label><input type="checkbox"/><span>Item vedette</span></label>
+						<label><input type="checkbox" id="inputVedette"/><span>Item vedette</span></label>
 				</div>
 				<div class="wrapperBtnEnd">
 					<div class="wrapper-cancel"><input type="submit" class="btn btn-success" value="Annuler" onclick="self.close()"></div>
-					<div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter"></div>
+					<div class="wrapper-submit"><input type="submit" class="btn btn-success" id="btnSend" value="Compléter"></div>
 				</div>
+			</form>
 			</div>

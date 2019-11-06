@@ -2,6 +2,22 @@ const express = require("express");
 const path = require("path")
 const session = require('express-session');
 const ejs = require("ejs");
+const multer = require("multer");
+
+//FOR THE FILE UPLOAD
+let storage = multer.diskStorage({
+    destination: function(req, file, callback){
+    	console.log("isdfiusdiufisdf")
+        callback(null, './public/images'); // set the destination
+    },
+    filename: function(req, file, callback){
+    	console.log("iisdifsdifisdfidsfi");
+        callback(null, Date.now() + '.jpg'); // set the file name and extension
+    }
+});
+let upload = multer({storage: storage});
+
+
 
 
 //Class imports
@@ -28,6 +44,7 @@ app.set("views",path.join(__dirname, './'));
 
 website.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 //Website routes
 website.get("/",function(req,res){
@@ -226,6 +243,13 @@ app.get("/modifyProduct",function(req,res){
 	}
 });
 
+app.post('/addProduct', upload.single('imgProduct'), function(req, res, next) {
+    let imgName = req.file.filename;
+    let data = req.body;
+    data.imgName = imgName;
+    console.log(data);
+   
+});
 
 
 website.listen(8000);

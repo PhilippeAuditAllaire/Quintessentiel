@@ -21,6 +21,46 @@
 			<%include ./includes/templateProduct.ejs%>
 		</div>
 	</section>
+	<script src="http://malsup.github.com/jquery.form.js"></script> 
+	<script>
+		let inputName = document.getElementById("inputName");
+		let inputPrice = document.getElementById("inputPrice");
+		let inputQty = document.getElementById("inputQty");
+		let inputImage = document.getElementById("inputFile");
+		let inputCategory = document.getElementById("selectCategory");
+		let inputDescription = document.getElementById("txtAreaDescription");
+		let inputAdvice = document.getElementById("txtAreaAdvice");
+		let inputVedette = document.getElementById("inputVedette");
+		let selectedTags;
+
+
+	   $('.addProduct').submit(function(e){
+	     e.preventDefault();
+
+	     $(this).ajaxSubmit({
+	       data: {
+	       	name: inputName.value,
+	       	price: inputPrice.value,
+	       	qty: inputQty.value,
+	       	category: inputCategory.value,
+	       	description: inputDescription.value,
+	       	advice: inputAdvice.value,
+	       	isVedette: inputVedette.checked,
+	       	tags: getAttributedListboxId()
+	       },
+	       contentType: 'application/json',
+	       success: function(response){
+	         console.log('image uploaded and form submitted');  
+	         this.clear();   
+	       }
+
+	   });
+
+	      });
+
+
+	</script>
+	<script src="./javascript/listbox.js"></script>
 	<script src="./javascript/renderer.js"></script>
 	<script src="./javascript/tableProducts.js"></script>
 	<script src="./javascript/resizeWindow.js"></script>
