@@ -222,7 +222,7 @@ app.post("/ajaxRequest/updateRecipeHandlerDesc", function(req, res) {
 app.post("/ajaxRequest/updateRecipeHandlerInstru", function(req, res) {
     let ctrl = new CtrlRecipe();
 
-    ctrl.getDescription(req.body.id).then(function(result) {
+    ctrl.getInstruction(req.body.id).then(function(result) {
         res.send(result);
     });
 

@@ -32,21 +32,34 @@ class MgrRecipe {
     }
 
     updateRecipe(id, name, desc, instru, is_custom, product, ingre) {
-
-        let query = "UPDATE recipe SET description = ?, SET instruction = ?, SET isCustom =b?, SET productName = ?) WHERE id = ?";
+        console.log(id);
+        let query = "UPDATE recipe SET description = ?, instruction = ?,  isCustom =b?,  productName = ? WHERE id = ?";
         let param = [desc, instru, is_custom, product, id];
         let currentQueryEngine = this._queryEngine;
         return this._queryEngine.executeQuery(query, param).then(function(res) {
+            console.log(res);
+            console.log("he");
+            let queryDel = "DELETE FROM ta_ingredients_recipe WHERE idRecipe = ?";
+            let paramDel = [id];
+            this._queryEngine.executeQuery(query, param).then(function(res) {
+                console.log("delete ingre");
+                ingre.forEach(function(ing) {
 
-            ingre.forEach(function(ing) {
-
-                let query2 = "INSERT INTO ta_ingredients_recipe (idIngredient, idRecipe) VALUES (?,?)";
-                let param2 = [ing, id];
-                currentQueryEngine.executeQuery(query2, param2).then(function(res) {
-                    console.log("et2");
-                    console.log(res);
+                    let query2 = "INSERT INTO ta_ingredients_recipe (idIngredient, idRecipe) VALUES (?,?)";
+                    let param2 = [ing, id];
+                    currentQueryEngine.executeQuery(query2, param2).then(function(res) {
+                        console.log("et2");
+                        console.log(res);
+                    });
                 });
+            }).then(function() {
+                console.log(res);
+
+            }).catch(function() {
+                console.log(res);
+
             });
+
 
         }).then(function() {
             return true;
@@ -69,8 +82,9 @@ class MgrRecipe {
     }
 
     deleteIngre(id) {
-        let query = "DELETE * FROM ta_ingredients_recipe WHERE idRecipe = ?";
-        let param = [id];
+        console.log("he");
+        let queryDel = "DELETE * FROM ta_ingredients_recipe WHERE idRecipe = ?";
+        let paramDel = [id];
         return this._queryEngine.executeQuery(query, param).then(function(res) {
             console.log("delete ingre");
         }).then(function() {

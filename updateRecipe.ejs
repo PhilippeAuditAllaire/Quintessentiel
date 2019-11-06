@@ -140,13 +140,15 @@
         <script>
             let oldClicked = "";
             let idClick = "";
+            let id_recipe = findGetParameter('id');
 
             function load() {
+
                 $.ajax({
                     url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerCustom",
                     method: "POST",
                     data: {
-                        id: findGetParameter('id')
+                        id: id_recipe
                     },
                     success: function(response) {
                         console.log(response);
@@ -165,11 +167,11 @@
                     url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerDesc",
                     method: "POST",
                     data: {
-                        id: findGetParameter('id')
+                        id: id_recipe
                     },
                     success: function(response) {
                         console.log(response);
-                        $('#description').val() = response;
+                        $('#description').val(response);
                     },
                     error: function(response) {
                         console.log(response);
@@ -181,11 +183,11 @@
                     url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerInstru",
                     method: "POST",
                     data: {
-                        id: findGetParameter('id')
+                        id: id_recipe
                     },
                     success: function(response) {
                         console.log(response);
-                        $('#instru').val() = response;
+                        $('#instru').val(response);
                     },
                     error: function(response) {
                         console.log(response);
@@ -197,11 +199,11 @@
                     url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerName",
                     method: "POST",
                     data: {
-                        id: findGetParameter('id')
+                        id: id_recipe
                     },
                     success: function(response) {
                         console.log(response);
-                        $('#description').val() = response;
+                        $('#name').val(response);
                     },
                     error: function(response) {
                         console.log(response);
@@ -269,6 +271,7 @@
                     url: "http://localhost:5000/ajaxRequest/updateRecipeHandler",
                     method: "POST",
                     data: {
+                        id: id_recipe,
                         name: $('#name').find(":selected").text(),
                         desc: $('#description').val(),
                         instru: $('#instru').val(),
