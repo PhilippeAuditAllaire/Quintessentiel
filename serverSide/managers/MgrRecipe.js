@@ -87,7 +87,7 @@ class MgrRecipe {
         let queryDel = "DELETE FROM ta_ingredients_recipe WHERE idRecipe = ?";
         let paramDel = [id];
         return this._queryEngine.executeQuery(queryDel, paramDel).then(function(res) {
-            console.log(res);            
+            console.log(res);
             console.log("delete ingre");
         }).then(function() {
             return true;
@@ -108,7 +108,7 @@ class MgrRecipe {
     }
 
     getIngredients(id) {
-        let query = "SELECT * FROM ta_ingredients_recipe JOIN ingredient ON ingredient.id = ta_ingredients_recipe.idIngredient JOIN product ON product.id = ingredient.idProduct JOIN ta_productattribute_language on ta_productattribute_language.idProduct = product.id where ta_ingredients_recipe.id = ? and ta_productattribute_language.value = 'title'";
+        let query = "SELECT Product.id , ta_productattribute_language.value FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND product.id = ?";
         let param = [id];
         return this._queryEngine.executeQuery(query, param);
     }

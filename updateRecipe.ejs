@@ -58,36 +58,7 @@
                                 <div class="left-available-wrapper">
                                     <p>Produits disponibles</p>
                                     <div class="list-group" id="list-group-not-chosen">
-                                        <div id="pro-1">
-                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="1">
-												Cras justo odio
-												<input type="number" id="qty-1" class="qty-pro" min="0.00" step="1" value="0.00" >
-												<label for="">mg</label>
-											</a>
 
-                                        </div>
-                                        <div id="pro-1">
-                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="2">
-												Cras justo odio
-												<input type="number" id="qty-2" class="qty-pro" min="0.00" step="1" value="0.00" />
-												<label for="">mg</label>
-											</a>
-                                        </div>
-                                        <div id="pro-1">
-                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="3">
-												Cras justo odio
-												<input type="number" id="qty-3" class="qty-pro" min="0.00" step="1" value="0.00" />
-												<label for="">mg</label>
-											</a>
-
-                                        </div>
-                                        <div id="pro-1">
-                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="4">
-												Cras justo odio
-												<input type="number" id="qty-4" class="qty-pro" min="0.00" step="1" value="0.00" />
-												<label for="">mg</label>
-											</a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -151,8 +122,6 @@
                     },
                     success: function(response) {
                         console.log(response);
-                        
-
                     },
                     error: function(response) {
                         console.log(response);
@@ -227,6 +196,36 @@
                     error: function(response) {
                         console.log(response);
                         alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/addRecipeHandlerIngre",
+                    method: "POST",
+
+                    success: function(response) {
+                        console.log("not chosen" + response);
+                        $('#list-group-not-chosen').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerIngre",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log("chosen" + response);
+                        $('#list-group-chosen').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
                     }
                 });
             }

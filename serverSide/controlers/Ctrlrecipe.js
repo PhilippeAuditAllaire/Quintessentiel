@@ -25,8 +25,11 @@ class CtrlRecipe {
             let html = [];
 
             val.forEach(function(ingre) {
-                let ele = '';
-
+                let ele = '<tr onclick="openRecipe(' + ingre.id + ')">';
+                ele += '<th>' + ingre.productName + '</th>';
+                ele += '<th>' + ingre.description + '</th>';
+                ele += '<th>' + ingre.instruction + '</th>';
+                ele += '</tr>';
                 html.push(ele);
             });
             return html;
@@ -95,7 +98,7 @@ class CtrlRecipe {
                 let ele = '<a href="#" class="list-group-item list-group-item-action active ingredient" onclick="active(this)" id="' + ingre.id + '">';
                 ele += ingre.value;
                 ele += '<input type="number" id="qty-' + ingre.id + '" class="qty-pro" min="0.00" step="1" value="0.00" />';
-                ele += '<label for="">' + mg + '</label>';
+                ele += '<label for="">' + 'mg' + '</label>';
                 ele += '</a>'
                 html.push(ele);
             });
@@ -110,10 +113,13 @@ class CtrlRecipe {
             let html = [];
 
             val.forEach(function(pro) {
-                let ele = '<a href="#" class="list-group-item list-group-item-action active ingredient" onclick="active(this)" id="' + ingre.id + '">';
-                ele += '<input type="number" id="qty-' + ingre.id + '" class="qty-pro" min="0.00" step="1" value="0.00" />';
-                ele += '<label for="">' + mg + '</label>';
+                let ele = '<a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="' + pro.id + '">';
+                ele += pro.value;
+                ele += '<input type="number" id="qty-' + pro.id + '" class="qty-pro" min="0.00" step="1" value="0.00" />';
+                ele += '<label for="">' + 'mg' + '</label>';
+                html.push(ele);
             });
+            return html;
         });
     }
 

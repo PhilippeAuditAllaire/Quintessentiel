@@ -201,6 +201,15 @@ app.post("/ajaxRequest/addRecipeHandler", function(req, res) {
 
 });
 
+app.post("/ajaxRequest/addRecipeHandlerIngre", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getProducts().then(function(result) {
+        res.send(result);
+    });
+
+});
+
 app.post("/ajaxRequest/updateRecipeHandler", function(req, res) {
     let ctrl = new CtrlRecipe();
 
@@ -210,10 +219,28 @@ app.post("/ajaxRequest/updateRecipeHandler", function(req, res) {
 
 });
 
+app.post("/ajaxRequest/updateRecipeHandlerIngre", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getIngredients(req.body.id).then(function(result) {
+        res.send(result);
+    });
+
+});
+
 app.post("/ajaxRequest/updateRecipeHandlerDesc", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getDescription(req.body.id).then(function(result) {
+        res.send(result);
+    });
+
+});
+
+app.post("/ajaxRequest/manageRecipe", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getAllRecipe().then(function(result) {
         res.send(result);
     });
 

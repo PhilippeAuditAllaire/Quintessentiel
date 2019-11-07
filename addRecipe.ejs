@@ -145,6 +145,20 @@
             let oldClicked = "";
             let idClick = "";
 
+            $.ajax({
+                url: "http://localhost:5000/ajaxRequest/addRecipeHandlerIngre",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    $('#list-group-not-chosen').val(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur");
+                }
+            });
+
             function active(ele) {
                 console.log(ele);
                 if (oldClicked == ele) {
