@@ -196,11 +196,13 @@ class MgrProduct {
     }
 
     addProduct(product) {
-        let query = "INSERT INTO Product VALUES (DEFAULT,?,?,?,?,?,?,?,NULL)";
+        let query = "INSERT INTO Product VALUES (DEFAULT,?,?,?,?,1,1,2.53,NULL)";
+        console.log(product.dropWeightGram);
         let param = [product.retailPrice,product.costPrice,product.qty,product.image,product.featured,product.isVisible,product.dropWeightGram];
         let currentQueryEngine = this._queryEngine;
 
         return this._queryEngine.executeQuery(query,param).then(function(res){
+            console.log(res);
             let insertedId = res.insertId;
             let queryInsertAttributes = "INSERT INTO ta_productattribute_language VALUES ?";
             let paramAttributes = [[1,1,insertedId,product.name],[2,1,insertedId,product.description],[3,1,insertedId,product.advice]];
