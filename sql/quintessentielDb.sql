@@ -230,8 +230,6 @@ CREATE TABLE TA_Ingredients_Recipe(
 CREATE TABLE Category(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	isVisible BIT NOT NULL,
-	title VARCHAR(30) NOT NULL,
-	description VARCHAR(255)
 );
 
 CREATE TABLE TA_Category_Product(

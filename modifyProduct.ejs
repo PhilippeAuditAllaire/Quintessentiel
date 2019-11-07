@@ -14,14 +14,15 @@
 	<%include ./includes/reducedAppNavbar.ejs%>
 	<section class="wrapper-content-manageProduct">
 		<div class="wrapper-body-mgProduct">
-			<p class="warning-success" id="warning-success"></p>
+			<p class="warning-error" id="warning-error"></p>
 		</div>
 		<div class="wrapper-manageProduct-section">
-			<h2>Ajout d'un produit</h2>
+			<h2>Modification d'un produit</h2>
 			<%include ./includes/templateProduct.ejs%>
 		</div>
 	</section>
-	<script src="http://malsup.github.com/jquery.form.js"></script> 
+	<script src="./javascript/renderer.js"></script>
+	<script src="http://malsup.github.com/jquery.form.js"></script>
 	<script>
 		let inputName = document.getElementById("inputName");
 		let inputCostPrice = document.getElementById("inputCostPrice");
@@ -35,11 +36,23 @@
 		let inputVisible = document.getElementById("inputVisible");
 		let inputWeight = document.getElementById("inputWeight");
 
+		$("#formProduct").attr("action","/updateProduct");
+		
+		getProductId();
+
+		function getProductId()
+		{
+			let productId = document.location.href.split("=")[1];
+			return productId;
+		}
+
+
 	   $('.addProduct').submit(function(e){
 	     e.preventDefault();
 
 			     $(this).ajaxSubmit({
 			       data: {
+			       	id: getProductId(),
 			       	name: inputName.value,
 			       	costPrice: inputCostPrice.value,
 			       	retailPrice: inputRetailPrice.value,
@@ -56,17 +69,11 @@
 			       success: function(response){
 			       	 $("#warning-success").html("Produit ajouté avec succès!");
 			       	 $('html, body').animate({ scrollTop: 0 }, 'fast');
-			         this.clear();   
 			       }
 
 			   });
 
 	    });
-
-
 	</script>
-	<script src="./javascript/renderer.js"></script>
-	<script src="./javascript/tableProducts.js"></script>
-	<script src="./javascript/resizeWindow.js"></script>
 </body>
 </html>

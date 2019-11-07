@@ -6,6 +6,163 @@ class CtrlProduct {
         this._mgrProduct = new MgrProduct();
     }
 
+    updateProduct(productInfos)
+    {
+        let context = this;
+        return this.loadProductInfosById(productInfos.id).then(function(productBefore){
+
+            let product = new Product();
+            product.id = productInfos.id;
+            product.name = productInfos.name;
+
+            if(productInfos.imgName == undefined){
+                product.image = productBefore.image;  
+            }
+            else{
+                product.image = productInfos.imgName;
+            }
+            
+            product.description = productInfos.description
+            product.advice = productInfos.advice;
+            product.qty = productInfos.qty;
+            product.featured = 'b1';
+            product.isVisible = productInfos.isVisible;
+            product.dropWeightGram = productInfos.weight;
+            product.retailPrice = productInfos.retailPrice;
+            product.costPrice = productInfos.costPrice;
+            product.category = productInfos.category;
+            product.tags = productInfos.tags;
+
+            return context._mgrProduct.updateProduct(product).then(function(res){
+                console.log(res);
+            });
+
+        })
+
+    }
+
+    loadProductInfosById(productId)
+    {
+        return this._mgrProduct.loadProductInfosById(productId).then(function(res){
+            let product = new Product();
+            product.id = res[0][0].id;
+            product.retailPrice = res[0][0].retailPrice;
+            product.costPrice = res[0][0].costPrice;
+            product.qty = res[0][0].quantity;
+            product.image = res[0][0].image;
+            product.featured = res[0][0].featured;
+            product.isVisible = res[0][0].isVisible;
+            product.category = res[2][0].idCategory;
+            product.dropWeightGram = res[0][0].dropWeightGram;
+            product.name = res[1][0].value;
+            product.description = res[1][1].value;
+            product.advice = res[1][2].value;
+
+            return product;
+        });
+    }
+
+
+    loadTagsRelatedToProduct(productId)
+    {
+        return this._mgrProduct.loadTagsRelatedToProduct(productId).then(function(res){
+            let html = "";
+            let idRelatedToProduct = [];
+
+            if(res != undefined && res.length > 0)
+            {
+                res.forEach(function(row){
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.idTag+">"+row.value+"</a>";
+                    idRelatedToProduct.push(row.idTag);
+                });
+            }
+
+            return [html,idRelatedToProduct];
+
+        });
+    }
+
+    //Loads all the tags that are related and not related to the product (makes the difference between them)
+    loadTagsForBoxes(productId)
+    {
+        let idRelatedToProduct = [];
+        let currentContext = this;
+        return this.loadTagsRelatedToProduct(productId).then(function(res){
+
+            let htmlRelatedTags = res[0];
+            let idRelatedToProduct = res[1];
+
+            return currentContext.loadAllTags(idRelatedToProduct).then(function(result){
+                return [htmlRelatedTags,result];
+            });
+        });
+    }
+
+    //Loads all the tags except the one precised in the except tags (can be undefined)
+    loadAllTags(exceptTags)
+    {
+        return this._mgrProduct.loadAllTags(exceptTags).then(function(res){
+            let html = "";
+
+            if(res != undefined && res.length > 0)
+            {
+                res.forEach(function(row){
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
+                });                
+            }
+
+
+            return html;
+        });
+    }
+
+    //@productCategoryId is optional
+    loadAllCategories(productCategoryId)
+    {
+        return this._mgrProduct.loadAllCategories().then(function(res){
+            let html = "";
+
+            if(res != undefined)
+            {
+
+                 res.forEach(function(row){
+                                  console.log(row.id);
+                console.log(productCategoryId);
+                    html += "<option "+(row.id == productCategoryId ? "selected" : "")+" value="+row.id+">"+row.value+"</option>";
+                });               
+            }
+
+
+            return html;
+        });
+    }
+
+    //adds a product in the DB
+    //@productInfos are the infos
+    //the user entered
+    addProduct(productInfos)
+    {
+        let product = new Product();
+        product.name = productInfos.name;
+        product.image = productInfos.imgName;
+        product.description = productInfos.description
+        product.advice = productInfos.advice;
+        product.qty = productInfos.qty;
+        product.featured = productInfos.isFeatured;
+        product.isVisible = productInfos.isVisible;
+        product.dropWeightGram = productInfos.weight;
+        product.retailPrice = productInfos.retailPrice;
+        product.costPrice = productInfos.costPrice;
+        product.category = productInfos.category;
+        product.tags = productInfos.tags;
+
+        return this._mgrProduct.addProduct(product).then(function(res){
+            return true;
+        })
+        .catch(function(res){
+            return false;
+        });
+    }
 
     getProductInfo(id, code_lang) {
         let products = this._mgrProduct.loadProductbyId(id, code_lang);

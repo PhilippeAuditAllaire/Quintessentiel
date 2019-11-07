@@ -26,7 +26,7 @@ body{
 }
 
 
-#inputPrice,#inputQty{
+#inputPrice,#inputQty,#inputWeight,#inputPriceRetail{
 	width:100px;
 }
 
@@ -47,13 +47,9 @@ body{
 }
 
 
-.list-group-item-action.active{
-	background-color:rgba(188,209,63,0.8);
-	border-color:#7c8c34;
-}
 
 .list-group{
-	max-height:300px;
+	height:250px;
 	width:100%;
 	overflow-y: scroll;
 }
@@ -108,8 +104,19 @@ body{
 	height:200px;
 }
 
+.wrapperBtnEnd{
+	width:70%;
+	margin:auto;
+}
+
 #wrapperVedette input[type=checkbox]{
 	transform: scale(1.5);
+}
+
+#wrapperVedette{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 #wrapperVedette label{
@@ -122,6 +129,7 @@ body{
 
 .wrapperBtnEnd{
 	display:flex;
+	margin-top:40px;
 }
 
 #wrapperCategory .wrapper-label label{
