@@ -50,7 +50,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ondblclick="openUpdateProduct(this)" data-product-id="1">
+                        <tr data-product-id="24" ondblclick="openUpdateProduct(this)" class="rowTR">
                             <th>Liniment démaquillant peau sensible</th>
                             <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
                                 douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
@@ -59,7 +59,7 @@
                             <th>20</th>
                             <th>20.00</th>
                         </tr>
-                        <tr>
+                        <tr data-product-id="24" ondblclick="openUpdateProduct(this)" class="rowTR">
                             <th>Liniment démaquillant peau sensible</th>
                             <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
                                 douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
@@ -68,7 +68,7 @@
                             <th>10</th>
                             <th>20.00</th>
                         </tr>
-                        <tr>
+                        <tr data-product-id="24" ondblclick="openUpdateProduct(this)" class="rowTR">
                             <th>Liniment démaquillant peau sensible</th>
                             <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
                                 douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
@@ -88,6 +88,7 @@
 	<script>
         function openUpdateProduct(element){
             let productId = element.getAttribute("data-product-id");
+
             window.open("./modifyProduct?productId="+productId, '_blank');
         }
 	</script>

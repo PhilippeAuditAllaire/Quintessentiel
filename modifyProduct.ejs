@@ -22,13 +22,58 @@
 		</div>
 	</section>
 	<script src="./javascript/renderer.js"></script>
+	<script src="http://malsup.github.com/jquery.form.js"></script>
 	<script>
+		let inputName = document.getElementById("inputName");
+		let inputCostPrice = document.getElementById("inputCostPrice");
+		let inputRetailPrice = document.getElementById("inputRetailPrice");
+		let inputQty = document.getElementById("inputQty");
+		let inputImage = document.getElementById("inputFile");
+		let inputCategory = document.getElementById("selectCategory");
+		let inputDescription = document.getElementById("txtAreaDescription");
+		let inputAdvice = document.getElementById("txtAreaAdvice");
+		let inputVedette = document.getElementById("inputVedette");
+		let inputVisible = document.getElementById("inputVisible");
+		let inputWeight = document.getElementById("inputWeight");
+
+		$("#formProduct").attr("action","/updateProduct");
+		
 		getProductId();
 
 		function getProductId()
 		{
 			let productId = document.location.href.split("=")[1];
+			return productId;
 		}
+
+
+	   $('.addProduct').submit(function(e){
+	     e.preventDefault();
+
+			     $(this).ajaxSubmit({
+			       data: {
+			       	id: getProductId(),
+			       	name: inputName.value,
+			       	costPrice: inputCostPrice.value,
+			       	retailPrice: inputRetailPrice.value,
+			       	qty: inputQty.value,
+			       	category: inputCategory.value,
+			       	description: inputDescription.value,
+			       	advice: inputAdvice.value,
+			       	isFeatured: inputVedette.checked,
+			       	tags: getAttributedListboxId(),
+			       	weight: inputWeight.value,
+			       	isVisible: inputVisible.checked
+			       },
+			       contentType: 'application/json',
+			       success: function(response){
+			       	 $("#warning-success").html("Produit ajouté avec succès!");
+			       	 $('html, body').animate({ scrollTop: 0 }, 'fast');
+			       }
+
+			   });
+
+	    });
 	</script>
 </body>
 </html>
