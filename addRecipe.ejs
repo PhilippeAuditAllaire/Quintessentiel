@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quintessentiel | Ajouter recette</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style_application.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style_addProduct.css" />
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+</head>
+
+<body>
+    <%include ./includes/reducedAppNavbar.ejs%>
+        <section class="wrapper-content-manageProduct">
+            <div class="wrapper-body-mgProduct">
+                <p class="warning-error" id="warning-error"></p>
+            </div>
+            <div class="wrapper-manageProduct-section">
+                <h2>Ajout d'une recette</h2>
+                <div class="wrapper-form-add-product">
+                    <div class="wrapper-input-label">
+                        <div class="wrapper-label">
+                            <label>Produit créé</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <select class="form-control" id="name">
+									<option id="product-1">Produit A</option>
+							</select>
+                        </div>
+                    </div>
+
+                    <a href="./addProduct" class="wrapper-input-label">Ajouter un produit</a>
+
+                    <div class="wrapper-input-label">
+                        <div class="wrapper-label">
+                            <label>Prix</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <input type="number" id="inputPrice" class="form-control" min="0.00" step="0.01" value="0.00" />
+                        </div>
+                    </div>
+
+                    <div class="wrapper-input-label" id="wrapperCategory">
+                        <div class="wrapper-label">
+                            <label>Type</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <select class="form-control">
+							<option>Peau mature</option>
+						</select>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperInputLabelTags">
+                        <div class="wrapper-label">
+                            <label>Produits</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <div class="availableTags">
+                                <div class="left-available-wrapper">
+                                    <p>Produits disponibles</p>
+                                    <div class="list-group" id="list-group-not-chosen">
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="1">
+												Cras justo odio
+												<input type="number" id="qty-1" class="qty-pro" min="0.00" step="1" value="0.00" >
+												<label for="">mg</label>
+											</a>
+
+                                        </div>
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="2">
+												Cras justo odio
+												<input type="number" id="qty-2" class="qty-pro" min="0.00" step="1" value="0.00" />
+												<label for="">mg</label>
+											</a>
+                                        </div>
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="3">
+												Cras justo odio
+												<input type="number" id="qty-3" class="qty-pro" min="0.00" step="1" value="0.00" />
+												<label for="">mg</label>
+											</a>
+
+                                        </div>
+                                        <div id="pro-1">
+                                            <a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="4">
+												Cras justo odio
+												<input type="number" id="qty-4" class="qty-pro" min="0.00" step="1" value="0.00" />
+												<label for="">mg</label>
+											</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="wrapper-btnChange">
+                                <button onclick="moveRight()">></button>
+                                <button onclick="moveLeft()"><</button>
+                            </div>
+                            <div class="choosenTags">
+                                <div class="right-choosen-wrapper">
+                                    <p>Produits attribués</p>
+                                    <div class="list-group" id="list-group-chosen">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperDescription">
+                        <div class="wrapper-label">
+                            <label>Description</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <textarea class="form-control" id="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperInstructions">
+                        <div class="wrapper-label">
+                            <label>Instructions</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <textarea class="form-control" id="instru"></textarea>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperVedette">
+
+                        <label><input type="checkbox"id="custom"/><span>Recette personnalisée</span></label>
+                    </div>
+                    <div class="wrapperBtnEnd">
+                        <div class="wrapper-cancel"><input type="submit" class="btn btn-success" value="Annuler" onclick="self.close()"></div>
+                        <div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter" onclick="add()"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script src="./javascript/renderer.js"></script>
+        <script src="./javascript/tableProducts.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            let oldClicked = "";
+            let idClick = "";
+
+            $.ajax({
+                url: "http://localhost:5000/ajaxRequest/addRecipeHandlerIngre",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    $('#list-group-not-chosen').val(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur");
+                }
+            });
+
+            function active(ele) {
+                console.log(ele);
+                if (oldClicked == ele) {
+
+                } else {
+                    ele.classList.add("active");
+                    if (oldClicked != "") {
+                        oldClicked.classList.remove("active");
+                    }
+                    oldClicked = ele;
+                    idClick = ele.id;
+                    console.log(idClick);
+                }
+            }
+
+            function moveRight() {
+                let list = document.getElementById("list-group-chosen");
+                let child = document.getElementById(idClick);
+                child.classList.add("ingredient");
+                list.appendChild(child);
+            }
+
+            function moveLeft() {
+                let list = document.getElementById("list-group-not-chosen");
+                let child = document.getElementById(idClick);
+                child.classList.remove("ingredient");
+                list.appendChild(child);
+            }
+
+            function add() {
+                let custom = '0';
+                if ($('#custom').checked) {
+                    custom = '1';
+                }
+                let ingredients = [];
+
+                let element = document.getElementsByClassName("ingredient");
+                console.log(element);
+                for (let ing of element) {
+                    ingredients.push(ing.id);
+                }
+                console.log(ingredients);
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/addRecipeHandler",
+                    method: "POST",
+                    data: {
+                        name: $('#name').find(":selected").text(),
+                        desc: $('#description').val(),
+                        instru: $('#instru').val(),
+                        is_custom: custom,
+                        product: $('#name').find(":selected").text(),
+                        ingre: ingredients
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+            }
+        </script>
+</body>
+
+</html>

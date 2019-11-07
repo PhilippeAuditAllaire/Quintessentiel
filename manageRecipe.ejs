@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quintessentiel | Connexion</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style_application.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style_manageRecipe.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css" />
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+</head>
+
+<body>
+    <%include ./includes/appNavbar.ejs%>
+        <div class="recipe-header">
+            <div class="logo">
+                <img src="./images/logo.png" />
+            </div>
+            <div class="title">
+                Gestion des recettes
+            </div>
+        </div>
+        <div class="mg-product-top-line middle">
+            <div class="wrapper-left-qty">
+                <div class="sub-left-wrapper">
+                    <label>Trier par:</label>
+                    <select id="orderBySelect">
+							<option>Quantité</option>
+						</select>
+                </div>
+            </div>
+            <div class="wrapper-right-btn">
+                <div class="wrapper-btn">
+                    <a href="./addRecipe" class="btnApp" target="_blank">+</a>
+                </div>
+            </div>
+        </div>
+        <div class="table">
+            <div class="border">
+                <table class="table-recipe">
+                    <thead class="table-recipe-header">
+                        <tr>
+                            <th>Recette</th>
+                            <th>Description</th>
+                            <th>Instructions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recipes">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            function openRecipe(id) {
+                console.log(id);
+                document.location = './updateRecipe?id=' + id;
+            }
+
+            $.ajax({
+                url: "http://localhost:5000/ajaxRequest/manageRecipe",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    $('#recipes').html(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur");
+                }
+            });
+        </script>
+</body>
+
+</html>

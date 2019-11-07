@@ -63,6 +63,11 @@ html,body{
 	-webkit-app-region: no-drag;
 }
 
+.wrapper-select select:focus{
+	outline:0;
+	border:0;
+}
+
 .wrapper-select option{
 	outline:0;
 }
@@ -117,6 +122,10 @@ html,body{
 	background-color:#bcd13f;
 }
 
+
+a.disabled{
+	opacity:0.5;
+}
 
 /* ===========================
   		<AdminConnection>
@@ -192,4 +201,18 @@ html,body{
 	font-size:20px;
 	text-align: center;
 	margin-bottom:0;
+}
+
+.modal .modal-header{
+	background-color:#342c2c;
+	color:white;
+}
+
+.list-group{
+	border:2px solid #342c2c;
+	border-radius: 10px;
+}
+
+.close{
+	color:white!important;
 }
