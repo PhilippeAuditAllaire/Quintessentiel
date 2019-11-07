@@ -34,9 +34,9 @@ select {
     margin-top: 40px;
 }
 
-.tag p {
-    margin: 0;
-    padding: 5px;
+
+#inputPrice,#inputQty,#inputWeight,#inputPriceRetail{
+	width:100px;
 }
 
 .wrapper-btnChange {
@@ -62,19 +62,11 @@ select {
     width: 50%;
 }
 
-#wrapperInputLabelTags {
-    display: flex;
-    flex-direction: column;
-    margin-top: 40px;
-}
 
-#wrapperInputLabelTags .wrapper-label {
-    text-align: center;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 20px;
+.list-group{
+	height:250px;
+	width:100%;
+	overflow-y: scroll;
 }
 
 .wrapper-btnChange {
@@ -129,20 +121,33 @@ select {
     height: 200px;
 }
 
-#wrapperVedette input[type=checkbox] {
-    transform: scale(1.5);
+
+.wrapperBtnEnd{
+	width:70%;
+	margin:auto;
 }
 
-#wrapperVedette label {
-    padding-left: 10px;
+#wrapperVedette input[type=checkbox]{
+	transform: scale(1.5);
+}
+
+#wrapperVedette{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#wrapperVedette label{
+	padding-left:10px;
 }
 
 #wrapperVedette label span {
     margin-left: 10px;
 }
 
-.wrapperBtnEnd {
-    display: flex;
+.wrapperBtnEnd{
+	display:flex;
+	margin-top:40px;
 }
 
 #wrapperCategory .wrapper-label label {

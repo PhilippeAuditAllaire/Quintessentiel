@@ -47,6 +47,7 @@
 	border-radius:5px;
 }
 
+
 .btnApp:hover{
 	color:white;
 	text-decoration: none;
@@ -58,7 +59,8 @@
 
 .wrapper-gridProduct{
 	display:flex;
-	border:1px solid black;
+	background-color:#fff6c9
+;
 	justify-content: space-between;
 	margin-top:25px;
 }
@@ -107,3 +109,100 @@
 #wrapperInputLabelTags .wrapper-input{
 	justify-content: center;
 }
+
+
+.list-group-item-action.active{
+	background-color:rgba(188,209,63,0.8);
+	border-color:#7c8c34;
+}
+
+.product-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.table-product{
+    padding: 10px;
+    border: 1px solid #342c2c;
+}
+
+.table-product thead {
+    background-color: #342c2c;
+    color: white;
+}
+
+.table {
+    border-collapse: collapse;
+    margin-top:15px;
+    max-height:65vh;
+    overflow-y: scroll;
+}
+
+.middle {
+    padding: 20px;
+}
+
+table{
+	overflow-y: scroll;
+	width:100%;
+}
+
+thead th{
+	position: sticky;
+	top:0;
+	background-color:#342c2c;
+}
+
+table,
+td,
+th {
+    border: 1px solid white;
+    text-align: left;
+    padding: 8px;
+}
+
+.table-product-header{
+	position: sticky;
+}
+
+.table-product-header th{
+	z-index:999;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+    border: 1px solid #dddddd;
+}
+
+th img {
+    max-width: 50px;
+}
+
+tbody {
+    font-size: 11px;
+}
+
+tbody tr:hover {
+    background-color: #cfdb8b;
+    cursor: pointer
+}
+
+th{
+	font-size:14px;
+}
+
+.list-group{
+	min-height:200px;
+}
+
