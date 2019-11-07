@@ -14,7 +14,7 @@
 	<%include ./includes/reducedAppNavbar.ejs%>
 	<section class="wrapper-content-manageProduct">
 		<div class="wrapper-body-mgProduct">
-			<p class="warning-error" id="warning-error"></p>
+			<p class="warning-success" id="warning-success"></p>
 		</div>
 		<div class="wrapper-manageProduct-section">
 			<h2>Ajout d'un produit</h2>
@@ -36,34 +36,33 @@
 		let inputWeight = document.getElementById("inputWeight");
 
 		let selectedTags;
-
-
 	   $('.addProduct').submit(function(e){
 	     e.preventDefault();
 
-	     $(this).ajaxSubmit({
-	       data: {
-	       	name: inputName.value,
-	       	costPrice: inputCostPrice.value,
-	       	retailPrice: inputRetailPrice.value,
-	       	qty: inputQty.value,
-	       	category: inputCategory.value,
-	       	description: inputDescription.value,
-	       	advice: inputAdvice.value,
-	       	isVedette: inputVedette.checked,
-	       	tags: getAttributedListboxId(),
-	       	weight: inputWeight.value,
-	       	isVisible: inputVisible.checked
-	       },
-	       contentType: 'application/json',
-	       success: function(response){
-	         console.log('image uploaded and form submitted');  
-	         this.clear();   
-	       }
+			     $(this).ajaxSubmit({
+			       data: {
+			       	name: inputName.value,
+			       	costPrice: inputCostPrice.value,
+			       	retailPrice: inputRetailPrice.value,
+			       	qty: inputQty.value,
+			       	category: inputCategory.value,
+			       	description: inputDescription.value,
+			       	advice: inputAdvice.value,
+			       	isFeatured: inputVedette.checked,
+			       	tags: getAttributedListboxId(),
+			       	weight: inputWeight.value,
+			       	isVisible: inputVisible.checked
+			       },
+			       contentType: 'application/json',
+			       success: function(response){
+			       	 $("#warning-success").html("Produit ajouté avec succès!");
+			       	 $('html, body').animate({ scrollTop: 0 }, 'fast');
+			         this.clear();   
+			       }
 
-	   });
+			   });
 
-	      });
+	    });
 
 
 	</script>

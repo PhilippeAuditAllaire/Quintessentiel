@@ -47,7 +47,7 @@
 					<div class="wrapper-input">
 						<select class="form-control" id="selectCategory" required>
 							<option disabled selected>Veuillez sélectionner une catégorie</option>
-							<option value="1">Peau mature</option>
+							<%- allCategories %>
 						</select>
 					</div>
 				</div>
@@ -68,12 +68,7 @@
 							<div class="left-available-wrapper">
 								<p>Étiquettes disponibles</p>		
 								<div class="list-group" id="available-listbox">
-								  <a href="#" class="list-group-item list-group-item-action" data-id="0">
-								    Cras justo odio
-								  </a>
-								  <a href="#" class="list-group-item list-group-item-action" data-id="1">Dapibus ac facilisis in</a>
-								  <a href="#" class="list-group-item list-group-item-action" data-id="2">Morbi leo risus</a>
-								  <a href="#" class="list-group-item list-group-item-action" data-id="3">Porta ac consectetur ac</a>
+									<%- availableTags %>
 								</div>
 							</div>
 							</div>
@@ -86,7 +81,7 @@
 							<div class="right-choosen-wrapper">
 								<p>Étiquettes attribuées</p>		
 								<div class="list-group" id="attributed-listbox">
-			  						<a href="#" class="list-group-item list-group-item-action" data-id="4">Porta ac consectetur ac</a>
+			  			
 								</div>
 							</div>
 						</div>

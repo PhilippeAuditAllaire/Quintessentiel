@@ -7,6 +7,60 @@ class CtrlProduct {
     }
 
 
+    loadAllTags()
+    {
+        return this._mgrProduct.loadAllTags().then(function(res){
+            let html = "";
+
+            res.forEach(function(row){
+                html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
+            });
+
+            return html;
+        });
+    }
+
+
+    loadAllCategories(selectedCategory)
+    {
+        return this._mgrProduct.loadAllCategories().then(function(res){
+            let html = "";
+
+            res.forEach(function(row){
+                html += "<option value="+row.id+">"+row.value+"</option>";
+            });
+
+            return html;
+        });
+    }
+
+    //adds a product in the DB
+    //@productInfos are the infos
+    //the user entered
+    addProduct(productInfos)
+    {
+        let product = new Product();
+        product.name = productInfos.name;
+        product.image = productInfos.imgName;
+        product.description = productInfos.description
+        product.advice = productInfos.advice;
+        product.qty = productInfos.qty;
+        product.featured = productInfos.isFeatured;
+        product.isVisible = productInfos.isVisible;
+        product.dropWeightGram = productInfos.weight;
+        product.retailPrice = productInfos.retailPrice;
+        product.costPrice = productInfos.costPrice;
+        product.category = productInfos.category;
+        product.tags = productInfos.tags;
+
+        return this._mgrProduct.addProduct(product).then(function(res){
+            return true;
+        })
+        .catch(function(res){
+            return false;
+        });
+    }
+
     getProductInfo(id, code_lang) {
         let products = this._mgrProduct.loadProductbyId(id, code_lang);
 

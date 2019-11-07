@@ -214,13 +214,20 @@ app.get("/manageProduct",function(req,res){
 
 
 app.get("/addProduct",function(req,res){
-	if(req.session.userId != undefined && req.session.isAdmin == 1)
-	{
-		res.render("addProduct.ejs");	
-	}
-	else{
-		res.redirect("/adminConnection?pleaseConnect=true");
-	}
+	let ctrlProduct = new CtrlProduct();
+
+	//Load all the required HTML then renders the page
+	Promise.all([ctrlProduct.loadAllTags(),ctrlProduct.loadAllCategories()]).then(function(results){
+
+		if(req.session.userId != undefined && req.session.isAdmin == 1)
+		{
+			res.render("addProduct.ejs",{availableTags: results[0],allCategories: results[1]});	
+		}
+		else{
+			res.redirect("/adminConnection?pleaseConnect=true");
+		}
+
+	});
 });
 
 app.get("/manageCategory",function(req,res){
@@ -247,8 +254,23 @@ app.post('/addProduct', upload.single('imgProduct'), function(req, res, next) {
     let imgName = req.file.filename;
     let data = req.body;
     data.imgName = imgName;
-    console.log(data);
+    
+     let ctrlProduct = new CtrlProduct();
+     ctrlProduct.addProduct(data).then(function(result){
+     	res.send(result)
+     });
    
+});
+
+app.post("/ajaxRequest/getTags",function(req,res){
+		let ctrlProduct = new CtrlProduct();
+
+		ctrlProduct.loadAllTags().then(function(result){
+
+			
+			
+		});
+		
 });
 
 

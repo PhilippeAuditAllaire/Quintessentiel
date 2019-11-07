@@ -61,7 +61,7 @@ class Product {
     set featured(paramFeatured) { this._featured = paramFeatured; }
 
     get isVisible() { return this._isVisible; }
-    set isvisible(paramIsVisible) { this._isVisible = paramIsVisible; }
+    set isVisible(paramIsVisible) { this._isVisible = paramIsVisible; }
 
     get dropWeightGram() { return this._dropWeightGram; }
     set dropWeightGram(dropWeightGram) { this._dropWeightGram = dropWeightGram; }
@@ -74,6 +74,12 @@ class Product {
 
     get amazonAfiliate() { return this._amazonAfiliate; }
     set amazonAfiliate(paramAmazonAfiliate) { this._amazonAfiliate = paramAmazonAfiliate; }
+
+    get category() { return this._category; }
+    set category(paramCategory) { this._category = paramCategory; }
+
+    get tags() { return this._tags; }
+    set tags(paramTags) { this._tags = paramTags; }
 }
 
 module.exports = Product;
