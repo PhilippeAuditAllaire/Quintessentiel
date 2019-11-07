@@ -126,6 +126,15 @@ website.post("/ajaxRequest/catalogue", function(req, res) {
 
 });
 
+website.post("/ajaxRequest/catalogueSearch", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
+
+    ctrlProduct.loadProductSearch(1, req.body.search).then(function(result) {
+        res.send(result);
+    });
+
+});
+
 website.post("/ajaxRequest/produitInfo", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 

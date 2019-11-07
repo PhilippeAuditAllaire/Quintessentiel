@@ -95,7 +95,7 @@ class CtrlProduct {
 
             val.forEach(function(product) {
                 //product.image = "default.jpg";
-                let ele = '<div class="catalogue-produit" onclick="openInfo(' + product.id + ');">';
+                let ele = '<div class="catalogue-produit" onclick="openInfo(' + product.product_id + ');">';
                 ele += '<div class="catalogue-produit-div-image">';
                 ele += '<img class="catalogue-produit-image" src="./images/' + product.image + '" alt="' + product.value + '">';
                 ele += '</div>';
@@ -121,6 +121,47 @@ class CtrlProduct {
                 ele += '<img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier">';
                 ele += '</div>';
 
+                catalogue_product.push(ele);
+            });
+
+            return catalogue_product;
+        });
+    }
+
+    loadProductSearch(code_lang, search) {
+        let products = this._mgrProduct.loadProductSearch(code_lang, search);
+        console.log(products);
+        return products.then(function(val) {
+            let catalogue_product = [];
+
+            val.forEach(function(product) {
+                //product.image = "default.jpg";
+                let ele = '<div class="catalogue-produit" onclick="openInfo(' + product.product_id + ');">';
+                ele += '<div class="catalogue-produit-div-image">';
+                ele += '<img class="catalogue-produit-image" src="./images/' + product.image + '" alt="' + product.value + '">';
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-nom">';
+                ele += product.value;
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-review">';
+                ele += '<div class="catalogue-produit-etoile">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<div class = "catalogue-produit-comm">';
+                ele += 'Aucun commentaire';
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-prix">';
+                ele += '$' + product.retailPrice + ' CAD';
+                ele += '</div>';
+                ele += '</div>';
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-panier">';
+                ele += '<img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier">';
+                ele += '</div>';
+                ele += '</div>';
                 catalogue_product.push(ele);
             });
 
