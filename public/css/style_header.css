@@ -3,6 +3,22 @@
 	justify-content: space-between;
 }
 
+.navbar-serum{
+	text-align: center;
+	color: lightgray;
+	background-color: lightslategray;
+	line-height: 35px;
+	width: 100%;
+}
+
+.navbar-serum p{
+	margin: auto;
+}
+
+.navbar-serum a{
+	color:#bcd13f;
+}
+
 .nav-item{
 	font-size:18px;
 }
@@ -125,6 +141,8 @@
 .navbar-toggler-icon{
 	color:white!important;
 }
+
+
 
 
 @media screen and (max-width:1300px)

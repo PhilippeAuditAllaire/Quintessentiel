@@ -31,6 +31,7 @@
 
 .contact-row-centered{
     text-align: center;
+    padding-bottom: 20px;
 }
 
 .contact-row-centered h1{
@@ -43,9 +44,13 @@
 }
 
 .contact-row-centered hr{
-    border-width: 3px;
-    border-color: #212529;
+    color:#000;
+    height:3px;
+    background:black;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 350, from(#000), to(#FFF));
+    width: 95%;
 }
+
 .contact-single-col{
     display: flex;
     flex:100%;
@@ -81,3 +86,74 @@
     margin: 15px;
 }
 
+.contact-sales{
+    width: 95%;
+    display: flex;
+    text-align: left;
+    padding-left:3%;
+}
+
+.contact-sales ul{
+    list-style-type: none;
+    padding: 0 !important;
+}
+
+.contact-sales h2{
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 991px)
+{
+	.left-menu-bar{
+		display: none;
+    }
+    
+    .contact-sales{
+        text-align: center;
+    }
+
+    .contact-sales ul{
+        margin:auto;
+        margin-bottom: 20px;
+    }
+
+    .contact-sales h2{
+        margin: auto;
+    }
+
+    .contact-row{
+        display: initial;
+    }
+
+    .contact-col{
+        padding-top: 15px;
+    }
+
+    .contact-single-col{
+        padding-top: 15px;
+    }
+
+    .contact-single-col select{
+        width: 85%;
+    }
+    
+    .contact-single-col textarea{
+        width: 85%;
+    }
+    
+    .contact-single-col input{
+        width: 85%;
+    }
+
+    .delimiter{
+        padding-top: 50px;
+    }
+
+    .btn-primary{
+        background-color: #bcd13f !important;
+        border-color: #bcd13f !important;
+        width: 75%;
+        margin: 15px;
+    }
+
+}
