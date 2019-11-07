@@ -1,8 +1,8 @@
 const mysql = require("mysql");
 
-class MgrDbConnection{
+class MgrDbConnection {
 
-	constructor(host,username,password,database){
+    constructor(host, username, password, database) {
 
 		this._connection = mysql.createConnection({
 			host: host,
@@ -25,9 +25,9 @@ class MgrDbConnection{
 		});
 	}
 
-	get connection(){
-		return this._connection;
-	}
+    get connection() {
+        return this._connection;
+    }
 
 }
 

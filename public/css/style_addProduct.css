@@ -1,28 +1,37 @@
-body{
-	overflow-y: scroll;
+body {
+    overflow-y: scroll;
 }
 
-.wrapper-input-label{
-	display: flex;
-	justify-content: row;
-	justify-content: flex-start;
-	width:70%;
-	margin:auto;
-	margin-top:20px;
+.wrapper-input-label {
+    display: flex;
+    justify-content: row;
+    justify-content: flex-start;
+    width: 70%;
+    margin: auto;
+    margin-top: 20px;
 }
 
-
-.wrapper-label{
-	width:25%;
+.wrapper-label {
+    width: 25%;
 }
 
-.wrapper-input{
-	flex-grow: 1;
-	justify-content: flex-start;
+.wrapper-input {
+    flex-grow: 1;
+    justify-content: flex-start;
 }
 
-.wrapper-input input,select{
-	width:70%;
+.wrapper-input input,
+select {
+    width: 70%;
+}
+
+#inputPrice,
+#inputQty {
+    width: 100px;
+}
+
+.wrapper-form-add-product {
+    margin-top: 40px;
 }
 
 
@@ -30,22 +39,28 @@ body{
 	width:100px;
 }
 
-.wrapper-form-add-product{
-	margin-top: 40px;
+.wrapper-btnChange {
+    display: flex;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-direction: column;
 }
 
-.tag p{
-	margin:0;
-	padding:5px;
+.list-group-item-action.active {
+    background-color: rgba(188, 209, 63, 0.8);
+    border-color: #7c8c34;
 }
 
-.wrapper-btnChange{
-	display: flex;
-	margin-left:10px;
-	margin-right:10px;
-	flex-direction: column;
+.list-group {
+    max-height: 300px;
+    width: 100%;
+    overflow-y: scroll;
 }
 
+.availableTags,
+.choosenTags {
+    width: 50%;
+}
 
 
 .list-group{
@@ -54,55 +69,58 @@ body{
 	overflow-y: scroll;
 }
 
-.availableTags,.choosenTags{
-	width:50%;
+.wrapper-btnChange {
+    align-self: center;
 }
 
-#wrapperInputLabelTags{
-	display:flex;
-	flex-direction: column;
-	margin-top:40px;
+.wrapper-btnChange button:nth-child(2) {
+    margin-top: 20px;
 }
 
-#wrapperInputLabelTags .wrapper-label{
-	text-align:center;
-	width:100%;
-	display:flex;
-	justify-content: center;
-	font-weight: bold;
-	font-size:20px;
+#wrapperDescription {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
 }
 
-.wrapper-btnChange{
-	align-self: center;
+#wrapperDescription .wrapper-label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-.wrapper-btnChange button:nth-child(2){
-	margin-top:20px;
+#wrapperDescription .wrapper-label label {
+    text-align: center
 }
 
-#wrapperDescription{
-	display:flex;
-	flex-direction: column;
-	justify-content: center;
-	margin-top:50px;
+#wrapperDescription textarea {
+    width: 100%;
+    height: 200px;
 }
 
-
-#wrapperDescription .wrapper-label{
-	display:flex;
-	flex-direction: column;
-	width:100%;
+#wrapperInstructions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
 }
 
-#wrapperDescription .wrapper-label label{
-	text-align: center
+#wrapperInstructions .wrapper-label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-#wrapperDescription textarea{
-	width:100%;
-	height:200px;
+#wrapperInstructions .wrapper-label label {
+    text-align: center
 }
+
+#wrapperInstructions textarea {
+    width: 100%;
+    height: 200px;
+}
+
 
 .wrapperBtnEnd{
 	width:70%;
@@ -123,8 +141,8 @@ body{
 	padding-left:10px;
 }
 
-#wrapperVedette label span{
-	margin-left:10px;
+#wrapperVedette label span {
+    margin-left: 10px;
 }
 
 .wrapperBtnEnd{
@@ -132,6 +150,6 @@ body{
 	margin-top:40px;
 }
 
-#wrapperCategory .wrapper-label label{
-	margin:0;
+#wrapperCategory .wrapper-label label {
+    margin: 0;
 }

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quintessentiel | Modifier recette</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style_application.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style_addProduct.css" />
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+</head>
+
+<body onload="load()">
+    <%include ./includes/reducedAppNavbar.ejs%>
+        <section class="wrapper-content-manageProduct">
+            <div class="wrapper-body-mgProduct">
+                <p class="warning-error" id="warning-error"></p>
+            </div>
+            <div class="wrapper-manageProduct-section">
+                <h2>Modification d'une recette <img src="./images/icons/delete.png" alt="Supprimer" onclick="deleteRecipe()"></h2>
+                <div class="wrapper-form-add-product">
+                    <div class="wrapper-input-label">
+                        <div class="wrapper-label">
+                            <label>Produit créé</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <input type="text" id="name" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="wrapper-input-label">
+                        <div class="wrapper-label">
+                            <label>Prix</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <input type="number" id="inputPrice" class="form-control" min="0.00" step="0.01" value="0.00" />
+                        </div>
+                    </div>
+
+                    <div class="wrapper-input-label" id="wrapperCategory">
+                        <div class="wrapper-label">
+                            <label>Type</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <select class="form-control">
+							<option>Peau mature</option>
+						</select>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperInputLabelTags">
+                        <div class="wrapper-label">
+                            <label>Produits</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <div class="availableTags">
+                                <div class="left-available-wrapper">
+                                    <p>Produits disponibles</p>
+                                    <div class="list-group" id="list-group-not-chosen">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="wrapper-btnChange">
+                                <button onclick="moveRight()">></button>
+                                <button onclick="moveLeft()"><</button>
+                            </div>
+                            <div class="choosenTags">
+                                <div class="right-choosen-wrapper">
+                                    <p>Produits attribués</p>
+                                    <div class="list-group" id="list-group-chosen">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperDescription">
+                        <div class="wrapper-label">
+                            <label>Description</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <textarea class="form-control" id="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperInstructions">
+                        <div class="wrapper-label">
+                            <label>Instructions</label>
+                        </div>
+                        <div class="wrapper-input">
+                            <textarea class="form-control" id="instru"></textarea>
+                        </div>
+                    </div>
+                    <div class="wrapper-input-label" id="wrapperVedette">
+
+                        <label><input type="checkbox"id="custom"/><span>Recette personnalisée</span></label>
+                    </div>
+                    <div class="wrapperBtnEnd">
+                        <div class="wrapper-cancel"><input type="submit" class="btn btn-success" value="Annuler" onclick="self.close()"></div>
+                        <div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter" onclick="add()"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script src="./javascript/renderer.js"></script>
+        <script src="./javascript/tableProducts.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            let oldClicked = "";
+            let idClick = "";
+            let id_recipe = findGetParameter('id');
+
+            function deleteRecipe() {
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/deleteRecipeHandler",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+            }
+
+            function load() {
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerCustom",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response == 1) {
+                            $('#custom').prop('checked', true);
+                        }
+
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerDesc",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#description').val(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerInstru",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#instru').val(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerName",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#name').val(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/addRecipeHandlerIngre",
+                    method: "POST",
+
+                    success: function(response) {
+                        console.log("not chosen" + response);
+                        $('#list-group-not-chosen').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandlerIngre",
+                    method: "POST",
+                    data: {
+                        id: id_recipe
+                    },
+                    success: function(response) {
+                        console.log("chosen" + response);
+                        $('#list-group-chosen').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
+            }
+
+            function findGetParameter(parameterName) {
+                let result = null,
+                    tmp = [];
+                location.search
+                    .substr(1)
+                    .split("&")
+                    .forEach(function(item) {
+                        tmp = item.split("=");
+                        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                    });
+                return result;
+            }
+
+            function active(ele) {
+                console.log(ele);
+                if (oldClicked == ele) {
+
+                } else {
+                    ele.classList.add("active");
+                    if (oldClicked != "") {
+                        oldClicked.classList.remove("active");
+                    }
+                    oldClicked = ele;
+                    idClick = ele.id;
+                    console.log(idClick);
+                }
+            }
+
+            function moveRight() {
+                let list = document.getElementById("list-group-chosen");
+                let child = document.getElementById(idClick);
+                child.classList.add("ingredient");
+                list.appendChild(child);
+            }
+
+            function moveLeft() {
+                let list = document.getElementById("list-group-not-chosen");
+                let child = document.getElementById(idClick);
+                child.classList.remove("ingredient");
+                list.appendChild(child);
+            }
+
+            function add() {
+                let custom = '0';
+                if ($('#custom').checked) {
+                    custom = '1';
+                }
+                let ingredients = [];
+
+                let element = document.getElementsByClassName("ingredient");
+                console.log(element);
+                for (let ing of element) {
+                    ingredients.push(ing.id);
+                }
+                console.log(ingredients);
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandler",
+                    method: "POST",
+                    data: {
+                        id: id_recipe,
+                        name: $('#name').find(":selected").text(),
+                        desc: $('#description').val(),
+                        instru: $('#instru').val(),
+                        is_custom: custom,
+                        product: $('#name').val(),
+                        ingre: ingredients
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur dans l'ajout de la recette");
+                    }
+                });
+            }
+        </script>
+</body>
+
+</html>
