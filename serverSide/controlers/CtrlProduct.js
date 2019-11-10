@@ -29,13 +29,13 @@ class CtrlProduct {
 
                 ul += "<li class='nav-item'><a data-toggle='tab' href='#"+lang.name+"' class='nav-link "+isTabActive+"'>"+lang.name+"</a></li>";
 
-                tabContent += `<div id=`+lang.name+` class='tab-pane fade in `+isTabActive+`'>
+                tabContent += `<div id=`+lang.name+` class='tab-pane fade in `+isTabActive+`' data-langId=`+lang.id+`>
                                 <div class='wrapper-inputLabel-productModal modal-single-wrapper'>
                                         <div class='wrapper-modal-label'>
                                             <label>Nom du produit</label>
                                         </div>
                                         <div class='wrapper-modal-input'>
-                                            <input type='text' name='' class='form-control'/>
+                                            <input type='text' name='' class='form-control productName'/>
                                         </div>
                                     </div>
                                     <div class='wrapper-inputLabel-productModal modal-single-wrapper textarea-wrapper'>
@@ -43,7 +43,7 @@ class CtrlProduct {
                                             <label>Description du produit</label>
                                         </div>
                                         <div class='wrapper-modal-input'>
-                                            <textarea></textarea>
+                                            <textarea class='productDescription form-control'></textarea>
                                         </div>
                                     </div>
                                     <div class='wrapper-inputLabel-productModal modal-single-wrapper textarea-wrapper'>
@@ -51,7 +51,7 @@ class CtrlProduct {
                                             <label>Conseils d'utilisation du produit</label>
                                         </div>
                                         <div class='wrapper-modal-input'>
-                                            <textarea></textarea>
+                                            <textarea class='productAdvice form-control'></textarea>
                                         </div>
                                  </div>
                                 </div>`;
@@ -67,6 +67,48 @@ class CtrlProduct {
             return  generatedHTML;
         });
 
+    }
+
+
+    //Loads all the tags except the one precised in the except tags (can be undefined)
+    loadAllTags(exceptTags)
+    {
+        return this._mgrProduct.loadAllTags(exceptTags).then(function(res){
+            let html = "";
+
+            if(res != undefined && res.length > 0)
+            {
+                res.forEach(function(row){
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
+                });                
+            }
+
+
+            return html;
+        });
+    }
+
+    //Loads every categories that exist
+    //@productCategoryId is optional, given the category id
+    //it can identify if the given category is related to the product and make it selected
+    loadAllCategories(productCategoryId)
+    {
+        return this._mgrProduct.loadAllCategories().then(function(res){
+            let html = "";
+
+            if(res != undefined)
+            {
+
+                 res.forEach(function(row){
+                                  console.log(row.id);
+                console.log(productCategoryId);
+                    html += "<option "+(row.id == productCategoryId ? "selected" : "")+" value="+row.id+">"+row.value+"</option>";
+                });               
+            }
+
+
+            return html;
+        });
     }
 
     getCommentsIndex(code_lang) {
@@ -166,44 +208,9 @@ class CtrlProduct {
         });
     }
 
-    //Loads all the tags except the one precised in the except tags (can be undefined)
-    loadAllTags(exceptTags)
-    {
-        return this._mgrProduct.loadAllTags(exceptTags).then(function(res){
-            let html = "";
-
-            if(res != undefined && res.length > 0)
-            {
-                res.forEach(function(row){
-                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
-                });                
-            }
 
 
-            return html;
-        });
-    }
 
-    //@productCategoryId is optional
-    loadAllCategories(productCategoryId)
-    {
-        return this._mgrProduct.loadAllCategories().then(function(res){
-            let html = "";
-
-            if(res != undefined)
-            {
-
-                 res.forEach(function(row){
-                                  console.log(row.id);
-                console.log(productCategoryId);
-                    html += "<option "+(row.id == productCategoryId ? "selected" : "")+" value="+row.id+">"+row.value+"</option>";
-                });               
-            }
-
-
-            return html;
-        });
-    }
 
     //adds a product in the DB
     //@productInfos are the infos

@@ -326,8 +326,8 @@ app.get("/manageProduct", function(req, res) {
     if (true) { //req.session.userId != undefined && req.session.isAdmin == 1
         let ctrlProduct = new CtrlProduct();
 
-        ctrlProduct.generateAddProductTabs().then(function(modalTabs){
-            res.render("manageProduct.ejs",{addProductTabs: modalTabs});
+        Promise.all([ctrlProduct.generateAddProductTabs(),ctrlProduct.loadAllTags(),ctrlProduct.loadAllCategories()]).then(function(results){
+            res.render("manageProduct.ejs",{addProductTabs: results[0],availableTags: results[1],availableCategories: results[2]});
         });
 
     } else {

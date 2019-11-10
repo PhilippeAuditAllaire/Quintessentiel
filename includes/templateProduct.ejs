@@ -1,109 +1,97 @@
-			<div class="wrapper-form-add-product">
-				<form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST" id="formProduct">
-				<div class="wrapper-input-label">
-					<div class="wrapper-label">
-						<label for="inputName">Nom</label>
-					</div>
-					<div class="wrapper-input">
-						<input type="text" id="inputName" class="form-control" value="<%- productName %>" required/>
-					</div>
-				</div>
-				<div class="wrapper-input-label">
-					<div class="wrapper-label">
-						<label for="inputCostPrice">Prix coûtant</label>
-					</div>
-					<div class="wrapper-input">
-						<input type="number" id="inputCostPrice" class="form-control" min="0.00" step="0.01" value="<%- productCostPrice %>"/>
-					</div>
-				</div>
-				<div class="wrapper-input-label">
-					<div class="wrapper-label">
-						<label for="inputRetailPrice">Prix au détail</label>
-					</div>
-					<div class="wrapper-input">
-						<input type="number" id="inputRetailPrice" class="form-control" min="0.00" step="0.01" value="<%- productRetailPrice %>"/>
-					</div>
-				</div>
-				<div class="wrapper-input-label">
-					<div class="wrapper-label">
-						<label for="inputQty">Quantité</label>
-					</div>
-					<div class="wrapper-input">
-						<input type="number" id="inputQty" class="form-control" min="0" value="<%- productQty %>" required/>
-					</div>
-				</div>
-				<div class="wrapper-input-label">
-					<div class="wrapper-label">
-						<label for="inputFile">Image</label>
-					</div>
-					<div class="wrapper-input">
-						<input type="file" id="inputFile" name="imgProduct" <%- isFileRequired %>/>
-					</div>
-				</div>
-				<div class="wrapper-input-label" id="wrapperCategory">
-					<div class="wrapper-label">
-						<label for="selectCategory">Catégorie</label>
-					</div>
-					<div class="wrapper-input">
-						<select class="form-control" id="selectCategory" required>
-							<option disabled selected>Veuillez sélectionner une catégorie</option>
-							<%- allCategories %>
-						</select>
-					</div>
-				</div>
-				<div class="wrapper-input-label" id="wrapperInputLabelTags">
-					<div class="wrapper-label">
-						<label>Étiquettes</label>
-					</div>
-					<div class="wrapper-input">
-						<div class="availableTags">
-							<div class="left-available-wrapper">
-								<p>Étiquettes disponibles</p>		
-								<div class="list-group" id="available-listbox">
-									<%- availableTags %>
-								</div>
-							</div>
-							</div>
+                   <div class="modal-product-double-wrapper">
+                        <div class="wrapper-inputLabel-productModal">
+                            <div class="wrapper-modal-label">
+                                <label>Prix coûtant</label>
+                            </div>
+                            <div class="wrapper-modal-input">
+                                <input type="number" name="" class="costPrice form-control"/>
+                            </div>
+                        </div>
+                        <div class="wrapper-inputLabel-productModal">
+                            <div class="wrapper-modal-label">
+                                <label>Prix au détail</label>
+                            </div>
+                            <div class="wrapper-modal-input">
+                                <input type="number" class="retailPrice form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-product-double-wrapper">
+                        <div class="wrapper-inputLabel-productModal">
+                            <div class="wrapper-modal-label">
+                                <label>Quantité</label>
+                            </div>
+                            <div class="wrapper-modal-input">
+                                <input type="number" class="quantity form-control"/>
+                            </div>
+                        </div>
+                        <div class="wrapper-inputLabel-productModal">
+                            <div class="wrapper-modal-label">
+                                <label>Poid</label>
+                            </div>
+                            <div class="wrapper-modal-input">
+                                <input type="number" class="weight form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                        <div class="wrapper-modal-label">
+                            <label>Catégorie</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <select class="form-control" class="category">
+                                <option selected disabled>Veuillez choisir une catégorie</option>
+                                <%- availableCategories %>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                        <div class="wrapper-modal-label">
+                            <label>Image</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="file" name="image" class="image"/>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal tagsList modal-single-wrapper">
+                        <div class="availableTags">
+                            <div class="left-available-wrapper">
+                                <p>Étiquettes disponibles</p>       
+                                <div class="list-group" id="available-listbox">
+                                   <%- availableTags %>
+                                </div>
+                            </div>
+                        </div>
 
-						<div class="wrapper-btnChange">
-							<button id="btnRight">></button>
-							<button id="btnLeft"><</button>
-						</div>
-						<div class="choosenTags">
-							<div class="right-choosen-wrapper">
-								<p>Étiquettes attribuées</p>		
-								<div class="list-group" id="attributed-listbox">
-			  						<%- attributedTags %>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="wrapper-input-label" id="wrapperDescription">
-					<div class="wrapper-label">
-						<label for="txtAreaDescription">Description</label>
-					</div>
-					<div class="wrapper-input">
-						<textarea id="txtAreaDescription" class="form-control" required><%- textAreaDescription %></textarea>
-					</div>
-				</div>
-				<div class="wrapper-input-label" id="wrapperDescription">
-					<div class="wrapper-label">
-						<label for="txtAreaAdvice">Conseils d'utilisation</label>
-					</div>
-					<div class="wrapper-input">
-						<textarea class="form-control" id="txtAreaAdvice" required><%- textAreaAdvice %></textarea>
-					</div>
-				</div>
-				<div class="wrapper-input-label" id="wrapperVedette">
-						
-						<label><input type="checkbox" id="inputVedette" <%- chckFeatured %>/><span>Item vedette</span></label>
-						<label><input type="checkbox" id="inputVisible" <%- chckVisible %>/><span>Item visible</span></label>
-				</div>
-				<div class="wrapperBtnEnd">
-					<div class="wrapper-cancel"><input type="submit" class="btn btn-success" value="Annuler" onclick="self.close()"></div>
-					<div class="wrapper-submit"><input type="submit" class="btn btn-success" id="btnSend" value="Compléter"></div>
-				</div>
-			</form>
-			</div>
-			<script src="./javascript/listbox.js"></script>
+                        <div class="wrapper-btnChange">
+                            <button id="btnRight">></button>
+                            <button id="btnLeft"><</button>
+                        </div>
+                        <div class="choosenTags">
+                            <div class="right-choosen-wrapper">
+                                <p>Étiquettes attribuées</p>        
+                                <div class="list-group" id="attributed-listbox">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-product-double-wrapper wrapper-checkbox">
+                        <div class="wrapper-inputLabel-productModal">
+                            <div class="wrapper-modal-label">
+                                <label>Produit vedette</label>
+                            </div>
+                            <div class="wrapper-modal-input">
+                                <input type="checkbox" class="chckFeatured"/>
+                            </div>
+                        </div>
+                        <div class="wrapper-inputLabel-productModal visibleCheckbox">
+                            <div class="wrapper-modal-label">
+                                <label>Produit visible</label>
+                            </div>
+                            <div class="wrapper-modal-input">
+                                <input type="checkbox" class="chckVisible"/>
+                            </div>
+                        </div>
+                      </div>
+                 </div>
