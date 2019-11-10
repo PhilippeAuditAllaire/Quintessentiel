@@ -206,7 +206,7 @@ th{
 	min-height:200px;
 }
 
-.addProductUniqueFields{
+.addProductFields{
 	display: flex;
 	flex-direction: column;
 }
@@ -231,7 +231,7 @@ th{
 	max-width:800px;
 }
 
-.addProductUniqueFields{
+.addProductFields{
 	width:90%;
 	margin:auto;
 }
@@ -334,4 +334,35 @@ th{
 
 .modal-single-wrapper .wrapper-modal-input{
 	width:50%;
+}
+
+.textarea-wrapper{
+	display: flex;
+	flex-direction: column;
+}
+
+.textarea-wrapper .wrapper-modal-input,.textarea-wrapper .wrapper-modal-label{
+	width:80%;
+	margin:auto;
+}
+
+.textarea-wrapper .wrapper-modal-label label{
+	width:100%;
+	display: flex;
+	justify-content: center;
+}
+.textarea-wrapper .wrapper-modal-input textarea{
+	width:100%;
+	height:90px;
+
+}
+
+.tab-content{
+	border-bottom: 1px solid black;
+    padding-bottom: 30px;
+}
+
+.modal-header .modal-title{
+	width:100%;
+	text-align: center;
 }

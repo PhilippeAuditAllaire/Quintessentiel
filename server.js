@@ -325,8 +325,11 @@ app.get("/adminConnection", function(req, res) {
 app.get("/manageProduct", function(req, res) {
     if (true) { //req.session.userId != undefined && req.session.isAdmin == 1
         let ctrlProduct = new CtrlProduct();
-        //ctrlProduct.generateAddProductTabs();
-        res.render("manageProduct.ejs");
+
+        ctrlProduct.generateAddProductTabs().then(function(modalTabs){
+            res.render("manageProduct.ejs",{addProductTabs: modalTabs});
+        });
+
     } else {
         res.redirect("/adminConnection?pleaseConnect=true");
     }

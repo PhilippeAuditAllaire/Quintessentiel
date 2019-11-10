@@ -11,7 +11,62 @@ class CtrlProduct {
     //based on the number of languages
     generateAddProductTabs()
     {
-        let availableLanguages = this._mgrProduct.loadAvailableLanguages();
+        return this._mgrProduct.loadAvailableLanguages().then(function(res){
+            let generatedHTML;
+            let ul = "<ul class='nav nav-tabs'>";
+            let tabContent = "<div class='tab-content'>";
+
+            let i = 0;
+
+            res.forEach(function(lang){
+                
+
+                let isTabActive = "";
+
+                if(i == 0){
+                    isTabActive = "active show";
+                }
+
+                ul += "<li class='nav-item'><a data-toggle='tab' href='#"+lang.name+"' class='nav-link "+isTabActive+"'>"+lang.name+"</a></li>";
+
+                tabContent += `<div id=`+lang.name+` class='tab-pane fade in `+isTabActive+`'>
+                                <div class='wrapper-inputLabel-productModal modal-single-wrapper'>
+                                        <div class='wrapper-modal-label'>
+                                            <label>Nom du produit</label>
+                                        </div>
+                                        <div class='wrapper-modal-input'>
+                                            <input type='text' name='' class='form-control'/>
+                                        </div>
+                                    </div>
+                                    <div class='wrapper-inputLabel-productModal modal-single-wrapper textarea-wrapper'>
+                                        <div class='wrapper-modal-label'>
+                                            <label>Description du produit</label>
+                                        </div>
+                                        <div class='wrapper-modal-input'>
+                                            <textarea></textarea>
+                                        </div>
+                                    </div>
+                                    <div class='wrapper-inputLabel-productModal modal-single-wrapper textarea-wrapper'>
+                                        <div class='wrapper-modal-label'>
+                                            <label>Conseils d'utilisation du produit</label>
+                                        </div>
+                                        <div class='wrapper-modal-input'>
+                                            <textarea></textarea>
+                                        </div>
+                                 </div>
+                                </div>`;
+                i++;
+            });
+
+            ul += "</ul>";
+            tabContent += "</div>";
+
+
+            generatedHTML = ul + tabContent;
+
+            return  generatedHTML;
+        });
+
     }
 
     getCommentsIndex(code_lang) {

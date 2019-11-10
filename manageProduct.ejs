@@ -19,124 +19,151 @@
             </button>
           </div>
           <div class="modal-body">
-            <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-              <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-              <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-            </ul>
+            
+            <div class="addProductFields">
+                <%- addProductTabs %>
+                <!--
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                  <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+                  <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+                </ul>
 
-            <div class="tab-content">
-              <div id="home" class="tab-pane fade in active">
-                <h3>HOME</h3>
-                <p>Some content.</p>
-              </div>
-              <div id="menu1" class="tab-pane fade">
-                <h3>Menu 1</h3>
-                <p>Some content in menu 1.</p>
-              </div>
-              <div id="menu2" class="tab-pane fade">
-                <h3>Menu 2</h3>
-                <p>Some content in menu 2.</p>
-              </div>
-            </div>
+                <div class="tab-content">
+                  <div id="home" class="tab-pane fade in active">
+                    <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                        <div class="wrapper-modal-label">
+                            <label>Nom du produit</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="text" name="" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal modal-single-wrapper textarea-wrapper">
+                        <div class="wrapper-modal-label">
+                            <label>Description du produit</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal modal-single-wrapper textarea-wrapper">
+                        <div class="wrapper-modal-label">
+                            <label>Conseils d'utilisation du produit</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                  </div>
+                  <div id="menu1" class="tab-pane fade">
+
+                  </div>
+                  <div id="menu2" class="tab-pane fade">
+                    <h3>Menu 2</h3>
+                    <p>Some content in menu 2.</p>
+                  </div>
+                </div>
+            -->
+
+                <div class="modal-product-double-wrapper">
+                    <div class="wrapper-inputLabel-productModal">
+                        <div class="wrapper-modal-label">
+                            <label>Prix coûtant</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="number" name="" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal">
+                        <div class="wrapper-modal-label">
+                            <label>Prix au détail</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="number" name="" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-product-double-wrapper">
+                    <div class="wrapper-inputLabel-productModal">
+                        <div class="wrapper-modal-label">
+                            <label>Quantité</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="number" name="" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal">
+                        <div class="wrapper-modal-label">
+                            <label>Poid</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="number" name="" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                    <div class="wrapper-modal-label">
+                        <label>Catégorie</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <select class="form-control">
+                            <option selected disabled>Veuillez choisir une catégorie</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                    <div class="wrapper-modal-label">
+                        <label>Image</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <input type="file" name=""/>
+                    </div>
+                </div>
+                <div class="wrapper-inputLabel-productModal tagsList modal-single-wrapper">
+                    <div class="availableTags">
+                        <div class="left-available-wrapper">
+                            <p>Étiquettes disponibles</p>       
+                            <div class="list-group" id="available-listbox">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wrapper-btnChange">
+                        <button id="btnRight">></button>
+                        <button id="btnLeft"><</button>
+                    </div>
+                    <div class="choosenTags">
+                        <div class="right-choosen-wrapper">
+                            <p>Étiquettes attribuées</p>        
+                            <div class="list-group" id="attributed-listbox">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-product-double-wrapper wrapper-checkbox">
+                    <div class="wrapper-inputLabel-productModal">
+                        <div class="wrapper-modal-label">
+                            <label>Produit vedette</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal visibleCheckbox">
+                        <div class="wrapper-modal-label">
+                            <label>Produit visible</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                  </div>
+             </div>
           </div>
-          <div class="addProductUniqueFields">
-            <div class="modal-product-double-wrapper">
-                <div class="wrapper-inputLabel-productModal">
-                    <div class="wrapper-modal-label">
-                        <label>Prix coûtant</label>
-                    </div>
-                    <div class="wrapper-modal-input">
-                        <input type="number" name="" class="form-control"/>
-                    </div>
-                </div>
-                <div class="wrapper-inputLabel-productModal">
-                    <div class="wrapper-modal-label">
-                        <label>Prix au détail</label>
-                    </div>
-                    <div class="wrapper-modal-input">
-                        <input type="number" name="" class="form-control"/>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-product-double-wrapper">
-                <div class="wrapper-inputLabel-productModal">
-                    <div class="wrapper-modal-label">
-                        <label>Quantité</label>
-                    </div>
-                    <div class="wrapper-modal-input">
-                        <input type="number" name="" class="form-control"/>
-                    </div>
-                </div>
-                <div class="wrapper-inputLabel-productModal">
-                    <div class="wrapper-modal-label">
-                        <label>Poid</label>
-                    </div>
-                    <div class="wrapper-modal-input">
-                        <input type="number" name="" class="form-control"/>
-                    </div>
-                </div>
-            </div>
-            <div class="wrapper-inputLabel-productModal modal-single-wrapper">
-                <div class="wrapper-modal-label">
-                    <label>Catégorie</label>
-                </div>
-                <div class="wrapper-modal-input">
-                    <select class="form-control">
-                        <option selected disabled>Veuillez choisir une catégorie</option>
-                    </select>
-                </div>
-            </div>
-            <div class="wrapper-inputLabel-productModal modal-single-wrapper">
-                <div class="wrapper-modal-label">
-                    <label>Image</label>
-                </div>
-                <div class="wrapper-modal-input">
-                    <input type="file" name=""/>
-                </div>
-            </div>
-            <div class="wrapper-inputLabel-productModal tagsList modal-single-wrapper">
-                <div class="availableTags">
-                    <div class="left-available-wrapper">
-                        <p>Étiquettes disponibles</p>       
-                        <div class="list-group" id="available-listbox">
-                           
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wrapper-btnChange">
-                    <button id="btnRight">></button>
-                    <button id="btnLeft"><</button>
-                </div>
-                <div class="choosenTags">
-                    <div class="right-choosen-wrapper">
-                        <p>Étiquettes attribuées</p>        
-                        <div class="list-group" id="attributed-listbox">
-                           
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-product-double-wrapper wrapper-checkbox">
-                <div class="wrapper-inputLabel-productModal">
-                    <div class="wrapper-modal-label">
-                        <label>Produit vedette</label>
-                    </div>
-                    <div class="wrapper-modal-input">
-                        <input type="checkbox" />
-                    </div>
-                </div>
-                <div class="wrapper-inputLabel-productModal visibleCheckbox">
-                    <div class="wrapper-modal-label">
-                        <label>Produit visible</label>
-                    </div>
-                    <div class="wrapper-modal-input">
-                        <input type="checkbox" />
-                    </div>
-                </div>
-              </div>
-         </div>
+      
           <div class="modal-footer">
             <button type="button" class="btn btn-primary">Save changes</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
