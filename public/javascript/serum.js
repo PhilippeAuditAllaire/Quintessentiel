@@ -40,7 +40,7 @@ $(document).ready(function (){
             event.preventDefault();
             alert("Erreur dans le courriel.");
         }
-        if(!(reText.test(timeTrouble))){
+        if(!(reNum.test(timeTrouble))){
             event.preventDefault();
             alert("Erreur dans la durée des maux.");
         }

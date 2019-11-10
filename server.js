@@ -354,6 +354,7 @@ app.get("/updateRecipe", function(req, res) {
     } else {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
+});
 
 app.get("/addProduct",function(req,res){
 	let ctrlProduct = new CtrlProduct();
@@ -392,8 +393,9 @@ app.get("/modifyProduct",function(req,res){
 	{
 		let ctrlProduct = new CtrlProduct();
 		let productId = req.query.productId;
+        console.log(productId);
 		Promise.all([ctrlProduct.loadProductInfosById(productId),ctrlProduct.loadTagsForBoxes(productId)]).then(function(result){
-			console.log(result);
+			
 			ctrlProduct.loadAllCategories(result[0].category).then(function(optionBox){
 				res.render("modifyproduct.ejs",{availableTags: result[1][1],allCategories: optionBox,
 				productName: result[0].name,productCostPrice: result[0].costPrice,productRetailPrice: result[0].retailPrice,productQty: result[0].qty,
