@@ -49,7 +49,7 @@
 
 	   $('.addProduct').submit(function(e){
 	     e.preventDefault();
-
+	     console.log(getProductId())
 			     $(this).ajaxSubmit({
 			       data: {
 			       	id: getProductId(),
