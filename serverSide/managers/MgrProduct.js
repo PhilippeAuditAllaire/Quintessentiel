@@ -5,6 +5,14 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
+    //Loads all the languages that are in the DB
+    //@Returns a promise
+    loadAvailableLanguages()
+    {
+        let query = "SELECT * FROM Language";
+        return this._queryEngine.executeQuery(query);
+    }
+
     loadCommentSlider(code_lang) {
         let query = "SELECT * FROM comment JOIN users ON users.id = comment.idUser JOIN commentstatus ON commentstatus.id = comment.idStatus WHERE commentstatus.name = 'Approved'";
 

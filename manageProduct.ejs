@@ -7,9 +7,144 @@
 	<link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
-	<script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
 </head>
 <body>
+    <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ajout d'un produit</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+              <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+              <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div id="home" class="tab-pane fade in active">
+                <h3>HOME</h3>
+                <p>Some content.</p>
+              </div>
+              <div id="menu1" class="tab-pane fade">
+                <h3>Menu 1</h3>
+                <p>Some content in menu 1.</p>
+              </div>
+              <div id="menu2" class="tab-pane fade">
+                <h3>Menu 2</h3>
+                <p>Some content in menu 2.</p>
+              </div>
+            </div>
+          </div>
+          <div class="addProductUniqueFields">
+            <div class="modal-product-double-wrapper">
+                <div class="wrapper-inputLabel-productModal">
+                    <div class="wrapper-modal-label">
+                        <label>Prix coûtant</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <input type="number" name="" class="form-control"/>
+                    </div>
+                </div>
+                <div class="wrapper-inputLabel-productModal">
+                    <div class="wrapper-modal-label">
+                        <label>Prix au détail</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <input type="number" name="" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-product-double-wrapper">
+                <div class="wrapper-inputLabel-productModal">
+                    <div class="wrapper-modal-label">
+                        <label>Quantité</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <input type="number" name="" class="form-control"/>
+                    </div>
+                </div>
+                <div class="wrapper-inputLabel-productModal">
+                    <div class="wrapper-modal-label">
+                        <label>Poid</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <input type="number" name="" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                <div class="wrapper-modal-label">
+                    <label>Catégorie</label>
+                </div>
+                <div class="wrapper-modal-input">
+                    <select class="form-control">
+                        <option selected disabled>Veuillez choisir une catégorie</option>
+                    </select>
+                </div>
+            </div>
+            <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                <div class="wrapper-modal-label">
+                    <label>Image</label>
+                </div>
+                <div class="wrapper-modal-input">
+                    <input type="file" name=""/>
+                </div>
+            </div>
+            <div class="wrapper-inputLabel-productModal tagsList modal-single-wrapper">
+                <div class="availableTags">
+                    <div class="left-available-wrapper">
+                        <p>Étiquettes disponibles</p>       
+                        <div class="list-group" id="available-listbox">
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wrapper-btnChange">
+                    <button id="btnRight">></button>
+                    <button id="btnLeft"><</button>
+                </div>
+                <div class="choosenTags">
+                    <div class="right-choosen-wrapper">
+                        <p>Étiquettes attribuées</p>        
+                        <div class="list-group" id="attributed-listbox">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-product-double-wrapper wrapper-checkbox">
+                <div class="wrapper-inputLabel-productModal">
+                    <div class="wrapper-modal-label">
+                        <label>Produit vedette</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <input type="checkbox" />
+                    </div>
+                </div>
+                <div class="wrapper-inputLabel-productModal visibleCheckbox">
+                    <div class="wrapper-modal-label">
+                        <label>Produit visible</label>
+                    </div>
+                    <div class="wrapper-modal-input">
+                        <input type="checkbox" />
+                    </div>
+                </div>
+              </div>
+         </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 	<%include ./includes/appNavbar.ejs%>
 	<section class="wrapper-content-manageProduct">
 		<div class="wrapper-body-mgProduct">
@@ -31,7 +166,7 @@
 				</div>
 				<div class="wrapper-right-btn">
 					<div class="wrapper-btn">
-						<a href="./addProduct" class="btnApp" target="_blank">+</a>
+						<a href="#" class="btnApp">+</a>
 					</div>
 				</div>
 			</div>
@@ -85,12 +220,23 @@
 	<script src="./javascript/renderer.js"></script>
 	<script src="./javascript/tableProducts.js"></script>
 	<script src="./javascript/resizeWindow.js"></script>
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 	<script>
+        let addModal = $("#addModal");
+
         function openUpdateProduct(element){
             let productId = element.getAttribute("data-product-id");
 
             window.open("./modifyProduct?productId="+productId, '_blank');
         }
+
+        $(".btnApp").on("click",function(e){
+            e.preventDefault();
+            addModal.modal()
+        })
 	</script>
 </body>
 </html>

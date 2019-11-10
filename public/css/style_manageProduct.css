@@ -206,3 +206,132 @@ th{
 	min-height:200px;
 }
 
+.addProductUniqueFields{
+	display: flex;
+	flex-direction: column;
+}
+
+.wrapper-inputLabel-productModal{
+	display: flex;
+	flex-direction: row;
+}
+
+.wrapper-modal-label{
+	display: flex;
+}
+
+.wrapper-modal-label label{
+	margin-bottom:0;
+	display: flex;
+	align-self: center;
+}
+
+.modal-dialog{
+	width:80%;
+	max-width:800px;
+}
+
+.addProductUniqueFields{
+	width:90%;
+	margin:auto;
+}
+
+.wrapper-modal-label{
+	width:25%;
+}
+
+.wrapper-modal-input{
+	width:75%;
+}
+
+.modal-product-double-wrapper{
+	display: flex;
+	flex-direction: row;
+	margin-top:15px;
+	justify-content: space-between;
+}
+.modal-single-wrapper{
+	margin-top:15px;
+}
+.wrapper-inputLabel-productModal{
+	display: flex;
+	flex-direction: column;
+	width:45%;
+}
+
+.wrapper-inputLabel-productModal .wrapper-modal-label{
+	width:100%;
+}
+
+.tagsList{
+	display: flex;
+	flex-direction: row;
+	width:100%;
+}
+
+.tagsList div{
+	display: flex;
+}
+
+.wrapper-btnChange{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.wrapper-btnChange button{
+	width:45px;
+	height:45px;
+	margin-right:10px;
+	margin-left:10px;
+}
+
+.wrapper-btnChange button:nth-child(2){
+	margin-top:15px;
+}
+
+.left-available-wrapper,.right-choosen-wrapper{
+	width:100%;
+	display:flex;
+	flex-direction: column;
+}
+
+.availableTags,.choosenTags{
+	flex-grow: 1;
+}
+
+.wrapper-inputLabel-productModal{
+	display: flex;
+	flex-direction: row;
+}
+
+.wrapper-inputLabel-productModal input[type=checkbox]{
+	transform: scale(1.5);
+}
+
+.wrapper-checkbox .wrapper-modal-label{
+	width: auto;
+	white-space: pre;
+}
+
+.wrapper-modal-label,.tagsList p{
+	font-size:20px;
+}
+
+.wrapper-checkbox .wrapper-modal-input{
+	margin-left:20px;
+	display: flex;
+    align-self: center;
+}
+
+.modal-single-wrapper{
+	width:100%;
+}
+
+.modal-single-wrapper .wrapper-modal-label{
+	width:25%;
+}
+
+.modal-single-wrapper .wrapper-modal-input{
+	width:50%;
+}

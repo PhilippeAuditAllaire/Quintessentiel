@@ -7,6 +7,13 @@ class CtrlProduct {
     }
 
 
+    //Generates the tabs of the add product modal
+    //based on the number of languages
+    generateAddProductTabs()
+    {
+        let availableLanguages = this._mgrProduct.loadAvailableLanguages();
+    }
+
     getCommentsIndex(code_lang) {
         let products = this._mgrProduct.loadCommentSlider();
     }

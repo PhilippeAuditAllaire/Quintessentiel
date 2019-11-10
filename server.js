@@ -315,7 +315,7 @@ app.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
 
 //Application routes
 app.get("/", function(req, res) {
-    res.redirect("/adminConnection");
+    res.redirect("/manageProduct");//res.redirect("/adminConnection");
 });
 
 app.get("/adminConnection", function(req, res) {
@@ -323,7 +323,9 @@ app.get("/adminConnection", function(req, res) {
 });
 
 app.get("/manageProduct", function(req, res) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+    if (true) { //req.session.userId != undefined && req.session.isAdmin == 1
+        let ctrlProduct = new CtrlProduct();
+        //ctrlProduct.generateAddProductTabs();
         res.render("manageProduct.ejs");
     } else {
         res.redirect("/adminConnection?pleaseConnect=true");
@@ -356,27 +358,6 @@ app.get("/updateRecipe", function(req, res) {
     }
 });
 
-app.get("/addProduct",function(req,res){
-	let ctrlProduct = new CtrlProduct();
-
-	//Load all the required HTML then renders the page
-	Promise.all([ctrlProduct.loadAllTags(),ctrlProduct.loadAllCategories()]).then(function(results){
-
-		if(req.session.userId != undefined && req.session.isAdmin == 1)
-		{
-			res.render("addProduct.ejs",{availableTags: results[0],allCategories: results[1],
-				productName: "",productCostPrice: "0.00",productRetailPrice: "0.00",productQty: "0",
-				productWeight: "0.00",attributedTags: "",textAreaDescription:"",textAreaAdvice: "",
-				chckFeatured:"",chckVisible:"",isFileRequired: "required"});	
-
-		}
-		else{
-			res.redirect("/adminConnection?pleaseConnect=true");
-		}
-
-	});
-});
-
 app.get("/manageCategory",function(req,res){
 	if(req.session.userId != undefined && req.session.isAdmin == 1)
 	{
@@ -393,7 +374,7 @@ app.get("/modifyProduct",function(req,res){
 	{
 		let ctrlProduct = new CtrlProduct();
 		let productId = req.query.productId;
-        console.log(productId);
+
 		Promise.all([ctrlProduct.loadProductInfosById(productId),ctrlProduct.loadTagsForBoxes(productId)]).then(function(result){
 			
 			ctrlProduct.loadAllCategories(result[0].category).then(function(optionBox){
