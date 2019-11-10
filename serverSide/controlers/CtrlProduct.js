@@ -49,6 +49,7 @@ class CtrlProduct {
     loadProductInfosById(productId)
     {
         return this._mgrProduct.loadProductInfosById(productId).then(function(res){
+            console.log(res);
             let product = new Product();
             product.id = res[0][0].id;
             product.retailPrice = res[0][0].retailPrice;
@@ -169,6 +170,9 @@ class CtrlProduct {
         });
     }
 
+
+getCommentsIndex(code_lang) {
+        let products = this._mgrProduct.loadCommentSlider();
 
         return products.then(function(val) {
             let catalogue_product = [];
