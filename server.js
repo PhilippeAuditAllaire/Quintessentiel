@@ -395,19 +395,22 @@ app.get("/modifyProduct",function(req,res){
 	}
 });
 
-app.post('/addProduct', upload.single('imgProduct'), function(req, res, next) {
-	if(req.session.userId != undefined && req.session.isAdmin == 1)
+app.post('/addProduct', upload.single('image'), function(req, res, next) {
+	if(true) //req.session.userId != undefined && req.session.isAdmin == 1
 	{
 	    let imgName = req.file.filename;
 	    let data = req.body;
 	    data.imgName = imgName;
 	    
 	     let ctrlProduct = new CtrlProduct();
-	     ctrlProduct.addProduct(data).then(function(result){
+         console.log("Added a product")
+         console.log(data);
+	     /*ctrlProduct.addProduct(data).then(function(result){
 	     	res.send(result)
-	     });
+	     });*/
    	}
 	else{
+        console.log("here")
 		res.redirect("/adminConnection?pleaseConnect=true");
 	}
 });

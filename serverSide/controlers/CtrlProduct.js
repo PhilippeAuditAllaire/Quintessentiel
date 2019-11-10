@@ -43,7 +43,7 @@ class CtrlProduct {
                                             <label>Description du produit</label>
                                         </div>
                                         <div class='wrapper-modal-input'>
-                                            <textarea class='productDescription form-control'></textarea>
+                                            <textarea class='description form-control'></textarea>
                                         </div>
                                     </div>
                                     <div class='wrapper-inputLabel-productModal modal-single-wrapper textarea-wrapper'>
@@ -51,7 +51,7 @@ class CtrlProduct {
                                             <label>Conseils d'utilisation du produit</label>
                                         </div>
                                         <div class='wrapper-modal-input'>
-                                            <textarea class='productAdvice form-control'></textarea>
+                                            <textarea class='advice form-control'></textarea>
                                         </div>
                                  </div>
                                 </div>`;

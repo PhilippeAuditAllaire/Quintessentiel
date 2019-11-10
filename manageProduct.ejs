@@ -107,11 +107,13 @@
             </div>
         </div>
 	</section>
+
     <script src="./javascript/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="./javascript/listbox.js"></script>
         <script src="./javascript/tableProducts.js"></script>
+         <script src="http://malsup.github.com/jquery.form.js"></script> 
 	<script>
         let addModal = $("#addModal");
 
@@ -140,10 +142,14 @@
 
         $('.addProduct').submit(function(e){
                 e.preventDefault();
+                console.log(e.target)
+                let translatedFields = getTranslatedFields(document.getElementById("addModal"));
+                let attributedListbox = getAttributedListboxId();
 
-                
                  $(this).ajaxSubmit({
                    data: {
+                        translatedFields: JSON.stringify(translatedFields),
+                        attributedTags: attributedListbox,
                         costPrice: costPrice.val(),
                         retailPrice: retailPrice.val(),
                         quantity: quantity.val(),
@@ -163,6 +169,40 @@
                
 
         });
+
+
+        //Gets the value of every field
+        //that is needed for a precise language
+        //and returns an object containing all the fields
+        //for this precise languages
+        //@modal is the modal in which to look for those different panes
+        function getTranslatedFields(modal)
+        {
+            let allTabs = modal.getElementsByClassName("tab-pane");
+            console.log(allTabs)
+            let allProductLangObject = [];
+            //For each tabs, put the info in objects
+            for(let i = 0;i < allTabs.length;i++)
+            {
+                let tab = allTabs[i];
+                let langId = tab.getAttribute("data-langid");
+                let productName = tab.getElementsByClassName("productName")[0];
+                console.log(tab.getElementsByClassName("description"));
+                let description = tab.getElementsByClassName("description")[0];
+                let advice = tab.getElementsByClassName("advice")[0];
+
+                let obj = {
+                    langId: langId,
+                    productName: productName.value,
+                    description: description.value,
+                    advice: advice.value
+                }
+
+                allProductLangObject.push(obj)                
+            }
+
+            return allProductLangObject;
+        }
 	</script>
 </body>
 </html>
