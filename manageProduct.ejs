@@ -138,6 +138,7 @@
         let category = $(".category");
         let featured = $(".chckFeatured");
         let visible = $(".chckVisible");
+        let amazonAffiliate = $(".amazonAffiliate");
 
 
         $('.addProduct').submit(function(e){
@@ -145,7 +146,8 @@
                 console.log(e.target)
                 let translatedFields = getTranslatedFields(document.getElementById("addModal"));
                 let attributedListbox = getAttributedListboxId();
-
+                console.log(translatedFields)
+                
                  $(this).ajaxSubmit({
                    data: {
                         translatedFields: JSON.stringify(translatedFields),
@@ -155,8 +157,9 @@
                         quantity: quantity.val(),
                         weight: weight.val(),
                         category: category.val(),
-                        featured: featured.val(),
-                        visible: visible.val()
+                        featured: $(featured)[0].checked,
+                        visible: $(visible)[0].checked,
+                        amazonAffiliate: amazonAffiliate.val()
                    },
                    contentType: 'application/json',
                    success: function(response){
@@ -166,6 +169,8 @@
                    }
 
                });
+
+               
                
 
         });
@@ -179,8 +184,8 @@
         function getTranslatedFields(modal)
         {
             let allTabs = modal.getElementsByClassName("tab-pane");
-            console.log(allTabs)
             let allProductLangObject = [];
+
             //For each tabs, put the info in objects
             for(let i = 0;i < allTabs.length;i++)
             {
@@ -198,10 +203,33 @@
                     advice: advice.value
                 }
 
-                allProductLangObject.push(obj)                
+                if(fieldsAreFilled(productName.value,description.value,advice.value))
+                {
+                   allProductLangObject.push(obj)  
+                }
+                               
             }
 
             return allProductLangObject;
+        }
+
+        //Checks if the fields are filled and returns 
+        //false if not + displays an error message
+        function fieldsAreFilled(name,description,advice){
+
+            if(name == ""){
+                return false;
+            }
+
+            if(description == ""){
+                return false;
+            }
+
+            if(advice == ""){
+                return false;
+            }
+
+            return true;
         }
 	</script>
 </body>

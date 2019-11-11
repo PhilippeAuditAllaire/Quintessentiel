@@ -4,7 +4,7 @@
                                 <label>Prix coûtant</label>
                             </div>
                             <div class="wrapper-modal-input">
-                                <input type="number" name="" class="costPrice form-control"/>
+                                <input type="number" step="0.01" name="" class="costPrice form-control"/>
                             </div>
                         </div>
                         <div class="wrapper-inputLabel-productModal">
@@ -12,7 +12,7 @@
                                 <label>Prix au détail</label>
                             </div>
                             <div class="wrapper-modal-input">
-                                <input type="number" class="retailPrice form-control"/>
+                                <input type="number" step="0.01" class="retailPrice form-control"/>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                                 <label>Poid</label>
                             </div>
                             <div class="wrapper-modal-input">
-                                <input type="number" class="weight form-control"/>
+                                <input type="number" step="0.01" class="weight form-control"/>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             <label>Catégorie</label>
                         </div>
                         <div class="wrapper-modal-input">
-                            <select class="form-control" class="category">
+                            <select class="form-control category">
                                 <option selected disabled>Veuillez choisir une catégorie</option>
                                 <%- availableCategories %>
                             </select>
@@ -51,6 +51,14 @@
                         </div>
                         <div class="wrapper-modal-input">
                             <input type="file" name="image" class="image"/>
+                        </div>
+                    </div>
+                    <div class="wrapper-inputLabel-productModal modal-single-wrapper">
+                        <div class="wrapper-modal-label">
+                            <label>Lien amazon affiliate</label>
+                        </div>
+                        <div class="wrapper-modal-input">
+                            <input type="text" class="amazonAffiliate form-control"/>
                         </div>
                     </div>
                     <div class="wrapper-inputLabel-productModal tagsList modal-single-wrapper">

@@ -7,6 +7,51 @@ class CtrlProduct {
     }
 
 
+    //adds a product in the DB
+    //@productInfos are the infos
+    //the user entered
+    addProduct(productInfos)
+    {
+        //Put the non translatableInfos in this product object
+        let nonTranslatableInfos = new Product();
+        nonTranslatableInfos.image = productInfos.imgName;
+        nonTranslatableInfos.qty = productInfos.quantity;
+        nonTranslatableInfos.featured = (productInfos.featured == "true" ? true : false);
+        nonTranslatableInfos.isVisible = (productInfos.visible == "true" ? true : false);
+        nonTranslatableInfos.amazonAfiliate = productInfos.amazonAffiliate;
+        nonTranslatableInfos.dropWeightGram = productInfos.weight;
+        nonTranslatableInfos.retailPrice = productInfos.retailPrice;
+        nonTranslatableInfos.costPrice = productInfos.costPrice;
+        nonTranslatableInfos.category = productInfos.category;
+        nonTranslatableInfos.tags = productInfos.attributedTags;
+
+        let currentMgrProduct = this._mgrProduct;
+        return this._mgrProduct.addNonTranslatableInfos(nonTranslatableInfos).then(function(res){
+            
+            let insertedId = res.insertId;
+
+            //Now that the product is added, lets add all the text in every languages
+            productInfos.translatedFields.forEach(function(fields){
+                let translatableInfos = new Product();
+
+                translatableInfos.id = insertedId;
+                translatableInfos.name = fields.productName;
+                translatableInfos.description = fields.description;
+                translatableInfos.advice = fields.advice;
+
+                currentMgrProduct.addProductTextFields(fields.langId,translatableInfos).then(function(res){
+                    console.log(res);
+                });                
+            })
+
+        })
+
+        //product.name = productInfos.name;
+        //product.description = productInfos.description
+        //product.advice = productInfos.advice;
+    }
+
+
     //Generates the tabs of the add product modal
     //based on the number of languages
     generateAddProductTabs()
@@ -212,32 +257,7 @@ class CtrlProduct {
 
 
 
-    //adds a product in the DB
-    //@productInfos are the infos
-    //the user entered
-    addProduct(productInfos)
-    {
-        let product = new Product();
-        product.name = productInfos.name;
-        product.image = productInfos.imgName;
-        product.description = productInfos.description
-        product.advice = productInfos.advice;
-        product.qty = productInfos.qty;
-        product.featured = productInfos.isFeatured;
-        product.isVisible = productInfos.isVisible;
-        product.dropWeightGram = productInfos.weight;
-        product.retailPrice = productInfos.retailPrice;
-        product.costPrice = productInfos.costPrice;
-        product.category = productInfos.category;
-        product.tags = productInfos.tags;
 
-        return this._mgrProduct.addProduct(product).then(function(res){
-            return true;
-        })
-        .catch(function(res){
-            return false;
-        });
-    }
 
 
 getCommentsIndex(code_lang) {

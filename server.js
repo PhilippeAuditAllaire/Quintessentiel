@@ -401,13 +401,13 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 	    let imgName = req.file.filename;
 	    let data = req.body;
 	    data.imgName = imgName;
-	    
+	    data.translatedFields = JSON.parse(data.translatedFields);
+
 	     let ctrlProduct = new CtrlProduct();
-         console.log("Added a product")
-         console.log(data);
-	     /*ctrlProduct.addProduct(data).then(function(result){
+
+	     ctrlProduct.addProduct(data).then(function(result){
 	     	res.send(result)
-	     });*/
+	     });
    	}
 	else{
         console.log("here")

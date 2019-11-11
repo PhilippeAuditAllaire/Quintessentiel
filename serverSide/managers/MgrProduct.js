@@ -5,6 +5,46 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
+
+    //Adds the product infos that cannot be
+    //translated such as the price
+    //@productInfos is a product object containing
+    //all the non translatable infos to add to the DB
+    //@Returns a promise
+    addNonTranslatableInfos(productInfos)
+    {
+        let query = `INSERT INTO Product 
+                    (id,retailPrice,costPrice,quantity,image,featured,isVisible,dropWeightGram,amazonAffiliateLink) 
+                    VALUES
+                    (DEFAULT,?,?,?,?,?,?,?,?)`;
+        let param = [productInfos.retailPrice,productInfos.costPrice,productInfos.qty,productInfos.image,
+                    productInfos.featured,productInfos.isVisible,productInfos.dropWeightGram,productInfos.amazonAfiliate];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Adds the text fields related to a product and to 
+    //a given languages
+    //@langId is the id of the languge of the translatableInfos
+    //@translatableInfos is the list of text fields to be inserted
+    //@Returns a promise
+    addProductTextFields(langId,translatableInfos)
+    {
+        console.log(translatableInfos)
+        let query = `INSERT INTO ta_productattribute_language 
+                    (productAttributeId,idLanguage,idProduct,value) 
+                    VALUES
+                    (?,?,?,?)`;
+        let paramName =[1,langId,translatableInfos.id,translatableInfos.name];
+        let paramDesc = [2,langId,translatableInfos.id,translatableInfos.description];
+        let paramAdvice = [3,langId,translatableInfos.id,translatableInfos.advice];
+        console.log("Before adding the fields")
+        return Promise.all([this._queryEngine.executeQuery(query,paramName),
+                            this._queryEngine.executeQuery(query,paramDesc),
+                            this._queryEngine.executeQuery(query,paramAdvice)]);
+    }
+
+
     //Loads all the languages that are in the DB
     //@Returns a promise
     loadAvailableLanguages()
@@ -194,65 +234,6 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query);
     }
 
-    insertTagAttribute(productId,tagList){
-
-        if(tagList != undefined)
-        {
-            let queryLinkTags = "INSERT INTO ta_tag_product VALUES ?";
-            let paramLinkTags = [];
-
-            for(let i = 0;i < tagList.length;i++)
-            {
-                paramLinkTags.push(["DEFAULT",tagList[i],productId])
-            } 
-
-            return this._queryEngine.executeQuery(queryLinkTags,[paramLinkTags]);           
-        }
-
-    }
-
-    insertCategoryAttribute(productId, categoryId)
-    {
-        let queryCategory = "INSERT INTO ta_category_product VALUES (DEFAULT,?,?)";
-        let paramCategory = [categoryId,productId];
-
-        return this._queryEngine.executeQuery(queryCategory,paramCategory);
-    }
-
-    addProduct(product) {
-        let query = "INSERT INTO Product VALUES (DEFAULT,?,?,?,?,1,1,2.53,NULL)";
-        console.log(product.dropWeightGram);
-        let param = [product.retailPrice,product.costPrice,product.qty,product.image,product.featured,product.isVisible,product.dropWeightGram];
-        let currentQueryEngine = this._queryEngine;
-
-        return this._queryEngine.executeQuery(query,param).then(function(res){
-            console.log(res);
-            let insertedId = res.insertId;
-            let queryInsertAttributes = "INSERT INTO ta_productattribute_language VALUES ?";
-            let paramAttributes = [[1,1,insertedId,product.name],[2,1,insertedId,product.description],[3,1,insertedId,product.advice]];
-
-            currentQueryEngine.executeQuery(queryInsertAttributes,[paramAttributes]).then(function(res){
-                
-                let queryLinkTags = "INSERT INTO ta_tag_product VALUES ?";
-                let paramLinkTags = [];
-
-                for(let i = 0;i < product.tags.length;i++)
-                {
-                    paramLinkTags.push(["DEFAULT",product.tags[i],insertedId])
-                }
-
-                currentQueryEngine.executeQuery(queryLinkTags,[paramLinkTags]).then(function(res){
-                    let queryCategory = "INSERT INTO ta_category_product VALUES (DEFAULT,?,?)";
-                    let paramCategory = [product.category,insertedId];
-
-                    currentQueryEngine.executeQuery(queryCategory,paramCategory).then(function(res){
-                        console.log("Added category")
-                        console.log(res)
-                    })
-                });
-            });
-        });
-    }
 
 
 }
