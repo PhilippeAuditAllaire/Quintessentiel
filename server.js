@@ -157,6 +157,15 @@ website.post("/ajaxRequest/catalogueSearch", function(req, res) {
 
 });
 
+website.post("/ajaxRequest/categoryCatalogueSearch", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
+
+    ctrlProduct.loadProductSearchCategory(1, req.body.search).then(function(result) {
+        res.send(result);
+    });
+
+});
+
 website.post("/ajaxRequest/produitInfo", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
@@ -199,6 +208,18 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
         })
         .catch(function(error) {
             res.send("Impossible de charger les conditions.");
+        });
+
+});
+
+website.post("/ajaxRequest/getCategories", function(req, res) {
+    let ctrlCategories = new CtrlProduct();
+
+    ctrlCategories.loadAllCategories(1).then(function(categoryList) {
+            res.send(categoryList);
+        })
+        .catch(function(error) {
+            res.send("Impossible de charger les categories.");
         });
 
 });
