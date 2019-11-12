@@ -10,23 +10,21 @@ class CtrlProduct {
     getCommentsIndex(code_lang) {
         let products = this._mgrProduct.loadCommentSlider();
     }
-  
-    updateProduct(productInfos)
-    {
+
+    updateProduct(productInfos) {
         let context = this;
-        return this.loadProductInfosById(productInfos.id).then(function(productBefore){
+        return this.loadProductInfosById(productInfos.id).then(function(productBefore) {
 
             let product = new Product();
             product.id = productInfos.id;
             product.name = productInfos.name;
 
-            if(productInfos.imgName == undefined){
-                product.image = productBefore.image;  
-            }
-            else{
+            if (productInfos.imgName == undefined) {
+                product.image = productBefore.image;
+            } else {
                 product.image = productInfos.imgName;
             }
-            
+
             product.description = productInfos.description
             product.advice = productInfos.advice;
             product.qty = productInfos.qty;
@@ -38,7 +36,7 @@ class CtrlProduct {
             product.category = productInfos.category;
             product.tags = productInfos.tags;
 
-            return context._mgrProduct.updateProduct(product).then(function(res){
+            return context._mgrProduct.updateProduct(product).then(function(res) {
                 console.log(res);
             });
 
@@ -46,9 +44,8 @@ class CtrlProduct {
 
     }
 
-    loadProductInfosById(productId)
-    {
-        return this._mgrProduct.loadProductInfosById(productId).then(function(res){
+    loadProductInfosById(productId) {
+        return this._mgrProduct.loadProductInfosById(productId).then(function(res) {
             console.log(res);
             let product = new Product();
             product.id = res[0][0].id;
@@ -69,52 +66,47 @@ class CtrlProduct {
     }
 
 
-    loadTagsRelatedToProduct(productId)
-    {
-        return this._mgrProduct.loadTagsRelatedToProduct(productId).then(function(res){
+    loadTagsRelatedToProduct(productId) {
+        return this._mgrProduct.loadTagsRelatedToProduct(productId).then(function(res) {
             let html = "";
             let idRelatedToProduct = [];
 
-            if(res != undefined && res.length > 0)
-            {
-                res.forEach(function(row){
-                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.idTag+">"+row.value+"</a>";
+            if (res != undefined && res.length > 0) {
+                res.forEach(function(row) {
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-id=" + row.idTag + ">" + row.value + "</a>";
                     idRelatedToProduct.push(row.idTag);
                 });
             }
 
-            return [html,idRelatedToProduct];
+            return [html, idRelatedToProduct];
 
         });
     }
 
     //Loads all the tags that are related and not related to the product (makes the difference between them)
-    loadTagsForBoxes(productId)
-    {
+    loadTagsForBoxes(productId) {
         let idRelatedToProduct = [];
         let currentContext = this;
-        return this.loadTagsRelatedToProduct(productId).then(function(res){
+        return this.loadTagsRelatedToProduct(productId).then(function(res) {
 
             let htmlRelatedTags = res[0];
             let idRelatedToProduct = res[1];
 
-            return currentContext.loadAllTags(idRelatedToProduct).then(function(result){
-                return [htmlRelatedTags,result];
+            return currentContext.loadAllTags(idRelatedToProduct).then(function(result) {
+                return [htmlRelatedTags, result];
             });
         });
     }
 
     //Loads all the tags except the one precised in the except tags (can be undefined)
-    loadAllTags(exceptTags)
-    {
-        return this._mgrProduct.loadAllTags(exceptTags).then(function(res){
+    loadAllTags(exceptTags) {
+        return this._mgrProduct.loadAllTags(exceptTags).then(function(res) {
             let html = "";
 
-            if(res != undefined && res.length > 0)
-            {
-                res.forEach(function(row){
-                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
-                });                
+            if (res != undefined && res.length > 0) {
+                res.forEach(function(row) {
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-id=" + row.id + ">" + row.value + "</a>";
+                });
             }
 
 
@@ -123,19 +115,17 @@ class CtrlProduct {
     }
 
     //@productCategoryId is optional
-    loadAllCategories(productCategoryId)
-    {
-        return this._mgrProduct.loadAllCategories().then(function(res){
+    loadAllCategories(productCategoryId) {
+        return this._mgrProduct.loadAllCategories().then(function(res) {
             let html = "";
 
-            if(res != undefined)
-            {
+            if (res != undefined) {
 
-                 res.forEach(function(row){
-                                  console.log(row.id);
-                console.log(productCategoryId);
-                    html += "<option "+(row.id == productCategoryId ? "selected" : "")+" value="+row.id+">"+row.value+"</option>";
-                });               
+                res.forEach(function(row) {
+                    console.log(row.id);
+                    console.log(productCategoryId);
+                    html += "<option " + (row.id == productCategoryId ? "selected" : "") + " value=" + row.id + ">" + row.value + "</option>";
+                });
             }
 
 
@@ -146,8 +136,7 @@ class CtrlProduct {
     //adds a product in the DB
     //@productInfos are the infos
     //the user entered
-    addProduct(productInfos)
-    {
+    addProduct(productInfos) {
         let product = new Product();
         product.name = productInfos.name;
         product.image = productInfos.imgName;
@@ -162,16 +151,16 @@ class CtrlProduct {
         product.category = productInfos.category;
         product.tags = productInfos.tags;
 
-        return this._mgrProduct.addProduct(product).then(function(res){
-            return true;
-        })
-        .catch(function(res){
-            return false;
-        });
+        return this._mgrProduct.addProduct(product).then(function(res) {
+                return true;
+            })
+            .catch(function(res) {
+                return false;
+            });
     }
 
 
-getCommentsIndex(code_lang) {
+    getCommentsIndex(code_lang) {
         let products = this._mgrProduct.loadCommentSlider();
 
         return products.then(function(val) {
@@ -217,7 +206,7 @@ getCommentsIndex(code_lang) {
 
         return products.then(function(val) {
             let catalogue_product = [];
-
+            console.log(val);
             let ele = '<div class="produit-div-image">';
             ele += '<img class="produit-image" src="./images/' + val[0].image + '" alt="' + val[0].value + '">';
             ele += '</div>';
@@ -242,7 +231,25 @@ getCommentsIndex(code_lang) {
             ele += '</div>';
             ele += '<div class="produit-details-cart"><button class="manager-button produit-cart-button">Ajouter au panier</button></div>';
 
-            ele += '<div class="produit-details-description">' + val[1].value + '</div></div>';
+            let desc = '<div class="details"><div class="tab">';
+            desc += '<button class="tablinks" onclick="openTab(event, \'info-1\')">Description</button>';
+            desc += '<button class="tablinks" onclick="openTab(event, \'info-2\')">Conseil d\'utilisation</button>';
+            desc += '<button class="tablinks" onclick="openTab(event, \'info-3\')">Ingrédients</button>';
+            desc += '</div>';
+
+            desc += '<div id="info-1" class="tabcontent">';
+            desc += '<p>' + val[1].value + '</p>';
+            desc += '</div>';
+
+            desc += '<div id="info-2" class="tabcontent">';
+            desc += '<p>' + val[2].value + '</p>';
+            desc += '</div>';
+
+            desc += '<div id="info-3" class="tabcontent">';
+            desc += '<p>' + 'ingrédients' + '</p>';
+            desc += '</div></div>';
+
+            ele += '<div class="produit-details-description">' + desc + '</div></div>';
 
             catalogue_product.push(ele);
 
