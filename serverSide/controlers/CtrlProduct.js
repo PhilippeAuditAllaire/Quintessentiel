@@ -34,9 +34,14 @@ class CtrlProduct {
             //linkTagsToProduct
            productInfos.category.forEach(function(categoryId){
                 currentMgrProduct.linkCategoryToProduct(insertedId,categoryId).then(function(res){
-                    console.log(res)
                 });
-           }); 
+           });
+
+           productInfos.attributedTags.forEach(function(tagId){
+                currentMgrProduct.linkTagToProduct(insertedId,tagId).then(function(res){
+                    console.log(res);
+                });           
+           })
 
             //Now that the product is added, lets add all the text in every languages
             productInfos.translatedFields.forEach(function(fields){

@@ -21,6 +21,23 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query,param);
     }
 
+    //Links the given tag id
+    //to the given product id
+    //@productId is the product to link to
+    //@tagId
+    //@Returns a promise
+    linkTagToProduct(productId,tagId)
+    {
+        let query = `INSERT INTO ta_tag_product 
+                    (id,idTag,idProduct) 
+                    VALUES
+                    (DEFAULT,?,?)`;
+
+        let param = [tagId,productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     //Adds the product infos that cannot be
     //translated such as the price
     //@productInfos is a product object containing
