@@ -173,10 +173,8 @@
                 let tagsAttributedListbox = listboxTags.attributedListbox;
                 let categoryAttributedListbox = listboxCategory.attributedListbox;
 
-                if(tagsAttributedListbox.length > 0)
+                if(!checkFieldsError())
                 {
-                    if(categoryAttributedListbox.length > 0)
-                    {
                         $(this).ajaxSubmit({
                            data: {
                                 translatedFields: JSON.stringify(translatedFields),
@@ -192,29 +190,51 @@
                            },
                            contentType: 'application/json',
                            success: function(response){
-                            console.log(response);
                             successAddedProduct();
-                             //$("#warning-success").html("Produit ajouté avec succès!");
-                             //$('html, body').animate({ scrollTop: 0 }, 'fast');
-                           }
+                         }
+                       });   
+                }        
 
-                       });           
-                    }
-                    else{
-                        console.log("Minimum une catégorie")
-                    }
-                    
-                }
-                else{
-                    console.log("Minimum un tag");
-                }
-                
 
 
                
                
 
         });
+
+        //Checks if the fiels are filled correctly
+        function checkFieldsError()
+        {
+
+            let tagsAttributedListbox = listboxTags.attributedListbox;
+            let categoryAttributedListbox = listboxCategory.attributedListbox;
+            let hasError = false;
+
+            $("#errorMsgAddTag").html('');
+            $("#errorMsgAddCategory").html('');
+
+            if(tagsAttributedListbox.length == 0)
+            {
+                $("#errorMsgAddTag").html("Veuillez sélectionner au moins une étiquette");
+                hasError = true;
+            }
+
+            if(categoryAttributedListbox.length == 0)
+            {
+                $("#errorMsgAddCategory").html("Veuillez sélectionner au moins une catégorie");
+                hasError = true;
+            }
+
+            return hasError;
+        }
+
+        //Displays an error message
+        //and hides the success message
+        function displayErrorMessage(errC)
+        {
+            addProductSuccessAlert.classList.remove("show");
+
+        }
 
         //This function shows a success message
         //and clears the form
@@ -245,7 +265,6 @@
                 let tab = allTabs[i];
                 let langId = tab.getAttribute("data-langid");
                 let productName = tab.getElementsByClassName("productName")[0];
-                console.log(tab.getElementsByClassName("description"));
                 let description = tab.getElementsByClassName("description")[0];
                 let advice = tab.getElementsByClassName("advice")[0];
 

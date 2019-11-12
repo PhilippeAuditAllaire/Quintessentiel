@@ -367,6 +367,20 @@ th{
 	text-align: center;
 }
 
+
 #addProductSuccessAlert{
 	margin-bottom:5px;
+}
+
+.errorMsgForm{
+	text-align: center;
+	margin-bottom: 0;
+	margin-top:10px;
+	color:red;
+	font-size:18px;
+}
+
+
+#categoryWrapper,#tagsWrapper{
+	margin-top:0;
 }
