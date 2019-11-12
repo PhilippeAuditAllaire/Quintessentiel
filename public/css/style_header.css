@@ -39,8 +39,11 @@
 }
 
 .wrapper-links-t li {
+    justify-content: space-evenly;
+    /*
     margin-right: 1.5%;
     margin-left: 1.5%;
+    */
 }
 
 .header-right-wrapper {
