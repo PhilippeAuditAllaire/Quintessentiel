@@ -7,11 +7,9 @@ const multer = require("multer");
 //FOR THE FILE UPLOAD
 let storage = multer.diskStorage({
     destination: function(req, file, callback){
-    	console.log("isdfiusdiufisdf")
         callback(null, './public/images'); // set the destination
     },
     filename: function(req, file, callback){
-    	console.log("iisdifsdifisdfidsfi");
         callback(null, Date.now() + '.jpg'); // set the file name and extension
     }
 });
@@ -313,6 +311,14 @@ app.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
 
 });
 
+
+app.post("/ajaxRequest/loadAllProducts", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
+
+    ctrlProduct.loadAllProductsAdmin().then(function(res){
+        res.send(res)
+    })
+});
 //Application routes
 app.get("/", function(req, res) {
     res.redirect("/manageProduct");//res.redirect("/adminConnection");

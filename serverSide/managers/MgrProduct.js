@@ -5,6 +5,22 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
+    //Loads all the product translatable infos
+    loadTranslatableInfos(productId,langId)
+    {
+        let query = "SELECT * FROM ta_productattribute_language WHERE idProduct = ? AND idLanguage = ?";
+        let param = [productId,langId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Loads all the products infos
+    loadNonTranslatableInfos()
+    {
+        let query = "SELECT * FROM Product";
+        return this._queryEngine.executeQuery(query);
+    }
+
     //Links the given category id
     //to the given product id
     //@productId is the product to link to 

@@ -117,10 +117,26 @@
     <script src="./javascript/listbox.js"></script>
     <script src="./javascript/tableProducts.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <script>
+        loadProductsDisplayList();
+        
+        function loadProductsDisplayList()
+        {
+            $.ajax({
+                url: "./ajaxRequest/loadAllProducts",
+                type: "POST",
+                success: function(res){
+                    console.log("Retour de load all products")
+                    console.log(res)
+                }
+            })
+        }
+
+    </script>
 	<script>
         let formProduct = document.getElementById("formProduct");
         let addProductSuccessAlert = document.getElementById("addProductSuccessAlert")
-
+        
         //Setup the listbox managers
 
         //Category list box
@@ -194,11 +210,6 @@
                          }
                        });   
                 }        
-
-
-
-               
-               
 
         });
 

@@ -1,4 +1,5 @@
 const Product = require("../class/Product.js");
+const ProductInfos = require("../class/ProductInfos.js");
 const MgrProduct = require("../managers/MgrProduct.js");
 
 class CtrlProduct {
@@ -6,6 +7,66 @@ class CtrlProduct {
         this._mgrProduct = new MgrProduct();
     }
 
+
+    //Loads all the products
+    loadAllProductsAdmin()
+    {   
+        
+
+        let currentMgr = this._mgrProduct;
+
+        return currentMgr.loadAvailableLanguages().then(function(resLang){
+
+            let productList = [];
+            let languages = resLang;
+
+            //For each product, load the non translatable infos (qty,price,etc..)
+            currentMgr.loadNonTranslatableInfos().then(function(resNonTranslatable){
+
+                resNonTranslatable.forEach(function(product){ //Load all the products non translatable infos
+                    let prod = new Product();
+                    productList.push(prod); //Its a refference so no need to push it at the end
+
+                    prod.id = product.id;
+                    prod.image = product.image;
+                    prod.qty = product.quantity;
+                    prod.featured = product.featured;
+                    prod.isVisible = product.isVisible;
+                    prod.dropWeightGram = product.dropWeightGram;
+                    prod.retailPrice = product.retailPrice;
+                    prod.costPrice =  product.costPrice;
+                    prod.amazonAfiliate = product.amazonAffiliateLink;
+                    
+                    //Chargement des Catégories ici
+                    //Chargement des Tags ici
+
+                    languages.forEach(function(language){ //For each language
+                        currentMgr.loadTranslatableInfos(prod.id,language.id).then(function(resTranslatable){ //Load this product infos
+                            
+                            if(resTranslatable.length > 0) //If there are infos for that product in this language
+                            {
+                                //Le bug value of undefined est probablement lié au fait que mes produits de la BD
+                                //ne sont pas complets
+                                console.log(resTranslatable);
+                                let productInfos = new ProductInfos(prod.id,resTranslatable[0].value,resTranslatable[1].value,resTranslatable[2].value);
+                                prod.traductions.push(productInfos);                       
+                            }
+
+                        }); 
+
+
+                    })   
+
+                });
+
+            }).then(function(res){ 
+            console.log("herererererer");
+            console.log(productList);
+        });
+                    
+        })
+
+    }
 
     //adds a product in the DB
     //@productInfos are the infos

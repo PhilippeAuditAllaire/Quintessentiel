@@ -30,6 +30,7 @@ class Product {
         this._retailPrice = retailPrice;
         this._costPrice = costPrice;
         this._amazonAfiliate = amazonAfiliate;
+        this._traductions = [];
     }
 
 
@@ -80,6 +81,9 @@ class Product {
 
     get tags() { return this._tags; }
     set tags(paramTags) { this._tags = paramTags; }
+
+    get traductions() { return this._traductions; }
+    set traductions(paramTraductions) { this._traductions = paramTraductions; }
 }
 
 module.exports = Product;
