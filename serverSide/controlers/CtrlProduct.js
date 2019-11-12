@@ -30,16 +30,16 @@ class CtrlProduct {
             
             let insertedId = res.insertId;
 
-            //linkCategoryToProduct
-            //linkTagsToProduct
+           //Link the categories to the product
            productInfos.category.forEach(function(categoryId){
                 currentMgrProduct.linkCategoryToProduct(insertedId,categoryId).then(function(res){
+                    return 
                 });
            });
 
+           //Link the tags to the product
            productInfos.attributedTags.forEach(function(tagId){
                 currentMgrProduct.linkTagToProduct(insertedId,tagId).then(function(res){
-                    console.log(res);
                 });           
            })
 
@@ -53,15 +53,14 @@ class CtrlProduct {
                 translatableInfos.advice = fields.advice;
 
                 currentMgrProduct.addProductTextFields(fields.langId,translatableInfos).then(function(res){
-                    console.log(res);
                 });                
             })
 
-        });
-
-        //product.name = productInfos.name;
-        //product.description = productInfos.description
-        //product.advice = productInfos.advice;
+        }).then(function(res){
+            return true; //Everything worked perfectly
+        }).catch(function(res){
+            return false; //Error while adding the product
+        })
     }
 
 

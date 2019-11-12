@@ -20,7 +20,9 @@
                 </button>
               </div>
               <div class="modal-body">
-                
+                <div id="addProductSuccessAlert" class="alert alert-success fade" role="alert">
+                    Produit ajouté avec succès!
+                </div>
                 <div class="addProductFields">
                     <%- addProductTabs %>
                     <%include ./includes/templateProduct.ejs%>
@@ -108,13 +110,17 @@
         </div>
 	</section>
 
-    <script src="./javascript/jquery-3.4.1.min.js"></script>
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="./javascript/renderer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="./javascript/listbox.js"></script>
     <script src="./javascript/tableProducts.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script> 
 	<script>
+        let formProduct = document.getElementById("formProduct");
+        let addProductSuccessAlert = document.getElementById("addProductSuccessAlert")
+
         //Setup the listbox managers
 
         //Category list box
@@ -139,11 +145,8 @@
 
         let addModal = $("#addModal");
 
-        function openUpdateProduct(element){
-            let productId = element.getAttribute("data-product-id");
 
-            window.open("./modifyProduct?productId="+productId, '_blank');
-        }
+
 
         $(".btnApp").on("click",function(e){
             e.preventDefault();
@@ -189,9 +192,10 @@
                            },
                            contentType: 'application/json',
                            success: function(response){
-                             $("#warning-success").html("Produit ajouté avec succès!");
-                             $('html, body').animate({ scrollTop: 0 }, 'fast');
-                             this.clear();   
+                            console.log(response);
+                            successAddedProduct();
+                             //$("#warning-success").html("Produit ajouté avec succès!");
+                             //$('html, body').animate({ scrollTop: 0 }, 'fast');
                            }
 
                        });           
@@ -212,6 +216,18 @@
 
         });
 
+        //This function shows a success message
+        //and clears the form
+        function successAddedProduct()
+        {
+            addProductSuccessAlert.classList.add("show");
+            formProduct.reset();
+            $('.modal').animate({ scrollTop: 0 }, 'slow');
+
+            setTimeout(function(){
+                addProductSuccessAlert.classList.remove("show");
+            },5000);
+        }
 
         //Gets the value of every field
         //that is needed for a precise language

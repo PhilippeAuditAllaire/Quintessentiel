@@ -366,3 +366,7 @@ th{
 	width:100%;
 	text-align: center;
 }
+
+#addProductSuccessAlert{
+	margin-bottom:5px;
+}
