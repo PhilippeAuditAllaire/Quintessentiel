@@ -36,17 +36,6 @@
                     </div>
                     <div class="wrapper-inputLabel-productModal modal-single-wrapper">
                         <div class="wrapper-modal-label">
-                            <label>Catégorie</label>
-                        </div>
-                        <div class="wrapper-modal-input">
-                            <select class="form-control category">
-                                <option selected disabled>Veuillez choisir une catégorie</option>
-                                <%- availableCategories %>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="wrapper-inputLabel-productModal modal-single-wrapper">
-                        <div class="wrapper-modal-label">
                             <label>Image</label>
                         </div>
                         <div class="wrapper-modal-input">
@@ -61,24 +50,47 @@
                             <input type="text" class="amazonAffiliate form-control"/>
                         </div>
                     </div>
-                    <div class="wrapper-inputLabel-productModal tagsList modal-single-wrapper">
+                    <div id="categoryWrapper" class="wrapper-inputLabel-productModal categoryList modal-single-wrapper">
+                        <div class="availableTags">
+                            <div class="left-available-wrapper" id="">
+                                <p>Catégories non-attribuées</p>       
+                                <div class="list-group" id="categoryAvailableList">
+                                   <%- availableCategories %>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wrapper-btnChange">
+                            <button id="categoryRightBtn">></button>
+                            <button id="categoryLeftBtn"><</button>
+                        </div>
+                        <div class="choosenTags">
+                            <div class="right-choosen-wrapper">
+                                <p>Catégories attribuées</p>        
+                                <div class="list-group" id="categoryAttributedList">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tagsWrapper" class="wrapper-inputLabel-productModal tagsList modal-single-wrapper">
                         <div class="availableTags">
                             <div class="left-available-wrapper">
                                 <p>Étiquettes disponibles</p>       
-                                <div class="list-group" id="available-listbox">
+                                <div class="list-group" id="tagsAvailableList">
                                    <%- availableTags %>
                                 </div>
                             </div>
                         </div>
 
                         <div class="wrapper-btnChange">
-                            <button id="btnRight">></button>
-                            <button id="btnLeft"><</button>
+                            <button id="tagsRightBtn">></button>
+                            <button id="tagsLeftBtn"><</button>
                         </div>
                         <div class="choosenTags">
                             <div class="right-choosen-wrapper">
                                 <p>Étiquettes attribuées</p>        
-                                <div class="list-group" id="attributed-listbox">
+                                <div class="list-group" id="tagsAttributedList">
                                    
                                 </div>
                             </div>

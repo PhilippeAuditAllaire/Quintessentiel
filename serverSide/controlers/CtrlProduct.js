@@ -30,6 +30,10 @@ class CtrlProduct {
             
             let insertedId = res.insertId;
 
+            //linkCategoryToProduct
+            //linkTagsToProduct
+
+
             //Now that the product is added, lets add all the text in every languages
             productInfos.translatedFields.forEach(function(fields){
                 let translatableInfos = new Product();
@@ -143,11 +147,8 @@ class CtrlProduct {
 
             if(res != undefined)
             {
-
                  res.forEach(function(row){
-                                  console.log(row.id);
-                console.log(productCategoryId);
-                    html += "<option "+(row.id == productCategoryId ? "selected" : "")+" value="+row.id+">"+row.value+"</option>";
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
                 });               
             }
 

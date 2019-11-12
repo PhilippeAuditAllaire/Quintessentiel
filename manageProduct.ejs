@@ -112,9 +112,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="./javascript/listbox.js"></script>
-        <script src="./javascript/tableProducts.js"></script>
-         <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <script src="./javascript/tableProducts.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
 	<script>
+        //Setup the listbox managers
+
+        //Category list box
+        let categoryWrapper = document.getElementById("categoryWrapper");
+        let categoryAvailableList = document.getElementById("categoryAvailableList");
+        let categoryAttributedList = document.getElementById("categoryAttributedList");
+        let categoryRightBtn = document.getElementById("categoryRightBtn");
+        let categoryleftBtn = document.getElementById("categoryLeftBtn");
+
+        //Tags Listbox
+        let tagsWrapper = document.getElementById("tagsWrapper");
+        let tagsAvailableList = document.getElementById("tagsAvailableList");
+        let tagsAttributedList = document.getElementById("tagsAttributedList");
+        let tagsRightBtn = document.getElementById("tagsRightBtn");
+        let tagsLeftBtn = document.getElementById("tagsLeftBtn");
+
+        let listboxTags= new Listbox(tagsWrapper,tagsAvailableList,tagsAttributedList,tagsRightBtn,
+            tagsLeftBtn);
+
+        let listboxCategory = new Listbox(categoryWrapper,categoryAvailableList,categoryAttributedList,categoryRightBtn,
+            categoryleftBtn);
+
         let addModal = $("#addModal");
 
         function openUpdateProduct(element){
