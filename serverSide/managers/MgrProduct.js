@@ -194,6 +194,8 @@ class MgrProduct {
                 query=query.concat(conditions);
             }
         }
+        let endQuery=" GROUP BY ta_category_product.id";
+        query=query.concat(endQuery);
         
         console.log(query);
         return this._queryEngine.executeQuery(query);
