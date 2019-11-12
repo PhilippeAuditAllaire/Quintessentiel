@@ -5,6 +5,21 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
+    //Links the given category id
+    //to the given product id
+    //@productId is the product to link to 
+    //@categoryId
+    //@Returns a promise
+    linkCategoryToProduct(productId,categoryId)
+    {
+        let query = `INSERT INTO ta_category_product 
+                    (id,idCategory,idProduct) 
+                    VALUES
+                    (DEFAULT,?,?)`;
+        let param = [categoryId,productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
 
     //Adds the product infos that cannot be
     //translated such as the price

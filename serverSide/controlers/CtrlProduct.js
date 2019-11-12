@@ -32,7 +32,11 @@ class CtrlProduct {
 
             //linkCategoryToProduct
             //linkTagsToProduct
-
+           productInfos.category.forEach(function(categoryId){
+                currentMgrProduct.linkCategoryToProduct(insertedId,categoryId).then(function(res){
+                    console.log(res)
+                });
+           }); 
 
             //Now that the product is added, lets add all the text in every languages
             productInfos.translatedFields.forEach(function(fields){
@@ -48,7 +52,7 @@ class CtrlProduct {
                 });                
             })
 
-        })
+        });
 
         //product.name = productInfos.name;
         //product.description = productInfos.description

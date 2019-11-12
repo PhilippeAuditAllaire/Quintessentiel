@@ -86,4 +86,9 @@ class Listbox{
 		return attributedIds;
 	}
 
+
+	get attributedListbox(){
+		return this.getAttributedListboxId()
+	}
+
 }

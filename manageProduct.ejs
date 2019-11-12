@@ -165,32 +165,47 @@
 
         $('.addProduct').submit(function(e){
                 e.preventDefault();
-                console.log(e.target)
-                let translatedFields = getTranslatedFields(document.getElementById("addModal"));
-                let attributedListbox = getAttributedListboxId();
-                console.log(translatedFields)
-                
-                 $(this).ajaxSubmit({
-                   data: {
-                        translatedFields: JSON.stringify(translatedFields),
-                        attributedTags: attributedListbox,
-                        costPrice: costPrice.val(),
-                        retailPrice: retailPrice.val(),
-                        quantity: quantity.val(),
-                        weight: weight.val(),
-                        category: category.val(),
-                        featured: $(featured)[0].checked,
-                        visible: $(visible)[0].checked,
-                        amazonAffiliate: amazonAffiliate.val()
-                   },
-                   contentType: 'application/json',
-                   success: function(response){
-                     $("#warning-success").html("Produit ajouté avec succès!");
-                     $('html, body').animate({ scrollTop: 0 }, 'fast');
-                     this.clear();   
-                   }
 
-               });
+                let translatedFields = getTranslatedFields(document.getElementById("addModal"));
+                let tagsAttributedListbox = listboxTags.attributedListbox;
+                let categoryAttributedListbox = listboxCategory.attributedListbox;
+
+                if(tagsAttributedListbox.length > 0)
+                {
+                    if(categoryAttributedListbox.length > 0)
+                    {
+                        $(this).ajaxSubmit({
+                           data: {
+                                translatedFields: JSON.stringify(translatedFields),
+                                attributedTags: tagsAttributedListbox,
+                                costPrice: costPrice.val(),
+                                retailPrice: retailPrice.val(),
+                                quantity: quantity.val(),
+                                weight: weight.val(),
+                                category: categoryAttributedListbox,
+                                featured: $(featured)[0].checked,
+                                visible: $(visible)[0].checked,
+                                amazonAffiliate: amazonAffiliate.val()
+                           },
+                           contentType: 'application/json',
+                           success: function(response){
+                             $("#warning-success").html("Produit ajouté avec succès!");
+                             $('html, body').animate({ scrollTop: 0 }, 'fast');
+                             this.clear();   
+                           }
+
+                       });           
+                    }
+                    else{
+                        console.log("Minimum une catégorie")
+                    }
+                    
+                }
+                else{
+                    console.log("Minimum un tag");
+                }
+                
+
 
                
                
