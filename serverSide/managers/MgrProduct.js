@@ -5,7 +5,10 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
-
+    //Loads the categories that are associated
+    //with the given product id
+    //@productId is the id of the 
+    //product to look for its categories
     loadCategoryByProductId(productId)
     {
         let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ?";
@@ -16,7 +19,7 @@ class MgrProduct {
         });
     }
 
-    //Loads all the product translatable infos
+    //Loads all the givne product translatable infos
     loadTranslatableInfos(productId,langId)
     {
         let query = "SELECT * FROM ta_productattribute_language WHERE idProduct = ? AND idLanguage = ?";
@@ -26,7 +29,7 @@ class MgrProduct {
     }
 
     //Loads all the products infos
-    loadNonTranslatableInfos()
+    loadAllProductsNonTranslatableInfos()
     {
         let query = "SELECT * FROM Product";
         return this._queryEngine.executeQuery(query);
@@ -48,22 +51,6 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query,param);
     }
 
-    //Links the given tag id
-    //to the given product id
-    //@productId is the product to link to
-    //@tagId
-    //@Returns a promise
-    linkTagToProduct(productId,tagId)
-    {
-        let query = `INSERT INTO ta_tag_product 
-                    (id,idTag,idProduct) 
-                    VALUES
-                    (DEFAULT,?,?)`;
-
-        let param = [tagId,productId];
-
-        return this._queryEngine.executeQuery(query,param);
-    }
 
     //Adds the product infos that cannot be
     //translated such as the price
@@ -139,14 +126,6 @@ class MgrProduct {
 
        })
 
-    }
-
-    removeAllRelatedTags(productId)
-    {
-        let queryRemoveTags = "DELETE FROM ta_tag_product WHERE idProduct = ?";
-        let paramRemoveTags = [productId];
-
-        return this._queryEngine.executeQuery(queryRemoveTags,paramRemoveTags);
     }
 
     removeRelatedCategory(productId)

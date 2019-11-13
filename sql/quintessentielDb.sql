@@ -230,7 +230,7 @@ CREATE TABLE TA_Ingredients_Recipe(
 
 CREATE TABLE Category(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
-	isVisible BIT NOT NULL,
+	isVisible BIT NOT NULL
 );
 
 CREATE TABLE TA_Category_Product(
@@ -255,37 +255,6 @@ CREATE TABLE TA_CategoryAttribute_Language(
 	FOREIGN KEY (idCategory) REFERENCES Category(id),
 	value VARCHAR(255),
 	PRIMARY KEY(idCategoryAttribute,idLanguage,idCategory)
-);
-
-
-CREATE TABLE Tag(
-	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
-	title VARCHAR(30) NOT NULL,
-	description VARCHAR(255)
-);
-
-CREATE TABLE TA_Tag_Product(
-	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
-	idTag SMALLINT NOT NULL,
-	FOREIGN KEY (idTag) REFERENCES Tag(id),
-	idProduct INT NOT NULL,
-	FOREIGN KEY (idProduct) REFERENCES Product(id)
-);
-
-CREATE TABLE TagAttribute(
-	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
-	type VARCHAR(30) NOT NULL
-);
-
-CREATE TABLE TA_TagAttribute_Language(
-	idTagAttribute SMALLINT NOT NULL,
-	FOREIGN KEY (idTagAttribute) REFERENCES Tag(id),
-	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
-	idTag SMALLINT NOT NULL,
-	FOREIGN KEY (idTag) REFERENCES Tag(id),
-	value VARCHAR(255),
-	PRIMARY KEY(idTagAttribute,idLanguage,idTag)
 );
 
 

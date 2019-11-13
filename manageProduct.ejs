@@ -146,16 +146,6 @@
         let categoryRightBtn = document.getElementById("categoryRightBtn");
         let categoryleftBtn = document.getElementById("categoryLeftBtn");
 
-        //Tags Listbox
-        let tagsWrapper = document.getElementById("tagsWrapper");
-        let tagsAvailableList = document.getElementById("tagsAvailableList");
-        let tagsAttributedList = document.getElementById("tagsAttributedList");
-        let tagsRightBtn = document.getElementById("tagsRightBtn");
-        let tagsLeftBtn = document.getElementById("tagsLeftBtn");
-
-        let listboxTags= new Listbox(tagsWrapper,tagsAvailableList,tagsAttributedList,tagsRightBtn,
-            tagsLeftBtn);
-
         let listboxCategory = new Listbox(categoryWrapper,categoryAvailableList,categoryAttributedList,categoryRightBtn,
             categoryleftBtn);
 
@@ -186,7 +176,6 @@
                 e.preventDefault();
 
                 let translatedFields = getTranslatedFields(document.getElementById("addModal"));
-                let tagsAttributedListbox = listboxTags.attributedListbox;
                 let categoryAttributedListbox = listboxCategory.attributedListbox;
                 let checkFormatRadioBtn = $(".addProduct input[type='radio']:checked").val();
 
@@ -195,7 +184,6 @@
                         $(this).ajaxSubmit({
                            data: {
                                 translatedFields: JSON.stringify(translatedFields),
-                                attributedTags: tagsAttributedListbox,
                                 costPrice: costPrice.val(),
                                 retailPrice: retailPrice.val(),
                                 quantity: quantity.val(),
@@ -218,19 +206,10 @@
         //Checks if the fiels are filled correctly
         function checkFieldsError()
         {
-
-            let tagsAttributedListbox = listboxTags.attributedListbox;
             let categoryAttributedListbox = listboxCategory.attributedListbox;
             let hasError = false;
 
-            $("#errorMsgAddTag").html('');
             $("#errorMsgAddCategory").html('');
-
-            if(tagsAttributedListbox.length == 0)
-            {
-                $("#errorMsgAddTag").html("Veuillez sélectionner au moins une étiquette");
-                hasError = true;
-            }
 
             if(categoryAttributedListbox.length == 0)
             {

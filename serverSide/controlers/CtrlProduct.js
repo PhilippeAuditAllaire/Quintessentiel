@@ -24,10 +24,11 @@ class CtrlProduct {
             
 
             //Load all the products (only load the non translatable infos)
-            return currentMgr.loadNonTranslatableInfos().then(function(resNonTranslatable){
+            return currentMgr.loadAllProductsNonTranslatableInfos().then(function(resNonTranslatable){
                 return resNonTranslatable;
             }).then(function(allNonTranslatableInfos){
 
+                    //Reproduced a foreach in async
                     async function asyncForEach(array, callback) {
                       for (let index = 0; index < array.length; index++) {
                         await callback(array[index], index, array);
@@ -56,6 +57,7 @@ class CtrlProduct {
                                     prod.category.push(cat)
                                 })
                             });
+
 
                             await asyncForEach(languages, async (language) =>{ //For each language
                                 await currentMgr.loadTranslatableInfos(prod.id,language.id).then(function(resTranslatable){ //Load this product infos
@@ -90,7 +92,7 @@ class CtrlProduct {
         nonTranslatableInfos.qty = productInfos.quantity;
         nonTranslatableInfos.featured = (productInfos.featured == "true" ? true : false);
         nonTranslatableInfos.isVisible = (productInfos.visible == "true" ? true : false);
-        nonTranslatableInfos.amazonAfiliate = productInfos.amazonAffiliate;
+        nonTranslatableInfos.amazonAfiliate = (productInfos.amazonAffiliate == "" ? "NULL" : productInfos.amazonAffiliate);
         nonTranslatableInfos.dropWeightGram = productInfos.weight;
         nonTranslatableInfos.retailPrice = productInfos.retailPrice;
         nonTranslatableInfos.costPrice = productInfos.costPrice;
@@ -109,11 +111,6 @@ class CtrlProduct {
                 });
            });
 
-           //Link the tags to the product
-           productInfos.attributedTags.forEach(function(tagId){
-                currentMgrProduct.linkTagToProduct(insertedId,tagId).then(function(res){
-                });           
-           })
 
             //Now that the product is added, lets add all the text in every languages
             productInfos.translatedFields.forEach(function(fields){
