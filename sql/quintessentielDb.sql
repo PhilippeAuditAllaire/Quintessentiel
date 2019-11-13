@@ -89,7 +89,8 @@ CREATE TABLE Product(
 	featured BIT NOT NULL,
 	isVisible BIT NOT NULL,
 	dropWeightGram FLOAT NOT NULL,
-	amazonAffiliateLink VARCHAR(500)
+	amazonAffiliateLink VARCHAR(500),
+	format VARCHAR(10)
 );
 
 CREATE TABLE ProductAttribute(

@@ -62,11 +62,11 @@ class MgrProduct {
     addNonTranslatableInfos(productInfos)
     {
         let query = `INSERT INTO Product 
-                    (id,retailPrice,costPrice,quantity,image,featured,isVisible,dropWeightGram,amazonAffiliateLink) 
+                    (id,retailPrice,costPrice,quantity,image,featured,isVisible,dropWeightGram,amazonAffiliateLink,format) 
                     VALUES
-                    (DEFAULT,?,?,?,?,?,?,?,?)`;
+                    (DEFAULT,?,?,?,?,?,?,?,?,?)`;
         let param = [productInfos.retailPrice,productInfos.costPrice,productInfos.qty,productInfos.image,
-                    productInfos.featured,productInfos.isVisible,productInfos.dropWeightGram,productInfos.amazonAfiliate];
+                    productInfos.featured,productInfos.isVisible,productInfos.dropWeightGram,productInfos.amazonAfiliate,productInfos.format];
 
         return this._queryEngine.executeQuery(query,param);
     }

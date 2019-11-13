@@ -85,6 +85,7 @@ class CtrlProduct {
         nonTranslatableInfos.costPrice = productInfos.costPrice;
         nonTranslatableInfos.category = productInfos.category;
         nonTranslatableInfos.tags = productInfos.attributedTags;
+        nonTranslatableInfos.format = productInfos.format;
 
         let currentMgrProduct = this._mgrProduct;
         return this._mgrProduct.addNonTranslatableInfos(nonTranslatableInfos).then(function(res){

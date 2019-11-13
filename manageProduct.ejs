@@ -188,6 +188,7 @@
                 let translatedFields = getTranslatedFields(document.getElementById("addModal"));
                 let tagsAttributedListbox = listboxTags.attributedListbox;
                 let categoryAttributedListbox = listboxCategory.attributedListbox;
+                let checkFormatRadioBtn = $(".addProduct input[type='radio']:checked").val();
 
                 if(!checkFieldsError())
                 {
@@ -199,6 +200,7 @@
                                 retailPrice: retailPrice.val(),
                                 quantity: quantity.val(),
                                 weight: weight.val(),
+                                format: checkFormatRadioBtn,
                                 category: categoryAttributedListbox,
                                 featured: $(featured)[0].checked,
                                 visible: $(visible)[0].checked,
