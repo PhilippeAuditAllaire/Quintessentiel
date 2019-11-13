@@ -384,3 +384,37 @@ th{
 #categoryWrapper,#tagsWrapper{
 	margin-top:0;
 }
+
+.wrapper-inside-format{
+	display: flex;
+}
+
+
+.wrapper-inside-format input[type=radio]{
+	align-self: center;
+}
+
+.wrapper-inside-format label:nth-child(2){
+	margin-left:5px;
+}
+
+#quantityWrapper {
+	display: flex;
+    flex-direction: column;
+}
+
+#quantityWrapper label{
+	align-self: baseline;
+}
+
+.wrapper-inside-format label{
+	margin-left:5px;
+}
+
+.wrapper-inside-format label:nth-child(1){
+	margin-left:0px;
+}
+
+#lblWeight{
+	align-self: auto;
+}

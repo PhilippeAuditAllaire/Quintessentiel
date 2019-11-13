@@ -84,6 +84,9 @@ class Product {
 
     get traductions() { return this._traductions; }
     set traductions(paramTraductions) { this._traductions = paramTraductions; }
+
+    get format() { return this._format; }
+    set format(paramFormat) { this._format = paramFormat; }
 }
 
 module.exports = Product;

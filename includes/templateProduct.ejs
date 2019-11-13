@@ -18,8 +18,13 @@
                     </div>
                     <div class="modal-product-double-wrapper">
                         <div class="wrapper-inputLabel-productModal">
-                            <div class="wrapper-modal-label">
+                            <div id="quantityWrapper" class="wrapper-modal-label">
                                 <label>Quantité</label>
+                                <div class="wrapper-inside-format">
+                                    <label>(normal<input type="radio" name="radioFormat" value="normal"/></label>
+                                    <label>ml<input type="radio" name="radioFormat" value="ml"/></label>
+                                    <label>gr<input type="radio" name="radioFormat" value="gr"/>)</label>
+                                </div>
                             </div>
                             <div class="wrapper-modal-input">
                                 <input type="number" class="quantity form-control"/>
@@ -27,7 +32,7 @@
                         </div>
                         <div class="wrapper-inputLabel-productModal">
                             <div class="wrapper-modal-label">
-                                <label>Poid</label>
+                                <label id="lblWeight">Poid</label>
                             </div>
                             <div class="wrapper-modal-input">
                                 <input type="number" step="0.01" class="weight form-control"/>
