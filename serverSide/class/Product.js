@@ -31,6 +31,7 @@ class Product {
         this._costPrice = costPrice;
         this._amazonAfiliate = amazonAfiliate;
         this._traductions = [];
+        this._category = [];
     }
 
 

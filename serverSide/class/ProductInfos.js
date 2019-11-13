@@ -5,12 +5,14 @@ class ProductInfos {
     /**
      * constructor of an instance of the Class Product
      * @param {int} id id of the product
+     * @param {int} id id of the language
      * @param {string} name name of the product
      * @param {string} description description of the product
      * @param {string} advice advice on how to use the product
      */
-    constructor(id, name, description, advice) {
+    constructor(id,idLang, name, description, advice) {
         this._id = id;
+        this._idLang = idLang;
         this._name = name;
         this._description = description;
         this._advice = advice;
@@ -28,6 +30,9 @@ class ProductInfos {
 
     get advice() { return this._advice; }
     set advice(paramAdvice) { this._advice = paramAdvice; }
+
+    get idLang() { return this._idLang; }
+    set idLang(paramLang) { this._idLang = paramLang; }
 }
 
 module.exports = ProductInfos;

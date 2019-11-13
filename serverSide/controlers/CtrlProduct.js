@@ -14,58 +14,69 @@ class CtrlProduct {
         
 
         let currentMgr = this._mgrProduct;
+        
+        let lanugages;
+        let productList = [];
 
-        return currentMgr.loadAvailableLanguages().then(function(resLang){
+        return currentMgr.loadAvailableLanguages().then(function(resLang){ //Load the languages
 
-            let productList = [];
             let languages = resLang;
+            
 
-            //For each product, load the non translatable infos (qty,price,etc..)
-            currentMgr.loadNonTranslatableInfos().then(function(resNonTranslatable){
+            //Load all the products (only load the non translatable infos)
+            return currentMgr.loadNonTranslatableInfos().then(function(resNonTranslatable){
+                return resNonTranslatable;
+            }).then(function(allNonTranslatableInfos){
 
-                resNonTranslatable.forEach(function(product){ //Load all the products non translatable infos
-                    let prod = new Product();
-                    productList.push(prod); //Its a refference so no need to push it at the end
+                    async function asyncForEach(array, callback) {
+                      for (let index = 0; index < array.length; index++) {
+                        await callback(array[index], index, array);
+                      }
+                    }
 
-                    prod.id = product.id;
-                    prod.image = product.image;
-                    prod.qty = product.quantity;
-                    prod.featured = product.featured;
-                    prod.isVisible = product.isVisible;
-                    prod.dropWeightGram = product.dropWeightGram;
-                    prod.retailPrice = product.retailPrice;
-                    prod.costPrice =  product.costPrice;
-                    prod.amazonAfiliate = product.amazonAffiliateLink;
-                    
-                    //Chargement des Catégories ici
-                    //Chargement des Tags ici
+                    const loadAllProductsInfos = async () => {
+                      await asyncForEach(allNonTranslatableInfos, async (product) => {
+                            let prod = new Product();
+                            productList.push(prod); //Its a refference so no need to push it at the end
 
-                    languages.forEach(function(language){ //For each language
-                        currentMgr.loadTranslatableInfos(prod.id,language.id).then(function(resTranslatable){ //Load this product infos
-                            
-                            if(resTranslatable.length > 0) //If there are infos for that product in this language
-                            {
-                                //Le bug value of undefined est probablement lié au fait que mes produits de la BD
-                                //ne sont pas complets
-                                console.log(resTranslatable);
-                                let productInfos = new ProductInfos(prod.id,resTranslatable[0].value,resTranslatable[1].value,resTranslatable[2].value);
-                                prod.traductions.push(productInfos);                       
-                            }
+                            prod.id = product.id;
+                            prod.image = product.image;
+                            prod.qty = product.quantity;
+                            prod.featured = product.featured;
+                            prod.isVisible = product.isVisible;
+                            prod.dropWeightGram = product.dropWeightGram;
+                            prod.retailPrice = product.retailPrice;
+                            prod.costPrice =  product.costPrice;
+                            prod.amazonAfiliate = product.amazonAffiliateLink;   
 
-                        }); 
+                            currentMgr.loadCategoryByProductId(prod.id).then(function(categories){
+                                categories.forEach(function(category){
+                                    let cat = {id: category.idCategory,name:category.value}
+
+                                    prod.category.push(cat)
+                                })
+                            });
+
+                            await asyncForEach(languages, async (language) =>{ //For each language
+                                await currentMgr.loadTranslatableInfos(prod.id,language.id).then(function(resTranslatable){ //Load this product infos
+                                        if(resTranslatable.length > 0) //If there are infos for that product in this language
+                                        {
+                                            let productInfos = new ProductInfos(prod.id,language.id,resTranslatable[0].value,resTranslatable[1].value,resTranslatable[2].value);
+                                            prod.traductions.push(productInfos);  
+                                        }
+                                }); 
+                            });
+                      });
+                    }
+
+                    return loadAllProductsInfos();
 
 
-                    })   
+            })
 
-                });
-
-            }).then(function(res){ 
-            console.log("herererererer");
-            console.log(productList);
-        });
-                    
+        }).then(function(res){
+            return productList;
         })
-
     }
 
     //adds a product in the DB
@@ -95,7 +106,6 @@ class CtrlProduct {
            //Link the categories to the product
            productInfos.category.forEach(function(categoryId){
                 currentMgrProduct.linkCategoryToProduct(insertedId,categoryId).then(function(res){
-                    return 
                 });
            });
 

@@ -315,8 +315,8 @@ app.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
 app.post("/ajaxRequest/loadAllProducts", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
-    ctrlProduct.loadAllProductsAdmin().then(function(res){
-        res.send(res)
+    ctrlProduct.loadAllProductsAdmin().then(function(result){
+        res.send(result)
     })
 });
 //Application routes
@@ -412,8 +412,6 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 	     let ctrlProduct = new CtrlProduct();
 
 	     ctrlProduct.addProduct(data).then(function(result){
-            console.log("results:")
-            console.log(result);
 	     	res.send(result)
 	     });
    	}

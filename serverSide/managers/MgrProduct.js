@@ -5,6 +5,17 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
+
+    loadCategoryByProductId(productId)
+    {
+        let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param).then(function(res){
+            return res;
+        });
+    }
+
     //Loads all the product translatable infos
     loadTranslatableInfos(productId,langId)
     {
@@ -194,16 +205,6 @@ class MgrProduct {
 
 
        });
-    }
-
-    loadCategoryIdRelatedToProduct(productId)
-    {
-        let query = "SELECT ta_category_product.idCategory FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ?";
-        let param = [productId];
-
-        return this._queryEngine.executeQuery(query,param).then(function(res){
-            return res;
-        });
     }
 
 
