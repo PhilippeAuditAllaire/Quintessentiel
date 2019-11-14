@@ -377,29 +377,6 @@ app.get("/manageCategory",function(req,res){
 	}
 });
 
-app.get("/modifyProduct",function(req,res){
-
-	if(req.session.userId != undefined && req.session.isAdmin == 1)
-	{
-		let ctrlProduct = new CtrlProduct();
-		let productId = req.query.productId;
-
-		Promise.all([ctrlProduct.loadProductInfosById(productId),ctrlProduct.loadTagsForBoxes(productId)]).then(function(result){
-			
-			ctrlProduct.loadAllCategories(result[0].category).then(function(optionBox){
-				res.render("modifyproduct.ejs",{availableTags: result[1][1],allCategories: optionBox,
-				productName: result[0].name,productCostPrice: result[0].costPrice,productRetailPrice: result[0].retailPrice,productQty: result[0].qty,
-				productWeight: result[0].dropWeightGram,attributedTags: result[1][0],textAreaDescription:result[0].description,textAreaAdvice: result[0].advice,
-				chckFeatured:(result[0].isFeatured ? "checked" : ""),chckVisible:(result[0].isVisible ? "checked" : ""),isFileRequired: ""});				
-			})
-
-		})	
-			
-	}
-	else{
-		res.redirect("/adminConnection?pleaseConnect=true");
-	}
-});
 
 app.post('/addProduct', upload.single('image'), function(req, res, next) {
 	if(true) //req.session.userId != undefined && req.session.isAdmin == 1
@@ -412,29 +389,33 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 	     let ctrlProduct = new CtrlProduct();
 
 	     ctrlProduct.addProduct(data).then(function(result){
-	     	res.send(result)
+	     	res.send(result.toString())
 	     });
    	}
 	else{
-        console.log("here")
 		res.redirect("/adminConnection?pleaseConnect=true");
 	}
 });
 
-app.post('/updateProduct', upload.single('imgProduct'), function(req, res, next) {
+app.post('/updateProduct', upload.single('image'), function(req, res, next) {
 	if(true)//req.session.userId != undefined && req.session.isAdmin == 1
 	{  
         console.log("On est ici! Voici les informations envoyées:")
         
 		let data = req.body;
+        data.translatedFields = JSON.parse(data.translatedFields);
 
-		if(req.file != undefined){
+		if(req.file != undefined){ //If the user uploaded a new image, replace it
 			let imgName = req.file.filename;
 			data.imgName = imgName;
 		}
 
-        
-        console.log(data);
+        let ctrlProduct = new CtrlProduct();
+
+        ctrlProduct.updateProduct(data).then(function(result){
+            res.send(result.toString())
+        });
+
    	}
 	else{
 		res.redirect("/adminConnection?pleaseConnect=true");

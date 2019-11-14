@@ -99,6 +99,42 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query);
     }
 
+
+    //Deletes the given product
+    //@productId is the id of the
+    //product to delete
+    deleteProduct(productId)
+    {
+        let query = "DELETE FROM Product WHERE id = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Deletes all the product attributes
+    //that are related to the given product id
+    //@productId is the id of the product to 
+    //delete its attributes
+    deleteProductAttributes(productId)
+    {
+        let query = "DELETE FROM ta_productattribute_language WHERE idProduct = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Deletes all the categories associated
+    //with a given product id
+    //@productId is the id of the product
+    //to delete the related categories
+    deleteProductCategories(productId)
+    {
+        let query = "DELETE FROM ta_category_product WHERE idProduct = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     loadCommentSlider(code_lang) {
         let query = "SELECT * FROM comment JOIN users ON users.id = comment.idUser JOIN commentstatus ON commentstatus.id = comment.idStatus WHERE commentstatus.name = 'Approved'";
 

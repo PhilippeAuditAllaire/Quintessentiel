@@ -8,6 +8,23 @@ class CtrlProduct {
         this._mgrProduct = new MgrProduct();
     }
 
+    updateProduct(productInfos){
+        let context = this;
+
+        return Promise.all([this._mgrProduct.deleteProductCategories(productInfos.id),
+                            this._mgrProduct.deleteProductAttributes(productInfos.id)])
+        .then(function(res){ //The product has been completely removed from the DB
+            return context._mgrProduct.deleteProduct(productInfos.id).then(function(res){
+                return context.addProduct(productInfos).then(function(res){
+                    return res;
+                })
+            })
+
+        })
+        .catch(function(err){
+            return false;
+        })
+    }
 
     //Loads all the products
     loadAllProductsAdmin()
@@ -102,9 +119,9 @@ class CtrlProduct {
         nonTranslatableInfos.format = productInfos.format;
 
         let currentMgrProduct = this._mgrProduct;
+        let insertedId;
         return this._mgrProduct.addNonTranslatableInfos(nonTranslatableInfos).then(function(res){
-            
-            let insertedId = res.insertId;
+            insertedId = res.insertId;
 
            //Link the categories to the product
            productInfos.category.forEach(function(categoryId){
@@ -127,7 +144,7 @@ class CtrlProduct {
             })
 
         }).then(function(res){
-            return true; //Everything worked perfectly
+            return insertedId; //Everything worked perfectly
         }).catch(function(res){
             return false; //Error while adding the product
         })
@@ -241,39 +258,6 @@ class CtrlProduct {
         let products = this._mgrProduct.loadCommentSlider();
     }
   
-    updateProduct(productInfos)
-    {
-        let context = this;
-        return this.loadProductInfosById(productInfos.id).then(function(productBefore){
-
-            let product = new Product();
-            product.id = productInfos.id;
-            product.name = productInfos.name;
-
-            if(productInfos.imgName == undefined){
-                product.image = productBefore.image;  
-            }
-            else{
-                product.image = productInfos.imgName;
-            }
-            
-            product.description = productInfos.description
-            product.advice = productInfos.advice;
-            product.qty = productInfos.qty;
-            product.featured = 'b1';
-            product.isVisible = productInfos.isVisible;
-            product.dropWeightGram = productInfos.weight;
-            product.retailPrice = productInfos.retailPrice;
-            product.costPrice = productInfos.costPrice;
-            product.category = productInfos.category;
-            product.tags = productInfos.tags;
-
-            return context._mgrProduct.updateProduct(product).then(function(res){
-            });
-
-        })
-
-    }
 
     loadProductInfosById(productId)
     {

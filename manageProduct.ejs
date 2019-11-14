@@ -48,7 +48,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <div id="addProductSuccessAlert" class="alert alert-success fade" role="alert">
+                <div id="updateProductSuccessAlert" class="alert alert-success fade" role="alert">
                     Produit modifié avec succès!
                 </div>
                 <div class="addProductFields">
@@ -138,7 +138,7 @@
         let updateCategoryRightBtn = $("#updateModal .rightBtn");
         let updateCategoryleftBtn = $("#updateModal .leftBtn");
         let updateUpdateModalListboxCategory = new Listbox(updateCategoryWrapper,updateCategoryAvailableList,updateCategoryAttributedList,updateCategoryRightBtn, updateCategoryleftBtn);
-        let updatedProductId;  //This contains the ID of the product that will be updated
+        let productToUpdate;  //This contains the product that will be updated
 
 
         function openUpdateProduct(row){
@@ -155,7 +155,7 @@
         //the array of element
         function fillUpdateFormWithProduct(rowId){
             let product = productList[rowId];
-            updatedProductId = product._id;
+            productToUpdate = product;
             fillUpdateTab(product);
             fillUpdateBasicInfos(product);
         }
@@ -248,6 +248,7 @@
             clearUpdateCategories();
             clearUpdateTabs();
             $("#updateModal .errorMsgForm").html('');
+            $("#updateModal .image").val('');
         }
 
         //Removes everything from the category two way list
@@ -287,7 +288,8 @@
                 {
                         $(this).ajaxSubmit({
                            data: {
-                                productId: updatedProductId,
+                                id: productToUpdate._id,
+                                imgName: productToUpdate._image,
                                 translatedFields: JSON.stringify(translatedFields),
                                 costPrice: updateCostPrice.val(),
                                 retailPrice: updateRetailPrice.val(),
@@ -301,14 +303,32 @@
                            },
                            contentType: 'application/json',
                            success: function(response){
-                            console.log("UPDATED");
-                            successAddedProduct();
-                            loadProductsDisplayList();
+                            let newProductId = parseInt(response);
+                            successUpdatedProduct();
+
+                            loadProductsDisplayList().then(function(){ //Wait for the product list to refresh
+                                productToUpdate = findProductById(newProductId);
+                                console.log("produit: ")
+                                console.log(productToUpdate);
+                            });
                          }
                        });   
                 }        
 
         });
+
+        //Finds a product from the product list
+        //by its ID.
+        //@productId is the id used to match
+        function findProductById(productId)
+        {
+            for(let i = 0;i < productList.length;i++)
+            {
+                if(productId == productList[i]._id){ //if the Ids match
+                    return productList[i];
+                }
+            }
+        }
     </script>
     <script>
         loadProductsDisplayList();
@@ -317,7 +337,7 @@
         //in the list
         function loadProductsDisplayList()
         {
-            $.ajax({
+            return $.ajax({
                 url: "./ajaxRequest/loadAllProducts",
                 type: "POST",
                 success: function(res){
@@ -403,8 +423,9 @@
     </script>
     <script>
         let formProduct = document.getElementById("formProduct");
+        let formUpdateProduct = document.getElementById("formUpdateProduct");
         let addProductSuccessAlert = document.getElementById("addProductSuccessAlert")
-        
+        let updateProductSuccessAlert = document.getElementById("updateProductSuccessAlert")
         //Setup the listbox managers
 
         //Category list box
@@ -504,19 +525,7 @@
 
             return hasError;           
         }
-        //Checks if the fiels are filled correctly
-        function checkFieldsError(modal)
-        {
 
-        }
-
-        //Displays an error message
-        //and hides the success message
-        function displayErrorMessage(errC)
-        {
-            addProductSuccessAlert.classList.remove("show");
-
-        }
 
         //This function shows a success message
         //and clears the form
@@ -524,12 +533,27 @@
         {
             addProductSuccessAlert.classList.add("show");
             formProduct.reset();
-            $('.modal').animate({ scrollTop: 0 }, 'slow');
+            $('#addModal').animate({ scrollTop: 0 }, 'slow');
 
             setTimeout(function(){
                 addProductSuccessAlert.classList.remove("show");
             },5000);
         }
+
+
+
+        //This function shows a success message
+        //and clears the form
+        function successUpdatedProduct()
+        {
+            updateProductSuccessAlert.classList.add("show");
+            $('#updateModal').animate({ scrollTop: 0 }, 'slow');
+
+            setTimeout(function(){
+                updateProductSuccessAlert.classList.remove("show");
+            },5000);
+        }
+
 
         //Gets the value of every field
         //that is needed for a precise language
