@@ -422,23 +422,19 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 });
 
 app.post('/updateProduct', upload.single('imgProduct'), function(req, res, next) {
-	if(req.session.userId != undefined && req.session.isAdmin == 1)
-	{
+	if(true)//req.session.userId != undefined && req.session.isAdmin == 1
+	{  
+        console.log("On est ici! Voici les informations envoyées:")
+        
 		let data = req.body;
 
 		if(req.file != undefined){
 			let imgName = req.file.filename;
 			data.imgName = imgName;
 		}
-	    
-	    
 
-	    let productId = req.query.productId;
-	    let ctrlProduct = new CtrlProduct();
-	     ctrlProduct.updateProduct(data).then(function(result){
-	     	res.send(result)
-
-	     });
+        
+        console.log(data);
    	}
 	else{
 		res.redirect("/adminConnection?pleaseConnect=true");

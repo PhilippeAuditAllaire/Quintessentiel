@@ -64,7 +64,7 @@ class CtrlProduct {
                             await asyncForEach(languages, async (language) =>{ //For each language
                                 await currentMgr.loadTranslatableInfos(prod.id,language.id).then(function(resTranslatable){ //Load this product infos
                                         if(resTranslatable.length > 0) //If there are infos for that product in this language
-                                        {   console.log(resTranslatable)
+                                        {   
                                             let productInfos = new ProductInfos(prod.id,language.id,resTranslatable[0].value,resTranslatable[1].value,resTranslatable[2].value);
                                             prod.traductions.push(productInfos);  
                                         }
@@ -209,7 +209,6 @@ class CtrlProduct {
 
             if(categoryList != undefined)
             {
-                console.log(categoryList);
                  categoryList.forEach(function(category){
                     html += "<a href='#' class='list-group-item list-group-item-action' data-id="+category.id+">"+category.name+"</a>";
                 });               
@@ -270,7 +269,6 @@ class CtrlProduct {
             product.tags = productInfos.tags;
 
             return context._mgrProduct.updateProduct(product).then(function(res){
-                console.log(res);
             });
 
         })
@@ -280,7 +278,6 @@ class CtrlProduct {
     loadProductInfosById(productId)
     {
         return this._mgrProduct.loadProductInfosById(productId).then(function(res){
-            console.log(res);
             let product = new Product();
             product.id = res[0][0].id;
             product.retailPrice = res[0][0].retailPrice;
@@ -466,7 +463,6 @@ getCommentsIndex(code_lang) {
 
     loadProductSearch(code_lang, search) {
         let products = this._mgrProduct.loadProductSearch(code_lang, search);
-        console.log(products);
         return products.then(function(val) {
             let catalogue_product = [];
 

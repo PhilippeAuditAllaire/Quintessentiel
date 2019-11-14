@@ -57,7 +57,7 @@
               </div>
           
               <div class="modal-footer">
-                <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                <input type="submit" class="btn btn-success" id="btnSend" value="Modifier">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
               </div>
             </div>
@@ -127,16 +127,16 @@
         let allCategories = JSON.parse('<%- allAvailableCategories %>'); //A list of JSON that contains all the existing categories
         let updateCategoryAvailableList = document.getElementById("updateModal").getElementsByClassName("categoryAvailableList")[0];
         let updateCategoryAttributedList = document.getElementById("updateModal").getElementsByClassName("categoryAttributedList")[0];
-        let updateCostPrice = updateModal.getElementsByClassName("costPrice")[0];
-        let updateRetailPrice = updateModal.getElementsByClassName("retailPrice")[0];
-        let updateQuantity = updateModal.getElementsByClassName("quantity")[0];
-        let updateWeight = updateModal.getElementsByClassName("weight")[0];
-        let updateAffiliate = updateModal.getElementsByClassName("amazonAffiliate")[0];
-        let updateFeatured = updateModal.getElementsByClassName("chckFeatured")[0];
-        let updateVisible = updateModal.getElementsByClassName("chckVisible")[0];
-        let updateCategoryWrapper = document.getElementById("updateModal").getElementsByClassName("categoryList")[0];
-        let updateCategoryRightBtn = document.getElementById("updateModal").getElementsByClassName("rightBtn")[0];
-        let updateCategoryleftBtn = document.getElementById("updateModal").getElementsByClassName("leftBtn")[0];
+        let updateCostPrice = $("#updateModal .costPrice");
+        let updateRetailPrice = $("#updateModal .retailPrice");
+        let updateQuantity = $("#updateModal .quantity");
+        let updateWeight = $("#updateModal .weight");
+        let updateAffiliate = $("#updateModal .amazonAffiliate");
+        let updateFeatured = $("#updateModal .chckFeatured");
+        let updateVisible = $("#updateModal .chckVisible");
+        let updateCategoryWrapper = $("#updateModal .categoryList");
+        let updateCategoryRightBtn = $("#updateModal .rightBtn");
+        let updateCategoryleftBtn = $("#updateModal .leftBtn");
         let updateUpdateModalListboxCategory = new Listbox(updateCategoryWrapper,updateCategoryAvailableList,updateCategoryAttributedList,updateCategoryRightBtn, updateCategoryleftBtn);
 
         function openUpdateProduct(row){
@@ -161,13 +161,13 @@
         //@product is the product Object to fill the modal's
         //basic tabs with
         function fillUpdateBasicInfos(product){
-            updateCostPrice.value = product._costPrice;
-            updateRetailPrice.value = product._retailPrice;
-            updateQuantity.value = product._qty;
-            updateWeight.value = product._dropWeightGram;
-            updateAffiliate.value = (product._amazonAfiliate == "NULL" ? "" : product._amazonAfiliate);
-            updateFeatured.checked = product._featured;
-            updateVisible.checked = product._isVisible;
+            updateCostPrice.val(product._costPrice);
+            updateRetailPrice.val(product._retailPrice);
+            updateQuantity.val(product._qty);
+            updateWeight.val(product._dropWeightGram);
+            updateAffiliate.val((product._amazonAfiliate == "NULL" ? "" : product._amazonAfiliate));
+            updateFeatured.prop("checked",product._featured);
+            updateVisible.prop("checked",product._isVisible);
             $("#updateModal input[name=radioFormat][value=" + product._format + "]").prop('checked', true);
         }
 
@@ -244,6 +244,7 @@
         {
             clearUpdateCategories();
             clearUpdateTabs();
+            $("#updateModal .errorMsgForm").html('');
         }
 
         //Removes everything from the category two way list
@@ -270,6 +271,42 @@
             }    
         }
     </script>
+    <script> //This script is for the update product form
+         $('.updateProduct').submit(function(e){
+            console.log("Submitting")
+                e.preventDefault();
+
+                let translatedFields = getTranslatedFields(document.getElementById("updateModal"));
+                let categoryAttributedListbox = updateUpdateModalListboxCategory.attributedListbox;
+                let checkFormatRadioBtn = $(".modalUpdate input[type='radio']:checked").val();
+
+                if(!checkUpdateModalError())
+                {
+                    console.log("Cost price update: "+ $(updateCostPrice).val())
+                        $(this).ajaxSubmit({
+                           data: {
+                                translatedFields: JSON.stringify(translatedFields),
+                                costPrice: updateCostPrice.val(),
+                                retailPrice: updateRetailPrice.val(),
+                                quantity: updateQuantity.val(),
+                                weight: updateWeight.val(),
+                                format: checkFormatRadioBtn,
+                                category: categoryAttributedListbox,
+                                featured: $(updateFeatured)[0].checked,
+                                visible: $(updateVisible)[0].checked,
+                                amazonAffiliate: updateAffiliate.val()
+                           },
+                           contentType: 'application/json',
+                           success: function(response){
+                            console.log("UPDATED");
+                            successAddedProduct();
+                            loadProductsDisplayList();
+                         }
+                       });   
+                }        
+
+        });
+    </script>
     <script>
         loadProductsDisplayList();
         let productList;
@@ -282,7 +319,6 @@
                 type: "POST",
                 success: function(res){
                     productList = res;
-                    console.log(res);
                     displayAllproducts();
                 }
             })
@@ -409,7 +445,7 @@
                 let categoryAttributedListbox = listboxCategory.attributedListbox;
                 let checkFormatRadioBtn = $(".addProduct input[type='radio']:checked").val();
 
-                if(!checkFieldsError())
+                if(!checkAddModalError())
                 {
                         $(this).ajaxSubmit({
                            data: {
@@ -434,21 +470,41 @@
 
         });
 
-        //Checks if the fiels are filled correctly
-        function checkFieldsError()
-        {
-            let categoryAttributedListbox = listboxCategory.attributedListbox;
+        //Check if there is any errors in the updateProduct modal form
+        function checkUpdateModalError(){
+            let categoryAttributedListbox = updateUpdateModalListboxCategory.attributedListbox;
             let hasError = false;
 
-            $("#errorMsgAddCategory").html('');
+            $("#updateModal .errorMsgForm").html("");
 
             if(categoryAttributedListbox.length == 0)
             {
-                $("#errorMsgAddCategory").html("Veuillez sélectionner au moins une catégorie");
+                $("#updateModal .errorMsgForm").html("Veuillez sélectionner au moins une catégorie");
                 hasError = true;
             }
 
-            return hasError;
+            return hasError;           
+        }
+
+        //Check if there is any errors in the addProduct modal form
+        function checkAddModalError(){
+            let categoryAttributedListbox = listboxCategory.attributedListbox;
+            let hasError = false;
+
+            $("#addModal .errorMsgForm").html("");
+
+            if(categoryAttributedListbox.length == 0)
+            {
+                $("#addModal .errorMsgForm").html("Veuillez sélectionner au moins une catégorie");
+                hasError = true;
+            }
+
+            return hasError;           
+        }
+        //Checks if the fiels are filled correctly
+        function checkFieldsError(modal)
+        {
+
         }
 
         //Displays an error message
