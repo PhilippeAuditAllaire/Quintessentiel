@@ -36,7 +36,35 @@
           </form>
       </div>
     </div>
-
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="updateModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form class="updateProduct" enctype="multipart/form-data" action="/updateProduct" method="POST" id="formUpdateProduct">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification d'un produit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="addProductSuccessAlert" class="alert alert-success fade" role="alert">
+                    Produit modifié avec succès!
+                </div>
+                <div class="addProductFields">
+                    <%- updateProductTabs %>
+                    <%include ./includes/templateProduct.ejs%>
+              </div>
+          
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+    </div>
 	<%include ./includes/appNavbar.ejs%>
 	<section class="wrapper-content-manageProduct">
 		<div class="wrapper-body-mgProduct">
@@ -94,6 +122,20 @@
     <script src="./javascript/listbox.js"></script>
     <script src="./javascript/tableProducts.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <script>
+        function openUpdateProduct(row){
+            let rowId = $("#tableProducts tr").index(row);
+            fillUpdateFormWithProduct(rowId);
+            let updateModal = document.getElementById("updateModal");
+            $(updateModal).modal();
+        }
+
+
+        function fillUpdateFormWithProduct(rowId){
+            let product = productList[rowId];
+            console.log(product);
+        }
+    </script>
     <script>
         loadProductsDisplayList();
         let productList;

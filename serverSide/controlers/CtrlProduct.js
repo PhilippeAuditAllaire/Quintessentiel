@@ -135,7 +135,9 @@ class CtrlProduct {
 
     //Generates the tabs of the add product modal
     //based on the number of languages
-    generateAddProductTabs()
+    //@modalName so the IDs can be customised depending of 
+    //the modal (else the tabs only work for one modal since same id)
+    generateModalProductTabs(modalName)
     {
         return this._mgrProduct.loadAvailableLanguages().then(function(res){
             let generatedHTML;
@@ -153,9 +155,9 @@ class CtrlProduct {
                     isTabActive = "active show";
                 }
 
-                ul += "<li class='nav-item'><a data-toggle='tab' href='#"+lang.name+"' class='nav-link "+isTabActive+"'>"+lang.name+"</a></li>";
+                ul += "<li class='nav-item'><a data-toggle='tab' href='#"+(modalName+lang.name)+"' class='nav-link "+isTabActive+"'>"+lang.name+"</a></li>";
 
-                tabContent += `<div id=`+lang.name+` class='tab-pane fade in `+isTabActive+`' data-langId=`+lang.id+`>
+                tabContent += `<div id=`+(modalName+lang.name)+` class='tab-pane fade in `+isTabActive+`' data-langId=`+lang.id+`>
                                 <div class='wrapper-inputLabel-productModal modal-single-wrapper'>
                                         <div class='wrapper-modal-label'>
                                             <label>Nom du produit</label>

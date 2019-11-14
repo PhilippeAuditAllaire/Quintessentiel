@@ -147,6 +147,7 @@
     margin-top:15px;
     max-height:65vh;
     overflow-y: scroll;
+    padding-bottom: 20px;
 }
 
 .middle {
