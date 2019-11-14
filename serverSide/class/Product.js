@@ -80,9 +80,6 @@ class Product {
     get category() { return this._category; }
     set category(paramCategory) { this._category = paramCategory; }
 
-    get tags() { return this._tags; }
-    set tags(paramTags) { this._tags = paramTags; }
-
     get traductions() { return this._traductions; }
     set traductions(paramTraductions) { this._traductions = paramTraductions; }
 

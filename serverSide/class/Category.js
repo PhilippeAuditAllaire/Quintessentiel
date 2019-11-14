@@ -30,10 +30,10 @@ class Category {
 		this._id = $id;
 	}
 
-	set titnamele($categoryName){
+	set name($categoryName){
 		this._name = $categoryName;
 	}
 }
 
 
-module.exports = User;
+module.exports = Category;

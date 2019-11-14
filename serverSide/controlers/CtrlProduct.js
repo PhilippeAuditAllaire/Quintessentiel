@@ -1,4 +1,5 @@
 const Product = require("../class/Product.js");
+const Category = require("../class/Category.js");
 const ProductInfos = require("../class/ProductInfos.js");
 const MgrProduct = require("../managers/MgrProduct.js");
 
@@ -53,7 +54,7 @@ class CtrlProduct {
 
                             currentMgr.loadCategoryByProductId(prod.id).then(function(categories){
                                 categories.forEach(function(category){
-                                    let cat = {id: category.idCategory,name:category.value}
+                                    let cat = new Category({id: category.idCategory,name: category.value})
 
                                     prod.category.push(cat)
                                 })
@@ -98,7 +99,6 @@ class CtrlProduct {
         nonTranslatableInfos.retailPrice = productInfos.retailPrice;
         nonTranslatableInfos.costPrice = productInfos.costPrice;
         nonTranslatableInfos.category = productInfos.category;
-        nonTranslatableInfos.tags = productInfos.attributedTags;
         nonTranslatableInfos.format = productInfos.format;
 
         let currentMgrProduct = this._mgrProduct;

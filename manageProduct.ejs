@@ -154,7 +154,7 @@
             updateWeight.value = product._dropWeightGram;
             updateAffiliate.value = product._amazonAfiliate;
             updateFeatured.checked = product._featured;
-            updateVisible.checked = product._visible;
+            updateVisible.checked = product._isVisible;
             $("#updateModal input[name=radioFormat][value=" + product._format + "]").prop('checked', true);
         }
 
@@ -212,6 +212,7 @@
                 type: "POST",
                 success: function(res){
                     productList = res;
+                    console.log(res);
                     displayAllproducts();
                 }
             })
@@ -234,7 +235,7 @@
                             <th><img src='./images/`+prod._image+`'/></th>
                             <th>`+categoriesHTML+`</th>
                             <th>`+prod._qty+`</th>
-                            <th>`+prod._retailPrice+`</th>
+                            <th>`+prod._retailPrice+`$</th>
                         </tr>`;
 
 
@@ -284,7 +285,7 @@
             let html = "";
 
             categoryList.forEach(function(category){
-                html += "<p>"+category.name+"</p>"
+                html += "<p>"+category._name+"</p>"
             });
 
             return html;
