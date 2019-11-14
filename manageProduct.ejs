@@ -52,7 +52,10 @@
 					<div class="sub-left-wrapper">
 						<label>Trier par:</label>
 						<select id="orderBySelect">
-							<option>Quantité</option>
+							<option value="_name" selected="">Nom</option>
+                            <option value="_qty">Quantité</option>
+                            <option value="_retailPrice">Prix</option>
+                            <option value="_description">Description</option>
 						</select>
 					</div>
 				</div>
@@ -76,34 +79,8 @@
                             <th>Prix</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr data-product-id="11" ondblclick="openUpdateProduct(this)" class="rowTR">
-                            <th>Liniment démaquillant peau sensible</th>
-                            <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
-                                douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
-                            <th>Image</th>
-                            <th>Soin visage</th>
-                            <th>20</th>
-                            <th>20.00</th>
-                        </tr>
-                        <tr data-product-id="11" ondblclick="openUpdateProduct(this)" class="rowTR">
-                            <th>Liniment démaquillant peau sensible</th>
-                            <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
-                                douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
-                            <th><img src="./images/default.jpg" alt=""></th>
-                            <th>Soin visage</th>
-                            <th>10</th>
-                            <th>20.00</th>
-                        </tr>
-                        <tr data-product-id="11" ondblclick="openUpdateProduct(this)" class="rowTR">
-                            <th>Liniment démaquillant peau sensible</th>
-                            <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
-                                douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
-                            <th>Image</th>
-                            <th>Soin visage</th>
-                            <th>15</th>
-                            <th>20.00</th>
-                        </tr>
+                    <tbody id="tableProducts">
+
                     </tbody>
                 </table>
             </div>
@@ -119,17 +96,92 @@
     <script src="http://malsup.github.com/jquery.form.js"></script> 
     <script>
         loadProductsDisplayList();
-        
+        let productList;
+        //Loads all the products that need to be displayed
+        //in the list
         function loadProductsDisplayList()
         {
             $.ajax({
                 url: "./ajaxRequest/loadAllProducts",
                 type: "POST",
                 success: function(res){
-                    console.log("Retour de load all products")
-                    console.log(res)
+                    productList = res;
+                    displayAllproducts();
                 }
             })
+        }
+
+        //Displays all the products into the table
+        function displayAllproducts()
+        {   
+            orderList();
+
+            let productListTable = document.getElementById("tableProducts");
+            productListTable.innerHTML = "";
+
+            productList.forEach(function(prod)
+            {
+                let categoriesHTML = productCategoriesAsHTML(prod._category);
+                let nextProduct = `<tr data-product-id="`+prod._id+`" ondblclick="openUpdateProduct(this)" class="rowTR">
+                            <th>`+prod._traductions[0]._name+`</th>
+                            <th>`+prod._traductions[0]._description+`</th>
+                            <th><img src='./images/`+prod._image+`'/></th>
+                            <th>`+categoriesHTML+`</th>
+                            <th>`+prod._qty+`</th>
+                            <th>`+prod._retailPrice+`</th>
+                        </tr>`;
+
+
+                productListTable.innerHTML += nextProduct;
+            })
+        }
+
+        //This function checks the current 'order by' filter
+        //and calls the right order by function according to it
+        function orderList(){
+            let orderBy = $("#orderBySelect").val();
+
+            if(orderBy == "_name" || orderBy == "_description"){
+                orderListByText(orderBy);
+            }
+            else if(orderBy == "_qty" || orderBy == "_retailPrice"){
+                orderListByNumber(orderBy)
+            }
+        }
+
+        //This function orders the list by the given field (only text fields are accepted)
+        //@field is the text field that will be checked for the ordering
+        function orderListByText(field){
+            productList.sort(function(a,b){
+                return a._traductions[0][field].localeCompare(b._traductions[0][field]);
+            })
+        }
+
+        //This function orders the list by the given field (only numerical fields are accepted)
+        //@field is the numerical field that will be checked for the ordering
+        function orderListByNumber(field){
+            productList.sort(function(a,b){
+                return a[field] - b[field];
+            })
+        }
+
+
+
+        $("#orderBySelect").on("change",function(){
+            displayAllproducts();
+        });
+
+        //generates the HTML for the categories that 
+        //need to be displayed in the table
+        function productCategoriesAsHTML(categoryList)
+        {
+            let html = "";
+
+            categoryList.forEach(function(category){
+                html += "<p>"+category.name+"</p>"
+            });
+
+            return html;
         }
 
     </script>
@@ -197,6 +249,7 @@
                            contentType: 'application/json',
                            success: function(response){
                             successAddedProduct();
+                            loadProductsDisplayList();
                          }
                        });   
                 }        

@@ -418,3 +418,7 @@ th{
 #lblWeight{
 	align-self: auto;
 }
+
+th p{
+    white-space: pre;
+}
