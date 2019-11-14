@@ -165,7 +165,7 @@
             updateRetailPrice.value = product._retailPrice;
             updateQuantity.value = product._qty;
             updateWeight.value = product._dropWeightGram;
-            updateAffiliate.value = product._amazonAfiliate;
+            updateAffiliate.value = (product._amazonAfiliate == "NULL" ? "" : product._amazonAfiliate);
             updateFeatured.checked = product._featured;
             updateVisible.checked = product._isVisible;
             $("#updateModal input[name=radioFormat][value=" + product._format + "]").prop('checked', true);
