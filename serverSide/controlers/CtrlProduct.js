@@ -48,7 +48,8 @@ class CtrlProduct {
                             prod.dropWeightGram = product.dropWeightGram;
                             prod.retailPrice = product.retailPrice;
                             prod.costPrice =  product.costPrice;
-                            prod.amazonAfiliate = product.amazonAffiliateLink;   
+                            prod.amazonAfiliate = product.amazonAffiliateLink;  
+                            prod.format = product.format; 
 
                             currentMgr.loadCategoryByProductId(prod.id).then(function(categories){
                                 categories.forEach(function(category){

@@ -123,17 +123,81 @@
     <script src="./javascript/tableProducts.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script> 
     <script>
+        let updateModal = document.getElementById("updateModal");
+
         function openUpdateProduct(row){
             let rowId = $("#tableProducts tr").index(row);
             fillUpdateFormWithProduct(rowId);
-            let updateModal = document.getElementById("updateModal");
+            
             $(updateModal).modal();
         }
 
 
         function fillUpdateFormWithProduct(rowId){
             let product = productList[rowId];
-            console.log(product);
+            fillUpdateTab(product);
+            fillUpdateBasicInfos(product);
+        }
+
+        function fillUpdateBasicInfos(product){
+            let updateCostPrice = updateModal.getElementsByClassName("costPrice")[0];
+            let updateRetailPrice = updateModal.getElementsByClassName("retailPrice")[0];
+            let updateQuantity = updateModal.getElementsByClassName("quantity")[0];
+            let updateWeight = updateModal.getElementsByClassName("weight")[0];
+            let updateAffiliate = updateModal.getElementsByClassName("amazonAffiliate")[0];
+            let updateFeatured = updateModal.getElementsByClassName("chckFeatured")[0];
+            let updateVisible = updateModal.getElementsByClassName("chckVisible")[0];
+
+            updateCostPrice.value = product._costPrice;
+            updateRetailPrice.value = product._retailPrice;
+            updateQuantity.value = product._qty;
+            updateWeight.value = product._dropWeightGram;
+            updateAffiliate.value = product._amazonAfiliate;
+            updateFeatured.checked = product._featured;
+            updateVisible.checked = product._visible;
+            $("#updateModal input[name=radioFormat][value=" + product._format + "]").prop('checked', true);
+        }
+
+        function fillUpdateTab(productInfos){
+            clearUpdateTabs();
+            let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
+
+            productInfos._traductions.forEach(function(traduction){ //For each traductions there is
+                let prodTradLang = traduction._idLang;
+
+                for(let i = 0;i < updateModalTabs.length;i++) //For each modal language tabs
+                {
+                    let modalTabLang = updateModalTabs[i].getAttribute("data-langId");
+
+                    if(modalTabLang == prodTradLang){ //This tab has the same lang as this traduction
+
+                        let tabProdName = updateModalTabs[i].getElementsByClassName("productName")[0];
+                        let tabProdDesc = updateModalTabs[i].getElementsByClassName("description")[0];
+                        let tabProdAdvice = updateModalTabs[i].getElementsByClassName("advice")[0];
+
+                        tabProdName.value = traduction._name;
+                        tabProdDesc.innerHTML = traduction._description;
+                        tabProdAdvice.innerHTML = traduction._advice;
+
+                    }
+                }
+            });
+        }
+
+        function clearUpdateTabs()
+        {
+            let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
+
+            for(let i = 0;i < updateModalTabs.length;i++) //For each modal language tabs
+            {
+               let tabProdName = updateModalTabs[i].getElementsByClassName("productName")[0];
+               let tabProdDesc = updateModalTabs[i].getElementsByClassName("description")[0];
+               let tabProdAdvice = updateModalTabs[i].getElementsByClassName("advice")[0];
+
+               tabProdName.value = "";
+               tabProdDesc.innerHTML = "";
+               tabProdAdvice.innerHTML = "";
+            }    
         }
     </script>
     <script>
