@@ -22,7 +22,7 @@ class MgrProduct {
     //Loads all the givne product translatable infos
     loadTranslatableInfos(productId,langId)
     {
-        let query = "SELECT * FROM ta_productattribute_language WHERE idProduct = ? AND idLanguage = ?";
+        let query = "SELECT * FROM ta_productattribute_language WHERE idProduct = ? AND idLanguage = ? ORDER BY productAttributeId";
         let param = [productId,langId];
 
         return this._queryEngine.executeQuery(query,param);

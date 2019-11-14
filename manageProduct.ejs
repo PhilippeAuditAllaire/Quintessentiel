@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quintessentiel | Connexion</title>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
+    <title>Quintessentiel | Connexion</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
 </head>
 <body>
     <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
@@ -65,36 +65,36 @@
       </div>
     </div>
     </div>
-	<%include ./includes/appNavbar.ejs%>
-	<section class="wrapper-content-manageProduct">
-		<div class="wrapper-body-mgProduct">
-			<div class="wrapper-logo">
-				<img src="./images/logo.png"/>
-			</div>
-			<p class="warning-error" id="warning-error"></p>
-		</div>
-		<div class="wrapper-manageProduct-section">
-			<h2>Gestion de l'inventaire</h2>
-			<div class="mg-product-top-line">
-				<div class="wrapper-left-qty">
-					<div class="sub-left-wrapper">
-						<label>Trier par:</label>
-						<select id="orderBySelect">
-							<option value="_name" selected="">Nom</option>
+    <%include ./includes/appNavbar.ejs%>
+    <section class="wrapper-content-manageProduct">
+        <div class="wrapper-body-mgProduct">
+            <div class="wrapper-logo">
+                <img src="./images/logo.png"/>
+            </div>
+            <p class="warning-error" id="warning-error"></p>
+        </div>
+        <div class="wrapper-manageProduct-section">
+            <h2>Gestion de l'inventaire</h2>
+            <div class="mg-product-top-line">
+                <div class="wrapper-left-qty">
+                    <div class="sub-left-wrapper">
+                        <label>Trier par:</label>
+                        <select id="orderBySelect">
+                            <option value="_name" selected="">Nom</option>
                             <option value="_qty">Quantité</option>
                             <option value="_retailPrice">Prix</option>
                             <option value="_description">Description</option>
-						</select>
-					</div>
-				</div>
-				<div class="wrapper-right-btn">
-					<div class="wrapper-btn">
-						<a href="#" class="btnApp">+</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="table">
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper-right-btn">
+                    <div class="wrapper-btn">
+                        <a href="#" class="btnApp">+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table">
             <div class="border">
                 <table class="table-product">
                     <thead class="table-product-header">
@@ -113,7 +113,7 @@
                 </table>
             </div>
         </div>
-	</section>
+    </section>
 
     <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
     <script src="./javascript/renderer.js"></script>
@@ -124,6 +124,20 @@
     <script src="http://malsup.github.com/jquery.form.js"></script> 
     <script>
         let updateModal = document.getElementById("updateModal");
+        let allCategories = JSON.parse('<%- allAvailableCategories %>'); //A list of JSON that contains all the existing categories
+        let updateCategoryAvailableList = document.getElementById("updateModal").getElementsByClassName("categoryAvailableList")[0];
+        let updateCategoryAttributedList = document.getElementById("updateModal").getElementsByClassName("categoryAttributedList")[0];
+        let updateCostPrice = updateModal.getElementsByClassName("costPrice")[0];
+        let updateRetailPrice = updateModal.getElementsByClassName("retailPrice")[0];
+        let updateQuantity = updateModal.getElementsByClassName("quantity")[0];
+        let updateWeight = updateModal.getElementsByClassName("weight")[0];
+        let updateAffiliate = updateModal.getElementsByClassName("amazonAffiliate")[0];
+        let updateFeatured = updateModal.getElementsByClassName("chckFeatured")[0];
+        let updateVisible = updateModal.getElementsByClassName("chckVisible")[0];
+        let updateCategoryWrapper = document.getElementById("updateModal").getElementsByClassName("categoryList")[0];
+        let updateCategoryRightBtn = document.getElementById("updateModal").getElementsByClassName("rightBtn")[0];
+        let updateCategoryleftBtn = document.getElementById("updateModal").getElementsByClassName("leftBtn")[0];
+        let updateUpdateModalListboxCategory = new Listbox(updateCategoryWrapper,updateCategoryAvailableList,updateCategoryAttributedList,updateCategoryRightBtn, updateCategoryleftBtn);
 
         function openUpdateProduct(row){
             let rowId = $("#tableProducts tr").index(row);
@@ -133,21 +147,20 @@
         }
 
 
+        //Fills the update form with all the product
+        //infos
+        //@rowId is the index of the clicked element in
+        //the array of element
         function fillUpdateFormWithProduct(rowId){
             let product = productList[rowId];
             fillUpdateTab(product);
             fillUpdateBasicInfos(product);
         }
 
+        //Fills the update modal basic infos (i.e: price)
+        //@product is the product Object to fill the modal's
+        //basic tabs with
         function fillUpdateBasicInfos(product){
-            let updateCostPrice = updateModal.getElementsByClassName("costPrice")[0];
-            let updateRetailPrice = updateModal.getElementsByClassName("retailPrice")[0];
-            let updateQuantity = updateModal.getElementsByClassName("quantity")[0];
-            let updateWeight = updateModal.getElementsByClassName("weight")[0];
-            let updateAffiliate = updateModal.getElementsByClassName("amazonAffiliate")[0];
-            let updateFeatured = updateModal.getElementsByClassName("chckFeatured")[0];
-            let updateVisible = updateModal.getElementsByClassName("chckVisible")[0];
-
             updateCostPrice.value = product._costPrice;
             updateRetailPrice.value = product._retailPrice;
             updateQuantity.value = product._qty;
@@ -158,8 +171,13 @@
             $("#updateModal input[name=radioFormat][value=" + product._format + "]").prop('checked', true);
         }
 
+        //Fills all the fields from the update modal
+        //tabs
+        //@productInfos is the product Object to fill
+        //the tabs with
         function fillUpdateTab(productInfos){
-            clearUpdateTabs();
+            clearUpdateModal();
+            placeCategories(productInfos._category)
             let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
 
             productInfos._traductions.forEach(function(traduction){ //For each traductions there is
@@ -184,6 +202,58 @@
             });
         }
 
+        //Place the categories into their right spot in
+        //the two way list
+        //@productCategories is an array of categories
+        //that are associated with the product
+        function placeCategories(productCategories)
+        {
+            for(let i = 0;i < allCategories.length;i++) //For each categories there is
+            {   
+                let attributed = false;
+
+                for(let j = 0;j < productCategories.length;j++)
+                {   
+                    if(allCategories[i]._id == productCategories[j]._id) //category is related to the product
+                    {
+                        addUpdateAttributedCategory(allCategories[i]);
+                        attributed = true;
+                    }
+                }
+
+                if(!attributed) //The product doesnt have this category
+                {
+                    addUpdateAvailableCategory(allCategories[i]);
+                }
+            }
+        }
+
+        //Adds a category to the available category list
+        //of the update modal
+        function addUpdateAvailableCategory(category){
+            updateCategoryAvailableList.innerHTML += '<a href="#" class="list-group-item list-group-item-action" data-id="'+category._id+'">'+category._name+'</a>';
+        }
+
+        function addUpdateAttributedCategory(category)
+        {
+            updateCategoryAttributedList.innerHTML += '<a href="#" class="list-group-item list-group-item-action" data-id="'+category._id+'">'+category._name+'</a>';
+        }
+
+        //Clears everything off the update modal
+        function clearUpdateModal()
+        {
+            clearUpdateCategories();
+            clearUpdateTabs();
+        }
+
+        //Removes everything from the category two way list
+        function clearUpdateCategories()
+        {
+            updateCategoryAvailableList.innerHTML = "";
+            updateCategoryAttributedList.innerHTML = "";
+
+        }
+        //Deletes everything that is written in the update modal tabs
         function clearUpdateTabs()
         {
             let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
@@ -292,7 +362,7 @@
         }
 
     </script>
-	<script>
+    <script>
         let formProduct = document.getElementById("formProduct");
         let addProductSuccessAlert = document.getElementById("addProductSuccessAlert")
         
@@ -307,6 +377,7 @@
 
         let listboxCategory = new Listbox(categoryWrapper,categoryAvailableList,categoryAttributedList,categoryRightBtn,
             categoryleftBtn);
+
 
         let addModal = $("#addModal");
 
@@ -455,6 +526,6 @@
 
             return true;
         }
-	</script>
+    </script>
 </body>
 </html>

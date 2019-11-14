@@ -64,7 +64,7 @@ class CtrlProduct {
                             await asyncForEach(languages, async (language) =>{ //For each language
                                 await currentMgr.loadTranslatableInfos(prod.id,language.id).then(function(resTranslatable){ //Load this product infos
                                         if(resTranslatable.length > 0) //If there are infos for that product in this language
-                                        {
+                                        {   console.log(resTranslatable)
                                             let productInfos = new ProductInfos(prod.id,language.id,resTranslatable[0].value,resTranslatable[1].value,resTranslatable[2].value);
                                             prod.traductions.push(productInfos);  
                                         }
@@ -199,23 +199,27 @@ class CtrlProduct {
     }
 
 
-    //Loads all the tags except the one precised in the except tags (can be undefined)
-    loadAllTags(exceptTags)
+    //Generates the HTML for each categories
+    //based on the loadAllCategories function
+    loadAllCategoriesHTML(productCategoryId)
     {
-        return this._mgrProduct.loadAllTags(exceptTags).then(function(res){
+        
+        return this.loadAllCategories(productCategoryId).then(function(categoryList){
             let html = "";
 
-            if(res != undefined && res.length > 0)
+            if(categoryList != undefined)
             {
-                res.forEach(function(row){
-                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
-                });                
+                console.log(categoryList);
+                 categoryList.forEach(function(category){
+                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+category.id+">"+category.name+"</a>";
+                });               
             }
-
 
             return html;
         });
+
     }
+
 
     //Loads every categories that exist
     //@productCategoryId is optional, given the category id
@@ -223,19 +227,16 @@ class CtrlProduct {
     loadAllCategories(productCategoryId)
     {
         return this._mgrProduct.loadAllCategories().then(function(res){
-            let html = "";
+            let categories = [];
 
-            if(res != undefined)
-            {
-                 res.forEach(function(row){
-                    html += "<a href='#' class='list-group-item list-group-item-action' data-id="+row.id+">"+row.value+"</a>";
-                });               
-            }
+            res.forEach(function(category){
+                categories.push(new Category({id:category.id,name:category.value}))
+            });
 
-
-            return html;
+            return categories;
         });
     }
+
 
     getCommentsIndex(code_lang) {
         let products = this._mgrProduct.loadCommentSlider();

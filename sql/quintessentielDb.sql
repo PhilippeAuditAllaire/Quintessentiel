@@ -287,7 +287,8 @@ CREATE TABLE LandingText(
 
 CREATE TABLE LandingText_Attribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
-	type VARCHAR(255) NOT NULL
+	type VARCHAR(255) NOT NULL,
+	page VARCHAR(32) NOT NULL
 );
 
 CREATE TABLE TA_LandingTextAttribute_Language(
