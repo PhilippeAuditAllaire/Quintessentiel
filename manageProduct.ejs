@@ -138,6 +138,8 @@
         let updateCategoryRightBtn = $("#updateModal .rightBtn");
         let updateCategoryleftBtn = $("#updateModal .leftBtn");
         let updateUpdateModalListboxCategory = new Listbox(updateCategoryWrapper,updateCategoryAvailableList,updateCategoryAttributedList,updateCategoryRightBtn, updateCategoryleftBtn);
+        let updatedProductId;  //This contains the ID of the product that will be updated
+
 
         function openUpdateProduct(row){
             let rowId = $("#tableProducts tr").index(row);
@@ -153,6 +155,7 @@
         //the array of element
         function fillUpdateFormWithProduct(rowId){
             let product = productList[rowId];
+            updatedProductId = product._id;
             fillUpdateTab(product);
             fillUpdateBasicInfos(product);
         }
@@ -284,6 +287,7 @@
                 {
                         $(this).ajaxSubmit({
                            data: {
+                                productId: updatedProductId,
                                 translatedFields: JSON.stringify(translatedFields),
                                 costPrice: updateCostPrice.val(),
                                 retailPrice: updateRetailPrice.val(),
