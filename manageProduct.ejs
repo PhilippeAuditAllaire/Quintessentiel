@@ -143,6 +143,8 @@
 
         function openUpdateProduct(row){
             let rowId = $("#tableProducts tr").index(row);
+            console.log("Ouverture du produit: ")
+            console.log(productList[rowId]);
             fillUpdateFormWithProduct(rowId);
             
             $(updateModal).modal();
@@ -156,8 +158,10 @@
         function fillUpdateFormWithProduct(rowId){
             let product = productList[rowId];
             productToUpdate = product;
+            clearUpdateModal();
             fillUpdateTab(product);
             fillUpdateBasicInfos(product);
+            placeCategories(product._category)
         }
 
         //Fills the update modal basic infos (i.e: price)
@@ -179,8 +183,7 @@
         //@productInfos is the product Object to fill
         //the tabs with
         function fillUpdateTab(productInfos){
-            clearUpdateModal();
-            placeCategories(productInfos._category)
+            
             let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
 
             productInfos._traductions.forEach(function(traduction){ //For each traductions there is
@@ -197,8 +200,11 @@
                         let tabProdAdvice = updateModalTabs[i].getElementsByClassName("advice")[0];
 
                         tabProdName.value = traduction._name;
-                        tabProdDesc.innerHTML = traduction._description;
-                        tabProdAdvice.innerHTML = traduction._advice;
+                        console.log("Description a la valeur:")
+                        console.log(tabProdDesc)
+                        console.log(traduction._description)
+                        $(tabProdDesc).val(traduction._description);
+                        $(tabProdAdvice).val(traduction._advice);
 
                     }
                 }
@@ -270,14 +276,13 @@
                let tabProdAdvice = updateModalTabs[i].getElementsByClassName("advice")[0];
 
                tabProdName.value = "";
-               tabProdDesc.innerHTML = "";
-               tabProdAdvice.innerHTML = "";
+               $(tabProdDesc).val("");
+               $(tabProdAdvice).val("");
             }    
         }
     </script>
     <script> //This script is for the update product form
          $('.updateProduct').submit(function(e){
-            console.log("Submitting")
                 e.preventDefault();
 
                 let translatedFields = getTranslatedFields(document.getElementById("updateModal"));
