@@ -1,184 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quintessentiel | Connexion</title>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
-	<link rel="stylesheet" type="text/css" href="./css/style_manageCategory.css"/>
-	<script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <title>Quintessentiel | Connexion</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
 </head>
 <body>
-	<%include ./includes/appNavbar.ejs%>
-	<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title">Ajout d'une catégorie</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <p>Inscrivez le nom de la nouvelle catégorie</p>
-	        <input type="text" class="form-control" placeholder="ex: Peau douce" />
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" id="confirmAddBtn" class="btn btn-success">Ajouter</button>
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<div id="modifyModal" class="modal fade" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title">Modification d'une catégorie</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <p>Inscrivez le nouveau nom pour la catégorie '<span class='modalCategoryName'></span>'</p>
-	        <input type="text" class="form-control" placeholder="ex: Peau douce" />
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" id="confirmUpdateBtn" class="btn btn-success">Modifier</button>
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<div id="activateModal" class="modal fade" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title"></h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <p></p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" id="confirmActivateBtn" class="btn btn-success" onclick="changeActiveState()"></button>
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<section class="wrapper-content-manageProduct">
-		<div class="wrapper-body-manage-category">
-			<h2>Gestion des catégories</h2>
-
-		<div class="table">
+    <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form class="addCategory" enctype="multipart/form-data" action="/addCategory" method="POST" id="formProduct">
+              <div class="modal-header">
+                <h5 class="modal-title">Ajout d'une catégorie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="addCategorySuccessAlert" class="alert alert-success fade" role="alert">
+                    Catégorie ajoutée avec succès
+                </div>
+                <div class="addCategoryFields">
+                    
+              </div>
+          
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="updateModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form class="updateProduct" enctype="multipart/form-data" action="/updateProduct" method="POST" id="formUpdateProduct">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification d'une catégorie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="updateCategorySuccessAlert" class="alert alert-success fade" role="alert">
+                    Catégorie modifiée avec succès!
+                </div>
+                <div class="addCategoryFields">
+                   
+              </div>
+          
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-success" id="btnSend" value="Modifier">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+    </div>
+    <%include ./includes/appNavbar.ejs%>
+    <section class="wrapper-content-manageProduct">
+    <section class="wrapper-content-manageProduct">
+        <div class="wrapper-body-mgProduct">
+            <div class="wrapper-logo">
+                <img src="./images/logo.png"/>
+            </div>
+            <p class="warning-error" id="warning-error"></p>
+        </div>
+        <div class="wrapper-manageProduct-section">
+            <h2>Gestion des catégories</h2>
+            <div class="mg-product-top-line">
+                <div class="wrapper-right-btn">
+                    <div class="wrapper-btn">
+                        <a href="#" class="btnAdd" id="btnAddCategory">+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table">
             <div class="border">
                 <table class="table-product">
                     <thead class="table-product-header">
                         <tr>
-                            <th>Catégorie</th>
-                            <th>Active</th>
+                            <th>Nom</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr data-category-id="19" class="rowCategory">
-                            <th class="categoryName">Catégorie A</th>
-                            <th><input type="checkbox" class="chckboxActive"/></th>
-                        </tr>
-                        <tr class="rowCategory" data-category-id="19">
-                            <th class="categoryName">Catégorie B</th>
-                            <th><input type="checkbox" class="chckboxActive" checked=""/></th>
-                        </tr>
-                        <tr class="rowCategory" data-category-id="19">
-                            <th class="categoryName">Catégorie C</th>
-                            <th><input type="checkbox" class="chckboxActive"/></th>
-                        </tr>
+                    <tbody id="tableProducts">
 
                     </tbody>
                 </table>
             </div>
         </div>
-			<div class="wrapper-btn-end">
-				<a href="#" id="btnAdd" class="btnApp">+</a>
-			</div>
-		</div>
-	</section>
-	<script src="./javascript/renderer.js"></script>
-	<script src="./javascript/tableProducts.js"></script>
-	<script src="./javascript/resizeWindow.js"></script>
-	<script>
-		let addBtn = $("#btnAdd")
-		let tr = document.getElementsByTagName("tr");
+    </section>
 
-		//modals
-		let addModal = $("#addModal");
-		let modifyModal = $("#modifyModal");
-		let activateModal = $("#activateModal");
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="./javascript/renderer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="./javascript/listbox.js"></script>
+    <script src="./javascript/tableProducts.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <script>
+        loadCategoriesDisplayList();
+        let pcategoriesList;
+        //Loads all the products that need to be displayed
+        //in the list
+        function loadCategoriesDisplayList()
+        {
+            return $.ajax({
+                url: "./ajaxRequest/loadAllCategoriesAdmin",
+                type: "POST",
+                success: function(res){
+                    categoryList = res;
+                    //displayAllCategories();
+                }
+            })
+        }
 
-		//modals confirm buttons
-		let confirmAddBtn = $("#confirmAddBtn");
-		let confirmUpdateBtn = $("#confirmUpdateBtn");
-		let confirmActivateBtn = $("#confirmActivateBtn")
+    </script>
 
-		let rows = $(".rowCategory");
-
-		addBtn.on("click",function(e){
-			$(addModal).modal();
-		});
-
-		rows.on("dblclick",function(e){
-			let target = e.target;
-			let targetId = target.parentNode.getAttribute("data-category-id");
-
-			let categoryName = target.parentNode.getElementsByClassName("categoryName")[0].innerHTML;
-			$(".modalCategoryName").html(categoryName)
-			$(modifyModal).modal();
-		});
-
-
-
-		let selectedCategoryId;
-
-		$(".chckboxActive").on("click",function(e){
-			e.preventDefault();
-
-			let isChecked = e.target.checked;
-
-			selectedCategoryId = e.target.parentNode.parentNode.getAttribute("data-category-id");
-
-			if(!isChecked){
-				$("#activateModal .modal-title").html("Désactivation d'une catégorie");
-				$("#activateModal .modal-body p").html("Souhaitez-vous vraiment désactiver cette catégorie?");
-				$("#confirmActivateBtn").html("Désactiver");
-				$("#activateModal").modal();
-			}
-			else{
-				$("#activateModal .modal-title").html("Activation d'une catégorie");
-				$("#activateModal .modal-body p").html("Souhaitez-vous vraiment activer cette catégorie?");
-				$("#confirmActivateBtn").html("Activer");
-				$("#activateModal").modal();	
-			}
-		});
-
-
-		//Calls the backend to change the active state of the given category
-		function changeActiveState(){
-			
-
-			$.ajax({
-				
-			})
-		}
-
-
-
-	</script>
-			<!-- Bootstrap -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

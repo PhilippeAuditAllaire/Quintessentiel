@@ -23,6 +23,7 @@ const QueryEngine = require("./serverSide/scripts/QueryEngine.js");
 const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
 const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
+const CtrlCategory = require("./serverSide/controlers/CtrlCategory.js");
 
 let website = express();
 let app = express();
@@ -368,7 +369,7 @@ app.get("/updateRecipe", function(req, res) {
 });
 
 app.get("/manageCategory",function(req,res){
-	if(req.session.userId != undefined && req.session.isAdmin == 1)
+	if(true) //req.session.userId != undefined && req.session.isAdmin == 1
 	{
 		res.render("manageCategory.ejs");	
 	}
@@ -420,6 +421,29 @@ app.post('/updateProduct', upload.single('image'), function(req, res, next) {
 	else{
 		res.redirect("/adminConnection?pleaseConnect=true");
 	}
+});
+
+app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
+    let ctrlCategory = new CtrlCategory();
+
+    ctrlCategory.loadAllCategoriesAdmin().then(function(result){
+        console.log(result)
+        res.send(result);
+    })
+});
+
+app.post('/addCategory',function(req, res, next) {
+    if(true) //req.session.userId != undefined && req.session.isAdmin == 1
+    {
+         let ctrlProduct = new CtrlProduct();
+
+         ctrlProduct.addCategory(data).then(function(result){
+            //res.send(result.toString())
+         });
+    }
+    else{
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
 });
 
 app.post("/ajaxRequest/getTags",function(req,res){
