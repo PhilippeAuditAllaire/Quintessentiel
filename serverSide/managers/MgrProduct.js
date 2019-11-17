@@ -187,10 +187,8 @@ class MgrProduct {
     }
 
     loadProductSearchCategory(code_lang, search) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_categoryattribute_language.value IN (";
+        let query = "SELECT DISTINCT Product.id as product_id,ta_category_product.idCategory FROM product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_categoryattribute_language.value IN (";
             for(let i=0;i<search.length;i++){
-                console.log("I : "+i);
-                console.log("Search lenght: "+search.length);
                 if(i!=(search.length-1)){
                     var conditions="'" + search[i] +"',";
                 }else{
@@ -198,7 +196,7 @@ class MgrProduct {
                 }  
                 query=query.concat(conditions);
         }
-        let endQuery=") GROUP BY Product.id";
+        let endQuery=") Order BY Product.id";
         query=query.concat(endQuery);
         
         console.log(query);

@@ -336,10 +336,49 @@ getCommentsIndex(code_lang) {
 
     loadProductSearchCategory(code_lang, search) {
         let products = this._mgrProduct.loadProductSearchCategory(code_lang, search);
-        console.log(products);
-        return products.then(function(val) {
-            let catalogue_product = [];
 
+        return products.then(function(val) {
+            console.log(products);
+            console.log("search lenght: "+search.length);
+            let catalogue_product = [];
+            
+            let newProducts = [];
+            let filteredProducts = [];
+            let nbrCat = 1;
+            
+            val.forEach(function(product) {
+                let ele = product.product_id;
+                newProducts.push(ele);
+            });
+
+            console.log(newProducts);
+
+            for(let i = 0;i<newProducts.length;i++){
+                if(!((i+1)==newProducts.length)){
+                    if(newProducts[i]==newProducts[i+1]){
+                        console.log("t dans le if");
+                        nbrCat++;
+                    }else{
+                        console.log("t dans le else");
+        
+                        if(nbrCat==search.length){
+                            let ele = newProducts[i];
+                            filteredProducts.push(ele);
+                        }
+                        nbrCat=1;
+                    }
+                }else{
+                    if(nbrCat==search.length){
+                        console.log("test dans le else i+1==lenght");
+                        let ele = newProducts[i];
+                        filteredProducts.push(ele);
+                    }
+                    nbrCat=1;
+                }
+                
+            }
+
+            console.log(filteredProducts);
             val.forEach(function(product) {
                 //product.image = "default.jpg";
                 let ele = '<div class="catalogue-produit" onclick="openInfo(' + product.product_id + ');">';
