@@ -5,6 +5,24 @@ class MgrCategory {
         this._queryEngine = new QueryEngine();
     }
 
+    //Adds the translation to a given category
+    addTranslation(langId,categoryId,categoryName)
+    {
+        let query = "INSERT INTO ta_categoryattribute_language VALUES (1,?,?,?)";
+        let param = [langId,categoryId,categoryName];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Adds the given category to
+    //the database
+    addCategory(category){
+        let query = "INSERT INTO Category VALUES (DEFAULT,?)";
+        let param = [category.isVisible];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     //Loads all the categories with
     //their basic infos (id,isVisible)
     //@Returns a promise
@@ -36,6 +54,7 @@ class MgrCategory {
         let query = "SELECT * FROM Language";
         return this._queryEngine.executeQuery(query);
     }
+
 }
 
 module.exports = MgrCategory;

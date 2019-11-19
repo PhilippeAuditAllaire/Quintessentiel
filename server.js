@@ -334,7 +334,7 @@ app.get("/manageProduct", function(req, res) {
         let ctrlProduct = new CtrlProduct();
 
         Promise.all([ctrlProduct.generateModalProductTabs("add"),ctrlProduct.loadAllCategoriesHTML(),ctrlProduct.generateModalProductTabs("update"),ctrlProduct.loadAllCategories()]).then(function(results){
-            res.render("manageProduct.ejs",{addProductTabs: results[0],availableCategories: results[1],updateProductTabs:results[2],allAvailableCategories:JSON.stringify(results[3])});
+            res.render("manageProduct.ejs",{addProductTabs: results[0],availableCategories: results[1],updateProductTabs:results[2],allAvailableCategories:results[3]});
         });
 
     } else {
@@ -371,7 +371,12 @@ app.get("/updateRecipe", function(req, res) {
 app.get("/manageCategory",function(req,res){
 	if(true) //req.session.userId != undefined && req.session.isAdmin == 1
 	{
-		res.render("manageCategory.ejs");	
+        let ctrlCategory = new CtrlCategory();
+
+        Promise.all([ctrlCategory.generateModalCategoryTabs("add"),ctrlCategory.generateModalCategoryTabs("update")]).then(function(result){
+            res.render("manageCategory.ejs",{modalAdd: result[0],modalUpdate: result[1]});
+        })
+			
 	}
 	else{
 		res.redirect("/adminConnection?pleaseConnect=true");
@@ -423,6 +428,20 @@ app.post('/updateProduct', upload.single('image'), function(req, res, next) {
 	}
 });
 
+app.post('/addCategory', function(req, res) {
+    if(true) //req.session.userId != undefined && req.session.isAdmin == 1
+    {
+         let ctrlCategory = new CtrlCategory();
+
+         ctrlCategory.addCategory(req.body).then(function(result){
+            res.send(result)
+         });
+    }
+    else{
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
+
 app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
     let ctrlCategory = new CtrlCategory();
 
@@ -430,20 +449,6 @@ app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
         console.log(result)
         res.send(result);
     })
-});
-
-app.post('/addCategory',function(req, res, next) {
-    if(true) //req.session.userId != undefined && req.session.isAdmin == 1
-    {
-         let ctrlProduct = new CtrlProduct();
-
-         ctrlProduct.addCategory(data).then(function(result){
-            //res.send(result.toString())
-         });
-    }
-    else{
-        res.redirect("/adminConnection?pleaseConnect=true");
-    }
 });
 
 app.post("/ajaxRequest/getTags",function(req,res){

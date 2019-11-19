@@ -58,3 +58,27 @@ th:nth-child(2) input[type=checkbox]{
 .modalCategoryName{
 	font-weight: bold;
 }
+
+
+#addCategoryModal .modal-single-wrapper{
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+}
+
+#addCategoryModal .wrapper-modal-input,#addCategoryModal .wrapper-modal-label{
+	margin:auto;
+}
+.wrapper-inputLabel-productModal{
+	width:100%;
+	text-align: center;
+	margin-top:10px;
+}
+
+.chckVisible{
+	margin-left:10px;
+}
+
+.tab-content{
+	border-bottom:0;
+}
