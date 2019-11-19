@@ -19,28 +19,30 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
-                <div id="addCategorySuccessAlert" class="alert alert-success fade" role="alert">
-                    Catégorie ajoutée avec succès
+              <form id="addModalForm">
+                  <div class="modal-body">
+                    <div id="addCategorySuccessAlert" class="alert alert-success fade" role="alert">
+                        Catégorie ajoutée avec succès
+                    </div>
+                    <div class="addCategoryFields">
+                        <%- modalAdd %>
+                        <div class="wrapper-inputLabel-productModal visibleCheckbox">
+                            <div class="wrapper-modal-input">
+                               <label>Catégorie visible<input type="checkbox" class="chckVisible"/></label> 
+                            </div>
+                        </div>
+                    </div>
+              
+                  <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                  </div>
                 </div>
-                <div class="addCategoryFields">
-                    <%- modalAdd %>
-                     <div class="wrapper-inputLabel-productModal visibleCheckbox">
-                         <div class="wrapper-modal-input">
-                            <label>Catégorie visible<input type="checkbox" class="chckVisible"/></label> 
-                         </div>
-                     </div>
-                </div>
-          
-              <div class="modal-footer">
-                <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              </div>
-            </div>
+            </form>
       </div>
     </div>
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="updateModal">       <!-- Update modal category -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="updateCategoryModal">       <!-- Update modal category -->
       <div class="modal-dialog" role="document">
         <div class="modal-content">
               <div class="modal-header">
@@ -114,29 +116,34 @@
         //Add category script
         let btnSend = document.getElementById("btnSend");
 
-        btnSend.addEventListener("click",function(e){
+        $("#addModalForm").on("submit",function(e){
             e.preventDefault();
 
             let isVisible = document.getElementById("addCategoryModal").getElementsByClassName("chckVisible")[0];
             
             let allTranslatedNames = getAllTranslatedNames(document.getElementById("addCategoryModal"));
-            console.log(allTranslatedNames)
-            $.ajax({
-                url: "./addCategory",
-                type: "POST",
-                data: {
-                    allTranslatedNames: allTranslatedNames,
-                    isVisible: isVisible.checked
-                },
-                success: function(res){
-                    if(res)
-                    {
-                       successAddedProduct();
-                       loadCategoriesDisplayList(); //Reload the categories list 
+
+            if(allTranslatedNames.length > 0) //If theres at least one traduction
+            {
+                 console.log(allTranslatedNames)
+                $.ajax({
+                    url: "./addCategory",
+                    type: "POST",
+                    data: {
+                        allTranslatedNames: allTranslatedNames,
+                        isVisible: isVisible.checked
+                    },
+                    success: function(res){
+                        if(res)
+                        {
+                           successAddedProduct();
+                           loadCategoriesDisplayList(); //Reload the categories list 
+                        }
+                        
                     }
-                    
-                }
-            })
+                })               
+            }
+
         });
 
         //Returns an object containing all of the
@@ -238,11 +245,20 @@
             console.log("adding a category!")
         });
 
-        //Opens the update category modal
-        function openUpdateCategory()
-        {
 
+
+        //Update product script
+
+        //Opens the update category modal
+        function openUpdateCategory(row)
+        {
+            let updateModal = document.getElementById("updateCategoryModal");
+
+            $(updateModal).modal()
+            console.log("sup")
+            console.log(row)
         }
+
 
     </script>
 

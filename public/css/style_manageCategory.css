@@ -60,13 +60,13 @@ th:nth-child(2) input[type=checkbox]{
 }
 
 
-#addCategoryModal .modal-single-wrapper{
+.modal .modal-single-wrapper{
 	display: flex;
 	flex-direction:column;
 	justify-content: center;
 }
 
-#addCategoryModal .wrapper-modal-input,#addCategoryModal .wrapper-modal-label{
+.modal .wrapper-modal-input,.modal .wrapper-modal-label{
 	margin:auto;
 }
 .wrapper-inputLabel-productModal{

@@ -124,7 +124,7 @@ class CtrlCategory {
                                             <label>Nom de la catégorie</label>
                                         </div>
                                         <div class="wrapper-modal-input">
-                                            <input type="text" class="addCategoryInputName categoryName form-control"/>
+                                            <input type="text" name="categoryName" class="addCategoryInputName categoryName form-control" />
                                         </div>
                                     </div>
                                 </div>`;
