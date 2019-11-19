@@ -432,7 +432,7 @@ app.post('/addCategory', function(req, res) {
     if(true) //req.session.userId != undefined && req.session.isAdmin == 1
     {
          let ctrlCategory = new CtrlCategory();
-
+         console.log(req.body);
          ctrlCategory.addCategory(req.body).then(function(result){
             res.send(result)
          });

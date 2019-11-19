@@ -11,11 +11,12 @@ class CtrlCategory {
     //Adds a category to the
     //database
     addCategory(infos)
-    {
-        let category = new Category({isVisible: infos.isVisible});
-
+    {   
+        let category = new Category();
+        category.isVisible = (infos.isVisible != "true" ? false : true);
         let context = this;
-
+        
+        
         return this._mgrCategory.addCategory(category).then(function(res){
 
                    console.log("Added the  id")
@@ -35,6 +36,7 @@ class CtrlCategory {
         }).then(function(){
             return true;
         });
+        
     }
 
     //Loads all the categories with
@@ -69,7 +71,7 @@ class CtrlCategory {
 
                                 if(categoryAttributes != undefined)
                                 {
-                                    let traduction = new CategoryInfos(category.id,categoryAttributes.idLang,categoryAttributes.value)
+                                    let traduction = new CategoryInfos(category.id,categoryAttributes.idLanguage,categoryAttributes.value)
                                     category.traductions.push(traduction);  
 
                                 }

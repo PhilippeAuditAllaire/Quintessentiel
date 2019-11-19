@@ -13,6 +13,7 @@ class Category {
 			}
 
 			if(args["isVisible"]){
+				console.log("JE PREND LA VALEUR: "+args["isVisible"]);
 				this._isVisible = args["isVisible"];
 			}
 
@@ -40,19 +41,19 @@ class Category {
 
 
 	//Setters
-	set id($id){
+	set id(id){
 		this._id = id;
 	}
 
-	set name($categoryName){
+	set name(categoryName){
 		this._name = categoryName;
 	}
 
-	set traductions($categoryTraduction){
+	set traductions(categoryTraduction){
 		this._traductions = categoryTraduction;
 	}
 
-	set isVisible($categoryIsVisible){
+	set isVisible(categoryIsVisible){
 		this._isVisible = categoryIsVisible;
 	}
 }

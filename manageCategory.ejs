@@ -115,6 +115,7 @@
     <script>
         //Add category script
         let btnSend = document.getElementById("btnSend");
+        let categoriesList;
 
         $("#addModalForm").on("submit",function(e){
             e.preventDefault();
@@ -202,7 +203,6 @@
         }
 
         //Display categories script
-        let categoriesList;
         let btnAddCategory = document.getElementById("btnAddCategory");
 
         loadCategoriesDisplayList();
@@ -215,8 +215,8 @@
                 url: "./ajaxRequest/loadAllCategoriesAdmin",
                 type: "POST",
                 success: function(res){
-                    categoryList = res;
-                    displayCategoriesList(categoryList);
+                    categoriesList = res;
+                    displayCategoriesList(categoriesList);
                 }
             })
         }
@@ -253,10 +253,44 @@
         function openUpdateCategory(row)
         {
             let updateModal = document.getElementById("updateCategoryModal");
+            let rowIndex = $("#tableProducts tr").index(row);
+            fillUpdateModal(rowIndex)
+            $(updateModal).modal();
+        }
 
-            $(updateModal).modal()
-            console.log("sup")
-            console.log(row)
+        function fillUpdateModal(rowIndex)
+        {
+            let rowInfos = categoriesList[rowIndex];
+            let updateModal = document.getElementById("updateCategoryModal");
+
+            clearModalInfos(updateModal);
+            fillTranslatableFields(rowInfos._traductions);
+            console.log(rowInfos)
+            updateModal.getElementsByClassName("chckVisible")[0].checked = rowInfos._isVisible;
+
+        }
+
+        //Fills the translatable fields with
+        //the category infos
+        function fillTranslatableFields(arrayTranslatable)
+        {
+            let updateModal = document.getElementById("updateCategoryModal")
+            let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
+
+            arrayTranslatable.forEach(function(traduction){
+
+                let traductionLang = traduction._idLang;
+
+                for(let i = 0;i < updateModalTabs.length;i++) //For each modal language tabs
+                {
+                    let modalTabLang = updateModalTabs[i].getAttribute("data-langId");
+
+                    if(modalTabLang == traductionLang){ //This tab has the same lang as this traduction
+                        let tabCatName = updateModalTabs[i].getElementsByClassName("categoryName")[0];
+                        $(tabCatName).val(traduction._name);
+                    }
+                }
+            });
         }
 
 

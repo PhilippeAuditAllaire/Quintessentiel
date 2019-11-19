@@ -29,8 +29,6 @@ class CtrlProduct {
     //Loads all the products
     loadAllProductsAdmin()
     {   
-        
-
         let currentMgr = this._mgrProduct;
         
         let lanugages;
