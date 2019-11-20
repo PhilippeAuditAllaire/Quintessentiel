@@ -334,7 +334,7 @@ app.get("/manageProduct", function(req, res) {
         let ctrlProduct = new CtrlProduct();
 
         Promise.all([ctrlProduct.generateModalProductTabs("add"),ctrlProduct.loadAllCategoriesHTML(),ctrlProduct.generateModalProductTabs("update"),ctrlProduct.loadAllCategories()]).then(function(results){
-            res.render("manageProduct.ejs",{addProductTabs: results[0],availableCategories: results[1],updateProductTabs:results[2],allAvailableCategories:results[3]});
+            res.render("manageProduct.ejs",{addProductTabs: results[0],availableCategories: results[1],updateProductTabs:results[2],allAvailableCategories:JSON.stringify(results[3])});
         });
 
     } else {
