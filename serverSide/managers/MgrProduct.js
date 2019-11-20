@@ -11,7 +11,7 @@ class MgrProduct {
     //product to look for its categories
     loadCategoryByProductId(productId)
     {
-        let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ?";
+        let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ? AND ta_categoryAttribute_language.idLanguage = 1";
         let param = [productId];
 
         return this._queryEngine.executeQuery(query,param).then(function(res){

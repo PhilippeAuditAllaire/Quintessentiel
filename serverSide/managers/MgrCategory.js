@@ -19,8 +19,7 @@ class MgrCategory {
     addCategory(category){
         let query = "INSERT INTO Category VALUES (DEFAULT,?)";
         let param = [category.isVisible];
-        console.log("NULL???")
-        console.log(category.isVisible);
+
         return this._queryEngine.executeQuery(query,param);
     }
 
