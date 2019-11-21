@@ -1,29 +1,49 @@
-const { app, shell, BrowserWindow,ipcMain } = require('electron');
-const nativeImage = require('electron').nativeImage;
+const { app, BrowserWindow, ipcMain } = require('electron');
+
+let mainWindow;
 
 require('electron-reload')(__dirname);
 
-  function createWindow () {
+//Create the main window
+function createWindow () {
 
-  	var image = nativeImage.createFromPath(__dirname + '/public/images/logoApp2.png'); 
-    // Creating the window
-    win = new BrowserWindow({webPreferences: {nodeIntegration: true},  icon:image,width: 800, height: 600, frame:false,'minHeight': 500,'minWidth': 550})
-  	
-  	
+  //Creating the main window
+  mainWindow = new BrowserWindow({
+    webPreferences: {nodeIntegration: true},
+    icon:'./public/images/logoAppNav.png',
+    frame:false,
+    width: 800,
+    height: 600,
+    'minHeight': 500,
+    'minWidth': 550,
+    show: false
+  });
+	
+	//Show the window when ready
+  mainWindow.once('ready-to-show',() => mainWindow.show());
+
+  //Redirect to the URL
+  mainWindow.loadURL('http://localhost:5000/');
+}
 
 
-    //Load the file
-    win.loadURL('http://localhost:5000/')
+app.on('ready', createWindow);
 
-    win.on("new-window", function(event, url) {
-      event.preventDefault();
-      shell.openExternal(url);
-    });
+//Check for the window-action event
+ipcMain.on('window-action', function(e, action){
 
-    ipcMain.on('resize-window', (event, size) => {
-      win.setSize(size.width,size.height);
-    });
-
+  if(action == "minimize"){
+    mainWindow.minimize();
   }
-  
-  app.on('ready', createWindow)
+  else if(action == "maximize")
+  {
+    mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
+  }
+  else if(action == "close"){
+    mainWindow.close();
+  }
+
+});
+
+
+

@@ -1,42 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quintessentiel | Connexion</title>
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
-	<script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <title>Quintessentiel | Connexion</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
 </head>
 <body>
-	<%include ./includes/appNavbar.ejs%>
-	<section class="wrapper-content-manageProduct">
-		<div class="wrapper-body-mgProduct">
-			<div class="wrapper-logo">
-				<img src="./images/logo.png"/>
-			</div>
-			<p class="warning-error" id="warning-error"></p>
-		</div>
-		<div class="wrapper-manageProduct-section">
-			<h2>Gestion de l'inventaire</h2>
-			<div class="mg-product-top-line">
-				<div class="wrapper-left-qty">
-					<div class="sub-left-wrapper">
-						<label>Trier par:</label>
-						<select id="orderBySelect">
-							<option>Quantité</option>
-						</select>
-					</div>
-				</div>
-				<div class="wrapper-right-btn">
-					<div class="wrapper-btn">
-						<a href="./addProduct" class="btnApp" target="_blank">+</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="table">
+    <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST" id="formProduct">
+              <div class="modal-header">
+                <h5 class="modal-title">Ajout d'un produit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="addProductSuccessAlert" class="alert alert-success fade" role="alert">
+                    Produit ajouté avec succès!
+                </div>
+                <div class="addProductFields">
+                    <%- addProductTabs %>
+                    <%include ./includes/templateProduct.ejs%>
+              </div>
+          
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="updateModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form class="updateProduct" enctype="multipart/form-data" action="/updateProduct" method="POST" id="formUpdateProduct">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification d'un produit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="updateProductSuccessAlert" class="alert alert-success fade" role="alert">
+                    Produit modifié avec succès!
+                </div>
+                <div class="addProductFields">
+                    <%- updateProductTabs %>
+                    <%include ./includes/templateProduct.ejs%>
+              </div>
+          
+              <div class="modal-footer">
+                <input type="submit" class="btn btn-success" id="btnSend" value="Modifier">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </form>
+      </div>
+    </div>
+    </div>
+    <%include ./includes/appNavbar.ejs%>
+    <section class="wrapper-content-manageProduct">
+        <div class="wrapper-body-mgProduct">
+            <div class="wrapper-logo">
+                <img src="./images/logo.png"/>
+            </div>
+            <p class="warning-error" id="warning-error"></p>
+        </div>
+        <div class="wrapper-manageProduct-section">
+            <h2>Gestion de l'inventaire</h2>
+            <div class="mg-product-top-line">
+                <div class="wrapper-left-qty">
+                    <div class="sub-left-wrapper">
+                        <label>Trier par:</label>
+                        <select id="orderBySelect">
+                            <option value="_name" selected="">Nom</option>
+                            <option value="_qty">Quantité</option>
+                            <option value="_retailPrice">Prix</option>
+                            <option value="_description">Description</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="wrapper-right-btn">
+                    <div class="wrapper-btn">
+                        <a href="#" class="btnApp">+</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table">
             <div class="border">
                 <table class="table-product">
                     <thead class="table-product-header">
@@ -49,48 +107,513 @@
                             <th>Prix</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr data-product-id="11" ondblclick="openUpdateProduct(this)" class="rowTR">
-                            <th>Liniment démaquillant peau sensible</th>
-                            <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
-                                douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
-                            <th>Image</th>
-                            <th>Soin visage</th>
-                            <th>20</th>
-                            <th>20.00</th>
-                        </tr>
-                        <tr data-product-id="11" ondblclick="openUpdateProduct(this)" class="rowTR">
-                            <th>Liniment démaquillant peau sensible</th>
-                            <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
-                                douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
-                            <th><img src="./images/default.jpg" alt=""></th>
-                            <th>Soin visage</th>
-                            <th>10</th>
-                            <th>20.00</th>
-                        </tr>
-                        <tr data-product-id="11" ondblclick="openUpdateProduct(this)" class="rowTR">
-                            <th>Liniment démaquillant peau sensible</th>
-                            <th>Doux et efficace pour les peaux sensibles! Le liniment Oleocalcaire démaquillant est le must pour les peaux sensibles et irritées. Bien connu en Europe pour le soin des peaux fragiles des bébés, il démaquille et nettoie en
-                                douceur les épidermes les plus fragiles. Composé à 100% d'huiles végétales précieuses bio, il nettoie, nourrit et hydrate l'épiderme tout en douceur. A utiliser avec nos hydrolats rééquilibrants!</th>
-                            <th>Image</th>
-                            <th>Soin visage</th>
-                            <th>15</th>
-                            <th>20.00</th>
-                        </tr>
+                    <tbody id="tableProducts">
+
                     </tbody>
                 </table>
             </div>
         </div>
-	</section>
-	<script src="./javascript/renderer.js"></script>
-	<script src="./javascript/tableProducts.js"></script>
-	<script src="./javascript/resizeWindow.js"></script>
-	<script>
-        function openUpdateProduct(element){
-            let productId = element.getAttribute("data-product-id");
+    </section>
 
-            window.open("./modifyProduct?productId="+productId, '_blank');
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="./javascript/renderer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="./javascript/listbox.js"></script>
+    <script src="./javascript/tableProducts.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <script>
+        let updateModal = document.getElementById("updateModal");
+        let allCategories = JSON.parse('<%- allAvailableCategories %>'); //A list of JSON that contains all the existing categories
+        let updateCategoryAvailableList = document.getElementById("updateModal").getElementsByClassName("categoryAvailableList")[0];
+        let updateCategoryAttributedList = document.getElementById("updateModal").getElementsByClassName("categoryAttributedList")[0];
+        let updateCostPrice = $("#updateModal .costPrice");
+        let updateRetailPrice = $("#updateModal .retailPrice");
+        let updateQuantity = $("#updateModal .quantity");
+        let updateWeight = $("#updateModal .weight");
+        let updateAffiliate = $("#updateModal .amazonAffiliate");
+        let updateFeatured = $("#updateModal .chckFeatured");
+        let updateVisible = $("#updateModal .chckVisible");
+        let updateCategoryWrapper = $("#updateModal .categoryList");
+        let updateCategoryRightBtn = $("#updateModal .rightBtn");
+        let updateCategoryleftBtn = $("#updateModal .leftBtn");
+        let updateUpdateModalListboxCategory = new Listbox(updateCategoryWrapper,updateCategoryAvailableList,updateCategoryAttributedList,updateCategoryRightBtn, updateCategoryleftBtn);
+        let productToUpdate;  //This contains the product that will be updated
+
+        function openUpdateProduct(row){
+            let rowId = $("#tableProducts tr").index(row);
+            console.log("Ouverture du produit: ")
+            console.log(productList[rowId]);
+            fillUpdateFormWithProduct(rowId);
+            
+            $(updateModal).modal();
         }
-	</script>
+
+
+        //Fills the update form with all the product
+        //infos
+        //@rowId is the index of the clicked element in
+        //the array of element
+        function fillUpdateFormWithProduct(rowId){
+            let product = productList[rowId];
+            productToUpdate = product;
+            clearUpdateModal();
+            fillUpdateTab(product);
+            fillUpdateBasicInfos(product);
+            placeCategories(product._category)
+        }
+
+        //Fills the update modal basic infos (i.e: price)
+        //@product is the product Object to fill the modal's
+        //basic tabs with
+        function fillUpdateBasicInfos(product){
+            updateCostPrice.val(product._costPrice);
+            updateRetailPrice.val(product._retailPrice);
+            updateQuantity.val(product._qty);
+            updateWeight.val(product._dropWeightGram);
+            updateAffiliate.val((product._amazonAfiliate == "NULL" ? "" : product._amazonAfiliate));
+            updateFeatured.prop("checked",product._featured);
+            updateVisible.prop("checked",product._isVisible);
+            $("#updateModal input[name=radioFormat][value=" + product._format + "]").prop('checked', true);
+        }
+
+        //Fills all the fields from the update modal
+        //tabs
+        //@productInfos is the product Object to fill
+        //the tabs with
+        function fillUpdateTab(productInfos){
+            
+            let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
+
+            productInfos._traductions.forEach(function(traduction){ //For each traductions there is
+                let prodTradLang = traduction._idLang;
+
+                for(let i = 0;i < updateModalTabs.length;i++) //For each modal language tabs
+                {
+                    let modalTabLang = updateModalTabs[i].getAttribute("data-langId");
+
+                    if(modalTabLang == prodTradLang){ //This tab has the same lang as this traduction
+
+                        let tabProdName = updateModalTabs[i].getElementsByClassName("productName")[0];
+                        let tabProdDesc = updateModalTabs[i].getElementsByClassName("description")[0];
+                        let tabProdAdvice = updateModalTabs[i].getElementsByClassName("advice")[0];
+
+                        tabProdName.value = traduction._name;
+                        $(tabProdDesc).val(traduction._description);
+                        $(tabProdAdvice).val(traduction._advice);
+
+                    }
+                }
+            });
+        }
+
+        //Place the categories into their right spot in
+        //the two way list
+        //@productCategories is an array of categories
+        //that are associated with the product
+        function placeCategories(productCategories)
+        {
+            for(let i = 0;i < allCategories.length;i++) //For each categories there is
+            {   
+                let attributed = false;
+
+                for(let j = 0;j < productCategories.length;j++)
+                {   
+                    if(allCategories[i]._id == productCategories[j]._id) //category is related to the product
+                    {
+                        addUpdateAttributedCategory(allCategories[i]);
+                        attributed = true;
+                    }
+                }
+
+                if(!attributed) //The product doesnt have this category
+                {
+                    addUpdateAvailableCategory(allCategories[i]);
+                }
+            }
+        }
+
+        //Adds a category to the available category list
+        //of the update modal
+        function addUpdateAvailableCategory(category){
+            updateCategoryAvailableList.innerHTML += '<a href="#" class="list-group-item list-group-item-action" data-id="'+category._id+'">'+category._name+'</a>';
+        }
+
+        function addUpdateAttributedCategory(category)
+        {
+            updateCategoryAttributedList.innerHTML += '<a href="#" class="list-group-item list-group-item-action" data-id="'+category._id+'">'+category._name+'</a>';
+        }
+
+        //Clears everything off the update modal
+        function clearUpdateModal()
+        {
+            clearUpdateCategories();
+            clearUpdateTabs();
+            $("#updateModal .errorMsgForm").html('');
+            $("#updateModal .image").val('');
+        }
+
+        //Removes everything from the category two way list
+        function clearUpdateCategories()
+        {
+            updateCategoryAvailableList.innerHTML = "";
+            updateCategoryAttributedList.innerHTML = "";
+
+        }
+        //Deletes everything that is written in the update modal tabs
+        function clearUpdateTabs()
+        {
+            let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
+
+            for(let i = 0;i < updateModalTabs.length;i++) //For each modal language tabs
+            {
+               let tabProdName = updateModalTabs[i].getElementsByClassName("productName")[0];
+               let tabProdDesc = updateModalTabs[i].getElementsByClassName("description")[0];
+               let tabProdAdvice = updateModalTabs[i].getElementsByClassName("advice")[0];
+
+               tabProdName.value = "";
+               $(tabProdDesc).val("");
+               $(tabProdAdvice).val("");
+            }    
+        }
+    </script>
+    <script> //This script is for the update product form
+         $('.updateProduct').submit(function(e){
+                e.preventDefault();
+
+                let translatedFields = getTranslatedFields(document.getElementById("updateModal"));
+                let categoryAttributedListbox = updateUpdateModalListboxCategory.attributedListbox;
+                let checkFormatRadioBtn = $(".modalUpdate input[type='radio']:checked").val();
+
+                if(!checkUpdateModalError())
+                {
+                        $(this).ajaxSubmit({
+                           data: {
+                                id: productToUpdate._id,
+                                imgName: productToUpdate._image,
+                                translatedFields: JSON.stringify(translatedFields),
+                                costPrice: updateCostPrice.val(),
+                                retailPrice: updateRetailPrice.val(),
+                                quantity: updateQuantity.val(),
+                                weight: updateWeight.val(),
+                                format: checkFormatRadioBtn,
+                                category: categoryAttributedListbox,
+                                featured: $(updateFeatured)[0].checked,
+                                visible: $(updateVisible)[0].checked,
+                                amazonAffiliate: updateAffiliate.val()
+                           },
+                           contentType: 'application/json',
+                           success: function(response){
+                            $("#updateModal").modal("hide");
+                            console.log("refresh")
+                            loadProductsDisplayList();
+                            //successUpdatedProduct();
+                            /*
+                            let newProductId = parseInt(response);
+                            loadProductsDisplayList().then(function(){ //Wait for the product list to refresh
+                                //productToUpdate = findProductById(newProductId);
+                                console.log("produit: ")
+                                console.log(productToUpdate);
+                            });
+                            */
+                         }
+                       });   
+                }        
+
+        });
+
+        //Finds a product from the product list
+        //by its ID.
+        //@productId is the id used to match
+        function findProductById(productId)
+        {
+            for(let i = 0;i < productList.length;i++)
+            {
+                if(productId == productList[i]._id){ //if the Ids match
+                    return productList[i];
+                }
+            }
+        }
+    </script>
+    <script>
+        loadProductsDisplayList();
+        let productList;
+        //Loads all the products that need to be displayed
+        //in the list
+        function loadProductsDisplayList()
+        {
+            return $.ajax({
+                url: "./ajaxRequest/loadAllProducts",
+                type: "POST",
+                success: function(res){
+                    productList = res;
+                    displayAllproducts();
+                }
+            })
+        }
+
+        //Displays all the products into the table
+        function displayAllproducts()
+        {   
+            orderList();
+
+            let productListTable = document.getElementById("tableProducts");
+            productListTable.innerHTML = "";
+
+            productList.forEach(function(prod)
+            {
+                let categoriesHTML = productCategoriesAsHTML(prod._category);
+                let nextProduct = `<tr data-product-id="`+prod._id+`" ondblclick="openUpdateProduct(this)" class="rowTR">
+                            <th>`+prod._traductions[0]._name+`</th>
+                            <th>`+prod._traductions[0]._description+`</th>
+                            <th><img src='./images/`+prod._image+`'/></th>
+                            <th>`+categoriesHTML+`</th>
+                            <th>`+prod._qty+`</th>
+                            <th>`+prod._retailPrice+`$</th>
+                        </tr>`;
+
+
+                productListTable.innerHTML += nextProduct;
+            })
+        }
+
+        //This function checks the current 'order by' filter
+        //and calls the right order by function according to it
+        function orderList(){
+            let orderBy = $("#orderBySelect").val();
+
+            if(orderBy == "_name" || orderBy == "_description"){
+                orderListByText(orderBy);
+            }
+            else if(orderBy == "_qty" || orderBy == "_retailPrice"){
+                orderListByNumber(orderBy)
+            }
+        }
+
+        //This function orders the list by the given field (only text fields are accepted)
+        //@field is the text field that will be checked for the ordering
+        function orderListByText(field){
+            productList.sort(function(a,b){
+                return a._traductions[0][field].localeCompare(b._traductions[0][field]);
+            })
+        }
+
+        //This function orders the list by the given field (only numerical fields are accepted)
+        //@field is the numerical field that will be checked for the ordering
+        function orderListByNumber(field){
+            productList.sort(function(a,b){
+                return a[field] - b[field];
+            })
+        }
+
+
+
+        $("#orderBySelect").on("change",function(){
+            displayAllproducts();
+        });
+
+        //generates the HTML for the categories that 
+        //need to be displayed in the table
+        function productCategoriesAsHTML(categoryList)
+        {
+            let html = "";
+
+            categoryList.forEach(function(category){
+                html += "<p>"+category._name+"</p>"
+            });
+
+            return html;
+        }
+
+    </script>
+    <script>
+        let formProduct = document.getElementById("formProduct");
+        let formUpdateProduct = document.getElementById("formUpdateProduct");
+        let addProductSuccessAlert = document.getElementById("addProductSuccessAlert")
+        let updateProductSuccessAlert = document.getElementById("updateProductSuccessAlert")
+        //Setup the listbox managers
+
+        //Category list box
+        let categoryWrapper = document.getElementById("categoryWrapper");
+        let categoryAvailableList = document.getElementById("categoryAvailableList");
+        let categoryAttributedList = document.getElementById("categoryAttributedList");
+        let categoryRightBtn = document.getElementById("categoryRightBtn");
+        let categoryleftBtn = document.getElementById("categoryLeftBtn");
+
+        let listboxCategory = new Listbox(categoryWrapper,categoryAvailableList,categoryAttributedList,categoryRightBtn,
+            categoryleftBtn);
+
+
+        let addModal = $("#addModal");
+
+
+
+
+        $(".btnApp").on("click",function(e){
+            e.preventDefault();
+            addModal.modal()
+        })
+
+
+
+        //For the add product
+        let costPrice = $(".costPrice");
+        let retailPrice = $(".retailPrice");
+        let quantity = $(".quantity");
+        let weight = $(".weight");
+        let category = $(".category");
+        let featured = $(".chckFeatured");
+        let visible = $(".chckVisible");
+        let amazonAffiliate = $(".amazonAffiliate");
+
+
+        $('.addProduct').submit(function(e){
+                e.preventDefault();
+
+                let translatedFields = getTranslatedFields(document.getElementById("addModal"));
+                let categoryAttributedListbox = listboxCategory.attributedListbox;
+                let checkFormatRadioBtn = $(".addProduct input[type='radio']:checked").val();
+
+                if(!checkAddModalError())
+                {
+                        $(this).ajaxSubmit({
+                           data: {
+                                translatedFields: JSON.stringify(translatedFields),
+                                costPrice: costPrice.val(),
+                                retailPrice: retailPrice.val(),
+                                quantity: quantity.val(),
+                                weight: weight.val(),
+                                format: checkFormatRadioBtn,
+                                category: categoryAttributedListbox,
+                                featured: $(featured)[0].checked,
+                                visible: $(visible)[0].checked,
+                                amazonAffiliate: amazonAffiliate.val()
+                           },
+                           contentType: 'application/json',
+                           success: function(response){
+                            successAddedProduct();
+                            loadProductsDisplayList();
+                         }
+                       });   
+                }        
+
+        });
+
+        //Check if there is any errors in the updateProduct modal form
+        function checkUpdateModalError(){
+            let categoryAttributedListbox = updateUpdateModalListboxCategory.attributedListbox;
+            let hasError = false;
+
+            $("#updateModal .errorMsgForm").html("");
+
+            if(categoryAttributedListbox.length == 0)
+            {
+                $("#updateModal .errorMsgForm").html("Veuillez sélectionner au moins une catégorie");
+                hasError = true;
+            }
+
+            return hasError;           
+        }
+
+        //Check if there is any errors in the addProduct modal form
+        function checkAddModalError(){
+            let categoryAttributedListbox = listboxCategory.attributedListbox;
+            let hasError = false;
+
+            $("#addModal .errorMsgForm").html("");
+
+            if(categoryAttributedListbox.length == 0)
+            {
+                $("#addModal .errorMsgForm").html("Veuillez sélectionner au moins une catégorie");
+                hasError = true;
+            }
+
+            return hasError;           
+        }
+
+
+        //This function shows a success message
+        //and clears the form
+        function successAddedProduct()
+        {
+            addProductSuccessAlert.classList.add("show");
+            formProduct.reset();
+            $('#addModal').animate({ scrollTop: 0 }, 'slow');
+
+            setTimeout(function(){
+                addProductSuccessAlert.classList.remove("show");
+            },5000);
+        }
+
+
+
+        //This function shows a success message
+        //and clears the form
+        function successUpdatedProduct()
+        {
+            updateProductSuccessAlert.classList.add("show");
+            $('#updateModal').animate({ scrollTop: 0 }, 'slow');
+
+            setTimeout(function(){
+                updateProductSuccessAlert.classList.remove("show");
+            },5000);
+        }
+
+
+        //Gets the value of every field
+        //that is needed for a precise language
+        //and returns an object containing all the fields
+        //for this precise languages
+        //@modal is the modal in which to look for those different panes
+        function getTranslatedFields(modal)
+        {
+            let allTabs = modal.getElementsByClassName("tab-pane");
+            let allProductLangObject = [];
+
+            //For each tabs, put the info in objects
+            for(let i = 0;i < allTabs.length;i++)
+            {
+                let tab = allTabs[i];
+                let langId = tab.getAttribute("data-langid");
+                let productName = tab.getElementsByClassName("productName")[0];
+                let description = tab.getElementsByClassName("description")[0];
+                let advice = tab.getElementsByClassName("advice")[0];
+
+                let obj = {
+                    langId: langId,
+                    productName: productName.value,
+                    description: description.value,
+                    advice: advice.value
+                }
+
+                if(fieldsAreFilled(productName.value,description.value,advice.value))
+                {
+                   allProductLangObject.push(obj)  
+                }
+                               
+            }
+
+            return allProductLangObject;
+        }
+
+        //Checks if the fields are filled and returns 
+        //false if not + displays an error message
+        function fieldsAreFilled(name,description,advice){
+
+            if(name == ""){
+                return false;
+            }
+
+            if(description == ""){
+                return false;
+            }
+
+            if(advice == ""){
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>

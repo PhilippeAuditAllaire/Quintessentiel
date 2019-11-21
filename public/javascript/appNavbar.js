@@ -13,8 +13,6 @@ if(menuSelect != undefined){ //If the menu exists on this bar
 		let selectedValue = menuSelectOption[e.target.selectedIndex].value;
 		document.location = selectedValue;
 	});
-
-
 }
 
 //Selects the current page on the select HTML element 

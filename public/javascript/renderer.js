@@ -1,25 +1,20 @@
-(function() {
-	
-	var remote = require('electron').remote;  //Permet d'accéder au main process de Electron
+(function() { 
+	//Load the IpcRenderer (event emitter)
+	const {ipcRenderer} = require('electron');
 
-	let btn_min = document.getElementById("minimize");
-	let btn_max = document.getElementById("maximize");
-	let btn_close = document.getElementById("close");
+	//Load the elements
+	let btn_min = document.getElementById('minimize');
+	let btn_max = document.getElementById('maximize');
+	let btn_close = document.getElementById('close');
 
-	btn_min.addEventListener("click",function(){
-		let main_window = remote.getCurrentWindow();
-		main_window.minimize();
-	},false);
+	//On minimize button click
+	btn_min.addEventListener('click',() => ipcRenderer.send('window-action','minimize'));
 
-	btn_max.addEventListener("click",function(){
-		let main_window = remote.getCurrentWindow();
-		main_window.isMaximized() ? main_window.unmaximize() : main_window.maximize();
-	},false);
+	//On maximize button click
+	btn_max.addEventListener('click',() => ipcRenderer.send('window-action','maximize'));
 
-	btn_close.addEventListener("click",function(){
-		let main_window = remote.getCurrentWindow();
-		main_window.close();
-	},false);
+	//On close button click
+	btn_close.addEventListener('click',() => ipcRenderer.send('window-action','close'));
 
 })();
 
