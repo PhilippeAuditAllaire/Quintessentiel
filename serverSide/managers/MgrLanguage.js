@@ -6,7 +6,7 @@ class MgrLanguage {
         this._queryEngine = new QueryEngine();
     }
     getTextByPage(page, code_lang) {
-        let query = "SELECT landingtext_attribute.type,ta_landingtextattribute_language.value FROM ta_landingtextattribute_language JOIN landingtext_attribute ON landingtext_attribute.id = ta_landingtextattribute_language.landingTextAttribute JOIN language ON ta_landingtextattribute_language.languageId = language.id WHERE language.name = ? AND landingtext_attribute.page = ?";
+        let query = "SELECT landingtext_attribute.type,ta_landingtextattribute_language.value FROM ta_landingtextattribute_language JOIN landingtext_attribute ON landingtext_attribute.id = ta_landingtextattribute_language.landingTextAttribute JOIN language ON ta_landingtextattribute_language.languageId = language.id WHERE language.id = ? AND landingtext_attribute.page = ?";
         let parameters = [code_lang, page];
         let context = this;
         return this._queryEngine.executeQuery(query, parameters).then(function(res) {

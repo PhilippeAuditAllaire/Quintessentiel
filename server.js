@@ -57,15 +57,18 @@ website.get("/serum", function(req, res) {
 });
 
 website.get("/", function(req, res) {
+    console.log("HI");
     res.redirect("/index")
 });
 
 
 website.get("/index", function(req, res) {
     /* TODO:req.session.code_lang selon le header */
-    let pageTraduction = mgr.getTextByPage("index", "fr");
-    console.log("pageTraduction" + pageTraduction);
-    res.render("index.ejs", pageTraduction);
+    let pageTraduction = mgr.getTextByPage("index", 1).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("index.ejs", JSON.parse(resultat));
+    });
+
 });
 
 website.get("/userConnection", function(req, res) {
