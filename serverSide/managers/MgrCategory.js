@@ -5,6 +5,25 @@ class MgrCategory {
         this._queryEngine = new QueryEngine();
     }
 
+    //Deletes all the attributes related
+    //to a given category
+    deleteCategoryAttributes(categoryId)
+    {
+        let query = "DELETE FROM ta_categoryattribute_language WHERE idCategory = ?";
+        let param = [categoryId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Updates the category basic infos (id,isVisible)
+    updateCategory(categoryId,isVisible)
+    {
+        let query = "UPDATE Category SET isVisible = ? WHERE id= ?";
+        let param = [isVisible,categoryId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     //Adds the translation to a given category
     addTranslation(langId,categoryId,categoryName)
     {

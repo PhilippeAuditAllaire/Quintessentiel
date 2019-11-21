@@ -8,35 +8,87 @@ class CtrlCategory {
         this._mgrCategory = new MgrCategory();
     }
 
+    //Async foreach
+    async asyncForEach(array, callback) { 
+      for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
+      }
+    }
+
+    //Updating the given category 
+    //with the given infos
+    updateCategory(infos)
+    { 
+
+        let category = new Category({id: infos.categoryId});
+        category.isVisible = (infos.isVisible == "true" ? true : false)
+
+        //Put the infos in the category object
+        infos.allTranslatedNames.forEach(function(translations){
+            let categoryInfos = new CategoryInfos(category.id,translations.langId,translations.name);
+            category.traductions.push(categoryInfos);
+        });
+
+        let context = this;
+        //update the isVisible in the category table
+        return this._mgrCategory.updateCategory(category.id,category.isVisible).then(function(updateCat){
+            return context._mgrCategory.deleteCategoryAttributes(category.id).then(function(deleteCatAtt){
+               return context.addCategoryTranslations(category.id,category.traductions);
+            });
+
+        });
+    }
+
     //Adds a category to the
     //database
     addCategory(infos)
     {   
         let category = new Category();
-        category.isVisible = (infos.isVisible != "true" ? false : true);
+        category.isVisible = (infos.isVisible == "true" ? true : false)
+
+        //Put the infos in the category object
+        infos.allTranslatedNames.forEach(function(translations){
+            let categoryInfos = new CategoryInfos();
+            categoryInfos.idLang = translations.langId;
+            categoryInfos.name = translations.name;
+            
+            category.traductions.push(categoryInfos);
+        });
+
         let context = this;
-        
         
         return this._mgrCategory.addCategory(category).then(function(res){
 
-                   console.log("Added the  id")
-                     console.log(res);
-            let allTranslations = infos.allTranslatedNames;
             let insertedId = res.insertId;
 
-            allTranslations.forEach(function(translation){
-                let langId = translation.langId;
-                let name = translation.name;
+            return context.addCategoryTranslations(insertedId,category.traductions);
 
-                context._mgrCategory.addTranslation(langId,insertedId,name).then(function(res){
-                     console.log("Added the attributes id")
-                     console.log(res);
-                });
-            })
-        }).then(function(){
+        }).then(function(res){
             return true;
-        });
+        })
         
+    }
+
+    //Adds the given translations
+    //to a given category id
+    //@categoryId is the category to which add the translations to
+    //@translations are the attributes in multiple languages
+    addCategoryTranslations(categoryId,translations)
+    {   
+        let context = this;
+
+        const addTranslations = async () => {
+
+            await context.asyncForEach(translations, async (transl) => {
+                console.log(transl);
+                await context._mgrCategory.addTranslation(transl.idLang,categoryId,transl.name).then(function(res){
+                    console.log(res);
+                });   
+
+            })
+        }
+
+       return addTranslations();
     }
 
     //Loads all the categories with
@@ -50,21 +102,14 @@ class CtrlCategory {
 
             return context._mgrCategory.loadAvailableLanguages().then(function(resLang){ //Load the languages
 
-                async function asyncForEach(array, callback) { //Async foreach
-                  for (let index = 0; index < array.length; index++) {
-                    await callback(array[index], index, array);
-                  }
-                }
-                
-
                 const loadAllCategoriesInfos = async () => {
 
-                    await asyncForEach(categories, async (cat) => {    //For each categories
+                    await context.asyncForEach(categories, async (cat) => {    //For each categories
 
                         let category = new Category({id:cat.id,isVisible:cat.isVisible});
                         categoriesArray.push(category);
                
-                        await asyncForEach(resLang, async (lang) => {    //For each languages, find all their traductions
+                        await context.asyncForEach(resLang, async (lang) => {    //For each languages, find all their traductions
 
                             await context._mgrCategory.loadCategoryAttributes(category.id,lang.id).then(function(categoryAttributes){ //Load its infos
                                 categoryAttributes = categoryAttributes[0]

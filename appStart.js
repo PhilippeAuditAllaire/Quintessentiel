@@ -1,7 +1,6 @@
-const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 let mainWindow;
-let demoWindow;
 
 require('electron-reload')(__dirname);
 
@@ -25,8 +24,6 @@ function createWindow () {
 
   //Redirect to the URL
   mainWindow.loadURL('http://localhost:5000/');
-
-  createDemoWindow();
 }
 
 
@@ -50,56 +47,3 @@ ipcMain.on('window-action', function(e, action){
 
 
 
-//Demo
-
-
-//Create the menu template
-const menuTemplate = [
-  {
-    label: 'Options',
-    submenu: [
-      {
-        label: 'Close',
-        accelerator: 'Ctrl+Q',
-        click: () => demoWindow.close()
-      },
-      {
-        label: 'Minimize'
-      }
-    ]
-  },
-  {
-    label: 'Other',
-    click: () => shell.openExternal("https://google.com")
-  }
-];
-
-
-//Build menu from template
-const menu = Menu.buildFromTemplate(menuTemplate);
-
-//Creating a window for the toolbar demo
-function createDemoWindow(){
-
-  //Create the new window
-  demoWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    show:false
-  });
-
-  //Set the menu
-  Menu.setApplicationMenu(menu);
-
-  //Redirect to the URL
-  demoWindow.loadURL('http://localhost:5000/');
-
-  //When ready show the window and minimize it
-  demoWindow.once('ready-to-show',function(){
-    demoWindow.show();
-    demoWindow.minimize();
-  });
-
-
-
-}

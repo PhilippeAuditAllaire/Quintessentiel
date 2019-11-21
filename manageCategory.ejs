@@ -51,24 +51,26 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
-                <div id="updateCategorySuccessAlert" class="alert alert-success fade" role="alert">
-                    Catégorie modifiée avec succès!
-                </div>
-                <div class="addCategoryFields">
-                   <%- modalUpdate %>
-                    <div class="wrapper-inputLabel-productModal visibleCheckbox">
-                         <div class="wrapper-modal-input">
-                            <label>Catégorie visible<input type="checkbox" class="chckVisible"/></label> 
+              <form id="updateModalForm">
+                  <div class="modal-body">
+                    <div id="updateCategorySuccessAlert" class="alert alert-success fade" role="alert">
+                        Catégorie modifiée avec succès!
+                    </div>
+                    <div class="addCategoryFields">
+                       <%- modalUpdate %>
+                        <div class="wrapper-inputLabel-productModal visibleCheckbox">
+                             <div class="wrapper-modal-input">
+                                <label>Catégorie visible<input type="checkbox" class="chckVisible"/></label> 
+                             </div>
                          </div>
-                     </div>
+                    </div>
+              
+                  <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" id="btnModify" value="Modifier">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                  </div>
                 </div>
-          
-              <div class="modal-footer">
-                <input type="submit" class="btn btn-success" id="btnSend" value="Modifier">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              </div>
-            </div>
+            </form>
       </div>
     </div>
     </div>
@@ -116,6 +118,7 @@
         //Add category script
         let btnSend = document.getElementById("btnSend");
         let categoriesList;
+        let updateSelectedCategory;
 
         $("#addModalForm").on("submit",function(e){
             e.preventDefault();
@@ -137,7 +140,7 @@
                     success: function(res){
                         if(res)
                         {
-                           successAddedProduct();
+                           successAddedCategory();
                            loadCategoriesDisplayList(); //Reload the categories list 
                         }
                         
@@ -178,7 +181,7 @@
 
         //This function shows a success message
         //and clears the form
-        function successAddedProduct()
+        function successAddedCategory()
         {
             addCategorySuccessAlert.classList.add("show");
             clearModalInfos(document.getElementById("addCategoryModal"));
@@ -251,22 +254,23 @@
 
         //Opens the update category modal
         function openUpdateCategory(row)
-        {
+        {   
             let updateModal = document.getElementById("updateCategoryModal");
             let rowIndex = $("#tableProducts tr").index(row);
+            updateSelectedCategory = categoriesList[rowIndex];
+
             fillUpdateModal(rowIndex)
             $(updateModal).modal();
         }
 
         function fillUpdateModal(rowIndex)
         {
-            let rowInfos = categoriesList[rowIndex];
             let updateModal = document.getElementById("updateCategoryModal");
 
             clearModalInfos(updateModal);
-            fillTranslatableFields(rowInfos._traductions);
-            console.log(rowInfos)
-            updateModal.getElementsByClassName("chckVisible")[0].checked = rowInfos._isVisible;
+            fillTranslatableFields(updateSelectedCategory._traductions);
+
+            updateModal.getElementsByClassName("chckVisible")[0].checked = updateSelectedCategory._isVisible;
 
         }
 
@@ -293,6 +297,35 @@
             });
         }
 
+        $("#updateModalForm").on("submit",function(e){
+            e.preventDefault();
+
+            let isVisible = document.getElementById("updateCategoryModal").getElementsByClassName("chckVisible")[0];
+            let allTranslatedNames = getAllTranslatedNames(document.getElementById("updateCategoryModal"));
+
+            if(allTranslatedNames.length > 0) //If theres at least one traduction
+            {
+                $.ajax({
+                    url: "./updateCategory",
+                    type: "POST",
+                    data: {
+                        categoryId: updateSelectedCategory._id,
+                        allTranslatedNames: allTranslatedNames,
+                        isVisible: isVisible.checked
+                    },
+                    success: function(res){
+                        successUpdatedCategory();
+                        loadCategoriesDisplayList(); //Reload the categories list 
+                    }
+                })               
+            }
+        })
+        
+        //when the category has been updated, just hide it
+        function successUpdatedCategory()
+        {   
+            $("#updateCategoryModal").modal('hide');
+        }
 
     </script>
 

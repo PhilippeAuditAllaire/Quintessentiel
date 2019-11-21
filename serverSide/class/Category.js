@@ -13,13 +13,11 @@ class Category {
 			}
 
 			if(args["isVisible"]){
-				console.log("JE PREND LA VALEUR: "+args["isVisible"]);
 				this._isVisible = args["isVisible"];
 			}
-
-			this._traductions = [];
-
 		}
+
+		this._traductions = [];
 	}
 
 	//Getters

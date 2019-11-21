@@ -304,14 +304,17 @@
                            },
                            contentType: 'application/json',
                            success: function(response){
+                            $("#updateModal").modal("hide");
+                            loadProductsDisplayList();
+                            //successUpdatedProduct();
+                            /*
                             let newProductId = parseInt(response);
-                            successUpdatedProduct();
-
                             loadProductsDisplayList().then(function(){ //Wait for the product list to refresh
-                                productToUpdate = findProductById(newProductId);
+                                //productToUpdate = findProductById(newProductId);
                                 console.log("produit: ")
                                 console.log(productToUpdate);
                             });
+                            */
                          }
                        });   
                 }        
