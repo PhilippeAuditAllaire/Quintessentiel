@@ -12,7 +12,12 @@ class Category {
 				this._name = args["name"];
 			}
 
+			if(args["isVisible"]){
+				this._isVisible = args["isVisible"];
+			}
 		}
+
+		this._traductions = [];
 	}
 
 	//Getters
@@ -24,16 +29,32 @@ class Category {
 		return this._name;
 	}
 
-
-	//Setters
-	set id($id){
-		this._id = $id;
+	get traductions(){
+		return this._traductions;
 	}
 
-	set titnamele($categoryName){
-		this._name = $categoryName;
+	get isVisible(){
+		return this._isVisible;
+	}
+
+
+	//Setters
+	set id(id){
+		this._id = id;
+	}
+
+	set name(categoryName){
+		this._name = categoryName;
+	}
+
+	set traductions(categoryTraduction){
+		this._traductions = categoryTraduction;
+	}
+
+	set isVisible(categoryIsVisible){
+		this._isVisible = categoryIsVisible;
 	}
 }
 
 
-module.exports = User;
+module.exports = Category;

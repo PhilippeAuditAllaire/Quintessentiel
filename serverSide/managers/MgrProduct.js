@@ -5,6 +5,135 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
+    //Loads the categories that are associated
+    //with the given product id
+    //@productId is the id of the 
+    //product to look for its categories
+    loadCategoryByProductId(productId)
+    {
+        let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ? AND ta_categoryAttribute_language.idLanguage = 1";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param).then(function(res){
+            return res;
+        });
+    }
+
+    //Loads all the givne product translatable infos
+    loadTranslatableInfos(productId,langId)
+    {
+        let query = "SELECT * FROM ta_productattribute_language WHERE idProduct = ? AND idLanguage = ? ORDER BY productAttributeId";
+        let param = [productId,langId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Loads all the products infos
+    loadAllProductsNonTranslatableInfos()
+    {
+        let query = "SELECT * FROM Product";
+        return this._queryEngine.executeQuery(query);
+    }
+
+    //Links the given category id
+    //to the given product id
+    //@productId is the product to link to 
+    //@categoryId
+    //@Returns a promise
+    linkCategoryToProduct(productId,categoryId)
+    {
+        let query = `INSERT INTO ta_category_product 
+                    (id,idCategory,idProduct) 
+                    VALUES
+                    (DEFAULT,?,?)`;
+        let param = [categoryId,productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+
+    //Adds the product infos that cannot be
+    //translated such as the price
+    //@productInfos is a product object containing
+    //all the non translatable infos to add to the DB
+    //@Returns a promise
+    addNonTranslatableInfos(productInfos)
+    {
+        let query = `INSERT INTO Product 
+                    (id,retailPrice,costPrice,quantity,image,featured,isVisible,dropWeightGram,amazonAffiliateLink,format) 
+                    VALUES
+                    (DEFAULT,?,?,?,?,?,?,?,?,?)`;
+        let param = [productInfos.retailPrice,productInfos.costPrice,productInfos.qty,productInfos.image,
+                    productInfos.featured,productInfos.isVisible,productInfos.dropWeightGram,productInfos.amazonAfiliate,productInfos.format];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Adds the text fields related to a product and to 
+    //a given languages
+    //@langId is the id of the languge of the translatableInfos
+    //@translatableInfos is the list of text fields to be inserted
+    //@Returns a promise
+    addProductTextFields(langId,translatableInfos)
+    {
+        let query = `INSERT INTO ta_productattribute_language 
+                    (productAttributeId,idLanguage,idProduct,value) 
+                    VALUES
+                    (?,?,?,?)`;
+        let paramName =[1,langId,translatableInfos.id,translatableInfos.name];
+        let paramDesc = [2,langId,translatableInfos.id,translatableInfos.description];
+        let paramAdvice = [3,langId,translatableInfos.id,translatableInfos.advice];
+
+        return Promise.all([this._queryEngine.executeQuery(query,paramName),
+                            this._queryEngine.executeQuery(query,paramDesc),
+                            this._queryEngine.executeQuery(query,paramAdvice)]);
+    }
+
+
+    //Loads all the languages that are in the DB
+    //@Returns a promise
+    loadAvailableLanguages()
+    {
+        let query = "SELECT * FROM Language";
+        return this._queryEngine.executeQuery(query);
+    }
+
+
+    //Deletes the given product
+    //@productId is the id of the
+    //product to delete
+    deleteProduct(productId)
+    {
+        let query = "DELETE FROM Product WHERE id = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Deletes all the product attributes
+    //that are related to the given product id
+    //@productId is the id of the product to 
+    //delete its attributes
+    deleteProductAttributes(productId)
+    {
+        let query = "DELETE FROM ta_productattribute_language WHERE idProduct = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Deletes all the categories associated
+    //with a given product id
+    //@productId is the id of the product
+    //to delete the related categories
+    deleteProductCategories(productId)
+    {
+        let query = "DELETE FROM ta_category_product WHERE idProduct = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     loadCommentSlider(code_lang) {
         let query = "SELECT * FROM comment JOIN users ON users.id = comment.idUser JOIN commentstatus ON commentstatus.id = comment.idStatus WHERE commentstatus.name = 'Approved'";
 
@@ -26,20 +155,13 @@ class MgrProduct {
 
        return this._queryEngine.executeQuery(queryUpdateBasicInfos,basicParam).then(function(res){
         console.log(res);
-            return Promise.all([context.updateProductTitle(product.name,product.id),context.updateProductDescription(product.description,product.id),context.updateAdvice(product.advice,product.id),context.removeAllRelatedTags(product.id),context.removeRelatedCategory(product.id)]).then(function(){
+            return Promise.all([context.updateProductTitle(product.name,product.id),context.updateProductDescription(product.description,product.id),context.updateAdvice(product.advice,product.id),context.removeAllRelatedTags(product.id),context.removeRelatedCategory(product.id)]).then(function(res){
+                console.log(res)
                 return Promise.all([context.insertCategoryAttribute(product.id,product.category),context.insertTagAttribute(product.id,product.tags)])
             })  
 
        })
 
-    }
-
-    removeAllRelatedTags(productId)
-    {
-        let queryRemoveTags = "DELETE FROM ta_tag_product WHERE idProduct = ?";
-        let paramRemoveTags = [productId];
-
-        return this._queryEngine.executeQuery(queryRemoveTags,paramRemoveTags);
     }
 
     removeRelatedCategory(productId)
@@ -98,16 +220,6 @@ class MgrProduct {
 
 
        });
-    }
-
-    loadCategoryIdRelatedToProduct(productId)
-    {
-        let query = "SELECT ta_category_product.idCategory FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ?";
-        let param = [productId];
-
-        return this._queryEngine.executeQuery(query,param).then(function(res){
-            return res;
-        });
     }
 
 
@@ -186,63 +298,6 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query);
     }
 
-    insertTagAttribute(productId,tagList){
-
-        if(tagList != undefined)
-        {
-            let queryLinkTags = "INSERT INTO ta_tag_product VALUES ?";
-            let paramLinkTags = [];
-
-            for(let i = 0;i < tagList.length;i++)
-            {
-                paramLinkTags.push(["DEFAULT",tagList[i],productId])
-            } 
-
-            return this._queryEngine.executeQuery(queryLinkTags,[paramLinkTags]);           
-        }
-
-    }
-
-    insertCategoryAttribute(productId, categoryId)
-    {
-        let queryCategory = "INSERT INTO ta_category_product VALUES (DEFAULT,?,?)";
-        let paramCategory = [categoryId,productId];
-
-        return this._queryEngine.executeQuery(queryCategory,paramCategory);
-    }
-
-    addProduct(product) {
-        let query = "INSERT INTO Product VALUES (DEFAULT,?,?,?,?,1,1,12,NULL)";
-        let param = [product.retailPrice,product.costPrice,product.qty,product.image,product.featured,product.isVisible,product.dropWeightGram];
-        let currentQueryEngine = this._queryEngine;
-
-        return this._queryEngine.executeQuery(query,param).then(function(res){
-            let insertedId = res.insertId;
-            let queryInsertAttributes = "INSERT INTO ta_productattribute_language VALUES ?";
-            let paramAttributes = [[1,1,insertedId,product.name],[2,1,insertedId,product.description],[3,1,insertedId,product.advice]];
-
-            currentQueryEngine.executeQuery(queryInsertAttributes,[paramAttributes]).then(function(res){
-                
-                let queryLinkTags = "INSERT INTO ta_tag_product VALUES ?";
-                let paramLinkTags = [];
-
-                for(let i = 0;i < product.tags.length;i++)
-                {
-                    paramLinkTags.push(["DEFAULT",product.tags[i],insertedId])
-                }
-
-                currentQueryEngine.executeQuery(queryLinkTags,[paramLinkTags]).then(function(res){
-                    let queryCategory = "INSERT INTO ta_category_product VALUES (DEFAULT,?,?)";
-                    let paramCategory = [product.category,insertedId];
-
-                    currentQueryEngine.executeQuery(queryCategory,paramCategory).then(function(res){
-                        console.log("Added category")
-                        console.log(res)
-                    })
-                });
-            });
-        });
-    }
 
 
 }

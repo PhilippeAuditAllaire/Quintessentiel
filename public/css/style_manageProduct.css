@@ -147,6 +147,7 @@
     margin-top:15px;
     max-height:65vh;
     overflow-y: scroll;
+    padding-bottom: 20px;
 }
 
 .middle {
@@ -206,3 +207,219 @@ th{
 	min-height:200px;
 }
 
+.addProductFields{
+	display: flex;
+	flex-direction: column;
+}
+
+.wrapper-inputLabel-productModal{
+	display: flex;
+	flex-direction: row;
+}
+
+.wrapper-modal-label{
+	display: flex;
+}
+
+.wrapper-modal-label label{
+	margin-bottom:0;
+	display: flex;
+	align-self: center;
+}
+
+.modal-dialog{
+	width:80%;
+	max-width:800px;
+}
+
+.addProductFields{
+	width:90%;
+	margin:auto;
+}
+
+.wrapper-modal-label{
+	width:25%;
+}
+
+.wrapper-modal-input{
+	width:75%;
+}
+
+.modal-product-double-wrapper{
+	display: flex;
+	flex-direction: row;
+	margin-top:15px;
+	justify-content: space-between;
+}
+.modal-single-wrapper{
+	margin-top:15px;
+}
+.wrapper-inputLabel-productModal{
+	display: flex;
+	flex-direction: column;
+	width:45%;
+}
+
+.wrapper-inputLabel-productModal .wrapper-modal-label{
+	width:100%;
+}
+
+.tagsList{
+	display: flex;
+	flex-direction: row;
+	width:100%;
+}
+
+.tagsList div{
+	display: flex;
+}
+
+.wrapper-btnChange{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.wrapper-btnChange button{
+	width:45px;
+	height:45px;
+	margin-right:10px;
+	margin-left:10px;
+}
+
+.wrapper-btnChange button:nth-child(2){
+	margin-top:15px;
+}
+
+.left-available-wrapper,.right-choosen-wrapper{
+	width:100%;
+	display:flex;
+	flex-direction: column;
+}
+
+.availableTags,.choosenTags{
+	flex-grow: 1;
+}
+
+.wrapper-inputLabel-productModal{
+	display: flex;
+	flex-direction: row;
+}
+
+.wrapper-inputLabel-productModal input[type=checkbox]{
+	transform: scale(1.5);
+}
+
+.wrapper-checkbox .wrapper-modal-label{
+	width: auto;
+	white-space: pre;
+}
+
+.wrapper-modal-label,.tagsList p{
+	font-size:20px;
+}
+
+.wrapper-checkbox .wrapper-modal-input{
+	margin-left:20px;
+	display: flex;
+    align-self: center;
+}
+
+.modal-single-wrapper{
+	width:100%;
+}
+
+.modal-single-wrapper .wrapper-modal-label{
+	width:25%;
+}
+
+.modal-single-wrapper .wrapper-modal-input{
+	width:50%;
+}
+
+.textarea-wrapper{
+	display: flex;
+	flex-direction: column;
+}
+
+.textarea-wrapper .wrapper-modal-input,.textarea-wrapper .wrapper-modal-label{
+	width:80%;
+	margin:auto;
+}
+
+.textarea-wrapper .wrapper-modal-label label{
+	width:100%;
+	display: flex;
+	justify-content: center;
+}
+.textarea-wrapper .wrapper-modal-input textarea{
+	width:100%;
+	height:90px;
+
+}
+
+.tab-content{
+	border-bottom: 1px solid black;
+    padding-bottom: 30px;
+}
+
+.modal-header .modal-title{
+	width:100%;
+	text-align: center;
+}
+
+
+#addProductSuccessAlert{
+	margin-bottom:5px;
+}
+
+.errorMsgForm{
+	text-align: center;
+	margin-bottom: 0;
+	margin-top:10px;
+	color:red;
+	font-size:18px;
+}
+
+
+#categoryWrapper,#tagsWrapper{
+	margin-top:0;
+}
+
+.wrapper-inside-format{
+	display: flex;
+}
+
+
+.wrapper-inside-format input[type=radio]{
+	align-self: center;
+}
+
+.wrapper-inside-format label:nth-child(2){
+	margin-left:5px;
+}
+
+#quantityWrapper {
+	display: flex;
+    flex-direction: column;
+}
+
+#quantityWrapper label{
+	align-self: baseline;
+}
+
+.wrapper-inside-format label{
+	margin-left:5px;
+}
+
+.wrapper-inside-format label:nth-child(1){
+	margin-left:0px;
+}
+
+#lblWeight{
+	align-self: auto;
+}
+
+th p{
+    white-space: pre;
+}
