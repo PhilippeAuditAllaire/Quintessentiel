@@ -76,7 +76,6 @@ class MgrProduct {
     //@Returns a promise
     addProductTextFields(langId,translatableInfos)
     {
-        console.log(translatableInfos)
         let query = `INSERT INTO ta_productattribute_language 
                     (productAttributeId,idLanguage,idProduct,value) 
                     VALUES
@@ -84,7 +83,7 @@ class MgrProduct {
         let paramName =[1,langId,translatableInfos.id,translatableInfos.name];
         let paramDesc = [2,langId,translatableInfos.id,translatableInfos.description];
         let paramAdvice = [3,langId,translatableInfos.id,translatableInfos.advice];
-        console.log("Before adding the fields")
+
         return Promise.all([this._queryEngine.executeQuery(query,paramName),
                             this._queryEngine.executeQuery(query,paramDesc),
                             this._queryEngine.executeQuery(query,paramAdvice)]);
@@ -156,7 +155,8 @@ class MgrProduct {
 
        return this._queryEngine.executeQuery(queryUpdateBasicInfos,basicParam).then(function(res){
         console.log(res);
-            return Promise.all([context.updateProductTitle(product.name,product.id),context.updateProductDescription(product.description,product.id),context.updateAdvice(product.advice,product.id),context.removeAllRelatedTags(product.id),context.removeRelatedCategory(product.id)]).then(function(){
+            return Promise.all([context.updateProductTitle(product.name,product.id),context.updateProductDescription(product.description,product.id),context.updateAdvice(product.advice,product.id),context.removeAllRelatedTags(product.id),context.removeRelatedCategory(product.id)]).then(function(res){
+                console.log(res)
                 return Promise.all([context.insertCategoryAttribute(product.id,product.category),context.insertTagAttribute(product.id,product.tags)])
             })  
 
