@@ -235,3 +235,87 @@
         align-self: auto;
     }
 }
+
+
+
+
+
+/*
+
+    Styling for the cart
+
+*/ 
+
+.fullPageOverlay{
+    position: fixed;
+    top:0;
+    background-color:#453F3F;
+    width:100%;
+    height:100%;
+    opacity:0;
+    z-index:10;
+    display:none;
+    transition-duration:0.7s;
+}
+
+.fullPageOverlay.toggled{
+    opacity: 0.6;
+}
+
+.cartWrapper{
+    background-color:#FAFAFA;
+    position: fixed;
+    right:0;
+    top:0;
+    min-height:100vh;
+    display: inline-block;
+    min-width:30%;
+    max-width:100vh;
+    color:white;
+    z-index:11;
+    display: none;
+    transform: translate(100%);
+    transition: transform 0.2s;
+}
+
+.cartWrapper.toggled{
+    opacity:1;
+    transform: translate(0);
+    transition: transform 0.5s;
+}
+
+.cartInnerWrapper{
+    height:100vh;
+}
+
+.cartTopWrapper{
+    background-color:#292323;
+    text-align: center;
+    height:10vh;
+}
+
+.cartWrapperTopTitle{
+    position: relative;
+    height:100%;
+}
+
+
+.cartWrapperTopTitle h2{
+    margin-bottom:0;
+}
+
+.closeCartIcon{
+    width:50px;
+    position: absolute;
+    left:0;
+    top:0;
+    bottom:0;
+}
+
+.cartUnderTopWrapper{
+    height:90vh;
+    color:#292323;
+    text-align: center;
+    font-size:25px;
+}
+
