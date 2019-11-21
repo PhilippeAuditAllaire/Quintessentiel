@@ -1,8 +1,5 @@
 .slider-main {
     display: flex;
-    padding-right: 50px;
-    padding-left: 50px;
-    padding-top: 20px;
     padding-bottom: 20px;
 }
 
@@ -15,11 +12,15 @@
     display: flex;
     justify-content: center;
     padding-left: 50px;
+    
+
 }
 
 .slider-main-item-a {
     display: flex;
     justify-content: center;
+    
+    width: -webkit-fill-available;
 }
 
 .center-aligned {
@@ -57,6 +58,7 @@
 
 .background-image {
     /*max-width: 1000px;*/
+
 }
 
 .index-download {

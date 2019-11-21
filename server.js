@@ -6,6 +6,7 @@ const multer = require("multer");
 
 //FOR THE FILE UPLOAD
 let storage = multer.diskStorage({
+
     destination: function(req, file, callback){
         callback(null, './public/images'); // set the destination
     },
@@ -13,7 +14,7 @@ let storage = multer.diskStorage({
         callback(null, Date.now() + '.jpg'); // set the file name and extension
     }
 });
-let upload = multer({storage: storage});
+let upload = multer({ storage: storage });
 
 
 
@@ -24,6 +25,9 @@ const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
 const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
 const CtrlCategory = require("./serverSide/controlers/CtrlCategory.js");
+const MgrLanguage = require("./serverSide/managers/MgrLanguage.js");
+
+let mgr = new MgrLanguage();
 
 let website = express();
 let app = express();
@@ -48,17 +52,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Website routes
 
-website.get("/serum",function(req,res){
-	res.render("serum.ejs")
+website.get("/serum", function(req, res) {
+    res.render("serum.ejs")
 });
 
 website.get("/", function(req, res) {
+    console.log("HI");
     res.redirect("/index")
 });
 
 
 website.get("/index", function(req, res) {
-    res.render("index.ejs");
+    /* TODO:req.session.code_lang selon le header */
+    let pageTraduction = mgr.getTextByPage("index", 1).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("index.ejs", JSON.parse(resultat));
+    });
+
 });
 
 website.get("/userConnection", function(req, res) {
@@ -368,6 +378,7 @@ app.get("/updateRecipe", function(req, res) {
     }
 });
 
+
 app.get("/manageCategory",function(req,res){
 	if(true) //req.session.userId != undefined && req.session.isAdmin == 1
 	{
@@ -473,7 +484,6 @@ app.post("/ajaxRequest/getTags",function(req,res){
 			
 			
 		});
-		
 });
 
 

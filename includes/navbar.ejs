@@ -1,12 +1,12 @@
 <!-- Navbar du site web -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-	$(function(){
-		$('#serumBanner').hide().delay(3000).slideDown(1000);
-	});
+    $(function() {
+        $('#serumBanner').hide().delay(3000).slideDown(1000);
+    });
 </script>
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#"><img src="./images/logo.png" alt="Logo de l'entreprise" /></a>
+    <a class="navbar-brand" href="index"><img src="./images/logo.png" alt="Logo de l'entreprise" /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -14,22 +14,96 @@
         <div class="wrapper-links-t">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link nav-link-current" href="#">Accueil</a>
+                    <a class="nav-link nav-link-current" href="index">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Produits</a>
+                    <a class="nav-link" href="catalogue">Produits</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Blog</a>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Visage
+                          </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Nettoyants</a>
+                        <a class="dropdown-item" href="#">Masque et exfoliants</a>
+                        <a class="dropdown-item" href="#">Contour des yeux</a>
+                        <a class="dropdown-item" href="#">Oléosérums</a>
+                        <a class="dropdown-item" href="#">Lotions toniques</a>
+                        <a class="dropdown-item" href="#">Hydrolats</a>
+                        <a class="dropdown-item" href="#">Trios et coffrets</a>
+                        <a class="dropdown-item" href="#">Huiles végétales</a>
+                        <a class="dropdown-item" href="#">Huiles essentielles</a>
+                        <a class="dropdown-item" href="#">Soins solaires</a>
+                        <a class="dropdown-item" href="#">Soins Anti-age</a>
+                        <a class="dropdown-item" href="#">Maquillage minéral</a>
+                        <a class="dropdown-item" href="#">Baume à lèvres</a>
+                        <a class="dropdown-item" href="#">Huile de Moringa</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Consultations/Ateliers</a>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Corps
+                          </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Beurre fouetté douceur</a>
+                        <a class="dropdown-item" href="#">Baume exfoliant</a>
+                        <a class="dropdown-item" href="#">Huile hydratante douceur</a>
+                        <a class="dropdown-item" href="#">Huile réparatrice vergetures</a>
+                        <a class="dropdown-item" href="#">Savon noir</a>
+                        <a class="dropdown-item" href="#">Coffret Hammam</a>
+                        <a class="dropdown-item" href="#">Soins des mains</a>
+                        <a class="dropdown-item" href="#">Soins pour hommes</a>
+                        <a class="dropdown-item" href="#">Beurre de karité</a>
+                        <a class="dropdown-item" href="#">Gel d'aloès</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">FAQ</a>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Peau
+                              </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Peau jeune</a>
+                        <a class="dropdown-item" href="#">Peau sensible/intolérante</a>
+                        <a class="dropdown-item" href="#">Peau sèche</a>
+                        <a class="dropdown-item" href="#">Peau mixte</a>
+                        <a class="dropdown-item" href="#">Peau grasse</a>
+                        <a class="dropdown-item" href="#">Peau réactive/rougeurs</a>
+                        <a class="dropdown-item" href="#">Peau à tendeance acnéique</a>
+                        <a class="dropdown-item" href="#">Peau déshydratée</a>
+                        <a class="dropdown-item" href="#">Cellulite/vergetures</a>
+                        <a class="dropdown-item" href="#">Tâches brunes</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Nous joindre</a>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Consultations
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Consultation en aromathérapie</a>
+                        <a class="dropdown-item" href="#">Consultation en dermocosmétique naturelle</a>
+                        <a class="dropdown-item" href="serum">Sérum personnalisé</a>
+                        <a class="dropdown-item" href="#">Coaching par Skype</a>
+                    </div>
+                </li>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Formations
+                                      </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Aromathérapie : Le top 10 des huiles essentielles</a>
+                        <a class="dropdown-item" href="#">Halte aux maux de l'hiver</a>
+                        <a class="dropdown-item" href="#">Huiles essentielles et émotions</a>
+                        <a class="dropdown-item" href="#">Qu'y a-t-il dans mes cosmétiques</a>
+                    </div>
+                </li>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        À propos
+                                      </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">FAQ</a>
+                        <a class="dropdown-item" href="contactus">Contactez-nous</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -58,10 +132,15 @@
                 </ul>
             </div>
 
-	    </div>
-	  </div>
+        </div>
+    </div>
 </nav>
 <div id="serumBanner" class="navbar-serum">
-	<p>Cliquez içi pour votre <a href="serum">serum personalisé</a></p>
+    <p>Cliquez ici pour votre <a href="serum">serum personnalisé</a></p>
 </div>
 
+<script>
+    // call ajax lang
+    // call ajax lang choisie -> var session
+    
+</script>
