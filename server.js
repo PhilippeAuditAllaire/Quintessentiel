@@ -25,6 +25,8 @@ const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
 const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
 const CtrlCategory = require("./serverSide/controlers/CtrlCategory.js");
+const CtrlCart = require("./serverSide/controlers/CtrlCart.js"); 
+const Cart = require("./serverSide/class/Cart.js"); 
 const MgrLanguage = require("./serverSide/managers/MgrLanguage.js");
 
 let mgr = new MgrLanguage();
@@ -210,6 +212,30 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
             res.send("Impossible de charger les conditions.");
         });
 
+});
+
+
+website.post("/ajaxRequest/addProductToCart",function(req,res){
+    console.log("Adding the product to the cart");
+    let itemId = req.body.productId;
+
+    if(req.session.userCart != undefined){  //If the cart already exists
+        let userCart = JSON.parse(req.session.userCart);
+        let newCart = new Cart();
+        newCart.itemArray = userCart._itemArray;
+        newCart.addItemToCart(itemId);
+        req.session.userCart = JSON.stringify(newCart);
+        console.log(newCart); 
+    }
+    else{  //The cart doesnt exist so create it and add the item to it
+        let newCart = new Cart();
+        newCart.addItemToCart(itemId);
+        console.log("AVANT")
+        console.log(newCart);
+        console.log(newCart.itemArray[0].id)
+        req.session.userCart = JSON.stringify(newCart);
+    }
+    res.send("fin");
 });
 
 
@@ -476,15 +502,7 @@ app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
     })
 });
 
-app.post("/ajaxRequest/getTags",function(req,res){
-		let ctrlProduct = new CtrlProduct();
 
-		ctrlProduct.loadAllTags().then(function(result){
-
-			
-			
-		});
-});
 
 
 website.listen(8000);
