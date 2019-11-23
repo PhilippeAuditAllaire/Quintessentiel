@@ -7,10 +7,10 @@ const multer = require("multer");
 //FOR THE FILE UPLOAD
 let storage = multer.diskStorage({
 
-    destination: function(req, file, callback){
+    destination: function(req, file, callback) {
         callback(null, './public/images'); // set the destination
     },
-    filename: function(req, file, callback){
+    filename: function(req, file, callback) {
         callback(null, Date.now() + '.jpg'); // set the file name and extension
     }
 });
@@ -64,7 +64,8 @@ website.get("/", function(req, res) {
 
 website.get("/index", function(req, res) {
     /* TODO:req.session.code_lang selon le header */
-    let pageTraduction = mgr.getTextByPage("index", 1).then(function(resultat) {
+
+    mgr.getTextByPage("index", 1).then(function(resultat) {
         console.log("pageTraduction" + resultat);
         res.render("index.ejs", JSON.parse(resultat));
     });
@@ -101,6 +102,29 @@ website.get("/productInfo", function(req, res) {
 
 
 //Ajax requests
+
+website.post("/ajaxRequest/lang", function(req, res) {
+
+    let mgrlang = new MgrLanguage();
+
+    mgrlang.getLanguagesNavBar().then(function(result) {
+        res.send(result);
+    });
+});
+
+website.post("/ajaxRequest/defLang", function(req, res) {
+
+    if (req.session.id_lang) {
+        req.session.id_lang = 1;
+    }
+});
+
+website.post("/ajaxRequest/changeLang", function(req, res) {
+    req.session.id_lang = req.body.id;
+    res.redirect('back');
+});
+
+
 website.post("/ajaxRequest/getCivilities", function(req, res) {
 
     let ctrlUserObj = new CtrlUser();
@@ -326,13 +350,13 @@ app.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
 app.post("/ajaxRequest/loadAllProducts", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
-    ctrlProduct.loadAllProductsAdmin().then(function(result){
+    ctrlProduct.loadAllProductsAdmin().then(function(result) {
         res.send(result)
     })
 });
 //Application routes
 app.get("/", function(req, res) {
-    res.redirect("/manageProduct");//res.redirect("/adminConnection");
+    res.redirect("/manageProduct"); //res.redirect("/adminConnection");
 });
 
 app.get("/adminConnection", function(req, res) {
@@ -343,8 +367,8 @@ app.get("/manageProduct", function(req, res) {
     if (true) { //req.session.userId != undefined && req.session.isAdmin == 1
         let ctrlProduct = new CtrlProduct();
 
-        Promise.all([ctrlProduct.generateModalProductTabs("add"),ctrlProduct.loadAllCategoriesHTML(),ctrlProduct.generateModalProductTabs("update"),ctrlProduct.loadAllCategories()]).then(function(results){
-            res.render("manageProduct.ejs",{addProductTabs: results[0],availableCategories: results[1],updateProductTabs:results[2],allAvailableCategories:JSON.stringify(results[3])});
+        Promise.all([ctrlProduct.generateModalProductTabs("add"), ctrlProduct.loadAllCategoriesHTML(), ctrlProduct.generateModalProductTabs("update"), ctrlProduct.loadAllCategories()]).then(function(results) {
+            res.render("manageProduct.ejs", { addProductTabs: results[0], availableCategories: results[1], updateProductTabs: results[2], allAvailableCategories: JSON.stringify(results[3]) });
         });
 
     } else {
@@ -379,90 +403,85 @@ app.get("/updateRecipe", function(req, res) {
 });
 
 
-app.get("/manageCategory",function(req,res){
-	if(true) //req.session.userId != undefined && req.session.isAdmin == 1
-	{
+app.get("/manageCategory", function(req, res) {
+    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    {
         let ctrlCategory = new CtrlCategory();
 
-        Promise.all([ctrlCategory.generateModalCategoryTabs("add"),ctrlCategory.generateModalCategoryTabs("update")]).then(function(result){
-            res.render("manageCategory.ejs",{modalAdd: result[0],modalUpdate: result[1]});
+        Promise.all([ctrlCategory.generateModalCategoryTabs("add"), ctrlCategory.generateModalCategoryTabs("update")]).then(function(result) {
+            res.render("manageCategory.ejs", { modalAdd: result[0], modalUpdate: result[1] });
         })
-			
-	}
-	else{
-		res.redirect("/adminConnection?pleaseConnect=true");
-	}
+
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
 });
 
 
 app.post('/addProduct', upload.single('image'), function(req, res, next) {
-	if(true) //req.session.userId != undefined && req.session.isAdmin == 1
-	{
-	    let imgName = req.file.filename;
-	    let data = req.body;
-	    data.imgName = imgName;
-	    data.translatedFields = JSON.parse(data.translatedFields);
-
-	     let ctrlProduct = new CtrlProduct();
-
-	     ctrlProduct.addProduct(data).then(function(result){
-	     	res.send(result.toString())
-	     });
-   	}
-	else{
-		res.redirect("/adminConnection?pleaseConnect=true");
-	}
-});
-
-app.post('/updateProduct', upload.single('image'), function(req, res, next) {
-	if(true)//req.session.userId != undefined && req.session.isAdmin == 1
-	{  
-        console.log("On est ici! Voici les informations envoyées:")
-        
-		let data = req.body;
+    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    {
+        let imgName = req.file.filename;
+        let data = req.body;
+        data.imgName = imgName;
         data.translatedFields = JSON.parse(data.translatedFields);
-
-		if(req.file != undefined){ //If the user uploaded a new image, replace it
-			let imgName = req.file.filename;
-			data.imgName = imgName;
-		}
 
         let ctrlProduct = new CtrlProduct();
 
-        ctrlProduct.updateProduct(data).then(function(result){
+        ctrlProduct.addProduct(data).then(function(result) {
+            res.send(result.toString())
+        });
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
+
+app.post('/updateProduct', upload.single('image'), function(req, res, next) {
+    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    {
+        console.log("On est ici! Voici les informations envoyées:")
+
+        let data = req.body;
+        data.translatedFields = JSON.parse(data.translatedFields);
+
+        if (req.file != undefined) { //If the user uploaded a new image, replace it
+            let imgName = req.file.filename;
+            data.imgName = imgName;
+        }
+
+        let ctrlProduct = new CtrlProduct();
+
+        ctrlProduct.updateProduct(data).then(function(result) {
             res.send(result.toString())
         });
 
-   	}
-	else{
-		res.redirect("/adminConnection?pleaseConnect=true");
-	}
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
 });
 
 app.post('/addCategory', function(req, res) {
-    if(true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
     {
-         let ctrlCategory = new CtrlCategory();
+        let ctrlCategory = new CtrlCategory();
 
-         ctrlCategory.addCategory(req.body).then(function(result){
+        ctrlCategory.addCategory(req.body).then(function(result) {
             res.send(result)
-         });
-    }
-    else{
+        });
+    } else {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
 });
 
 app.post('/updateCategory', function(req, res) {
-    if(true) //req.session.userId != undefined && req.session.isAdmin == 1
-    {   
-         let ctrlCategory = new CtrlCategory();
+    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    {
+        let ctrlCategory = new CtrlCategory();
 
-         ctrlCategory.updateCategory(req.body).then(function(result){
+        ctrlCategory.updateCategory(req.body).then(function(result) {
             res.send(result)
-         });
-    }
-    else{
+        });
+    } else {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
 });
@@ -470,20 +489,20 @@ app.post('/updateCategory', function(req, res) {
 app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
     let ctrlCategory = new CtrlCategory();
 
-    ctrlCategory.loadAllCategoriesAdmin().then(function(result){
+    ctrlCategory.loadAllCategoriesAdmin().then(function(result) {
         console.log(result)
         res.send(result);
     })
 });
 
-app.post("/ajaxRequest/getTags",function(req,res){
-		let ctrlProduct = new CtrlProduct();
+app.post("/ajaxRequest/getTags", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
 
-		ctrlProduct.loadAllTags().then(function(result){
+    ctrlProduct.loadAllTags().then(function(result) {
 
-			
-			
-		});
+
+
+    });
 });
 
 

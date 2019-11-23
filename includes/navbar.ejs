@@ -124,9 +124,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Langue
 						</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Fr</a>
-                            <a class="dropdown-item" href="#">En</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="lang-dropdown">
+
                         </div>
                     </li>
                 </ul>
@@ -138,9 +137,56 @@
 <div id="serumBanner" class="navbar-serum">
     <p>Cliquez ici pour votre <a href="serum">serum personnalisé</a></p>
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     // call ajax lang
+    $.ajax({
+        url: "http://localhost:8000/ajaxRequest/lang",
+        method: "POST",
+
+        success: function(response) {
+
+            $("#lang-dropdown").html(response);
+
+        },
+        error: function(response) {
+            console.log(response);
+            alert("Erreur dans l'affichage des langues");
+        }
+    });
+
+    $.ajax({
+        url: "http://localhost:8000/ajaxRequest/defLang",
+        method: "POST",
+
+        success: function(response) {
+
+
+
+        },
+        error: function(response) {
+            console.log(response);
+            alert("Erreur dans l'affichage des langues");
+        }
+    });
+
+    function changeLang(id) {
+        $.ajax({
+            url: "http://localhost:8000/ajaxRequest/changeLang",
+            method: "POST",
+            data: {
+                id_lang: id
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(response) {
+                console.log(response);
+                alert("Erreur dans l'affichage des langues");
+            }
+        });
+    }
+
+
     // call ajax lang choisie -> var session
-    
 </script>

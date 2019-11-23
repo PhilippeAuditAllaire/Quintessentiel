@@ -25,6 +25,18 @@ class MgrLanguage {
         console.log("JSON : " + res);
         return res;
     }
+
+    getLanguagesNavBar() {
+        let query = "SELECT * FROM language";
+        let html = '';
+        return this._queryEngine.executeQuery(query).then(function(res) {
+            res.forEach(function(lang) {
+                html += '<a class="dropdown-item" href="#" id="' + lang.id + '" onclick="changeLang(' + lang.id + ')">' + lang.name + '</a>';
+            });
+            return html;
+        });
+    }
+
 }
 
 module.exports = MgrLanguage;
