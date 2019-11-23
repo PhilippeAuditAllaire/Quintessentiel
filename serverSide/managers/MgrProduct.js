@@ -298,6 +298,9 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query);
     }
 
+    /*Select the products that match all of the categories passed
+    in the search array 
+    */
     loadProductSearchCategory(code_lang, search) {
         let query = "SELECT DISTINCT Product.id as product_id,ta_category_product.idCategory FROM product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_categoryattribute_language.value IN (";
             for(let i=0;i<search.length;i++){
@@ -315,6 +318,9 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query);
     }
 
+    /*Select the information necessary to populate the catalog
+    by the ids of the product
+    */
     loadCatalogProductID(code_lang,ids){
         let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id IN (";
             for(let i=0;i<ids.length;i++){

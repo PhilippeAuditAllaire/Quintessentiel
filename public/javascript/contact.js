@@ -9,9 +9,9 @@ $(document).ready(function (){
         var statusElm = $('.status');
         statusElm.empty();
 
-        var reText=/^[a-z ,.'-]+$/;
+        var reText=/^[0-9 a-zàâçéèêëîïôûùüÿñæœ ,.'-]+$/i;
         var reEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        var rePhone=/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+        var rePhone=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
         if(!(reText.test(fName))){
             event.preventDefault();

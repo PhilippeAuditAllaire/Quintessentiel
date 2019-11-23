@@ -212,6 +212,28 @@ class CtrlProduct {
 
     }
 
+    /*Generates the HTML to populate the dropdown for
+    each categories 
+    ProductCategoryID is optional*/    
+    loadAllSearchCategories(productCategoryId)
+    {
+        return this._mgrProduct.loadAllCategories().then(function(res){
+            let html = "";
+
+            if(res != undefined)
+            {
+
+                 res.forEach(function(row){
+                                  console.log(row.id);
+                console.log(productCategoryId);
+                    html += "<option value="+row.id+1+">"+row.value+"</option>";
+                });               
+            }
+
+
+            return html;
+        });
+    }
 
     //Generates the HTML for each categories
     //based on the loadAllCategories function
@@ -490,12 +512,16 @@ class CtrlProduct {
         });
     }
 
+    /*Loads all categories that match the categories in the search, 
+    verifies the ones that match every categories,
+    sends the ids that match to loadCatalogById
+    */
     loadProductSearchCategory(code_lang, search) {
         let products = this._mgrProduct.loadProductSearchCategory(code_lang, search);
 
         return products.then(function(val) {
-            console.log(products);
-            console.log("search lenght: "+search.length);
+            //console.log(products);
+            //console.log("search lenght: "+search.length);
             let newProducts = [];
             let filteredProducts = [];
             let nbrCat = 1;
@@ -505,7 +531,7 @@ class CtrlProduct {
                 newProducts.push(ele);
             });
 
-            console.log(newProducts);
+            //console.log(newProducts);
 
             for(let i = 0;i<newProducts.length;i++){
                 if(!((i+1)==newProducts.length)){
@@ -534,6 +560,9 @@ class CtrlProduct {
         });
     }
 
+    /*Gets all the ids and generates the necessary HTML to show those product in the catalog
+    returns an array of HTML elements
+    */
     loadCatalogById(ids){
         let products = this._mgrProduct.loadCatalogProductID(1,ids);
         return products.then(function(val){

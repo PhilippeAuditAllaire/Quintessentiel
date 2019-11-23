@@ -227,7 +227,7 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
 website.post("/ajaxRequest/getCategories", function(req, res) {
     let ctrlCategories = new CtrlProduct();
 
-    ctrlCategories.loadAllCategories(1).then(function(categoryList) {
+    ctrlCategories.loadAllSearchCategories(1).then(function(categoryList) {
             res.send(categoryList);
         })
         .catch(function(error) {
@@ -235,8 +235,6 @@ website.post("/ajaxRequest/getCategories", function(req, res) {
         });
 
 });
-
-
 
 app.post("/ajaxRequest/adminConnection", function(req, res) {
     let ctrlUserObj = new CtrlUser();
