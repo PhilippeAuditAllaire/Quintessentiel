@@ -18,6 +18,8 @@ class QueryEngine{
 
 			dbConnector.connection.query(query,function(err,result){
 				
+				dbConnector.connection.end(); //Ends the connection
+
 				if(!err){
 					resolve(result);
 				}
