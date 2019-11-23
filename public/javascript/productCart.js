@@ -12,7 +12,7 @@ function addProductToCart(productId)
 			productId: productId
 		},
 		success:function(res){
-
+			loadCartItem() //Load the item the user just added
 		}
 	})
 }
