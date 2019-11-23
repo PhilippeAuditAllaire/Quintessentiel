@@ -25,9 +25,9 @@ class Cart{
 		this._itemArray.forEach(function(item){	//For each item already in the cart
 
 			//If the id of the item to add is the same as the opne in the cart
-			if(item.id == idItemToAdd) 
+			if(item._id == idItemToAdd) 
 			{
-				item.qty += 1; //increment its quantity
+				item._qty += 1; //increment its quantity
 				isNewItem = false;
 			}
 
