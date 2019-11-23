@@ -89,6 +89,10 @@ website.get("/productInfo", function(req, res) {
     res.render("productInfo.ejs");
 });
 
+website.get("/faq", function(req, res) {
+    res.render("faq.ejs");
+});
+
 
 
 //Ajax requests
@@ -174,7 +178,6 @@ website.post("/ajaxRequest/produitInfo", function(req, res) {
     });
 
 });
-
 
 website.post("/ajaxRequest/sliderFeature", function(req, res) {
     let ctrlProduct = new CtrlProduct();
@@ -350,8 +353,6 @@ app.get("/manageProduct", function(req, res) {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
 });
-
-
 
 app.get("/manageRecipe", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {

@@ -25,8 +25,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <div class="catalogue">
             <div class="category-search" id="category-search">
+                <img class="reset" id="reset-btn" src="images/reset.png" alt="" onclick="reloadCatalog()">
                 <select class="dropdown-category" id="multi-cat">
-                    <option selected value="1" ></option>
                 </select>
             </div>
             <div class="catalogue-titre">
@@ -99,6 +99,26 @@
 
             function openInfo(id) {
                 document.location.href = './productInfo?id=' + id;
+            }
+
+            function reloadCatalog(){
+                $('.search-tag').remove();
+                catSearch=[];
+                $.ajax({
+                    url: "http://localhost:8000/ajaxRequest/catalogue",
+                    method: "POST",
+
+                    success: function(response) {
+                        //console.log(response);
+
+                        $("#catalogue").html(response);
+
+                    },
+                    error: function(response) {
+                        //console.log(response);
+                        alert("Erreur dans l'affichage du catalogue");
+                    }
+                });
             }
 
             $('select').on('change', function() {

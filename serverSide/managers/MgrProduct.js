@@ -203,6 +203,23 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query);
     }
 
+    loadCatalogProductID(code_lang,ids){
+        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id IN (";
+            for(let i=0;i<ids.length;i++){
+                if(i!=(ids.length-1)){
+                    var conditions="'" + ids[i] +"',";
+                }else{
+                    var conditions="'" + ids[i] +"'";
+                }  
+                query=query.concat(conditions);
+        }
+        let endQuery=") AND productattribute.type = 'title'";
+        query=query.concat(endQuery);
+
+        console.log(query);
+        return this._queryEngine.executeQuery(query);
+    }
+
     insertTagAttribute(productId,tagList){
 
         if(tagList != undefined)

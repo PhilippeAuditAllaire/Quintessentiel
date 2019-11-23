@@ -340,8 +340,6 @@ getCommentsIndex(code_lang) {
         return products.then(function(val) {
             console.log(products);
             console.log("search lenght: "+search.length);
-            let catalogue_product = [];
-            
             let newProducts = [];
             let filteredProducts = [];
             let nbrCat = 1;
@@ -356,10 +354,8 @@ getCommentsIndex(code_lang) {
             for(let i = 0;i<newProducts.length;i++){
                 if(!((i+1)==newProducts.length)){
                     if(newProducts[i]==newProducts[i+1]){
-                        console.log("t dans le if");
                         nbrCat++;
                     }else{
-                        console.log("t dans le else");
         
                         if(nbrCat==search.length){
                             let ele = newProducts[i];
@@ -369,7 +365,6 @@ getCommentsIndex(code_lang) {
                     }
                 }else{
                     if(nbrCat==search.length){
-                        console.log("test dans le else i+1==lenght");
                         let ele = newProducts[i];
                         filteredProducts.push(ele);
                     }
@@ -377,8 +372,16 @@ getCommentsIndex(code_lang) {
                 }
                 
             }
+            let newCtrl = new CtrlProduct;
+            let catalog_product = newCtrl.loadCatalogById(filteredProducts);
+            return catalog_product;
+        });
+    }
 
-            console.log(filteredProducts);
+    loadCatalogById(ids){
+        let products = this._mgrProduct.loadCatalogProductID(1,ids);
+        return products.then(function(val){
+            let catalogue_product = [];
             val.forEach(function(product) {
                 //product.image = "default.jpg";
                 let ele = '<div class="catalogue-produit" onclick="openInfo(' + product.product_id + ');">';
@@ -409,7 +412,7 @@ getCommentsIndex(code_lang) {
                 ele += '</div>';
                 catalogue_product.push(ele);
             });
-
+            
             return catalogue_product;
         });
     }
