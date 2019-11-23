@@ -4,9 +4,7 @@
 //@productId is the product to add
 //to the cart
 function addProductToCart(productId)
-{
-	console.log("Test");
-	
+{	
 	$.ajax({
 		url: "/ajaxRequest/addProductToCart",
 		type: "POST",
@@ -14,9 +12,22 @@ function addProductToCart(productId)
 			productId: productId
 		},
 		success:function(res){
-			console.log("Fin de l'ajout")
+
+		}
+	})
+}
+
+loadCartItem()
+//Loads all the items that
+//are in the user's cart
+function loadCartItem()
+{
+	$.ajax({
+		url: "/ajaxRequest/loadCartItem",
+		type: "POST",
+		success: function(res){
+			console.log("Voici les items de cart")
 			console.log(res);
 		}
 	})
-	
 }

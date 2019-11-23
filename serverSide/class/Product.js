@@ -85,6 +85,7 @@ class Product {
 
     get format() { return this._format; }
     set format(paramFormat) { this._format = paramFormat; }
+
 }
 
 module.exports = Product;

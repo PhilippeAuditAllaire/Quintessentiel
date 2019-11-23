@@ -225,17 +225,28 @@ website.post("/ajaxRequest/addProductToCart",function(req,res){
         newCart.itemArray = userCart._itemArray;
         newCart.addItemToCart(itemId);
         req.session.userCart = JSON.stringify(newCart);
-        console.log(newCart); 
     }
     else{  //The cart doesnt exist so create it and add the item to it
         let newCart = new Cart();
         newCart.addItemToCart(itemId);
-        console.log("AVANT")
-        console.log(newCart);
-        console.log(newCart.itemArray[0].id)
         req.session.userCart = JSON.stringify(newCart);
     }
     res.send("fin");
+});
+
+
+website.post("/ajaxRequest/loadCartItem",function(req,res){
+    console.log("Loading the products from the cart");
+    if(req.session.userCart != undefined && req.session.userCart.length > 0) //If the user has something in his cart
+    {
+      let ctrlCart = new CtrlCart();
+      ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart)).then(function(productsArray){
+        res.send(productsArray);
+      });  
+    }
+    else{
+        res.send("<p>Il n'y a aucun item dans votre panier!</p>");
+    }
 });
 
 
