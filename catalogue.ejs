@@ -55,7 +55,6 @@
 
                     },
                     error: function(response) {
-                        //console.log(response);
                         alert("Erreur dans l'affichage du catalogue");
                     }
                 });
@@ -69,7 +68,7 @@
                             search: $('#research').val()
                         },
                         success: function(service_research) {
-                            console.log("serv " + service_research);
+                            //console.log("serv " + service_research);
 
                             let catalogue = document.getElementById("catalogue");
                             catalogue.innerHTML = service_research;
@@ -83,13 +82,13 @@
                     method: "POST",
 
                     success: function(response) {
-                        console.log("categories:"+response);
+                        //console.log("categories:"+response);
 
                         $("#multi-cat").append(response);
 
                     },
                     error: function(response) {
-                        console.log(response);
+                        //console.log(response);
                         alert("Erreur dans l'affichage du catalogue");
                     }
                 });
@@ -124,7 +123,7 @@
             $('select').on('change', function() {
                 $("<div class='search-tag'>"+$('#multi-cat :selected').text()+"</div>").appendTo('#category-search')
                 catSearch.push($('#multi-cat :selected').text());
-                console.log(catSearch);
+                //console.log(catSearch);
 
                 $.ajax({
                         url: "http://localhost:8000/ajaxRequest/categoryCatalogueSearch",
@@ -133,7 +132,7 @@
                             search: catSearch
                         },
                         success: function(service_research) {
-                            console.log("serv " + service_research);
+                            //console.log("serv " + service_research);
 
                             let catalogue = document.getElementById("catalogue");
                             catalogue.innerHTML = service_research;
