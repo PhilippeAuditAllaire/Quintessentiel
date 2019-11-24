@@ -218,7 +218,7 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
 website.post("/ajaxRequest/addProductToCart",function(req,res){
     console.log("Adding the product to the cart");
     let itemId = req.body.productId;
-
+    
     if(req.session.userCart != undefined){  //If the cart already exists
         let userCart = JSON.parse(req.session.userCart);
         let newCart = new Cart();
