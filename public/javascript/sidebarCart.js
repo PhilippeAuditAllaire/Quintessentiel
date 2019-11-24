@@ -102,9 +102,12 @@ function displayCartItems(){
 		$(".cartItemQty").on("change",function(e){
 			let element = e.target.closest(".cart-item");
 			let elementIndexInArray = element.getAttribute("data-indexInArray");
+			let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
 
 			validateItemQty(e.target);
 			addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
+			loadCartItem(false);
+			//displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
 		})
 
 		indexInArray++;
@@ -118,13 +121,33 @@ function displayCartItems(){
 loadCartItem().then(function(){ 
 
 	let cartItemQty = document.getElementsByClassName("cartItemQty");
+	let cartItemPrice = document.getElementsByClassName("cartItemPrice");
 
-	for(let i = 0;i < cartItemQty.length;i++)
+	for(let i = 0;i < userCart.length;i++) //For each items in the cart
 	{
-		validateItemQty(cartItemQty[i]);
+		validateItemQty(cartItemQty[i]); //Validate its quantity
+		displayItemPrice(cartItemPrice[i],calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._retailPrice));
 	}
 	
-})
+});
+
+//Displays the price of an item
+//@priceElement is the element that shall
+//contain the price
+//@price is the price to put in the @priceElement
+function displayItemPrice(priceElement,price)
+{
+	priceElement.innerHTML = price + "$";
+}
+
+//Calculates the price of an item based on its
+//@itemQty and on its
+//@individualItemPrice
+//@Returns the total price of an item
+function calculateItemPrice(itemQty,individualItemPrice)
+{
+	return itemQty * individualItemPrice;
+}
 
 //Checks if the given element can
 //have that required qty (found in the input)
@@ -203,12 +226,9 @@ function loadCartItem(displayItems=true)
 			userCart = res;
 
 			if(displayItems && userCart.length > 0){
-				console.log("called from here");
-				console.log(userCart);
 				displayCartItems();
 			}
-			else{
-				console.log("empty")
+			else if(displayItems){
 				$("#cartContentWrapper").html("Le panier est vide.");
 			}
 		}
