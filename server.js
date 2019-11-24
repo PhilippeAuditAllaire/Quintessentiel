@@ -218,17 +218,18 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
 website.post("/ajaxRequest/addProductToCart",function(req,res){
     console.log("Adding the product to the cart");
     let itemId = req.body.productId;
-    
+    let itemQty = req.body.qty;
+
     if(req.session.userCart != undefined){  //If the cart already exists
         let userCart = JSON.parse(req.session.userCart);
         let newCart = new Cart();
         newCart.itemArray = userCart._itemArray;
-        newCart.addItemToCart(itemId);
+        newCart.addItemToCart(itemId,itemQty);
         req.session.userCart = JSON.stringify(newCart);
     }
     else{  //The cart doesnt exist so create it and add the item to it
         let newCart = new Cart();
-        newCart.addItemToCart(itemId);
+        newCart.addItemToCart(itemId,itemQty);
         req.session.userCart = JSON.stringify(newCart);
     }
     res.send("fin");
@@ -241,11 +242,13 @@ website.post("/ajaxRequest/loadCartItem",function(req,res){
     {
       let ctrlCart = new CtrlCart();
       ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart)).then(function(productsArray){
+        console.log("Voici le contenu du cart")
+        console.log(productsArray);
         res.send(productsArray);
       });  
     }
     else{
-        res.send("<p>Il n'y a aucun item dans votre panier!</p>");
+        res.end();
     }
 });
 

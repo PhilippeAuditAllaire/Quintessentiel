@@ -103,8 +103,8 @@ function displayCartItems(){
 			let element = e.target.closest(".cart-item");
 			let elementIndexInArray = element.getAttribute("data-indexInArray");
 
-			validateItemQty(e.target)
-			//addProductToCart(userCart[elementIndexInArray].product._id)
+			validateItemQty(e.target);
+			addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
 		})
 
 		indexInArray++;
@@ -203,7 +203,13 @@ function loadCartItem(displayItems=true)
 			userCart = res;
 
 			if(displayItems && userCart.length > 0){
+				console.log("called from here");
+				console.log(userCart);
 				displayCartItems();
+			}
+			else{
+				console.log("empty")
+				$("#cartContentWrapper").html("Le panier est vide.");
 			}
 		}
 	});
@@ -215,19 +221,17 @@ function loadCartItem(displayItems=true)
 //session
 //@productId is the product to add
 //to the cart
-//@displayAfter is a bool to pass to the loadCartItem
-//function that tells wether or not to display the items
-//after
-function addProductToCart(productId,displayAfter=true)
+function addProductToCart(productId,quantity)
 {	
 	$.ajax({
 		url: "/ajaxRequest/addProductToCart",
 		type: "POST",
 		data: {
-			productId: productId
+			productId: productId,
+			qty: quantity
 		},
 		success:function(res){
-			loadCartItem(displayAfter) //Load the item the user just added
+
 		}
 	})
 }

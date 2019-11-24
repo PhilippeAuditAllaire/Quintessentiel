@@ -16,9 +16,9 @@ class Cart{
 	}
 
 	//Checks if the element already exists,
-	//if so, increment its quantity, else,
-	//add it to the array
-	addItemToCart(idItemToAdd){
+	//if so, cahnge its quantity to the given one,
+	//else, create the new element with the given quantity
+	addItemToCart(idItemToAdd,qty){
 
 		let isNewItem = true;
 
@@ -27,14 +27,14 @@ class Cart{
 			//If the id of the item to add is the same as the opne in the cart
 			if(item._id == idItemToAdd) 
 			{
-				item._qty += 1; //increment its quantity
+				item._qty = qty; //increment its quantity
 				isNewItem = false;
 			}
 
 		});
 
 		if(isNewItem){ //If its not in the array, add it
-			this._itemArray.push(new CartItem({id: idItemToAdd,qty: 1}));
+			this._itemArray.push(new CartItem({id: idItemToAdd,qty: qty}));
 		}
 	}
 }
