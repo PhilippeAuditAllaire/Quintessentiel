@@ -58,7 +58,6 @@ function closeCartMenu()
 //@cartItemsArray is the array of items
 //the user has in his cart
 function displayCartItems(){
-	console.log("asdfasdf")
 	$("#cartContentWrapper").html("");
 	let indexInArray = 0;
 
@@ -78,7 +77,7 @@ function displayCartItems(){
                                 `+item.product._name+`
                             </div>
                             <div class="itemClose">
-                                <a href="#"><img src="./images/icons/BlackCartCloseIcon.svg"/></a>
+                                <a href="#" class='removeElement'><img src="./images/icons/BlackCartCloseIcon.svg"/></a>
                             </div>
                         </div>
                         <div class="itemBottomInfos">
@@ -86,7 +85,7 @@ function displayCartItems(){
                                 <label>Quantité:<input type="number" name="cartItemQty" class="cartItemQty" value="`+parseInt(item.qtyInCart)+`"/></label>
                             </div>
                             <div class="cartItemPrice">
-                                <p>`+parseInt(item.product._retailPrice)+`$</p>
+                                <p>`+calculateItemPrice(item._qtyInCart,item.product._retailPrice)+`</p>
                             </div>
                         </div>
                         <div class="wrapper-cart-error">
@@ -112,6 +111,19 @@ function displayCartItems(){
 			 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
 			});
 		})
+
+		$(".removeElement").on("click",function(e){
+			let element = e.target.closest(".cart-item");
+			let elementIndexInArray = element.getAttribute("data-indexInArray");
+			let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
+			let cartSubTotalWrapper = document.getElementById("cartSubTotal");
+
+			removeProductFromCart(userCart[elementIndexInArray].product._id);
+			loadCartItem(false).then(function(){ //When we loaded the cart items again
+			 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
+			 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
+			});
+		});
 
 		indexInArray++;
 			
@@ -259,6 +271,8 @@ function loadCartItem(displayItems=true)
 			else if(displayItems){
 				$("#cartContentWrapper").html("Le panier est vide.");
 			}
+
+			return;
 		}
 	});
 }
@@ -280,6 +294,24 @@ function addProductToCart(productId,quantity)
 		},
 		success:function(res){
 
+		}
+	})
+}
+
+//Removes the given product ID from the
+//cart session
+//@productId is the id of the product to remove
+//from the cart
+function removeProductFromCart(productId)
+{
+	$.ajax({
+		url: "/ajaxRequest/removeProductFromCart",
+		type: "POST",
+		data: {
+			productId: productId
+		},
+		success:function(res){
+			console.log("removed it!");
 		}
 	})
 }

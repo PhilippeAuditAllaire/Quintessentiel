@@ -234,7 +234,17 @@ website.post("/ajaxRequest/addProductToCart",function(req,res){
     }
     res.send("fin");
 });
+//removeProductFromCart
+website.post("/ajaxRequest/removeProductFromCart",function(req,res){
+    let itemId = req.body.productId;
+    
+    let userCart = JSON.parse(req.session.userCart);
+    let newCart = new Cart();
+    newCart.itemArray = userCart._itemArray;
+    newCart.removeItemFromCart(itemId);
 
+    req.session.userCart = JSON.stringify(newCart);
+});
 
 website.post("/ajaxRequest/loadCartItem",function(req,res){
     console.log("Loading the products from the cart");
