@@ -58,6 +58,7 @@ function closeCartMenu()
 //@cartItemsArray is the array of items
 //the user has in his cart
 function displayCartItems(){
+	console.log("allo")
 	$("#cartContentWrapper").html("");
 	let indexInArray = 0;
 
@@ -293,7 +294,7 @@ function addProductToCart(productId,quantity)
 			qty: quantity
 		},
 		success:function(res){
-
+			
 		}
 	})
 }
