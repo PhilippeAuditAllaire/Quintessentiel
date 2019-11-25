@@ -212,6 +212,28 @@ class CtrlProduct {
 
     }
 
+    /*Generates the HTML to populate the dropdown for
+    each categories 
+    ProductCategoryID is optional*/    
+    loadAllSearchCategories(productCategoryId)
+    {
+        return this._mgrProduct.loadAllCategories().then(function(res){
+            let html = "";
+
+            if(res != undefined)
+            {
+
+                 res.forEach(function(row){
+                                  console.log(row.id);
+                console.log(productCategoryId);
+                    html += "<option value="+row.id+1+">"+row.value+"</option>";
+                });               
+            }
+
+
+            return html;
+        });
+    }
 
     //Generates the HTML for each categories
     //based on the loadAllCategories function
@@ -309,7 +331,6 @@ class CtrlProduct {
             });
         });
     }
-
 
     getCommentsIndex(code_lang) {
         let products = this._mgrProduct.loadCommentSlider();
@@ -487,6 +508,96 @@ class CtrlProduct {
                 catalogue_product.push(ele);
             });
 
+            return catalogue_product;
+        });
+    }
+
+    /*Loads all categories that match the categories in the search, 
+    verifies the ones that match every categories,
+    sends the ids that match to loadCatalogById
+    */
+    loadProductSearchCategory(code_lang, search) {
+        let products = this._mgrProduct.loadProductSearchCategory(code_lang, search);
+
+        return products.then(function(val) {
+            //console.log(products);
+            //console.log("search lenght: "+search.length);
+            let newProducts = [];
+            let filteredProducts = [];
+            let nbrCat = 1;
+            
+            val.forEach(function(product) {
+                let ele = product.product_id;
+                newProducts.push(ele);
+            });
+
+            //console.log(newProducts);
+
+            for(let i = 0;i<newProducts.length;i++){
+                if(!((i+1)==newProducts.length)){
+                    if(newProducts[i]==newProducts[i+1]){
+                        nbrCat++;
+                    }else{
+        
+                        if(nbrCat==search.length){
+                            let ele = newProducts[i];
+                            filteredProducts.push(ele);
+                        }
+                        nbrCat=1;
+                    }
+                }else{
+                    if(nbrCat==search.length){
+                        let ele = newProducts[i];
+                        filteredProducts.push(ele);
+                    }
+                    nbrCat=1;
+                }
+                
+            }
+            let newCtrl = new CtrlProduct;
+            let catalog_product = newCtrl.loadCatalogById(filteredProducts);
+            return catalog_product;
+        });
+    }
+
+    /*Gets all the ids and generates the necessary HTML to show those product in the catalog
+    returns an array of HTML elements
+    */
+    loadCatalogById(ids){
+        let products = this._mgrProduct.loadCatalogProductID(1,ids);
+        return products.then(function(val){
+            let catalogue_product = [];
+            val.forEach(function(product) {
+                //product.image = "default.jpg";
+                let ele = '<div class="catalogue-produit" onclick="openInfo(' + product.product_id + ');">';
+                ele += '<div class="catalogue-produit-div-image">';
+                ele += '<img class="catalogue-produit-image" src="./images/' + product.image + '" alt="' + product.value + '">';
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-nom">';
+                ele += product.value;
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-review">';
+                ele += '<div class="catalogue-produit-etoile">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
+                ele += '<div class = "catalogue-produit-comm">';
+                ele += 'Aucun commentaire';
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-prix">';
+                ele += '$' + product.retailPrice + ' CAD';
+                ele += '</div>';
+                ele += '</div>';
+                ele += '</div>';
+                ele += '<div class="catalogue-produit-panier">';
+                ele += '<img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier">';
+                ele += '</div>';
+                ele += '</div>';
+                catalogue_product.push(ele);
+            });
+            
             return catalogue_product;
         });
     }

@@ -298,6 +298,103 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query);
     }
 
+    /*Select the products that match all of the categories passed
+    in the search array 
+    */
+    loadProductSearchCategory(code_lang, search) {
+        let query = "SELECT DISTINCT Product.id as product_id,ta_category_product.idCategory FROM product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_categoryattribute_language.value IN (";
+            for(let i=0;i<search.length;i++){
+                if(i!=(search.length-1)){
+                    var conditions="'" + search[i] +"',";
+                }else{
+                    var conditions="'" + search[i] +"'";
+                }  
+                query=query.concat(conditions);
+        }
+        let endQuery=") Order BY Product.id";
+        query=query.concat(endQuery);
+        
+        console.log(query);
+        return this._queryEngine.executeQuery(query);
+    }
+
+    /*Select the information necessary to populate the catalog
+    by the ids of the product
+    */
+    loadCatalogProductID(code_lang,ids){
+        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id IN (";
+            for(let i=0;i<ids.length;i++){
+                if(i!=(ids.length-1)){
+                    var conditions="'" + ids[i] +"',";
+                }else{
+                    var conditions="'" + ids[i] +"'";
+                }  
+                query=query.concat(conditions);
+        }
+        let endQuery=") AND productattribute.type = 'title'";
+        query=query.concat(endQuery);
+
+        console.log(query);
+        return this._queryEngine.executeQuery(query);
+    }
+
+    insertTagAttribute(productId,tagList){
+
+        if(tagList != undefined)
+        {
+            let queryLinkTags = "INSERT INTO ta_tag_product VALUES ?";
+            let paramLinkTags = [];
+
+            for(let i = 0;i < tagList.length;i++)
+            {
+                paramLinkTags.push(["DEFAULT",tagList[i],productId])
+            } 
+
+            return this._queryEngine.executeQuery(queryLinkTags,[paramLinkTags]);           
+        }
+
+    }
+
+    insertCategoryAttribute(productId, categoryId)
+    {
+        let queryCategory = "INSERT INTO ta_category_product VALUES (DEFAULT,?,?)";
+        let paramCategory = [categoryId,productId];
+
+        return this._queryEngine.executeQuery(queryCategory,paramCategory);
+    }
+
+    addProduct(product) {
+        let query = "INSERT INTO Product VALUES (DEFAULT,?,?,?,?,1,1,12,NULL)";
+        let param = [product.retailPrice,product.costPrice,product.qty,product.image,product.featured,product.isVisible,product.dropWeightGram];
+        let currentQueryEngine = this._queryEngine;
+
+        return this._queryEngine.executeQuery(query,param).then(function(res){
+            let insertedId = res.insertId;
+            let queryInsertAttributes = "INSERT INTO ta_productattribute_language VALUES ?";
+            let paramAttributes = [[1,1,insertedId,product.name],[2,1,insertedId,product.description],[3,1,insertedId,product.advice]];
+
+            currentQueryEngine.executeQuery(queryInsertAttributes,[paramAttributes]).then(function(res){
+                
+                let queryLinkTags = "INSERT INTO ta_tag_product VALUES ?";
+                let paramLinkTags = [];
+
+                for(let i = 0;i < product.tags.length;i++)
+                {
+                    paramLinkTags.push(["DEFAULT",product.tags[i],insertedId])
+                }
+
+                currentQueryEngine.executeQuery(queryLinkTags,[paramLinkTags]).then(function(res){
+                    let queryCategory = "INSERT INTO ta_category_product VALUES (DEFAULT,?,?)";
+                    let paramCategory = [product.category,insertedId];
+
+                    currentQueryEngine.executeQuery(queryCategory,paramCategory).then(function(res){
+                        console.log("Added category")
+                        console.log(res)
+                    })
+                });
+            });
+        });
+    }
 
 
 }

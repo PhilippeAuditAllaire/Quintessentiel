@@ -110,6 +110,10 @@ website.get("/productInfo", function(req, res) {
     res.render("productInfo.ejs");
 });
 
+website.get("/faq", function(req, res) {
+    res.render("faq.ejs");
+});
+
 
 
 //Ajax requests
@@ -200,6 +204,15 @@ website.post("/ajaxRequest/catalogueSearch", function(req, res) {
 
 });
 
+website.post("/ajaxRequest/categoryCatalogueSearch", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
+
+    ctrlProduct.loadProductSearchCategory(1, req.body.search).then(function(result) {
+        res.send(result);
+    });
+
+});
+
 website.post("/ajaxRequest/produitInfo", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
@@ -208,7 +221,6 @@ website.post("/ajaxRequest/produitInfo", function(req, res) {
     });
 
 });
-
 
 website.post("/ajaxRequest/sliderFeature", function(req, res) {
     let ctrlProduct = new CtrlProduct();
@@ -246,7 +258,17 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
 
 });
 
+website.post("/ajaxRequest/getCategories", function(req, res) {
+    let ctrlCategories = new CtrlProduct();
 
+    ctrlCategories.loadAllSearchCategories(1).then(function(categoryList) {
+            res.send(categoryList);
+        })
+        .catch(function(error) {
+            res.send("Impossible de charger les categories.");
+        });
+
+});
 
 app.post("/ajaxRequest/adminConnection", function(req, res) {
     let ctrlUserObj = new CtrlUser();
@@ -385,8 +407,6 @@ app.get("/manageProduct", function(req, res) {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
 });
-
-
 
 app.get("/manageRecipe", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
