@@ -64,8 +64,19 @@ website.get("/", function(req, res) {
 
 website.get("/index", function(req, res) {
     /* TODO:req.session.code_lang selon le header */
-
-    mgr.getTextByPage("index", 1).then(function(resultat) {
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("index", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
         res.render("index.ejs", JSON.parse(resultat));
     });
@@ -104,7 +115,6 @@ website.get("/productInfo", function(req, res) {
 //Ajax requests
 
 website.post("/ajaxRequest/lang", function(req, res) {
-
     let mgrlang = new MgrLanguage();
 
     mgrlang.getLanguagesNavBar().then(function(result) {
@@ -114,14 +124,14 @@ website.post("/ajaxRequest/lang", function(req, res) {
 
 website.post("/ajaxRequest/defLang", function(req, res) {
 
-    if (req.session.id_lang) {
-        req.session.id_lang = 1;
-    }
+    console.log("deflang" + req.session.id_lang);
+    res.send(req.session.id_lang);
 });
 
 website.post("/ajaxRequest/changeLang", function(req, res) {
-    req.session.id_lang = req.body.id;
-    res.redirect('back');
+    req.session.id_lang = req.body.id_lang;
+    console.log(req.session.id_lang);
+    res.send(req.session.id_lang);
 });
 
 
