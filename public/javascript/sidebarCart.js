@@ -104,7 +104,7 @@ function displayCartItems(){
 			let elementIndexInArray = element.getAttribute("data-indexInArray");
 			let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
 			let cartSubTotalWrapper = document.getElementById("cartSubTotal");
-			
+
 			validateItemQty(e.target);
 			addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
 			loadCartItem(false).then(function(){ //When we loaded the cart items again
@@ -153,11 +153,11 @@ function calculateSubTotal()
 
 	for(let i = 0;i < userCart.length;i++) //For each item in the cart
 	{
-		let itemPrice = calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._retailPrice);
+		let itemPrice = parseFloat(calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._retailPrice));
 		subTotal += itemPrice;
 	}
 
-	return subTotal;
+	return subTotal.toFixed(2);
 }
 
 //Displays the sub total
@@ -174,7 +174,7 @@ function displaySubTotal(subTotalElement,price)
 //@Returns the total price of an item
 function calculateItemPrice(itemQty,individualItemPrice)
 {
-	return itemQty * individualItemPrice;
+	return ((itemQty * (individualItemPrice)*100) / 100).toFixed(2);
 }
 
 //Checks if the given element can
