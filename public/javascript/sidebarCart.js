@@ -103,11 +103,14 @@ function displayCartItems(){
 			let element = e.target.closest(".cart-item");
 			let elementIndexInArray = element.getAttribute("data-indexInArray");
 			let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
-
+			let cartSubTotalWrapper = document.getElementById("cartSubTotal");
+			
 			validateItemQty(e.target);
 			addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
-			loadCartItem(false);
-			//displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
+			loadCartItem(false).then(function(){ //When we loaded the cart items again
+			 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
+			 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
+			});
 		})
 
 		indexInArray++;
@@ -122,11 +125,13 @@ loadCartItem().then(function(){
 
 	let cartItemQty = document.getElementsByClassName("cartItemQty");
 	let cartItemPrice = document.getElementsByClassName("cartItemPrice");
+	let cartSubTotalWrapper = document.getElementById("cartSubTotal");
 
 	for(let i = 0;i < userCart.length;i++) //For each items in the cart
 	{
 		validateItemQty(cartItemQty[i]); //Validate its quantity
 		displayItemPrice(cartItemPrice[i],calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._retailPrice));
+		displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
 	}
 	
 });
@@ -138,6 +143,29 @@ loadCartItem().then(function(){
 function displayItemPrice(priceElement,price)
 {
 	priceElement.innerHTML = price + "$";
+}
+
+//Calculates the sub total based
+//on every item price
+function calculateSubTotal()
+{	
+	let subTotal = 0;
+
+	for(let i = 0;i < userCart.length;i++) //For each item in the cart
+	{
+		let itemPrice = calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._retailPrice);
+		subTotal += itemPrice;
+	}
+
+	return subTotal;
+}
+
+//Displays the sub total
+//@subTotalElement is the element that will have the subTotal in it
+//@price is the price to put in the sub total element
+function displaySubTotal(subTotalElement,price)
+{
+	subTotalElement.innerHTML = price + "$";
 }
 
 //Calculates the price of an item based on its

@@ -313,7 +313,7 @@
 }
 
 .cartUnderTopWrapper{
-    height:90vh;
+    height:75vh;
     color:#292323;
     text-align: center;
     font-size:25px;
@@ -333,6 +333,15 @@
     cursor:pointer;
 }
 
+.cartBottomWrapper{
+    height:15vh;
+    color:#292323;
+    font-size:22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
 
 .itemUpperInfos{
     display: flex;
@@ -402,4 +411,24 @@
 .wrapper-cart-error p.toggled{
     width: 90%;
     display:block;
+}
+
+.cart-payButton{
+    text-align: center;
+}
+
+.cart-subTotal{
+    text-align: center;
+}
+
+#cartPayLink{
+    color:#FFFFFF;
+    background-color:#292323;
+    text-decoration: none;
+    border:1px solid black;
+    padding:10px 15px 10px 15px;
+}
+
+.cart-payButton{
+    margin-bottom:10px;
 }
