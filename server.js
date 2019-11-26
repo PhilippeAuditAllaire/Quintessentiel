@@ -84,34 +84,143 @@ website.get("/index", function(req, res) {
 });
 
 website.get("/userConnection", function(req, res) {
-    res.render("userConnection.ejs");
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("userConnection", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("userConnection.ejs", JSON.parse(resultat));
+    });
 });
 
 
 website.get("/userRegister", function(req, res) {
-    res.render("userRegister.ejs")
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("userRegister", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("userRegister.ejs", JSON.parse(resultat));
+    });
 });
 
 website.get("/recoverPassword", function(req, res) {
-    res.render("recoverPassword.ejs");
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("recoverPassword", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("recoverPassword.ejs", JSON.parse(resultat));
+    });
 });
 
 
 website.get("/contactus", function(req, res) {
-    res.render("contactus.ejs")
+    /* TODO:req.session.code_lang selon le header */
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("contactus", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("contactus.ejs", JSON.parse(resultat));
+    });
 });
 
 website.get("/catalogue", function(req, res) {
-    res.render("catalogue.ejs");
+    /* TODO:req.session.code_lang selon le header */
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("catalogue", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("catalogue.ejs", JSON.parse(resultat));
+    });
 
 });
 
 website.get("/productInfo", function(req, res) {
-    res.render("productInfo.ejs");
+    /* TODO:req.session.code_lang selon le header */
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("productInfo", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("productInfo.ejs", JSON.parse(resultat));
+    });
 });
 
 website.get("/faq", function(req, res) {
-    res.render("faq.ejs");
+    /* TODO:req.session.code_lang selon le header */
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("faq", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("faq.ejs", JSON.parse(resultat));
+    });
 });
 
 
@@ -216,7 +325,7 @@ website.post("/ajaxRequest/categoryCatalogueSearch", function(req, res) {
 website.post("/ajaxRequest/produitInfo", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
-    ctrlProduct.getProductInfo(req.body.id, 1).then(function(result) {
+    ctrlProduct.getProductInfo(req.body.id, req.session.id_lang).then(function(result) {
         res.send(result);
     });
 
