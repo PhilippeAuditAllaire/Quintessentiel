@@ -70,7 +70,7 @@ function displayCartItems(){
 			console.log(item)
 			let itemQty = validateItemQty(item.qtyInCart,item.product._qty); //Validate its quantity
 
-			$("#cartContentWrapper").html($("#cartContentWrapper").html() + `<div class="cartContentWrapper">
+			$("#cartContentWrapper").html($("#cartContentWrapper").html() + `
 	                <div class="cart-item" data-cartItemId="`+item.product._id+`">
 	                    <div class="cart-item-inside">
 	                        <div class="itemUpperInfos">
@@ -99,7 +99,6 @@ function displayCartItems(){
 	                        </div>
 	                    </div>
 	                </div>
-	            </div> 
 	           `);
 
 			//On item quantity change, check if its fine and
@@ -131,7 +130,13 @@ function displayCartItems(){
 				//Remove the product from the cart, loads the item list back and then display everything
 				removeProductFromCart(userCart[elementIndexInArray].product._id).then(function(){
 					loadCartItem().then(function(){
-						element.remove();
+						element.classList.add("disappear");
+
+						//Once the dissapear animation has been executed
+						element.addEventListener("animationend",function(){
+							element.remove();							
+						});
+
 						displaySubTotal(cartSubTotalWrapper,calculateSubTotal());
 					});
 				});
