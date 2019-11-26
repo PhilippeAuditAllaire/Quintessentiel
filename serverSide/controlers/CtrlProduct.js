@@ -441,7 +441,7 @@ class CtrlProduct {
                 ele += '</div>';
                 ele += '</div>';
                 ele += '<div class="catalogue-produit-panier">';
-                ele += '<a href="#" class="product-cart" onclick="event.stopPropagation();event.preventDefault();addProductToCart('+product.product_id+',1);loadCartItem().then(function(){displayCartItems()})"><img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier"></a>';
+                ele += '<a href="#" class="product-cart" onclick="event.stopPropagation();event.preventDefault();catalogAddProductToCart('+product.product_id+')"><img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier"></a>';
                 ele += '</div>';
 
                 catalogue_product.push(ele);

@@ -91,7 +91,7 @@ function displayCartItems(){
 	                                <label>Quantité:<input type="number" name="cartItemQty" class="cartItemQty" value="`+itemQty+`"/></label>
 	                            </div>
 	                            <div class="cartItemPrice">
-	                                <p>`+calculateItemPrice(itemQty,item.product._retailPrice)+`$</p>
+	                                `+calculateItemPrice(itemQty,item.product._retailPrice)+`$
 	                            </div>
 	                        </div>
 	                        <div class="wrapper-cart-error">
@@ -263,6 +263,13 @@ function validateItemQty(qtyInCart,maxElementQty)
 	}
 }
 
+
+function catalogAddProductToCart(productId)
+{
+	addProductToCart(productId,1);
+	loadCartItem().then(()=>displayCartItems());
+}
+
 //Displays the given error message in the given
 //error wrapper
 //@errorWrapper is the element in which to display
@@ -323,15 +330,15 @@ function loadCartItem()
 //to the cart
 function addProductToCart(productId,quantity)
 {	
-	$.ajax({
+	return $.ajax({
 		url: "/ajaxRequest/addProductToCart",
 		type: "POST",
 		data: {
 			productId: productId,
 			qty: quantity
 		},
-		success:function(res){
-			
+		success:function(isNewItem){
+			return isNewItem;
 		}
 	})
 }

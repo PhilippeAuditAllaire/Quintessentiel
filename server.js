@@ -220,20 +220,25 @@ website.post("/ajaxRequest/addProductToCart",function(req,res){
     let itemId = req.body.productId;
     let itemQty = req.body.qty;
 
+    let isNewItem; //It's a new item (wasnt in the cart before)
+
     if(req.session.userCart != undefined){  //If the cart already exists
         let userCart = JSON.parse(req.session.userCart);
         let newCart = new Cart();
         newCart.itemArray = userCart._itemArray;
-        newCart.addItemToCart(itemId,itemQty);
+        isNewItem = newCart.addItemToCart(itemId,itemQty);
         req.session.userCart = JSON.stringify(newCart);
     }
     else{  //The cart doesnt exist so create it and add the item to it
         let newCart = new Cart();
-        newCart.addItemToCart(itemId,itemQty);
+        isNewItem = newCart.addItemToCart(itemId,itemQty);
         req.session.userCart = JSON.stringify(newCart);
     }
-    res.send("fin");
+    
+    res.send(isNewItem);
 });
+
+
 //removeProductFromCart
 website.post("/ajaxRequest/removeProductFromCart",function(req,res){
     let itemId = req.body.productId;

@@ -438,9 +438,8 @@
 }
 
 .disappear{
-    transition-duration: 2s;
     transform: scale(0.5);
-    animation: removeElement 1.7s;
+    animation: removeElement 1.5s;
 }
 
 

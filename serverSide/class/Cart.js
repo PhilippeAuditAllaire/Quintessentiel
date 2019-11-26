@@ -18,6 +18,8 @@ class Cart{
 	//Checks if the element already exists,
 	//if so, cahnge its quantity to the given one,
 	//else, create the new element with the given quantity
+	//@Returns a bool telling whether the item was already
+	//in the cart or not
 	addItemToCart(idItemToAdd,qty)
 	{
 
@@ -37,6 +39,8 @@ class Cart{
 		if(isNewItem){ //If its not in the array, add it
 			this._itemArray.push(new CartItem({id: idItemToAdd,qty: qty}));
 		}
+
+		return isNewItem;
 	}
 
 	//Removes a given item from the cart
