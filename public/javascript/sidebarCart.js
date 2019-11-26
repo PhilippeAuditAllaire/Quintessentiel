@@ -12,7 +12,7 @@ let closeCartLink = document.getElementById("closeCartIcon"); //Close cart icon
 
 let fullPageOverlay = document.getElementById("fullPageOverlay"); //page overlay
 let cartWrapper = document.getElementById("cartWrapper"); //Cart wrapper
-
+	let cartSubTotalWrapper = document.getElementById("cartSubTotal"); //The sub total wrapper
 
 
 //Opens the sidebar menu
@@ -58,96 +58,99 @@ function closeCartMenu()
 //@cartItemsArray is the array of items
 //the user has in his cart
 function displayCartItems(){
-	console.log("allo")
+	console.log("display cart items!");
+
 	$("#cartContentWrapper").html("");
+
 	let indexInArray = 0;
 
-	userCart.forEach(function(item){
-		console.log(item)
-		console.log("here")
-		$("#cartContentWrapper").html($("#cartContentWrapper").html() + `<div class="cartContentWrapper">
-                <div class="cart-item" data-cartItemId="`+item.product._id+`" data-indexInArray="`+indexInArray+`">
-                    <div class="cart-item-inside">
-                        <div class="itemUpperInfos">
-                            <div class="wrapperItemImage">
-                                <div class="itemImage">
-                                    <img src="./images/logo.png"/>
-                                </div>
-                            </div>
-                            <div class="itemTitle">
-                                `+item.product._name+`
-                            </div>
-                            <div class="itemClose">
-                                <a href="#" class='removeElement'><img src="./images/icons/BlackCartCloseIcon.svg"/></a>
-                            </div>
-                        </div>
-                        <div class="itemBottomInfos">
-                            <div class="cartItemQuantity">
-                                <label>Quantité:<input type="number" name="cartItemQty" class="cartItemQty" value="`+parseInt(item.qtyInCart)+`"/></label>
-                            </div>
-                            <div class="cartItemPrice">
-                                <p>`+calculateItemPrice(item._qtyInCart,item.product._retailPrice)+`</p>
-                            </div>
-                        </div>
-                        <div class="wrapper-cart-error">
-                            <p>Quantité trop élevée!</p>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-           `);
+	if(userCart.length > 0){ //If there's nothing in the cart
 
-		//On item quantity change, check if its fine and
-		//update its quantity servside
-		$(".cartItemQty").on("change",function(e){
-			let element = e.target.closest(".cart-item");
-			let elementIndexInArray = element.getAttribute("data-indexInArray");
-			let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
-			let cartSubTotalWrapper = document.getElementById("cartSubTotal");
+		userCart.forEach(function(item){
+			console.log(item)
+			let itemQty = validateItemQty(item.qtyInCart,item.product._qty); //Validate its quantity
 
-			validateItemQty(e.target);
-			addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
-			loadCartItem(false).then(function(){ //When we loaded the cart items again
-			 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
-			 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
-			});
-		})
+			$("#cartContentWrapper").html($("#cartContentWrapper").html() + `<div class="cartContentWrapper">
+	                <div class="cart-item" data-cartItemId="`+item.product._id+`" data-indexInArray="`+indexInArray+`">
+	                    <div class="cart-item-inside">
+	                        <div class="itemUpperInfos">
+	                            <div class="wrapperItemImage">
+	                                <div class="itemImage">
+	                                    <img src="./images/logo.png"/>
+	                                </div>
+	                            </div>
+	                            <div class="itemTitle">
+	                                `+item.product._name+`
+	                            </div>
+	                            <div class="itemClose">
+	                                <a href="#" class='removeElement'><img src="./images/icons/BlackCartCloseIcon.svg"/></a>
+	                            </div>
+	                        </div>
+	                        <div class="itemBottomInfos">
+	                            <div class="cartItemQuantity">
+	                                <label>Quantité:<input type="number" name="cartItemQty" class="cartItemQty" value="`+itemQty+`"/></label>
+	                            </div>
+	                            <div class="cartItemPrice">
+	                                <p>`+calculateItemPrice(itemQty,item.product._retailPrice)+`$</p>
+	                            </div>
+	                        </div>
+	                        <div class="wrapper-cart-error">
+	                            <p>Quantité trop élevée!</p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div> 
+	           `);
 
-		$(".removeElement").on("click",function(e){
-			let element = e.target.closest(".cart-item");
-			let elementIndexInArray = element.getAttribute("data-indexInArray");
-			let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
-			let cartSubTotalWrapper = document.getElementById("cartSubTotal");
+			//On item quantity change, check if its fine and
+			//update its quantity servside
+			$(".cartItemQty").on("change",function(e){
+				let element = e.target.closest(".cart-item");
 
-			removeProductFromCart(userCart[elementIndexInArray].product._id);
-			loadCartItem(false).then(function(){ //When we loaded the cart items again
-			 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
-			 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
-			});
-		});
+				let elementIndexInArray = element.getAttribute("data-indexInArray");
+				let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0]; //Price wrapper for this item
+				let cartSubTotalWrapper = document.getElementById("cartSubTotal");
+				console.log(element)
+				checkItemQty(e.target);
+				addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
+				loadCartItem().then(function(){ //When we loaded the cart items again
+				 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
+				 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
+				});
+			})
 
-		indexInArray++;
-			
-	})
+			//On the remove element click
+			//Remove it from the cart and from the GUI
+			$(".removeElement").on("click",function(e){
+				console.log("removing the product from the cart");
+				let element = e.target.closest(".cart-item");
+				let elementIndexInArray = element.getAttribute("data-indexInArray");
+				let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
+				let cartSubTotalWrapper = document.getElementById("cartSubTotal");
+
+				removeProductFromCart(userCart[elementIndexInArray].product._id);
+
+
+				loadCartItem().then(function(){ //When we loaded the cart items again
+				 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
+				 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
+				});
+			});	
+
+			indexInArray++;
+		})	
+	}
+	else{
+		$("#cartContentWrapper").html("Votre panier est vide.");
+	}	
+
+	displaySubTotal(cartSubTotalWrapper,calculateSubTotal());
 }
 
 
 
-//When the cart items have been loaded for the first time
-loadCartItem().then(function(){ 
 
-	let cartItemQty = document.getElementsByClassName("cartItemQty");
-	let cartItemPrice = document.getElementsByClassName("cartItemPrice");
-	let cartSubTotalWrapper = document.getElementById("cartSubTotal");
-
-	for(let i = 0;i < userCart.length;i++) //For each items in the cart
-	{
-		validateItemQty(cartItemQty[i]); //Validate its quantity
-		displayItemPrice(cartItemPrice[i],calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._retailPrice));
-		displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
-	}
-	
-});
+loadCartItem().then(() => displayCartItems());	//on items load, display them
 
 //Displays the price of an item
 //@priceElement is the element that shall
@@ -192,7 +195,7 @@ function calculateItemPrice(itemQty,individualItemPrice)
 
 //Checks if the given element can
 //have that required qty (found in the input)
-function validateItemQty(target)
+function checkItemQty(target)
 {
 	let element = target.closest(".cart-item");
 	let elementIndexInArray = element.getAttribute("data-indexInArray");
@@ -202,21 +205,45 @@ function validateItemQty(target)
 	let elementQtyInCart = qtyInput.value;
 	let maxElementQty = userCart[elementIndexInArray].product._qty;
 
-	if(elementQtyInCart <= 0){ //If the user qty is 0 or less
-		qtyInput.value = 1;
-		displayErrorItem(errorP,"La quantité ne peut pas être plus petite que 1.")
-	}
-	else if(elementQtyInCart > maxElementQty) //If the user qty is bigger than the max qty
+	let validatedItemQty = validateItemQty(elementQtyInCart,maxElementQty);
+	
+	if(validatedItemQty == 1 && elementQtyInCart != 1) //If the quantity has been fixed
 	{
-		qtyInput.value = maxElementQty;
-		displayErrorItem(errorP,"La quantité dépasse la quantité en stock.")
+		displayErrorItem(errorP,"La quantité ne peut pas être plus petite que 1.");
+		qtyInput.value = validatedItemQty;
+		return false;
+	}
+	else if(validatedItemQty == maxElementQty && validatedItemQty != elementQtyInCart) //if the quantity has been fixed
+	{
+		displayErrorItem(errorP,"La quantité dépasse la quantité en stock.");
+		qtyInput.value = validatedItemQty;
+		return false;
+	}
+	else{	//The quantity has not been fixed (already valid)
+		clearErrorItem(errorP)
+		return true;
+	}
+}
+
+//Checks if the given quantity vs the given maxElement
+//match or not
+//@qtyInCart is the quantity of this element the user
+//has in his cart
+//@maxElementQty is the maximum quantity of this element
+//the user can have in his cart
+//@Returns the fixed quantity
+function validateItemQty(qtyInCart,maxElementQty)
+{
+	if(qtyInCart <= 0){ //If the user qty is 0 or less
+		return 1;
+	}
+	else if(qtyInCart > maxElementQty) //If the user qty is bigger than the max qty
+	{
+		return maxElementQty;
 	}
 	else{
-		clearErrorItem(errorP)
-		return true; //The quantity was valid
+		return qtyInCart; //The quantity was valid
 	}
-
-	return false; //The quantity was invalid
 }
 
 //Displays the given error message in the given
@@ -258,20 +285,13 @@ function clearErrorItem(errorWrapper)
 //displayItems is a bool that either displays
 //the items or not after the cart items have been 
 //loaded from the server
-function loadCartItem(displayItems=true)
+function loadCartItem()
 {
 	return $.ajax({
 		url: "/ajaxRequest/loadCartItem",
 		type: "POST",
 		success: function(res){
 			userCart = res;
-
-			if(displayItems && userCart.length > 0){
-				displayCartItems();
-			}
-			else if(displayItems){
-				$("#cartContentWrapper").html("Le panier est vide.");
-			}
 
 			return;
 		}
