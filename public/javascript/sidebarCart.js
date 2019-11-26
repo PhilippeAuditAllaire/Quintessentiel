@@ -12,7 +12,7 @@ let closeCartLink = document.getElementById("closeCartIcon"); //Close cart icon
 
 let fullPageOverlay = document.getElementById("fullPageOverlay"); //page overlay
 let cartWrapper = document.getElementById("cartWrapper"); //Cart wrapper
-	let cartSubTotalWrapper = document.getElementById("cartSubTotal"); //The sub total wrapper
+let cartSubTotalWrapper = document.getElementById("cartSubTotal"); //The sub total wrapper
 
 
 //Opens the sidebar menu
@@ -71,7 +71,7 @@ function displayCartItems(){
 			let itemQty = validateItemQty(item.qtyInCart,item.product._qty); //Validate its quantity
 
 			$("#cartContentWrapper").html($("#cartContentWrapper").html() + `<div class="cartContentWrapper">
-	                <div class="cart-item" data-cartItemId="`+item.product._id+`" data-indexInArray="`+indexInArray+`">
+	                <div class="cart-item" data-cartItemId="`+item.product._id+`">
 	                    <div class="cart-item-inside">
 	                        <div class="itemUpperInfos">
 	                            <div class="wrapperItemImage">
@@ -107,10 +107,10 @@ function displayCartItems(){
 			$(".cartItemQty").on("change",function(e){
 				let element = e.target.closest(".cart-item");
 
-				let elementIndexInArray = element.getAttribute("data-indexInArray");
+				let elementIndexInArray = getCartElementIndexInArray(element);
 				let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0]; //Price wrapper for this item
 				let cartSubTotalWrapper = document.getElementById("cartSubTotal");
-				console.log(element)
+
 				checkItemQty(e.target);
 				addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
 				loadCartItem().then(function(){ //When we loaded the cart items again
@@ -122,15 +122,18 @@ function displayCartItems(){
 			//On the remove element click
 			//Remove it from the cart and from the GUI
 			$(".removeElement").on("click",function(e){
-				console.log("removing the product from the cart");
+
 				let element = e.target.closest(".cart-item");
-				let elementIndexInArray = element.getAttribute("data-indexInArray");
+				let elementIndexInArray = getCartElementIndexInArray(element);
 				let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
 				let cartSubTotalWrapper = document.getElementById("cartSubTotal");
 
 				//Remove the product from the cart, loads the item list back and then display everything
 				removeProductFromCart(userCart[elementIndexInArray].product._id).then(function(){
-					loadCartItem().then(() => displayCartItems());
+					loadCartItem().then(function(){
+						element.remove();
+						displaySubTotal(cartSubTotalWrapper,calculateSubTotal());
+					});
 				});
 			});	
 
@@ -195,7 +198,7 @@ function calculateItemPrice(itemQty,individualItemPrice)
 function checkItemQty(target)
 {
 	let element = target.closest(".cart-item");
-	let elementIndexInArray = element.getAttribute("data-indexInArray");
+	let elementIndexInArray = getCartElementIndexInArray(element);
 	let errorP = element.getElementsByClassName("wrapper-cart-error")[0].getElementsByTagName("p")[0];
 
 	let qtyInput = element.getElementsByClassName("cartItemQty")[0]
@@ -220,6 +223,14 @@ function checkItemQty(target)
 		clearErrorItem(errorP)
 		return true;
 	}
+}
+
+
+function getCartElementIndexInArray(element)
+{
+	let cartItems = $(".cart-item");
+
+	return cartItems.index(element);
 }
 
 //Checks if the given quantity vs the given maxElement
