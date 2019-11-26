@@ -134,7 +134,11 @@ function displayCartItems(){
 
 						//Once the dissapear animation has been executed
 						element.addEventListener("animationend",function(){
-							element.remove();							
+							element.remove();	
+
+							if(userCart.length <= 0){
+								$("#cartContentWrapper").html("Votre panier est vide.");
+							}						
 						});
 
 						displaySubTotal(cartSubTotalWrapper,calculateSubTotal());
