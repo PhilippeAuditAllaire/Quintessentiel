@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Quintessentiel | Accueil</title>
+    <title>Quintessentiel | <%=titleIndex%></title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/style_header.css" />
     <link rel="stylesheet" type="text/css" href="/css/style_body.css" />
@@ -21,7 +21,7 @@
                     <div class="slider-main-item-a">
                         <section class="center-aligned">
                             <img class="background-image" src="./images/slider.webp" />
-                            <div class="text" onclick="sliderMainClick(1)">Acheter maintenant</div>
+                            
                         </section>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                     <div class="slider-main-item-a">
                         <section class=" center-aligned">
                             <img class="background-image" src="./images/slider.webp" />
-                            <div class="text" onclick="sliderMainClick(2)">Acheter maintenant</div>
+                            
                         </section>
                     </div>
                 </div>
@@ -37,34 +37,31 @@
                     <div class="slider-main-item-a">
                         <section class="center-aligned">
                             <img class="background-image" src="./images/slider.webp" />
-                            <div class="text" onclick="sliderMainClick(3)">Acheter maintenant</div>
+                            
                         </section>
                     </div>
                 </div>
             </div>
             <div class="index-title">
-                Produits vedettes
+                <%=featured%>
             </div>
             <div class="slider-featured" id="slider-featured">
 
             </div>
 
             <div class="index-download">
-                <a href="#" download>Téléchargez notre ebook</a>
+                <a href="#" download><%=ebook%></a>
             </div>
 
             <div class="index-title">
-                Présentation
+                <%=presentationTitle%>
             </div>
             <div class="index-presentation">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit repellat voluptatem architecto sint animi consequatur ullam, vitae omnis placeat nam quibusdam error quisquam quaerat! Officia molestias quaerat explicabo possimus vero? Lorem ipsum dolor
-                sit amet consectetur adipisicing elit. Soluta, reiciendis. Odio ut minus sint aperiam, impedit, eos similique esse harum velit voluptatem, magnam animi deleniti architecto quo ipsa corporis itaque. Lorem, ipsum dolor sit amet consectetur
-                adipisicing elit. Cum quam rem sunt, aspernatur reiciendis laboriosam reprehenderit debitis. Magni voluptas error tempora accusamus temporibus optio! Non officiis illum dolore ipsam quasi. Lorem ipsum dolor, sit amet consectetur adipisicing
-                elit. Blanditiis quasi, animi fuga excepturi ab sunt esse repudiandae corrupti eaque suscipit laborum cupiditate ducimus aperiam maxime repellendus unde adipisci eos molestiae.
+                <%=presentation%>
             </div>
 
             <div class="index-title">
-                Témoignages
+                <%=temoignage%>
             </div>
             <div class="slider-temoignages" id="slider-temoignages">
 

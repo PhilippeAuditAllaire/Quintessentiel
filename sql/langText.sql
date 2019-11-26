@@ -1,3 +1,4 @@
+/* NAVBAR */
 INSERT INTO landingtext_attribute (id, type, page) 
 VALUES 
     (1, 'home', 'navbar'),
@@ -211,3 +212,36 @@ VALUES
     
     ('54', '1', 'Contactez-nous'), 
     ('54', '2', 'Contactez-nous ANGLAIS');
+
+    /* FIN NAVBAR */
+
+    /* INDEX */
+    INSERT INTO landingtext_attribute (id, type, page) 
+    VALUES 
+    (55, 'titleIndex', 'index'),
+    (56, 'featured', 'index'),
+    (57, 'ebook', 'index'),
+    (58, 'presentationTitle', 'index'),
+    (59, 'presentation', 'index'),
+    (60, 'temoignage', 'index');
+
+    INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
+    VALUES 
+    ('55', '1', 'Accueil'), 
+    ('55', '2', 'Home'),
+
+    ('56', '1', 'Produits vedettes'), 
+    ('56', '2', 'Featured Products'),
+
+    ('57', '1', 'Téléchargez notre ebook !'), 
+    ('57', '2', 'Download our ebook !'),
+
+    ('58', '1', 'Présentation !'), 
+    ('58', '2', 'Presentation !'),
+
+    ('59', '1', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit repellat voluptatem architecto sint animi consequatur ullam, vitae omnis placeat nam quibusdam error quisquam quaerat! Officia molestias quaerat explicabo possimus vero? Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, reiciendis. Odio ut minus sint aperiam, impedit, eos similique esse harum velit voluptatem, magnam animi deleniti architecto quo ipsa corporis itaque. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum quam rem sunt, aspernatur reiciendis laboriosam reprehenderit debitis. Magni voluptas error tempora accusamus temporibus optio! Non officiis illum dolore ipsam quasi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis quasi, animi fuga excepturi ab sunt esse repudiandae corrupti eaque suscipit laborum cupiditate ducimus aperiam maxime repellendus unde adipisci eos molestiae.'), 
+    ('59', '2', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit repellat voluptatem architecto sint animi consequatur ullam, vitae omnis placeat nam quibusdam error quisquam quaerat! Officia molestias quaerat explicabo possimus vero? Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, reiciendis. Odio ut minus sint aperiam, impedit, eos similique esse harum velit voluptatem, magnam animi deleniti architecto quo ipsa corporis itaque. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum quam rem sunt, aspernatur reiciendis laboriosam reprehenderit debitis. Magni voluptas error tempora accusamus temporibus optio! Non officiis illum dolore ipsam quasi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis quasi, animi fuga excepturi ab sunt esse repudiandae corrupti eaque suscipit laborum cupiditate ducimus aperiam maxime repellendus unde adipisci eos molestiae.'),
+
+    ('60', '1', 'Temoignages'), 
+    ('60', '2', 'Témoignages');
+    /*  FIN INDEX */
