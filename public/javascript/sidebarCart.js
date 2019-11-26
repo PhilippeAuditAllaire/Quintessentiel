@@ -128,12 +128,9 @@ function displayCartItems(){
 				let cartItemPrice = element.getElementsByClassName("cartItemPrice")[0];
 				let cartSubTotalWrapper = document.getElementById("cartSubTotal");
 
-				removeProductFromCart(userCart[elementIndexInArray].product._id);
-
-
-				loadCartItem().then(function(){ //When we loaded the cart items again
-				 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
-				 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
+				//Remove the product from the cart, loads the item list back and then display everything
+				removeProductFromCart(userCart[elementIndexInArray].product._id).then(function(){
+					loadCartItem().then(() => displayCartItems());
 				});
 			});	
 
@@ -325,7 +322,7 @@ function addProductToCart(productId,quantity)
 //from the cart
 function removeProductFromCart(productId)
 {
-	$.ajax({
+	return $.ajax({
 		url: "/ajaxRequest/removeProductFromCart",
 		type: "POST",
 		data: {
