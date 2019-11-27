@@ -34,7 +34,7 @@ class CtrlUser{
 		userObj.noCivic = userInfos.noCivic;
 		userObj.idCountry = userInfos.idCountry;
 		userObj.idProvince = userInfos.idProvince;
-		
+
 		let isValidated = userObj.validateFields();
 
 		let currentMgrUser = this._mgrUser;
@@ -180,6 +180,50 @@ class CtrlUser{
 
 			return htmlElements;
 		});
+	}
+
+	/*
+		Loads all the countries and provinces
+		that are available
+	*/
+	loadAllCountriesAndProvinces(idLang)
+	{
+		let countriesList = [];
+		let context = this;
+
+		return this._mgrUser.loadAllCountries(idLang).then(function(countries){
+
+			let provincesPromises = []; 
+
+			countries.forEach(function(country){
+				provincesPromises.push(context._mgrUser.loadProvincesRelatedToCountry(country.id,idLang));
+			});
+
+			//Execute all the get provinces
+			
+			return Promise.all(provincesPromises).then((allProvinces)=>{
+
+				let allCountriesAndProvinces = [];
+
+				for(let i = 0;i < countries.length;i++) //For all the countries
+				{
+					let provincesForThisCountry = allProvinces[i];
+
+					allCountriesAndProvinces.push({	//Add this object to the main array
+						countryId: countries[i].id,
+						countryName: countries[i].countryName,
+						provinces: JSON.stringify(provincesForThisCountry)
+					});
+
+				}
+
+				return allCountriesAndProvinces;
+
+			});
+			
+
+		});
+
 	}
 
 }

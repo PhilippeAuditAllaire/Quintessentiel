@@ -279,6 +279,38 @@ class MgrUser{
 		});
 
 	}
+
+
+	/*
+		Loads all the countries
+		@idLang is the lang in which to load the countries names
+	*/
+	loadAllCountries(idLang)
+	{
+		let query = "SELECT Country.id,ta_countryattribute_language.value As countryName FROM country INNER JOIN ta_countryattribute_language ON Country.id = ta_countryattribute_language.idCountry WHERE ta_countryattribute_language.idLanguage = ?";
+		let param = [idLang];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+
+	/* 
+		Loads all the provinces that are related to
+		the given countryId
+
+		@idCountry is the country from which to load
+		the provinces from
+
+		@idLang is the languageId in which to load
+		the countries infos
+	*/
+	loadProvincesRelatedToCountry(idCountry,idLang)
+	{
+		let query = "SELECT Province.id,ta_provinceattribute_language.value AS provinceName FROM Province INNER JOIN ta_provinceattribute_language ON province.id = ta_provinceattribute_language.idProvince WHERE Province.idCountry = ? AND ta_provinceattribute_language.idLanguage = ?";
+		let param = [idCountry,idLang];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
 }
 
 
