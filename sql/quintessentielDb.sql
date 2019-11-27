@@ -60,7 +60,12 @@ CREATE TABLE Users(
 	password VARCHAR(255) NOT NULL,
 	newsletter BIT NOT NULL,
 	isAdmin BIT NOT NULL DEFAULT 0,
-	address VARCHAR(80)
+	street VARCHAR(100) NOT NULL,
+	noApp VARCHAR(20) DEFAULT "N/A",
+	postalCode VARCHAR(20) NOT NULL,
+	noCivic VARCHAR(20) NOT NULL,
+	idCountry SMALLINT NOT NULL,
+	idProvince SMALLINT NOT NULL
 );
 
 CREATE TABLE Users_ResetCode(

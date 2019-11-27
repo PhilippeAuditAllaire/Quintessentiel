@@ -28,7 +28,13 @@ class CtrlUser{
 		userObj.newsletter = (userInfos.newsletter == 'true' ? 1 : 0);
 		userObj.isAdmin = 0;
 		userObj.conditions = userInfos.conditionsCheckbox;
-
+		userObj.street = userInfos.street;
+		userObj.noApp = userInfos.noApp;
+		userObj.postalCode = userInfos.postalCode;
+		userObj.noCivic = userInfos.noCivic;
+		userObj.idCountry = userInfos.idCountry;
+		userObj.idProvince = userInfos.idProvince;
+		
 		let isValidated = userObj.validateFields();
 
 		let currentMgrUser = this._mgrUser;
