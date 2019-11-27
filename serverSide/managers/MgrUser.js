@@ -22,18 +22,14 @@ class MgrUser{
 		let selectUniqueEmailQuery = "SELECT id FROM Users WHERE email = ?";
 		let paramUniqueEmail = [userObj.email];
 		let currentQueryEngine = this._queryEngine;
-		console.log("ADDDING THIS USER")
-		console.log(userObj);
+		
 		return this._queryEngine.executeQuery(selectUniqueEmailQuery,paramUniqueEmail).then(function(result){
-			console.log(result)
 			if(result.length == 0) //The given email isnt already in the DB
 			{
 				let query = "INSERT INTO Users (idCivility,firstName,lastName,email,birthDate,password,newsletter,isAdmin,street,noApp,postalCode,noCivic,idCountry,idProvince) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				let param = [userObj.idCivility,userObj.firstName,userObj.lastName,userObj.email,userObj.birthDate,hash,userObj.newsletter,userObj.isAdmin,userObj.street,userObj.noApp,userObj.postalCode,userObj.noCivic,userObj.idCountry,userObj.idProvince];
 
-				return currentQueryEngine.executeQuery(query,param).then(function(test){
-					console.log(test);
-				});
+				return currentQueryEngine.executeQuery(query,param);
 			}
 			else{ //This email is already in the DB
 				return 1;
