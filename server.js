@@ -495,6 +495,13 @@ app.post("/ajaxRequest/loadAllProducts", function(req, res) {
         res.send(result)
     })
 });
+
+app.post("/ajaxRequest/managePromo", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
+
+    res.send("hey");
+});
+
 //Application routes
 app.get("/", function(req, res) {
     res.redirect("/manageProduct"); //res.redirect("/adminConnection");
@@ -520,6 +527,14 @@ app.get("/manageProduct", function(req, res) {
 app.get("/manageRecipe", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         res.render("manageRecipe.ejs");
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
+
+app.get("/managePromotion", function(req, res) {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+        res.render("managePromotion.ejs");
     } else {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
