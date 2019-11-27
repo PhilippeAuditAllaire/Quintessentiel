@@ -22,7 +22,7 @@ class MgrUser{
 		let selectUniqueEmailQuery = "SELECT id FROM Users WHERE email = ?";
 		let paramUniqueEmail = [userObj.email];
 		let currentQueryEngine = this._queryEngine;
-		
+
 		return this._queryEngine.executeQuery(selectUniqueEmailQuery,paramUniqueEmail).then(function(result){
 			if(result.length == 0) //The given email isnt already in the DB
 			{
@@ -304,6 +304,47 @@ class MgrUser{
 	{
 		let query = "SELECT Province.id,ta_provinceattribute_language.value AS provinceName FROM Province INNER JOIN ta_provinceattribute_language ON province.id = ta_provinceattribute_language.idProvince WHERE Province.idCountry = ? AND ta_provinceattribute_language.idLanguage = ?";
 		let param = [idCountry,idLang];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+
+	/* Loads the address infos from the user 
+		@userId is the id of the user to load the infos from
+	*/
+	loadUserBasicAddress(userId)
+	{
+		let query = "SELECT street,noApp,postalCode,noCivic,idCountry,idProvince FROM Users WHERE id = ?"
+		let param = [userId];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+	/* Loads a province's infos
+	   @provinceId is the id of the province
+	   which to load the infos from
+	   @idLang is the language in which to load the infos
+	*/
+	getProvinceById(provinceId,idLang)
+	{
+		let query = "SELECT value As provinceName FROM ta_provinceattribute_language WHERE ta_provinceattribute_language.idProvince = ? AND idLanguage = ?";
+		let param = [provinceId,idLang];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+	/*
+		Loads all the countries infos
+		@countryId is the Id of the country
+		which to load the infos from
+		@idLang is the languagge in which to load the infos
+	*/
+	getCountryById(countryId,idLang)
+	{
+		console.log("chargement avec le country id: "+ countryId);
+		console.log("et la langue: "+idLang);
+		let query = "SELECT value As countryName FROM ta_countryattribute_language WHERE ta_countryattribute_language.idCountry = ? AND idLanguage = ?";
+		let param = [countryId,idLang];
 
 		return this._queryEngine.executeQuery(query,param);
 	}

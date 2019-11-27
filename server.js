@@ -118,11 +118,23 @@ website.post("/ajaxRequest/getCivilities", function(req, res) {
 });
 
 website.post("/ajaxRequest/getAllCountries", function(req, res) {
-    
+
     let ctrlUser = new CtrlUser();
 
     ctrlUser.loadAllCountriesAndProvinces(1).then(function(allCountries){ 
         res.send(allCountries);
+    });
+
+});
+
+website.post("/ajaxRequest/getUserAdress", function(req, res) {
+    
+    let ctrlUser = new CtrlUser();
+    //req.session.userId
+    ctrlUser.loadCompleteUserAddress(1,1).then(function(userAddress){ 
+        console.log("Heres what we get")
+        console.log(userAddress);
+        res.send(userAddress);
     });
 
 });

@@ -226,6 +226,28 @@ class CtrlUser{
 
 	}
 
+
+	/*
+		Loads the complete user address
+	*/
+	loadCompleteUserAddress(idUser,idLang)
+	{
+		let context = this;
+
+		return this._mgrUser.loadUserBasicAddress(idUser).then((address)=>{ //Load the basic address
+
+			let userAddress = address[0];
+
+			//Load the province and the country
+			return Promise.all([context._mgrUser.getProvinceById(userAddress.idProvince,idLang),context._mgrUser.getCountryById(userAddress.idCountry,idLang)]).then(function(infos){
+				userAddress.provinceName = infos[0][0].provinceName;
+				userAddress.countryName = infos[1][0].countryName;
+
+				return userAddress;
+			});
+		})
+	}
+
 }
 
 
