@@ -25,16 +25,25 @@
 
 .wrapperInfoLeftDiv{
 	width:100px;
+	height:75px;
 	display: flex;
 	justify-content: center;
 }
 
 .wrapperInfoLeftDiv img{
 	align-self: center;
+	width:100%;
+	padding:5px;
+	height:75px;
 }
 
 .wrapperInfoRightDiv{
 	margin-left:5px;
+	align-self: center;
+}
+
+tr p{
+	margin:0;
 }
 
 tr:nth-child(even) {background: #dddddd}
@@ -45,3 +54,14 @@ tr:nth-child(odd) {background: #F6F6F6}
 	color:white;
 }
 
+.tabBtnChangeContainer{
+	display:flex;
+	justify-content: flex-end;
+	margin-top:50px;
+}
+
+
+.btn-success{
+	border:0!important;
+	background-color:#D6DE21!important;
+}
