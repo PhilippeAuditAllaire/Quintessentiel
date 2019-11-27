@@ -67,7 +67,7 @@ function displayCartItems(){
 	if(userCart.length > 0){ //If there's nothing in the cart
 
 		userCart.forEach(function(item){
-			console.log(item)
+
 			let itemQty = validateItemQty(item.qtyInCart,item.product._qty); //Validate its quantity
 
 			$("#cartContentWrapper").html($("#cartContentWrapper").html() + `
@@ -263,11 +263,27 @@ function validateItemQty(qtyInCart,maxElementQty)
 	}
 }
 
-
+//Adding a product to the cart from the click
+//of the catalog's cart icons
 function catalogAddProductToCart(productId)
-{
-	addProductToCart(productId,1);
-	loadCartItem().then(()=>displayCartItems());
+{	
+	//Add the product to the cart and display a popup
+	//about it
+	addProductToCart(productId,1).then((isNewItem) => {
+
+		if(isNewItem){ //If its a new item
+			popup("Item ajouté à votre panier!");
+		}
+		else{
+			popup("L'item se trouve déjà dans votre panier.");
+		}	
+
+		//Load back the cart items only once the product
+		//has been added to the cart
+		loadCartItem().then(()=> displayCartItems());
+	});
+
+
 }
 
 //Displays the given error message in the given
@@ -356,7 +372,7 @@ function removeProductFromCart(productId)
 			productId: productId
 		},
 		success:function(res){
-			console.log("removed it!");
+			
 		}
 	})
 }
