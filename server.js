@@ -100,6 +100,10 @@ website.get("/productInfo", function(req, res) {
     res.render("productInfo.ejs");
 });
 
+website.get("/paymentPage", function(req, res) {
+    res.render("paymentPage.ejs");
+});
+
 
 
 //Ajax requests
@@ -234,7 +238,7 @@ website.post("/ajaxRequest/addProductToCart",function(req,res){
         isNewItem = newCart.addItemToCart(itemId,itemQty);
         req.session.userCart = JSON.stringify(newCart);
     }
-    
+
     res.send(isNewItem);
 });
 

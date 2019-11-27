@@ -1,0 +1,47 @@
+.wrapper-payment-bloc{
+	width:80%;
+	margin:auto;
+	margin-top:20px;
+}
+
+#tabPayment a{
+	color:#D6DE20!important;
+}
+
+#resumeTab h2{
+	margin-top:50px;
+	margin-bottom:20px;
+	text-align: center;
+}
+
+#tableResume{
+	width:100%;
+}
+
+.wrapperInfoTd{
+	display: flex; 
+	flex-direction: row;
+}
+
+.wrapperInfoLeftDiv{
+	width:100px;
+	display: flex;
+	justify-content: center;
+}
+
+.wrapperInfoLeftDiv img{
+	align-self: center;
+}
+
+.wrapperInfoRightDiv{
+	margin-left:5px;
+}
+
+tr:nth-child(even) {background: #dddddd}
+tr:nth-child(odd) {background: #F6F6F6}
+
+#tableResume thead tr{
+	background-color:#292323;
+	color:white;
+}
+

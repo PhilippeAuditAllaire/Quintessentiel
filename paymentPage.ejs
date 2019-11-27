@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quintessentiel | Nouveau compte</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/css/style_header.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/style_payment.css"/>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+ 	<%include ./includes/navbar.ejs%>
+
+	<div class="payment-page">
+		<div class="wrapper-payment-bloc">
+			<ul class="nav nav-tabs" id="tabPayment" role="tablist">
+			  <li class="nav-item">
+			    <a class="nav-link active" id="resumeLink" data-toggle="tab" href="#resumeTab" role="tab" aria-controls="home" aria-selected="true">Résumé de commande</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" id="informationsLink" data-toggle="tab" href="#informationsTab" role="tab" aria-controls="profile" aria-selected="false">Informations</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" id="paymentLink" data-toggle="tab" href="#paymentTab" role="tab" aria-controls="contact" aria-selected="false">Paiement</a>
+			  </li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+			  <div class="tab-pane fade show active" id="resumeTab" role="resumeLink"> <!-- Résumé de la commande -->
+			  	<h2>Résumé de la commande</h2>
+
+			  	<table id="tableResume" class="table-resume">
+			  		<thead>
+			  			<tr>
+				  			<th>Mon panier</th>
+				  			<th>Prix</th>
+				  			<th>Qté</th>
+				  			<th>Total</th>
+				  		</tr>
+				  	</thead>
+			  		<tbody id="bodyTableResume">
+			  		</tbody>
+			  	</table>
+			  </div>
+			  <div class="tab-pane fade" id="informationsTab" role="informationsLink">
+			  	<p>ici2</p>
+			  </div>
+			  <div class="tab-pane fade" id="paymentTab" role="paymentLink">
+			  	<p>ici3</p>
+			  </div>
+			</div>	
+		</div>
+	</div>
+	<script> /* Script that fills the resume grid */
+		let bodyTableResume = document.getElementById("bodyTableResume");
+
+		//Once we loaded the cart's data
+		loadCartItem().then(function(){
+
+			userCart.forEach(function(cartItem){
+				bodyTableResume.innerHTML += `
+					<tr>
+						<td class="infosTd">
+							<div class="wrapperInfoTd">
+								<div class="wrapperInfoLeftDiv">
+									<img src="./images/`+cartItem.product._image+`"/>
+								</div>
+								<div class="wrapperInfoRightDiv">
+									<div class='infoRightUpperDiv'>
+										<p>`+cartItem.product._name+`</p>
+									</div>
+									<div class='infoRightDownDiv'>
+										<p><a href="#" onclick="deleteItemFromResume(`+cartItem.product._id+`)">Supprimer</a></p>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td class="priceTd">
+							<p>`+cartItem.product._retailPrice+`$</p>
+						</td>
+						<td class="qtyTd">
+							<input type="number" value="`+cartItem.qtyInCart+`"/>
+						</td>
+						<td class="totalTd">
+							<p>`+calculateItemPrice(cartItem.qtyInCart,cartItem.product._retailPrice)+`$</p>
+						</td>
+					</tr>
+				`;
+			});
+
+		});
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
