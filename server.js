@@ -17,6 +17,20 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 
+function setLang(req)
+{
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }  
+}
 
 
 //Class imports
@@ -66,17 +80,7 @@ website.get("/", function(req, res) {
 
 website.get("/index", function(req, res) {
     /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("index", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -86,17 +90,8 @@ website.get("/index", function(req, res) {
 });
 
 website.get("/userConnection", function(req, res) {
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("userConnection", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -106,17 +101,8 @@ website.get("/userConnection", function(req, res) {
 
 
 website.get("/userRegister", function(req, res) {
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("userRegister", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -125,17 +111,8 @@ website.get("/userRegister", function(req, res) {
 });
 
 website.get("/recoverPassword", function(req, res) {
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("recoverPassword", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -145,18 +122,8 @@ website.get("/recoverPassword", function(req, res) {
 
 
 website.get("/contactus", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("contactus", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -165,18 +132,8 @@ website.get("/contactus", function(req, res) {
 });
 
 website.get("/catalogue", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("catalogue", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -186,18 +143,8 @@ website.get("/catalogue", function(req, res) {
 });
 
 website.get("/productInfo", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("productInfo", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -206,18 +153,7 @@ website.get("/productInfo", function(req, res) {
 });
 
 website.get("/faq", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("faq", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
