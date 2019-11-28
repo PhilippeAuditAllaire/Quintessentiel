@@ -1,0 +1,88 @@
+.table thead th{
+    vertical-align: middle !important;
+}
+
+.wrapper-body-manage- h2{
+	width:100%;
+}
+
+
+.wrapper-body-manage-reseller{
+	text-align: center;
+}
+
+
+.wrapper-section-reseller{
+	width:60%;
+	margin:auto;
+	margin-top:50px;
+}
+
+#resellerList{
+	max-height:75vh;
+	overflow-y: scroll;
+}
+
+.wrapper-btn-end{
+	margin:auto;
+	text-align: right;
+	margin-top:15px;
+}
+
+
+.wrapper-btn-end a:nth-child(1){
+	margin-right:20px;
+}
+
+
+th:nth-child(2){
+	width:100px;
+	text-align: center;
+}
+
+th:nth-child(2) input[type=checkbox]{
+	transform:scale(1.5);
+	position: relative;
+	background-color: white;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius:20px 20px 20px 0;
+}
+
+
+.chckboxActive:disabled{
+	opacity:1;
+	background-color: white;
+	color:white;
+}
+
+.modalResellerName{
+	font-weight: bold;
+}
+
+
+.modal .modal-single-wrapper{
+	display: flex;
+	flex-direction:column;
+	justify-content: center;
+}
+
+.modal .wrapper-modal-input,.modal .wrapper-modal-label{
+	margin:auto;
+}
+.wrapper-inputLabel-productModal{
+	width:100%;
+	text-align: center;
+	margin-top:10px;
+}
+
+.chckVisible{
+	margin-left:10px;
+}
+
+.tab-content{
+	border-bottom:0;
+}

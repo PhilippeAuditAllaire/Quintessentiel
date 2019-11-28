@@ -1,0 +1,51 @@
+.faq-page{
+    margin: 30px !important;
+    width: -webkit-fill-available;
+    display: flex;
+    padding:10px;
+    flex-wrap: wrap;
+    margin:auto 0;
+    text-align: center;
+}
+
+.faq-window{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.collapsible {
+    background-color: #453f3f;
+
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    border-radius: 15px;
+    margin: 5px;
+    font-weight: bold;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+    text-align: left;
+    border-radius: 15px;
+    margin: 2px;
+
+  }
+
+  .titre{
+      margin-bottom: 45px;
+  }

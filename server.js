@@ -25,7 +25,9 @@ const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
 const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
 const CtrlCategory = require("./serverSide/controlers/CtrlCategory.js");
+const CtrlReseller = require("./serverSide/controlers/CtrlReseller.js");
 const MgrLanguage = require("./serverSide/managers/MgrLanguage.js");
+
 
 let mgr = new MgrLanguage();
 
@@ -173,6 +175,8 @@ website.post("/ajaxRequest/catalogueSearch", function(req, res) {
 website.post("/ajaxRequest/categoryCatalogueSearch", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
+    let ctrlres = new CtrlReseller();
+    console.log(ctrlres.getReseller());
     ctrlProduct.loadProductSearchCategory(1, req.body.search).then(function(result) {
         res.send(result);
     });
@@ -361,6 +365,10 @@ app.get("/adminConnection", function(req, res) {
     res.render("adminConnection.ejs");
 });
 
+app.get("/manageReseller", function(req, res) {
+    res.render("manageReseller.ejs");
+});
+
 app.get("/manageProduct", function(req, res) {
     if (true) { //req.session.userId != undefined && req.session.isAdmin == 1
         let ctrlProduct = new CtrlProduct();
@@ -491,6 +499,43 @@ app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
     let ctrlCategory = new CtrlCategory();
 
     ctrlCategory.loadAllCategoriesAdmin().then(function(result){
+        console.log(result)
+        res.send(result);
+    })
+});
+
+app.post("/ajaxRequest/loadAllResellers", function(req, res) {
+    let ctrlReseller = new CtrlReseller();
+
+    ctrlReseller.getReseller().then(function(result){
+        console.log(result)
+        res.send(result);
+    })
+});
+
+app.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
+    let ctrlReseller = new CtrlReseller();
+
+    ctrlReseller.getUsers().then(function(result){
+        console.log(result)
+        res.send(result);
+    })
+});
+
+app.post("/ajaxRequest/addReseller", function(req, res) {
+    let ctrlReseller = new CtrlReseller();
+
+    ctrlReseller.addReseller(req.body).then(function(result){
+        console.log(result)
+        res.send(result);
+    })
+});
+
+app.post("/ajaxRequest/getRebate", function(req, res) {
+    let ctrlReseller = new CtrlReseller();
+    console.log(req.body);
+
+    ctrlReseller.getRebateList(req.body).then(function(result){
         console.log(result)
         res.send(result);
     })

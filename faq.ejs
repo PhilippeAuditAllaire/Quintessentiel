@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-    <title>Quintessentiel | Catalogue</title>
+    <title>Quintessentiel | Faq</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/style_header.css" />
     <link rel="stylesheet" type="text/css" href="/css/style_body.css" />
@@ -14,5 +14,67 @@
 </head>
 <body>
     <%include ./includes/navbar.ejs%>
+    <div class="connection-page">
+        <div class="left-menu-bar">
+        </div>
+        <div class="faq-page" >
+            <div class="faq-window">
+                <h3 class="titre">Foire au questions</h3>
+                <button class="collapsible">Quelle est la différence Quintessentiel?</button>
+                <div class="content">
+                <p>Nos soins botaniques sont conçus selon une approche holistique, pour agir à la fois sur le corps et l'ame. Le mariage entre la science, l'intuition et la magie des essences.  Les textures, la qualité vibratoire des huiles essentielles sélectionnées dans vos soins, l'intention bienveillante lors de la création en font des soins d'exception. Que ce soit votre produit personnalisé ou votre soin habituel, la magie opère.
+                        Les huiles essentielles, cette quintessence des plantes, sont un cadeau puissant de la nature pour aider à équilibrer le corps et l'esprit pour qui sait les utiliser. Elles agissent sur votre peau mais ont aussi une action puissante sur le psychisme par le biais des odeurs, contribuant à votre bien-être.
+                        Les soins Quintessentiel sont donc une invitation à prendre soin de soi consciemment, en se reconnectant à l'essentiel, en réapprenant à s'écouter. Les soins que vous vous procurez sur ce site sont créés par mes soins à la main, en petite quantité, pour apporter le meilleur à votre peau et à votre etre profond.</p>
+                </div>
+                <button class="collapsible">Quels sont les ingrédients principaux des soins Quintessentiel?</button>
+                <div class="content">
+                <p>Le produit phare des produits Quintessentiel est l'huile de Moringa, pour sa richesse exceptionnelle en acides gras, vitamine E et A. Elle contient plus de  46 antioxydants et est exceptionnelle pour les peaux sensibles, matures et sèches.  Tous les produits Quintessentiel sont composés à base d'ingrédients 100% végétals sélectionnés avec soin pour leur propriétés. Les huiles végétales, les hydrolats et les huiles essentielles sélectionnés pour leurs propriétés respectives composent la base de tous nos produits. 
+                        Vous retrouverez la liste de tous les ingrédients sous chaque produit. </p>
+                </div>
+                <button class="collapsible">Combien de temps mes produits se conserveront-ils?</button>
+                <div class="content">
+                <p>Les produits Quintessentiel sont fabriqués en petits lots pour une fraicheur optimale. Les produits non ouverts peuvent se conserver jusqu'à  2 ans. Une fois ouverts, nous vous conseillons de les utiliser dans les 6 mois après ouverture.</p>
+                </div>
+                <button class="collapsible">Vos produits sont-ils bio?</button>
+                <div class="content">
+                <p>La majorité des ingrédients qui composent nos produits le sont et sont sélectionnés avec soin pour une qualité optimale. Les ingrédients bio sont mentionnés dans la liste d'ingrédients qui figurent au dos de la bouteille. Nous avons fait le choix de ne pas demander la certification bio pour le moment mais privilégions les ingrédients certifiés.</p>
+                </div>
+                <button class="collapsible">Dois- je conserver mes produits au réfrigérateur?</button>
+                <div class="content">
+                <p>Nos produits peuvent se conserver sans problème à température pièce mais une conservation au frigo peut prolonger la durée de vie de vos produits.</p>
+                </div>
+                <button class="collapsible">J'ai la peau sensible et réactive, puis-je utiliser tous vos produits?</button>
+                <div class="content">
+                <p>Nos produits ne contiennent pas de produits toxiques. Ils sont non irritants et biologiques. Il faut toutefois vous assurer de bien consulter les ingrédients, car vous pourriez être allergique ou sensible à l’un de nos ingrédients.
+                    <br><br>Certains produits Quintessentiel contiennent des huiles essentielles. Si vous avez la peau très sensible ou intolérante, nous vous conseillons d'utiliser nos produits sans huiles essentielles et de consulter la liste des ingrédients.  Dans tous les cas, il est de votre responsabilité de faire un test de sensibilité cutanée sur une petite surface de la peau avant d'appliquer le produit concerné. En cas de rougeur ou de réaction indésirable, rincez le visage à l'eau et cesser l'utilisation du produit.</p>
+                </div>
+                <button class="collapsible">Est-ce que les produits Quintessentiel peuvent etre utilisés durant la grossesse?</button>
+                <div class="content">
+                <p>La majorité des sérums Quintessentiel contiennent des huiles essentielles en quantité sécuritaire et peuvent etre utilisés sans problème. Vous pouvez egalement utiliser nos crèmes neutres sans parfum ou demander votre sérum sans huile essentielle. </p>
+                </div>
+                <button class="collapsible">Est-ce possible d'avoir une consultation en aromathérapie ou dermocosmétique à distance?</button>
+                <div class="content">
+                <p>Oui, vous pouvez réserver votre consultation sur notre site internet et nous convenons ensemble d'un horaire de rendez-vous. Lors de la rencontre en personne ou a distance, nous évaluons ensemble vos besoins, vous repartez avec vos soins peronnalisés.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+            
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                } 
+              });
+            }
+            </script>
+            
 </body>
 </html>

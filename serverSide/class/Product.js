@@ -15,8 +15,9 @@ class Product {
      * @param {double} retailPrice 
      * @param {double} costPrice 
      * @param {string} amazonAfiliate link amazonAfiliate for the product
+     * @param {double} rebate percentage amount of rebate for a product
      */
-    constructor(id, name, image, description, advice, ingredients, qty, featured, isVisible, dropWeightGram, retailPrice, costPrice, amazonAfiliate = "") {
+    constructor(id, name, image, description, advice, ingredients, qty, featured, isVisible, dropWeightGram, retailPrice, costPrice, amazonAfiliate = "", rebate) {
         this._id = id;
         this._name = name;
         this._image = image;
@@ -32,6 +33,7 @@ class Product {
         this._amazonAfiliate = amazonAfiliate;
         this._traductions = [];
         this._category = [];
+        this._rebate= rebate;
     }
 
 
@@ -85,6 +87,9 @@ class Product {
 
     get format() { return this._format; }
     set format(paramFormat) { this._format = paramFormat; }
+
+    get rebate() { return this._rebate; }
+    set rebate(paramRebate) { this._rebate = paramRebate; }
 }
 
 module.exports = Product;
