@@ -168,3 +168,30 @@ tr:nth-child(odd) {background: #F6F6F6}
 #btnToPayment{
 	margin-bottom: 20px;
 }
+
+#paymentTab{
+	width:50%;
+	margin:auto;
+	border:1px solid gray;
+	margin-top:50px;
+}
+
+#card-element-label{
+	margin-bottom: 50px;
+}
+
+
+#card-element{
+	margin-bottom: 50px;
+}
+
+#payment-form{
+	font-size:20px;
+	text-align: center;
+	background-color:#F6F6F6;
+	padding: 20px;
+}
+
+.CardField{
+	background-color: white!important;
+}

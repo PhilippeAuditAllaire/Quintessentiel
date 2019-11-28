@@ -178,6 +178,8 @@ website.get("/paymentPage", function(req, res) {
 
 website.post("/ajaxRequest/stripePayment",function(req,res){
     const token = req.body.stripeToken; // Using Express
+    let ctrlCart = new CtrlCart();
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart));
 
     (async () => {
       const charge = await stripe.charges.create({

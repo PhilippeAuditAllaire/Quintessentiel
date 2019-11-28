@@ -3,12 +3,12 @@ var elements = stripe.elements();
 
 var style = {
   base: {
-    fontSize: '16px',
+    fontSize: '20px',
     color: "#32325d",
   }
 };
 
-var card = elements.create('card', {style: style});
+var card = elements.create('card', {hidePostalCode: true,style: style});
 card.mount('#card-element');
 
 
