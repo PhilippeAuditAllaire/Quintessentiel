@@ -47,6 +47,31 @@ class User {
 			if(args["conditions"]){
 				this._conditions = args["conditions"];
 			}
+
+			if(args["street"]){
+				this._street = args["street"];
+			}
+
+			if(args["noApp"]){
+				this._noApp = args["noApp"];
+			}
+
+			if(args["postalCode"]){
+				this._postalCode = args["postalCode"];
+			}
+
+			if(args["noCivic"]){
+				this._noCivic = args["noCivic"];
+			}
+
+			if(args["idCountry"]){
+				this._idCountry = args["idCountry"];
+			}
+
+			if(args["idProvince"]){
+				this._idProvince = args["idProvince"];
+			}
+
 		}
 	}
 
@@ -93,6 +118,30 @@ class User {
 
 	get conditions(){
 		return this._conditions;
+	}
+
+	get street(){
+		return this._street;
+	}
+
+	get noApp(){
+		return this._noApp;
+	}
+
+	get postalCode(){
+		return this._postalCode;
+	}
+
+	get noCivic(){
+		return this._noCivic;
+	}
+
+	get idCountry(){
+		return this._idCountry;
+	}
+
+	get idProvince(){
+		return this._idProvince;
 	}
 
 
@@ -142,6 +191,29 @@ class User {
 		this._conditions = $conditions;
 	}
 
+	set street($street){
+		this._street = $street;
+	}
+
+	set noApp($noApp){
+		this._noApp = $noApp;
+	}
+
+	set postalCode($postalCode){
+		this._postalCode = $postalCode;
+	}
+
+	set noCivic($noCivic){
+		this._noCivic = $noCivic;
+	}
+
+	set idCountry($idCountry){
+		this._idCountry = $idCountry;
+	}
+
+	set idProvince($idProvince){
+		this._idProvince = $idProvince;
+	}
 
 	validateFields()
 	{

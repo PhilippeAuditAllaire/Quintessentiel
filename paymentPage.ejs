@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quintessentiel | Nouveau compte</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/css/style_header.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/style_payment.css"/>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+ 	<%include ./includes/navbar.ejs%>
+
+	<div class="payment-page">
+		<div class="wrapper-payment-bloc">
+			<ul class="nav nav-tabs" id="tabPayment" role="tablist">
+			  <li class="nav-item">
+			    <a class="nav-link active" id="resumeLink" data-toggle="tab" href="#resumeTab" role="tab">Résumé de commande</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" id="informationsLink" data-toggle="tab" href="#informationsTab" role="tab">Informations</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" id="paymentLink" data-toggle="tab" href="#paymentTab" role="tab">Paiement</a>
+			  </li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+			  <div class="tab-pane fade show active" id="resumeTab" role="resumeLink"> <!-- Résumé de la commande -->
+			  	<h2>Résumé de la commande</h2>
+
+			  	<table id="tableResume" class="table-resume">
+			  		<thead>
+			  			<tr>
+				  			<th>Mon panier</th>
+				  			<th>Prix</th>
+				  			<th>Qté</th>
+				  			<th>Total</th>
+				  			<th></th>
+				  		</tr>
+				  	</thead>
+			  		<tbody id="bodyTableResume">
+			  		</tbody>
+			  		<tfoot>
+			  			<tr>
+				  			<th></th>
+					  		<th></th>
+					  		<th></th>
+					  		<th>Sous-total</th>
+					  		<th id="completeSubTotal">100,00$</th>
+			  			</tr>
+			  		</tfoot>
+			  	</table>
+
+			  	<div class="tabBtnChangeContainer">
+			  		<a href="#" id="btnToInfo" data-toggle="tab" class="btn btn-success">Entrer mes informations</a>
+			  	</div>
+			  </div>
+			  <div class="tab-pane fade" id="informationsTab" role="informationsLink">
+			  	<div class="wrapperInfoTab">
+			  		<div class="topWrapperInfoTab infoBloc toggledBloc">
+				  		<div class="infoTabTopWrapper">
+				  			<h3>Utiliser les informations suivantes</h3>
+				  			<div class="infosBloc">
+				  				<p><span class="labelSpan">Pays: </span><span id="infoCountry" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">Province: </span><span id="infoProvince" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">Rue: </span><span id="infoStreet" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">No civic: </span><span id="infoCivic" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">Code postal: </span><span id="infoPostalCode" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">No app: </span><span id="infoNoApp" class="infoSpan"></span></p>
+				  			</div>
+				  		</div>
+			  		</div>
+			  		<div class="infoTabBottomWrapper infoBloc">
+			  			<h3>utiliser une nouvelle adresse: </h3>
+			  			<div id="formInfoUser" class="formInfoUser">
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Pays</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formCountry" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Province</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formProvince" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Rue</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formStreet" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>No Civic</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formNoCivic" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Code postal</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formPostalCode" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>No appartement</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formNoApp" class="form-control"/>
+			  					</div>
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+				  <div class="tabBtnChangeContainer">
+				  		<a href="#" id="btnToPayment" data-toggle="tab" class="btn btn-success">Passer au paiement</a>
+				  </div>
+			  </div>
+			  <div class="tab-pane fade" id="paymentTab" role="paymentLink"> <!-- Payment form -->
+			  	<form action="/charge" method="post" id="payment-form">
+				  <div class="form-row">
+				    <label for="card-element">
+				      Crédit ou débit
+				    </label>
+				    <div id="card-element">
+				      <!-- A Stripe Element will be inserted here. -->
+				    </div>
+
+				    <!-- Used to display Element errors. -->
+				    <div id="card-errors" role="alert"></div>
+				  </div>
+
+				  <button>Soumettre le paiement</button>
+				</form>
+			  </div>
+			</div>	
+		</div>
+	</div>
+	<script src="./javascript/stripePayment.js"></script>
+	<script> /* Script that fills the resume grid */
+		let bodyTableResume = document.getElementById("bodyTableResume");
+
+		//Once we loaded the cart's data
+		loadCartItem().then(function(){
+
+			userCart.forEach(function(cartItem){
+				bodyTableResume.innerHTML += `
+					<tr class="itemTR">
+						<td class="infosTd">
+							<div class="wrapperInfoTd">
+								<div class="wrapperInfoLeftDiv">
+									<img src="./images/`+cartItem.product._image+`"/>
+								</div>
+								<div class="wrapperInfoRightDiv">
+									<p>`+cartItem.product._name+`</p>
+								</div>
+							</div>
+						</td>
+						<td class="priceTd">
+							<p>`+calculateItemPrice(1,cartItem.product._retailPrice)+`$</p>
+						</td>
+						<td class="qtyTd">
+							<input type="number" class="qtyInput" value="`+cartItem.qtyInCart+`"/>
+						</td>
+						<td class="totalTd">
+							<p>`+calculateItemPrice(cartItem.qtyInCart,cartItem.product._retailPrice)+`$</p>
+						</td>
+						<td class="deleteTd">
+							<p><a href="#" title="supprimer l'item" class="deleteItemLink">Supprimer</a></p>
+						</td>
+					</tr>
+				`;
+			});
+
+
+			//On the change of an element's quantity
+			$(".qtyInput").on("change",function(e){
+				let element = e.target;
+				let elementIndex = getResumeElementIndexInArray(element)
+
+				let maxQty = userCart[elementIndex].product._qty;
+				element.value = validateItemQty(element.value,maxQty);
+
+				let newElementPrice = calculateItemPrice(element.value,userCart[elementIndex].product._retailPrice);
+
+				//Add the new quantity to the cart
+				addProductToCart(userCart[elementIndex].product._id,element.value);
+
+				loadCartItem().then(function(){ //When we loaded the cart items again
+
+					changeResumeElementPrice(newElementPrice,element); //Change the element's total price
+					changeCompleteSubTotal(calculateSubTotal());       //Change the sub total
+
+				});
+			});
+
+			//On the delete click of an element
+			$(".deleteItemLink").on("click",function(e){
+				e.preventDefault();
+				let element = e.target;
+				let itemTR = element.closest(".itemTR");
+
+				let elementIndex = getResumeElementIndexInArray(element)
+				let itemId = userCart[elementIndex].product._id;
+
+				//Remove the element from the cart
+				removeProductFromCart(itemId).then(function(){
+
+					//Reload the cart items
+					loadCartItem().then(function(){
+						itemTR.classList.add("disappear");
+
+						//Once the dissapear animation has been executed
+						itemTR.addEventListener("animationend",function(){
+							itemTR.remove();	
+							if(userCart.length <= 0){
+								$("#bodyTableResume").html("Votre panier est vide.");
+							}		
+						});
+
+						changeCompleteSubTotal(calculateSubTotal());	
+					});
+				});
+			});
+
+			if(userCart.length <= 0){
+				$("#bodyTableResume").html("Votre panier est vide.");
+			}
+
+			changeCompleteSubTotal(calculateSubTotal());       //Change the sub total
+
+		});
+
+
+		//Displays the complete sub total
+		//@price is the price to display
+		function changeCompleteSubTotal(price)
+		{
+			document.getElementById("completeSubTotal").innerHTML = price + "$"
+		}
+
+		//Changes the price that is displayed for a given
+		//product
+		//@price is the price to display
+		//@element is the element from which we find the .itemTR
+		function changeResumeElementPrice(price,element)
+		{
+			let itemTR = element.closest(".itemTR");
+			let priceTd = itemTR.getElementsByClassName("totalTd")[0];
+
+			priceTd.innerHTML = "<p>"+ price + "$</p>";
+		}
+
+
+		//Finds the element index in the array (based on its position
+		//in the resume)
+		//@element is the element to find its product index from
+		function getResumeElementIndexInArray(element)
+		{
+			let elementTR = element.closest(".itemTR");
+			let index = $("#tableResume .itemTR").index(elementTR);
+
+			return index;
+		}
+
+
+
+		//Managing the next/previous buttons
+		$("#btnToInfo").on("click",()=>$("#informationsLink").click())
+		$("#btnToPayment").on("click",()=>$("#paymentLink").click())
+	</script>
+	<script> /* Script that loads the user's address or adds a new address for this payment */
+
+		loadUserAddress().then(function(addressObj){
+			displayUserAddress(addressObj);
+		});
+
+		//Loads the user's address
+		function loadUserAddress()
+		{
+			return $.ajax({
+				url: "http://localhost:8000/ajaxRequest/getUserAdress",
+				method: "POST",
+				success: function(userAddress){
+
+				}
+			});	
+		}
+		
+		//Displays the user's address
+		//@addressObj is the object containing all 
+		//the user's address infos
+		function displayUserAddress(addressObj)
+		{
+			$("#infoCountry").html(addressObj.countryName);
+			$("#infoProvince").html(addressObj.provinceName);
+			$("#infoStreet").html(addressObj.street);
+			$("#infoCivic").html(addressObj.noCivic);
+			$("#infoPostalCode").html(addressObj.postalCode);
+			$("#infoNoApp").html(addressObj.noApp);
+		}
+
+		let currentlyToggledBlocIndex = 0;
+		let currentlyToggledBloc = $(".infoBloc")[0];
+		//On the click on one of the two
+		//blocs (infos or form)
+		$(".infoBloc").on("click",(e) => {
+			let toToggleBloc = e.target.closest(".infoBloc");
+			let toToggleBlocIndex = $(".infoBloc").index(toToggleBloc);
+
+			if(currentlyToggledBlocIndex != toToggleBlocIndex) //If this is not the toggled bloc
+			{	
+				currentlyToggledBloc.classList.remove("toggledBloc");
+				currentlyToggledBloc = toToggleBloc;
+				currentlyToggledBlocIndex = toToggleBlocIndex;
+				currentlyToggledBloc.classList.add("toggledBloc");
+			}
+		})
+
+
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!-- Bootstrap -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

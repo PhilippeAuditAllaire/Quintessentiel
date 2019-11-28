@@ -60,7 +60,12 @@ CREATE TABLE Users(
 	password VARCHAR(255) NOT NULL,
 	newsletter BIT NOT NULL,
 	isAdmin BIT NOT NULL DEFAULT 0,
-	address VARCHAR(80)
+	street VARCHAR(100) NOT NULL,
+	noApp VARCHAR(20) DEFAULT "N/A",
+	postalCode VARCHAR(20) NOT NULL,
+	noCivic VARCHAR(20) NOT NULL,
+	idCountry SMALLINT NOT NULL,
+	idProvince SMALLINT NOT NULL
 );
 
 CREATE TABLE Users_ResetCode(
@@ -337,25 +342,7 @@ CREATE TABLE TA_FAQQuestionAttribute_Language(
 	PRIMARY KEY(idQuestionAttribute,idLanguage)
 );
 
-CREATE TABLE Province(
-	id SMALLINT AUTO_INCREMENT PRIMARY KEY
-);
 
-CREATE TABLE ProvinceAttribute(
-	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
-	type TEXT NOT NULL
-);
-
-CREATE TABLE TA_ProvinceAttribute_Language(
-	provinceAttributeId SMALLINT NOT NULL,
-	FOREIGN KEY (provinceAttributeId) REFERENCES ProvinceAttribute(id),
-	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
-	idProvince SMALLINT NOT NULL,
-	FOREIGN KEY (idProvince) REFERENCES Province(id),
-	value TEXT,
-	PRIMARY KEY(provinceAttributeId,idLanguage,idProvince)
-);
 
 CREATE TABLE Country(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY
@@ -377,3 +364,24 @@ CREATE TABLE TA_CountryAttribute_Language(
 	PRIMARY KEY(countryAttributeId,idLanguage,idCountry)
 );
 
+CREATE TABLE Province(
+	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
+	idCountry SMALLINT NOT NULL,
+	FOREIGN KEY (idCountry) REFERENCES Country(id)
+);
+
+CREATE TABLE ProvinceAttribute(
+	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
+	type TEXT NOT NULL
+);
+
+CREATE TABLE TA_ProvinceAttribute_Language(
+	provinceAttributeId SMALLINT NOT NULL,
+	FOREIGN KEY (provinceAttributeId) REFERENCES ProvinceAttribute(id),
+	idLanguage SMALLINT NOT NULL,
+	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	idProvince SMALLINT NOT NULL,
+	FOREIGN KEY (idProvince) REFERENCES Province(id),
+	value TEXT,
+	PRIMARY KEY(provinceAttributeId,idLanguage,idProvince)
+);
