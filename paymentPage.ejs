@@ -58,8 +58,78 @@
 			  	</div>
 			  </div>
 			  <div class="tab-pane fade" id="informationsTab" role="informationsLink">
-			  	<p>ici2</p>
-			  </div>
+			  	<div class="wrapperInfoTab">
+			  		<div class="topWrapperInfoTab infoBloc toggledBloc">
+				  		<div class="infoTabTopWrapper">
+				  			<h3>Utiliser les informations suivantes</h3>
+				  			<div class="infosBloc">
+				  				<p><span class="labelSpan">Pays: </span><span id="infoCountry" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">Province: </span><span id="infoProvince" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">Rue: </span><span id="infoStreet" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">No civic: </span><span id="infoCivic" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">Code postal: </span><span id="infoPostalCode" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">No app: </span><span id="infoNoApp" class="infoSpan"></span></p>
+				  			</div>
+				  		</div>
+			  		</div>
+			  		<div class="infoTabBottomWrapper infoBloc">
+			  			<h3>utiliser une nouvelle adresse: </h3>
+			  			<div id="formInfoUser" class="formInfoUser">
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Pays</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formCountry" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Province</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formProvince" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Rue</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formStreet" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>No Civic</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formNoCivic" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>Code postal</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formPostalCode" class="form-control"/>
+			  					</div>
+			  				</div>
+			  				<div class="formRow">
+			  					<div class="wrapperLabel">
+			  						<label>No appartement</label>
+			  					</div>
+			  					<div class="wrapperInput">
+			  						<input type="text" id="formNoApp" class="form-control"/>
+			  					</div>
+			  				</div>
+			  			</div>
+			  		</div>
+			  	</div>
+				  <div class="tabBtnChangeContainer">
+				  				<a href="#" id="btnToPayment" data-toggle="tab" class="btn btn-success">Passer au paiement</a>
+				  			</div>
+				  </div>
 			  <div class="tab-pane fade" id="paymentTab" role="paymentLink">
 			  	<p>ici3</p>
 			  </div>
@@ -196,13 +266,18 @@
 
 		//Managing the next/previous buttons
 		$("#btnToInfo").on("click",()=>$("#informationsLink").click())
+		$("#btnToPayment").on("click",()=>$("#paymentLink").click())
 	</script>
 	<script> /* Script that loads the user's address or adds a new address for this payment */
 
+		loadUserAddress().then(function(addressObj){
+			displayUserAddress(addressObj);
+		});
 
+		//Loads the user's address
 		function loadUserAddress()
 		{
-			$.ajax({
+			return $.ajax({
 				url: "http://localhost:8000/ajaxRequest/getUserAdress",
 				method: "POST",
 				success: function(userAddress){
@@ -212,6 +287,37 @@
 			});	
 		}
 		
+		//Displays the user's address
+		//@addressObj is the object containing all 
+		//the user's address infos
+		function displayUserAddress(addressObj)
+		{
+			$("#infoCountry").html(addressObj.countryName);
+			$("#infoProvince").html(addressObj.provinceName);
+			$("#infoStreet").html(addressObj.street);
+			$("#infoCivic").html(addressObj.noCivic);
+			$("#infoPostalCode").html(addressObj.postalCode);
+			$("#infoNoApp").html(addressObj.noApp);
+		}
+
+		let currentlyToggledBlocIndex = 0;
+		let currentlyToggledBloc = $(".infoBloc")[0];
+		//On the click on one of the two
+		//blocs (infos or form)
+		$(".infoBloc").on("click",(e) => {
+			let toToggleBloc = e.target.closest(".infoBloc");
+			let toToggleBlocIndex = $(".infoBloc").index(toToggleBloc);
+
+			if(currentlyToggledBlocIndex != toToggleBlocIndex) //If this is not the toggled bloc
+			{	
+				currentlyToggledBloc.classList.remove("toggledBloc");
+				currentlyToggledBloc = toToggleBloc;
+				currentlyToggledBlocIndex = toToggleBlocIndex;
+				currentlyToggledBloc.classList.add("toggledBloc");
+			}
+		})
+
+
 	</script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<!-- Bootstrap -->
