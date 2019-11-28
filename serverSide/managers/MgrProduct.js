@@ -393,10 +393,12 @@ class MgrProduct {
         });
     }
 
+
     getAllProducts() {
         let query = "SELECT Product.id as product_id, ta_productattribute_language.value, Product.retailPrice, product.costPrice, product.isVisible FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id where productattribute.type='title' AND ta_productattribute_language.idLanguage = 1";
         return this._queryEngine.executeQuery(query);
     }
+
 }
 
 module.exports = MgrProduct;

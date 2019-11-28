@@ -40,6 +40,10 @@ class User {
 				this._isAdmin = args["isAdmin"];
 			}
 
+			if(args["isReseller"]){
+				this._isReseller = args["isReseller"];
+			}
+
 			if(args["address"]){
 				this._address = args["address"];
 			}
@@ -112,6 +116,10 @@ class User {
 		return this._isAdmin;
 	}
 
+	get isReseller(){
+		return this._isReseller;
+	}
+
 	get address(){
 		return this._address;
 	}
@@ -181,6 +189,10 @@ class User {
 
 	set isAdmin($isAdmin){
 		this._isAdmin= $isAdmin;
+	}
+
+	set isReseller($isReseller){
+		this._isReseller= $isReseller;
 	}
 
 	set address($address){
