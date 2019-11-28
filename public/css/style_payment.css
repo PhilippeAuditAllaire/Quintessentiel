@@ -76,9 +76,6 @@ tr:nth-child(odd) {background: #F6F6F6}
 	background-color:#F6F6F6;
 }
 
-.wrapperInfoTab div{
-	cursor:pointer;
-}
 
 .infosBloc{
 	display: flex;
@@ -160,6 +157,7 @@ tr:nth-child(odd) {background: #F6F6F6}
 .infoBloc{
 	opacity:0.5;
 	transition-duration: 1s;
+	cursor:pointer;
 }
 
 .infoBloc.toggledBloc{
