@@ -6,7 +6,7 @@ class MgrLanguage {
         this._queryEngine = new QueryEngine();
     }
     getTextByPage(page, code_lang) {
-        let query = "SELECT landingtext_attribute.type,ta_landingtextattribute_language.value FROM ta_landingtextattribute_language JOIN landingtext_attribute ON landingtext_attribute.id = ta_landingtextattribute_language.landingTextAttribute JOIN language ON ta_landingtextattribute_language.languageId = language.id WHERE language.id = ? AND landingtext_attribute.page = ?";
+        let query = "SELECT landingtext_attribute.type,ta_landingtextattribute_language.value FROM ta_landingtextattribute_language JOIN landingtext_attribute ON landingtext_attribute.id = ta_landingtextattribute_language.landingTextAttribute JOIN language ON ta_landingtextattribute_language.languageId = language.id WHERE language.id = ? AND landingtext_attribute.page IN (?,'navbar')";
         let parameters = [code_lang, page];
         let context = this;
         return this._queryEngine.executeQuery(query, parameters).then(function(res) {
@@ -25,6 +25,18 @@ class MgrLanguage {
         console.log("JSON : " + res);
         return res;
     }
+
+    getLanguagesNavBar() {
+        let query = "SELECT * FROM language";
+        let html = '';
+        return this._queryEngine.executeQuery(query).then(function(res) {
+            res.forEach(function(lang) {
+                html += '<a class="dropdown-item" href="#" id="' + lang.id + '" onclick="changeLang(' + lang.id + ')">' + lang.name + '</a>';
+            });
+            return html;
+        });
+    }
+
 }
 
 module.exports = MgrLanguage;

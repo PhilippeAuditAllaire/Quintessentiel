@@ -110,7 +110,7 @@
 }
 
 .fade:not(.show){
-    display: none;
+    visibility: hidden;
 }
 
 .form-radio{
@@ -158,10 +158,15 @@ serum-col-25 label{
     margin: 15px;
 }
 
+
 form div{
     border-radius: 15px;
     background: rgba(227, 228, 221, 1);
     box-shadow: 0 30px 30px 30px rgba(227,228,221.5);
+}
+
+.fade{
+    transition: visibility 0s, opacity 0.2s linear;
 }
 
 

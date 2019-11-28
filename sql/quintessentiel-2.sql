@@ -903,6 +903,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   KEY `idCivility` (`idCivility`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `promo` (
+  `id_product` smallint(6) NOT NULL AUTO_INCREMENT,
+  `rabais` smallint(6) NOT NULL,
+  PRIMARY KEY (`id_product`)
+) 
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
