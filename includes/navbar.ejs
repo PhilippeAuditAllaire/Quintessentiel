@@ -207,7 +207,7 @@
             </div>
             <div class="header-middle-wrapper">
                 <img src="./images/icons/account.png" />
-                <img src="./images/icons/cart.png" />
+                <a href="#" id="cartLink"><img src="./images/icons/cart.png"/></a>
             </div>
             <div class="header-top-wrapper">
                 <ul class="navbar-nav mr-auto">
@@ -228,3 +228,38 @@
 <div id="serumBanner" class="navbar-serum">
     <p>Cliquez ici pour votre <a href="serum">serum personnalisé</a></p>
 </div>
+<div id="cartWrapper" class="cartWrapper"> <!-- sidebar cart -->
+    <div class="cartInnerWrapper">
+        <div class="cartTopWrapper">
+            <div class="cartWrapperTopTitle">
+                <a href="#" id="closeCartLink"><img src="./images/icons/cartCloseIcon.svg" class="closeCartIcon" id="closeCartIcon"/></a>
+                <h2>Panier</h2>
+            </div>
+        </div>
+        <div class="cartUnderTopWrapper">
+            <div class="cartContentWrapper" id="cartContentWrapper">
+
+            </div> 
+        </div>
+        <div class="cartBottomWrapper">
+            <div class="cart-subTotal">
+                <p>Sous-total: <span id="cartSubTotal">0$</span></p>    
+            </div>
+            <div class="cart-payButton">
+                <a href="./paymentPage" title="passer au paiement" id="cartPayLink">Paiement</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fullPageOverlay" class="fullPageOverlay"></div>
+<div id="popup"> <!-- Popup -->
+    <div class="wrapperLogoPopup"><img src="./images/logoApp.png"/></div>
+    <p id="popupMessage">voici le super contenu du popup et sa continue ainsi de suite</p>
+</div>
+<script src="javascript/popup.js"></script>
+<script src="./javascript/sidebarCart.js"></script>
+<script>
+    // call ajax lang
+    // call ajax lang choisie -> var session
+    
+</script>

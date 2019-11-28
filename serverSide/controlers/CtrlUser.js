@@ -28,6 +28,12 @@ class CtrlUser{
 		userObj.newsletter = (userInfos.newsletter == 'true' ? 1 : 0);
 		userObj.isAdmin = 0;
 		userObj.conditions = userInfos.conditionsCheckbox;
+		userObj.street = userInfos.street;
+		userObj.noApp = userInfos.noApp;
+		userObj.postalCode = userInfos.postalCode;
+		userObj.noCivic = userInfos.noCivic;
+		userObj.idCountry = userInfos.idCountry;
+		userObj.idProvince = userInfos.idProvince;
 
 		let isValidated = userObj.validateFields();
 
@@ -174,6 +180,72 @@ class CtrlUser{
 
 			return htmlElements;
 		});
+	}
+
+	/*
+		Loads all the countries and provinces
+		that are available
+	*/
+	loadAllCountriesAndProvinces(idLang)
+	{
+		let countriesList = [];
+		let context = this;
+
+		return this._mgrUser.loadAllCountries(idLang).then(function(countries){
+
+			let provincesPromises = []; 
+
+			countries.forEach(function(country){
+				provincesPromises.push(context._mgrUser.loadProvincesRelatedToCountry(country.id,idLang));
+			});
+
+			//Execute all the get provinces
+			
+			return Promise.all(provincesPromises).then((allProvinces)=>{
+
+				let allCountriesAndProvinces = [];
+
+				for(let i = 0;i < countries.length;i++) //For all the countries
+				{
+					let provincesForThisCountry = allProvinces[i];
+
+					allCountriesAndProvinces.push({	//Add this object to the main array
+						countryId: countries[i].id,
+						countryName: countries[i].countryName,
+						provinces: JSON.stringify(provincesForThisCountry)
+					});
+
+				}
+
+				return allCountriesAndProvinces;
+
+			});
+			
+
+		});
+
+	}
+
+
+	/*
+		Loads the complete user address
+	*/
+	loadCompleteUserAddress(idUser,idLang)
+	{
+		let context = this;
+
+		return this._mgrUser.loadUserBasicAddress(idUser).then((address)=>{ //Load the basic address
+
+			let userAddress = address[0];
+
+			//Load the province and the country
+			return Promise.all([context._mgrUser.getProvinceById(userAddress.idProvince,idLang),context._mgrUser.getCountryById(userAddress.idCountry,idLang)]).then(function(infos){
+				userAddress.provinceName = infos[0][0].provinceName;
+				userAddress.countryName = infos[1][0].countryName;
+
+				return userAddress;
+			});
+		})
 	}
 
 }

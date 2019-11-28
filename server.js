@@ -17,6 +17,20 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 
+function setLang(req)
+{
+    if (req.session.id_lang == 1) {
+        console.log("if 1");
+    } else if (req.session.id_lang == 2) {
+        console.log("if 2");
+    } else if (req.session.id_lang != undefined) {
+        console.log("if undefined");
+        req.session.id_lang = 1;
+    } else {
+        console.log("default");
+        req.session.id_lang = 1;
+    }  
+}
 
 
 //Class imports
@@ -25,6 +39,8 @@ const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
 const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
 const CtrlCategory = require("./serverSide/controlers/CtrlCategory.js");
+const CtrlCart = require("./serverSide/controlers/CtrlCart.js"); 
+const Cart = require("./serverSide/class/Cart.js"); 
 const MgrLanguage = require("./serverSide/managers/MgrLanguage.js");
 
 let mgr = new MgrLanguage();
@@ -64,17 +80,7 @@ website.get("/", function(req, res) {
 
 website.get("/index", function(req, res) {
     /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("index", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -84,17 +90,8 @@ website.get("/index", function(req, res) {
 });
 
 website.get("/userConnection", function(req, res) {
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("userConnection", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -104,17 +101,8 @@ website.get("/userConnection", function(req, res) {
 
 
 website.get("/userRegister", function(req, res) {
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("userRegister", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -123,17 +111,8 @@ website.get("/userRegister", function(req, res) {
 });
 
 website.get("/recoverPassword", function(req, res) {
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("recoverPassword", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -143,18 +122,8 @@ website.get("/recoverPassword", function(req, res) {
 
 
 website.get("/contactus", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("contactus", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -163,18 +132,8 @@ website.get("/contactus", function(req, res) {
 });
 
 website.get("/catalogue", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("catalogue", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -184,18 +143,8 @@ website.get("/catalogue", function(req, res) {
 });
 
 website.get("/productInfo", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
+
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("productInfo", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
@@ -204,23 +153,16 @@ website.get("/productInfo", function(req, res) {
 });
 
 website.get("/faq", function(req, res) {
-    /* TODO:req.session.code_lang selon le header */
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
-        req.session.id_lang = 1;
-    } else {
-        console.log("default");
-        req.session.id_lang = 1;
-    }
+    setLang(req);
     console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("faq", req.session.id_lang).then(function(resultat) {
         console.log("pageTraduction" + resultat);
         res.render("faq.ejs", JSON.parse(resultat));
     });
+});
+
+website.get("/paymentPage", function(req, res) {
+    res.render("paymentPage.ejs");
 });
 
 
@@ -254,6 +196,28 @@ website.post("/ajaxRequest/getCivilities", function(req, res) {
 
     ctrlUserObj.loadAllCivilities().then(function(result) {
         res.send(result);
+    });
+
+});
+
+website.post("/ajaxRequest/getAllCountries", function(req, res) {
+
+    let ctrlUser = new CtrlUser();
+
+    ctrlUser.loadAllCountriesAndProvinces(1).then(function(allCountries){ 
+        res.send(allCountries);
+    });
+
+});
+
+website.post("/ajaxRequest/getUserAdress", function(req, res) {
+    
+    let ctrlUser = new CtrlUser();
+    //req.session.userId
+    ctrlUser.loadCompleteUserAddress(1,1).then(function(userAddress){ 
+        console.log("Heres what we get")
+        console.log(userAddress);
+        res.send(userAddress);
     });
 
 });
@@ -376,8 +340,61 @@ website.post("/ajaxRequest/getCategories", function(req, res) {
         .catch(function(error) {
             res.send("Impossible de charger les categories.");
         });
+});
+
+website.post("/ajaxRequest/addProductToCart",function(req,res){
+    console.log("Adding the product to the cart");
+    let itemId = req.body.productId;
+    let itemQty = req.body.qty;
+
+    let isNewItem; //It's a new item (wasnt in the cart before)
+
+    if(req.session.userCart != undefined){  //If the cart already exists
+        let userCart = JSON.parse(req.session.userCart);
+        let newCart = new Cart();
+        newCart.itemArray = userCart._itemArray;
+        isNewItem = newCart.addItemToCart(itemId,itemQty);
+        req.session.userCart = JSON.stringify(newCart);
+    }
+    else{  //The cart doesnt exist so create it and add the item to it
+        let newCart = new Cart();
+        isNewItem = newCart.addItemToCart(itemId,itemQty);
+        req.session.userCart = JSON.stringify(newCart);
+    }
+
+    res.send(isNewItem);
+});
+
+
+//removeProductFromCart
+website.post("/ajaxRequest/removeProductFromCart",function(req,res){
+    let itemId = req.body.productId;
+    let userCart = JSON.parse(req.session.userCart);
+    let newCart = new Cart();
+    newCart.itemArray = userCart._itemArray;
+    newCart.removeItemFromCart(itemId);
+    req.session.userCart = JSON.stringify(newCart);
+
+    res.end();
 
 });
+
+website.post("/ajaxRequest/loadCartItem",function(req,res){
+    console.log("Loading the products from the cart");
+    if(req.session.userCart != undefined && req.session.userCart.length > 0) //If the user has something in his cart
+    {
+      let ctrlCart = new CtrlCart();
+      ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart)).then(function(productsArray){
+        console.log("Voici le contenu du cart")
+        console.log(productsArray);
+        res.send(productsArray);
+      });  
+    }
+    else{
+        res.end();
+    }
+});
+
 
 app.post("/ajaxRequest/adminConnection", function(req, res) {
     let ctrlUserObj = new CtrlUser();
@@ -661,15 +678,6 @@ app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
     })
 });
 
-app.post("/ajaxRequest/getTags", function(req, res) {
-    let ctrlProduct = new CtrlProduct();
-
-    ctrlProduct.loadAllTags().then(function(result) {
-
-
-
-    });
-});
 
 
 website.listen(8000);
