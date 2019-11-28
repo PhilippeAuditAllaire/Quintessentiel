@@ -42,10 +42,6 @@
                         </tr>
                     </thead>
                     <tbody id="promotions">
-                        <tr ondblclick="openPromo(this)">
-                            <th class="produit" id="1">Produit A</th>
-                            <th class="rabais" id="1">100</th>
-                        </tr>
 
                     </tbody>
                 </table>
@@ -62,15 +58,15 @@
                         <h4 class="modal-title" id="title">Modifier promotions</h4>
                     </div>
                     <div class="modal-body">
-                        <select name="" id="">
-                            <option value="1">Produit A</option>
+                        <select name="" id="product">
+                            
                         </select>
                         <label for="">Rabais : </label>
-                        <input type="text" id="rabais">
+                        <input type="text" id="rabais-text">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn" onclick="">Modifier</button>
+                        <button type="button" class="btn" onclick="doIt()">Modifier</button>
                     </div>
                 </div>
 
@@ -86,26 +82,61 @@
         <script>
             let isModify = false;
 
+            $.ajax({
+                url: "http://localhost:5000/ajaxRequest/managePromo",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    $('#promotions').html(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur");
+                }
+            });
+
+            $.ajax({
+                url: "http://localhost:5000/ajaxRequest/loadSelectPromo",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    $('#product').html(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur");
+                }
+            });
+            // k
             function openPromo(line) {
                 isModify = true;
 
                 console.log(line.getElementsByClassName('rabais')[0].innerHTML);
                 $('#myModal').modal('toggle');
-                $('#rabais').val(line.getElementsByClassName('rabais')[0].innerHTML);
+                $('#rabais-text').val(line.getElementsByClassName('rabais')[0].innerHTML);
             }
 
             function add() {
+                $('#myModal').modal('toggle');
+            }
+
+            function doIt() {
                 if (isModify) {
+                    console.log($("#product").children(":selected").attr("id"));
+                    console.log("rabais " + $('#rabais-text').val());
+                    let rabaisA = $('#rabais-text').val();
                     $.ajax({
-                        url: "http://localhost:5000/ajaxRequest/addPromo",
+                        url: "http://localhost:5000/ajaxRequest/modifyPromo",
                         method: "POST",
                         data: {
-                            id: 1,
-                            rabais: .10
+                            id: $("#product").children(":selected").attr("id"),
+                            rabais: rabaisA
                         },
                         success: function(response) {
                             console.log(response);
-                            // $('#promotions').html(response);
+
                         },
                         error: function(response) {
                             console.log(response);
@@ -113,13 +144,19 @@
                         }
                     });
                 } else {
+                    console.log($("#product").children(":selected").attr("id"));
+                    console.log("rabais " + $('#rabais-text').val());
+                    let rabaisA = $('#rabais-text').val();
                     $.ajax({
-                        url: "http://localhost:5000/ajaxRequest/modifyPromo",
+                        url: "http://localhost:5000/ajaxRequest/addPromo",
                         method: "POST",
-
+                        data: {
+                            id: $("#product").children(":selected").attr("id"),
+                            rabais: rabaisA
+                        },
                         success: function(response) {
                             console.log(response);
-                            // $('#promotions').html(response);
+
                         },
                         error: function(response) {
                             console.log(response);
@@ -128,20 +165,6 @@
                     });
                 }
             }
-
-            $.ajax({
-                url: "http://localhost:5000/ajaxRequest/managePromo",
-                method: "POST",
-
-                success: function(response) {
-                    console.log(response);
-                    // $('#promotions').html(response);
-                },
-                error: function(response) {
-                    console.log(response);
-                    alert("Erreur");
-                }
-            });
         </script>
 </body>
 
