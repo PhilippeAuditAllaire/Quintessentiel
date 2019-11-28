@@ -502,6 +502,18 @@ app.post("/ajaxRequest/managePromo", function(req, res) {
     res.send("hey");
 });
 
+app.post("/ajaxRequest/addPromo", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
+
+    res.send("hey");
+});
+
+app.post("/ajaxRequest/modifyPromo", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
+
+    res.send("hey");
+});
+
 //Application routes
 app.get("/", function(req, res) {
     res.redirect("/manageProduct"); //res.redirect("/adminConnection");

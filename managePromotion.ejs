@@ -70,7 +70,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn">Modifier</button>
+                        <button type="button" class="btn" onclick="">Modifier</button>
                     </div>
                 </div>
 
@@ -95,7 +95,38 @@
             }
 
             function add() {
+                if (isModify) {
+                    $.ajax({
+                        url: "http://localhost:5000/ajaxRequest/addPromo",
+                        method: "POST",
+                        data: {
+                            id: 1,
+                            rabais: .10
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            // $('#promotions').html(response);
+                        },
+                        error: function(response) {
+                            console.log(response);
+                            alert("Erreur");
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: "http://localhost:5000/ajaxRequest/modifyPromo",
+                        method: "POST",
 
+                        success: function(response) {
+                            console.log(response);
+                            // $('#promotions').html(response);
+                        },
+                        error: function(response) {
+                            console.log(response);
+                            alert("Erreur");
+                        }
+                    });
+                }
             }
 
             $.ajax({
