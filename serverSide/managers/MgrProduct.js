@@ -8,23 +8,21 @@ class MgrProduct {
     //Loads a product name
     //based on its id and on the language id
     //@Returns a promise
-    loadProductName(productId,languageId)
-    {
+    loadProductName(productId, languageId) {
         let query = "SELECT value FROM ta_productattribute_language WHERE idProduct = ? AND idLanguage = ? AND productAttributeId = 1";
-        let param = [productId,languageId];
+        let param = [productId, languageId];
 
-        return this._queryEngine.executeQuery(query,param);
+        return this._queryEngine.executeQuery(query, param);
     }
 
     //Loads all the non translatable infos
     //of a product by its id
     //@Returns a promise
-    loadProductsTranslatableInfosById(productId)
-    {
+    loadProductsTranslatableInfosById(productId) {
         let query = "SELECT * FROM Product WHERE id = ?";
         let param = [productId];
 
-        return this._queryEngine.executeQuery(query,param);
+        return this._queryEngine.executeQuery(query, param);
     }
 
     //Loads the categories that are associated
@@ -166,12 +164,12 @@ class MgrProduct {
         let currentQueryEngine = this._queryEngine;
         let context = this;
 
-       return this._queryEngine.executeQuery(queryUpdateBasicInfos,basicParam).then(function(res){
+        return this._queryEngine.executeQuery(queryUpdateBasicInfos, basicParam).then(function(res) {
 
-            return Promise.all([context.updateProductTitle(product.name,product.id),context.updateProductDescription(product.description,product.id),context.updateAdvice(product.advice,product.id),context.removeAllRelatedTags(product.id),context.removeRelatedCategory(product.id)]).then(function(res){
-    
-                return Promise.all([context.insertCategoryAttribute(product.id,product.category),context.insertTagAttribute(product.id,product.tags)])
-            })  
+            return Promise.all([context.updateProductTitle(product.name, product.id), context.updateProductDescription(product.description, product.id), context.updateAdvice(product.advice, product.id), context.removeAllRelatedTags(product.id), context.removeRelatedCategory(product.id)]).then(function(res) {
+
+                return Promise.all([context.insertCategoryAttribute(product.id, product.category), context.insertTagAttribute(product.id, product.tags)])
+            })
 
         })
 
@@ -396,7 +394,7 @@ class MgrProduct {
     }
 
     getAllProducts() {
-        let query = "SELECT Product.id as product_id, ta_productattribute_language.value, Product.retailPrice, product.costPrice, product.isVisible FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id where productattribute.type='title'";
+        let query = "SELECT Product.id as product_id, ta_productattribute_language.value, Product.retailPrice, product.costPrice, product.isVisible FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id where productattribute.type='title' AND ta_productattribute_language.idLanguage = 1";
         return this._queryEngine.executeQuery(query);
     }
 }

@@ -17,8 +17,7 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage });
 
 
-function setLang(req)
-{
+function setLang(req) {
     if (req.session.id_lang == 1) {
         console.log("if 1");
     } else if (req.session.id_lang == 2) {
@@ -29,7 +28,7 @@ function setLang(req)
     } else {
         console.log("default");
         req.session.id_lang = 1;
-    }  
+    }
 }
 
 
@@ -39,10 +38,10 @@ const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
 const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
 const CtrlCategory = require("./serverSide/controlers/CtrlCategory.js");
-const CtrlCart = require("./serverSide/controlers/CtrlCart.js"); 
-const Cart = require("./serverSide/class/Cart.js"); 
+const CtrlCart = require("./serverSide/controlers/CtrlCart.js");
+const Cart = require("./serverSide/class/Cart.js");
 const MgrLanguage = require("./serverSide/managers/MgrLanguage.js");
-
+const CtrlPromo = require("./serverSide/controlers/CtrlPromotion.js");
 let mgr = new MgrLanguage();
 
 let website = express();
@@ -204,17 +203,17 @@ website.post("/ajaxRequest/getAllCountries", function(req, res) {
 
     let ctrlUser = new CtrlUser();
 
-    ctrlUser.loadAllCountriesAndProvinces(1).then(function(allCountries){ 
+    ctrlUser.loadAllCountriesAndProvinces(1).then(function(allCountries) {
         res.send(allCountries);
     });
 
 });
 
 website.post("/ajaxRequest/getUserAdress", function(req, res) {
-    
+
     let ctrlUser = new CtrlUser();
     //req.session.userId
-    ctrlUser.loadCompleteUserAddress(1,1).then(function(userAddress){ 
+    ctrlUser.loadCompleteUserAddress(1, 1).then(function(userAddress) {
         console.log("Heres what we get")
         console.log(userAddress);
         res.send(userAddress);
@@ -342,23 +341,22 @@ website.post("/ajaxRequest/getCategories", function(req, res) {
         });
 });
 
-website.post("/ajaxRequest/addProductToCart",function(req,res){
+website.post("/ajaxRequest/addProductToCart", function(req, res) {
     console.log("Adding the product to the cart");
     let itemId = req.body.productId;
     let itemQty = req.body.qty;
 
     let isNewItem; //It's a new item (wasnt in the cart before)
 
-    if(req.session.userCart != undefined){  //If the cart already exists
+    if (req.session.userCart != undefined) { //If the cart already exists
         let userCart = JSON.parse(req.session.userCart);
         let newCart = new Cart();
         newCart.itemArray = userCart._itemArray;
-        isNewItem = newCart.addItemToCart(itemId,itemQty);
+        isNewItem = newCart.addItemToCart(itemId, itemQty);
         req.session.userCart = JSON.stringify(newCart);
-    }
-    else{  //The cart doesnt exist so create it and add the item to it
+    } else { //The cart doesnt exist so create it and add the item to it
         let newCart = new Cart();
-        isNewItem = newCart.addItemToCart(itemId,itemQty);
+        isNewItem = newCart.addItemToCart(itemId, itemQty);
         req.session.userCart = JSON.stringify(newCart);
     }
 
@@ -367,7 +365,7 @@ website.post("/ajaxRequest/addProductToCart",function(req,res){
 
 
 //removeProductFromCart
-website.post("/ajaxRequest/removeProductFromCart",function(req,res){
+website.post("/ajaxRequest/removeProductFromCart", function(req, res) {
     let itemId = req.body.productId;
     let userCart = JSON.parse(req.session.userCart);
     let newCart = new Cart();
@@ -379,18 +377,17 @@ website.post("/ajaxRequest/removeProductFromCart",function(req,res){
 
 });
 
-website.post("/ajaxRequest/loadCartItem",function(req,res){
+website.post("/ajaxRequest/loadCartItem", function(req, res) {
     console.log("Loading the products from the cart");
-    if(req.session.userCart != undefined && req.session.userCart.length > 0) //If the user has something in his cart
+    if (req.session.userCart != undefined && req.session.userCart.length > 0) //If the user has something in his cart
     {
-      let ctrlCart = new CtrlCart();
-      ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart)).then(function(productsArray){
-        console.log("Voici le contenu du cart")
-        console.log(productsArray);
-        res.send(productsArray);
-      });  
-    }
-    else{
+        let ctrlCart = new CtrlCart();
+        ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart)).then(function(productsArray) {
+            console.log("Voici le contenu du cart")
+            console.log(productsArray);
+            res.send(productsArray);
+        });
+    } else {
         res.end();
     }
 });
@@ -513,10 +510,33 @@ app.post("/ajaxRequest/loadAllProducts", function(req, res) {
     })
 });
 
-app.post("/ajaxRequest/managePromo", function(req, res) {
-    let ctrlProduct = new CtrlProduct();
+app.post("/ajaxRequest/loadSelectPromo", function(req, res) {
+    let ctrl = new CtrlProduct();
+    ctrl.getProductsSelectPromo().then(function(result) {
+        res.send(result)
+    })
+});
 
-    res.send("hey");
+app.post("/ajaxRequest/managePromo", function(req, res) {
+    let ctrl = new CtrlPromo();
+    ctrl.loadAllPromotions().then(function(result) {
+        res.send(result)
+    })
+});
+
+app.post("/ajaxRequest/addPromo", function(req, res) {
+    let ctrlPromo = new CtrlPromo();
+    ctrlPromo.addPromo(req.body.id, req.body.rabais).then(function(result) {
+        console.log(res);
+        res.send(result)
+    })
+});
+
+app.post("/ajaxRequest/modifyPromo", function(req, res) {
+    let ctrlPromo = new CtrlPromo();
+    ctrlPromo.updatePromo(req.body.id, req.body.rabais).then(function(result) {
+        res.send(result)
+    })
 });
 
 //Application routes
