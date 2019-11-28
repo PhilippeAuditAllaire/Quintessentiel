@@ -113,8 +113,6 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 .infoTabBottomWrapper{
 	text-align: center;
-	margin-top:20px;
-	margin-bottom:20px;
 }
 
 .formInfoUser{
@@ -155,9 +153,11 @@ tr:nth-child(odd) {background: #F6F6F6}
 }
 
 .infoBloc{
-	opacity:0.5;
-	transition-duration: 1s;
+	opacity:0.3;
+	transition-duration: 0.3s;
 	cursor:pointer;
+	margin-top:20px;
+	margin-bottom:20px;
 }
 
 .infoBloc.toggledBloc{
@@ -194,4 +194,12 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 .CardField{
 	background-color: white!important;
+}
+
+.deleteItemLink{
+	color: green;
+}
+
+.deleteItemLink:hover{
+	color: green;
 }
