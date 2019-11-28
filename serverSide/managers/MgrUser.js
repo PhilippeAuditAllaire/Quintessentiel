@@ -24,11 +24,10 @@ class MgrUser{
 		let currentQueryEngine = this._queryEngine;
 
 		return this._queryEngine.executeQuery(selectUniqueEmailQuery,paramUniqueEmail).then(function(result){
-
 			if(result.length == 0) //The given email isnt already in the DB
 			{
-				let query = "INSERT INTO Users (idCivility,firstName,lastName,email,birthDate,password,newsletter,isAdmin) VALUES (?,?,?,?,?,?,?,?)";
-				let param = [userObj.idCivility,userObj.firstName,userObj.lastName,userObj.email,userObj.birthDate,hash,userObj.newsletter,userObj.isAdmin];
+				let query = "INSERT INTO Users (idCivility,firstName,lastName,email,birthDate,password,newsletter,isAdmin,street,noApp,postalCode,noCivic,idCountry,idProvince) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				let param = [userObj.idCivility,userObj.firstName,userObj.lastName,userObj.email,userObj.birthDate,hash,userObj.newsletter,userObj.isAdmin,userObj.street,userObj.noApp,userObj.postalCode,userObj.noCivic,userObj.idCountry,userObj.idProvince];
 
 				return currentQueryEngine.executeQuery(query,param);
 			}
@@ -275,6 +274,79 @@ class MgrUser{
 			resolve(1);
 		});
 
+	}
+
+
+	/*
+		Loads all the countries
+		@idLang is the lang in which to load the countries names
+	*/
+	loadAllCountries(idLang)
+	{
+		let query = "SELECT Country.id,ta_countryattribute_language.value As countryName FROM country INNER JOIN ta_countryattribute_language ON Country.id = ta_countryattribute_language.idCountry WHERE ta_countryattribute_language.idLanguage = ?";
+		let param = [idLang];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+
+	/* 
+		Loads all the provinces that are related to
+		the given countryId
+
+		@idCountry is the country from which to load
+		the provinces from
+
+		@idLang is the languageId in which to load
+		the countries infos
+	*/
+	loadProvincesRelatedToCountry(idCountry,idLang)
+	{
+		let query = "SELECT Province.id,ta_provinceattribute_language.value AS provinceName FROM Province INNER JOIN ta_provinceattribute_language ON province.id = ta_provinceattribute_language.idProvince WHERE Province.idCountry = ? AND ta_provinceattribute_language.idLanguage = ?";
+		let param = [idCountry,idLang];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+
+	/* Loads the address infos from the user 
+		@userId is the id of the user to load the infos from
+	*/
+	loadUserBasicAddress(userId)
+	{
+		let query = "SELECT street,noApp,postalCode,noCivic,idCountry,idProvince FROM Users WHERE id = ?"
+		let param = [userId];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+	/* Loads a province's infos
+	   @provinceId is the id of the province
+	   which to load the infos from
+	   @idLang is the language in which to load the infos
+	*/
+	getProvinceById(provinceId,idLang)
+	{
+		let query = "SELECT value As provinceName FROM ta_provinceattribute_language WHERE ta_provinceattribute_language.idProvince = ? AND idLanguage = ?";
+		let param = [provinceId,idLang];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+	/*
+		Loads all the countries infos
+		@countryId is the Id of the country
+		which to load the infos from
+		@idLang is the languagge in which to load the infos
+	*/
+	getCountryById(countryId,idLang)
+	{
+		console.log("chargement avec le country id: "+ countryId);
+		console.log("et la langue: "+idLang);
+		let query = "SELECT value As countryName FROM ta_countryattribute_language WHERE ta_countryattribute_language.idCountry = ? AND idLanguage = ?";
+		let param = [countryId,idLang];
+
+		return this._queryEngine.executeQuery(query,param);
 	}
 }
 
