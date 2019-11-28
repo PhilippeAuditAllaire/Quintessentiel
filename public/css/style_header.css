@@ -483,6 +483,7 @@
 /* popup */
 #popup{
     position: fixed;
+    z-index:9999;
     width:500px;
     margin:auto;
     bottom:-100px;

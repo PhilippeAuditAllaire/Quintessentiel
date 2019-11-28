@@ -163,10 +163,16 @@ website.get("/faq", function(req, res) {
 });
 
 website.get("/paymentPage", function(req, res) {
-    setLang(req);
-    mgr.getTextByPage("payment", req.session.id_lang).then(function(resultat) {
-        res.render("paymentPage.ejs",JSON.parse(resultat));
-    });
+    if (req.session.userId != undefined) { 
+        setLang(req);
+        mgr.getTextByPage("payment", req.session.id_lang).then(function(resultat) {
+            res.render("paymentPage.ejs",JSON.parse(resultat));
+        });
+    }
+    else{
+        res.redirect("/catalogue");
+    }
+
 });
 
 
@@ -193,6 +199,12 @@ website.post("/ajaxRequest/stripePayment",function(req,res){
     res.end();
 });
 
+
+website.post("/ajaxRequest/checkIfUserIsConnected",function(req,res){
+
+    let isUserConnected = (req.session.userId != undefined);
+    res.send(isUserConnected);
+});
 
 website.post("/ajaxRequest/lang", function(req, res) {
     let mgrlang = new MgrLanguage();

@@ -377,6 +377,35 @@ function removeProductFromCart(productId)
 	})
 }
 
-
 cartLink.addEventListener("click",openCartMenu);
 closeCartLink.addEventListener("click",closeCartMenu);
+
+
+$("#cartPayLink").on("click",function(e){
+	console.log("ici")
+	e.preventDefault();
+
+	checkIfUserIsConnected().then(function(isConnected){
+		if(isConnected)
+		{
+			document.location.href = "/paymentPage";
+		}
+		else{
+			popup("Vous devez être connecté pour passer la commande!");
+		}
+	})
+	
+});
+
+
+//Checks if the user is connected
+function checkIfUserIsConnected()
+{
+	return $.ajax({
+		url: "/ajaxRequest/checkIfUserIsConnected",
+		type: "POST",
+		success:function(res){
+			
+		}
+	})
+}
