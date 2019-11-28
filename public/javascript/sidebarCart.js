@@ -76,7 +76,7 @@ function displayCartItems(){
 	                        <div class="itemUpperInfos">
 	                            <div class="wrapperItemImage">
 	                                <div class="itemImage">
-	                                    <img src="./images/logo.png"/>
+	                                    <img src="./images/`+item.product._image+`"/>
 	                                </div>
 	                            </div>
 	                            <div class="itemTitle">

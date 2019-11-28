@@ -554,7 +554,7 @@ app.get("/adminConnection", function(req, res) {
 });
 
 app.get("/manageProduct", function(req, res) {
-    if (true) { //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1) { 
         let ctrlProduct = new CtrlProduct();
 
         Promise.all([ctrlProduct.generateModalProductTabs("add"), ctrlProduct.loadAllCategoriesHTML(), ctrlProduct.generateModalProductTabs("update"), ctrlProduct.loadAllCategories()]).then(function(results) {
@@ -600,7 +600,7 @@ app.get("/updateRecipe", function(req, res) {
 
 
 app.get("/manageCategory", function(req, res) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let ctrlCategory = new CtrlCategory();
 
@@ -615,7 +615,7 @@ app.get("/manageCategory", function(req, res) {
 
 
 app.post('/addProduct', upload.single('image'), function(req, res, next) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let imgName = req.file.filename;
         let data = req.body;
@@ -633,7 +633,7 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 });
 
 app.post('/updateProduct', upload.single('image'), function(req, res, next) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         console.log("On est ici! Voici les informations envoyées:")
 
@@ -657,7 +657,7 @@ app.post('/updateProduct', upload.single('image'), function(req, res, next) {
 });
 
 app.post('/addCategory', function(req, res) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let ctrlCategory = new CtrlCategory();
 
@@ -670,7 +670,7 @@ app.post('/addCategory', function(req, res) {
 });
 
 app.post('/updateCategory', function(req, res) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let ctrlCategory = new CtrlCategory();
 

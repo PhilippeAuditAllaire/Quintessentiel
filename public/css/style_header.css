@@ -527,3 +527,12 @@
         width:300px;
     }
 }
+
+.itemImage img{
+    width:100px;
+    height:100px;
+}
+
+.itemTitle{
+    margin-left: 14px;
+}
