@@ -3,6 +3,7 @@ const path = require("path")
 const session = require('express-session');
 const ejs = require("ejs");
 const multer = require("multer");
+const stripe = require('stripe')('sk_test_IHvUqWlOZpF6fpSXlX9k119n00Cf1LJM5v');
 
 //FOR THE FILE UPLOAD
 let storage = multer.diskStorage({
@@ -161,12 +162,48 @@ website.get("/faq", function(req, res) {
 });
 
 website.get("/paymentPage", function(req, res) {
-    res.render("paymentPage.ejs");
+    if (req.session.userId != undefined) { 
+        setLang(req);
+        mgr.getTextByPage("payment", req.session.id_lang).then(function(resultat) {
+            res.render("paymentPage.ejs",JSON.parse(resultat));
+        });
+    }
+    else{
+        res.redirect("/catalogue");
+    }
+
 });
 
 
 
+
+
 //Ajax requests
+
+
+website.post("/ajaxRequest/stripePayment",function(req,res){
+    const token = req.body.stripeToken; // Using Express
+    let ctrlCart = new CtrlCart();
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart));
+
+    (async () => {
+      const charge = await stripe.charges.create({
+        amount: 999,
+        currency: 'cad',
+        description: 'Example charge',
+        source: token,
+      });
+    })();
+
+    res.end();
+});
+
+
+website.post("/ajaxRequest/checkIfUserIsConnected",function(req,res){
+
+    let isUserConnected = (req.session.userId != undefined);
+    res.send(isUserConnected);
+});
 
 website.post("/ajaxRequest/lang", function(req, res) {
     let mgrlang = new MgrLanguage();
@@ -549,7 +586,7 @@ app.get("/adminConnection", function(req, res) {
 });
 
 app.get("/manageProduct", function(req, res) {
-    if (true) { //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1) { 
         let ctrlProduct = new CtrlProduct();
 
         Promise.all([ctrlProduct.generateModalProductTabs("add"), ctrlProduct.loadAllCategoriesHTML(), ctrlProduct.generateModalProductTabs("update"), ctrlProduct.loadAllCategories()]).then(function(results) {
@@ -595,7 +632,7 @@ app.get("/updateRecipe", function(req, res) {
 
 
 app.get("/manageCategory", function(req, res) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let ctrlCategory = new CtrlCategory();
 
@@ -610,7 +647,7 @@ app.get("/manageCategory", function(req, res) {
 
 
 app.post('/addProduct', upload.single('image'), function(req, res, next) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let imgName = req.file.filename;
         let data = req.body;
@@ -628,7 +665,7 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 });
 
 app.post('/updateProduct', upload.single('image'), function(req, res, next) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         console.log("On est ici! Voici les informations envoyées:")
 
@@ -652,7 +689,7 @@ app.post('/updateProduct', upload.single('image'), function(req, res, next) {
 });
 
 app.post('/addCategory', function(req, res) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let ctrlCategory = new CtrlCategory();
 
@@ -665,7 +702,7 @@ app.post('/addCategory', function(req, res) {
 });
 
 app.post('/updateCategory', function(req, res) {
-    if (true) //req.session.userId != undefined && req.session.isAdmin == 1
+    if (req.session.userId != undefined && req.session.isAdmin == 1)
     {
         let ctrlCategory = new CtrlCategory();
 

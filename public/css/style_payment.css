@@ -113,8 +113,6 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 .infoTabBottomWrapper{
 	text-align: center;
-	margin-top:20px;
-	margin-bottom:20px;
 }
 
 .formInfoUser{
@@ -155,9 +153,11 @@ tr:nth-child(odd) {background: #F6F6F6}
 }
 
 .infoBloc{
-	opacity:0.5;
-	transition-duration: 1s;
+	opacity:0.3;
+	transition-duration: 0.3s;
 	cursor:pointer;
+	margin-top:20px;
+	margin-bottom:20px;
 }
 
 .infoBloc.toggledBloc{
@@ -167,4 +167,39 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 #btnToPayment{
 	margin-bottom: 20px;
+}
+
+#paymentTab{
+	width:50%;
+	margin:auto;
+	border:1px solid gray;
+	margin-top:50px;
+}
+
+#card-element-label{
+	margin-bottom: 50px;
+}
+
+
+#card-element{
+	margin-bottom: 50px;
+}
+
+#payment-form{
+	font-size:20px;
+	text-align: center;
+	background-color:#F6F6F6;
+	padding: 20px;
+}
+
+.CardField{
+	background-color: white!important;
+}
+
+.deleteItemLink{
+	color: green;
+}
+
+.deleteItemLink:hover{
+	color: green;
 }

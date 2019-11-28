@@ -483,6 +483,7 @@
 /* popup */
 #popup{
     position: fixed;
+    z-index:9999;
     width:500px;
     margin:auto;
     bottom:-100px;
@@ -493,6 +494,7 @@
     display:flex;
     border-radius:10px;
     transition-duration: 0.5s;
+    box-shadow: 0px 0px 10px #bcd13f;
 }
 
 #popup.show{
@@ -526,4 +528,13 @@
     #popup{
         width:300px;
     }
+}
+
+.itemImage img{
+    width:100px;
+    height:100px;
+}
+
+.itemTitle{
+    margin-left: 14px;
 }

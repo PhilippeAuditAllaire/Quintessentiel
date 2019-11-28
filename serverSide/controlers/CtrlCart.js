@@ -53,6 +53,21 @@ class CtrlCart {
     	});
     }
 
+    //Calculates the sub total based
+    //on the items that are in the cart
+    //@cartItems to calculate the subTotal
+    //from
+    //Returns a promise that returns the subTotal
+    calculateCartSubTotal(cart)
+    {   
+        console.log("BEFORE");
+        console.log(cart)
+        console.log("ALL PRODUCTS FROM CART")
+        return this.loadProductsFromCart(cart).then((allProducts) => {
+            console.log(allProducts);
+        });
+    }
+
 }
 
 module.exports = CtrlCart;
