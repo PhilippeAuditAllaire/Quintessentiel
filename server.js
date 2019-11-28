@@ -3,6 +3,7 @@ const path = require("path")
 const session = require('express-session');
 const ejs = require("ejs");
 const multer = require("multer");
+const stripe = require('stripe')('sk_test_IHvUqWlOZpF6fpSXlX9k119n00Cf1LJM5v');
 
 //FOR THE FILE UPLOAD
 let storage = multer.diskStorage({
@@ -162,12 +163,34 @@ website.get("/faq", function(req, res) {
 });
 
 website.get("/paymentPage", function(req, res) {
-    res.render("paymentPage.ejs");
+    setLang(req);
+    mgr.getTextByPage("payment", req.session.id_lang).then(function(resultat) {
+        res.render("paymentPage.ejs",JSON.parse(resultat));
+    });
 });
 
 
 
+
+
 //Ajax requests
+
+
+website.post("/ajaxRequest/stripePayment",function(req,res){
+    const token = req.body.stripeToken; // Using Express
+
+    (async () => {
+      const charge = await stripe.charges.create({
+        amount: 999,
+        currency: 'cad',
+        description: 'Example charge',
+        source: token,
+      });
+    })();
+
+    res.end();
+});
+
 
 website.post("/ajaxRequest/lang", function(req, res) {
     let mgrlang = new MgrLanguage();
