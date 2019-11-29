@@ -1,5 +1,5 @@
 /* NAVBAR */
-INSERT INTO landingtext_attribute (id, type, page) 
+INSERT INTO LandingText_Attribute (id, type, page) 
 VALUES 
     (1, 'home', 'navbar'),
     (2, 'products', 'navbar'),
@@ -55,7 +55,7 @@ VALUES
     (54, 'proposcontact', 'navbar');
 
 
-INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
+INSERT INTO TA_LandingTextAttribute_Language (landingTextAttribute, languageId, value) 
 VALUES 
     ('1', '1', 'Accueil'), 
     ('1', '2', 'Home'),
@@ -216,7 +216,7 @@ VALUES
     /* FIN NAVBAR */
 
     /* INDEX */
-    INSERT INTO landingtext_attribute (id, type, page) 
+    INSERT INTO LandingText_Attribute (id, type, page) 
     VALUES 
     (55, 'titleIndex', 'index'),
     (56, 'featured', 'index'),
@@ -225,7 +225,7 @@ VALUES
     (59, 'presentation', 'index'),
     (60, 'temoignage', 'index');
 
-    INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
+    INSERT INTO TA_LandingTextAttribute_Language (landingTextAttribute, languageId, value) 
     VALUES 
     ('55', '1', 'Accueil'), 
     ('55', '2', 'Home'),
