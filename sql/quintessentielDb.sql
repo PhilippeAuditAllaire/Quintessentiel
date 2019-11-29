@@ -1,6 +1,6 @@
 
 CREATE DATABASE Quintessentiel;
-USE quintessentiel;
+USE Quintessentiel;
 
 -- Langage
 CREATE TABLE Language(
