@@ -6,11 +6,16 @@ function onOpenChat(){
     autoFirstMessage();
 }
 
-function showChat(){
-    // TODO
+function onClickSendMessage(e){
+    e.preventDefault();
+    const message = popMsgFromInput();
+    appendMessage(`You: ${message}`);
+    emitChatMessage(message);
 }
 
-
+function onPressEnter(){
+    // TODO
+}
 
 function onClickSendMessage() {
     if (messageIsEmpty())
@@ -20,19 +25,20 @@ function onClickSendMessage() {
         createConversation();
 }
 
-function onClickMarkToSave() {}
+function onClickMarkToSave() {
+    // TODO
+}
 
-function onClickChangeCustomerName() {}
+function onClickChangeCustomerName() {
+    newName = prompt("Quel nom donner a l'utilisateur ?");
+    changeUsername(newName);
+    appendMessage(previousName + " a ete renommer " + newName);
+    // TODO : Change le nom dans le chat
+}
+
 
 function onNewConversationRequest() {
     createConversationServer();
-}
-
-function onReceiveMessage() {
-    showMessage(msg);
-    
-    if (isServerSide)
-        checkForLongConversation();
 }
 
 
@@ -46,13 +52,4 @@ function onConversationClosed() {
         if (conversation.markedToSave)
             saveConversation();
     }
-}
-
-function onReceiveClosedConversation() {
-    showNotificationMsg("");
-}
-
-function onConnectionError(lang) {
-    
-    showErrorMessage(connectionErrorMsg(lang));
 }

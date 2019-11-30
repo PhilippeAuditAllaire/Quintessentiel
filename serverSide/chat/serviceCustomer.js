@@ -11,3 +11,8 @@ function autoFirstMessage(){
     showMessage(msg);
     // TODO : Modify Dom
 }
+
+
+function showChat(){
+    // TODO
+}
