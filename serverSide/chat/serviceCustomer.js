@@ -2,6 +2,7 @@
 
 function createConversationCustomer() {
     createSocket();
+    let convo = new Conversation();
 }
 
 function autoFirstMessage(){

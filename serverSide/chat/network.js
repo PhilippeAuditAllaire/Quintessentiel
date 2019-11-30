@@ -1,5 +1,7 @@
 // ChatNetwork
 
+io.on('connect', onConnect);
+
 function createSocket(){
 
 }

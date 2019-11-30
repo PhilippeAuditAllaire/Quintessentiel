@@ -1,9 +1,12 @@
 
 // ChatServiceAdmin
 
-function createConversationServer() {
+function createConversationServer(me) {
     createSocket();
     launchNotifications();
+    
+    let customer = Customer();
+    let convo = Conversation(ip, me, customer, id);
 }
 
 
@@ -13,7 +16,8 @@ function checkForLongConversation(){
 }
 
 function askToMarkToSave(){
-    conversation.markedToSave = true;
+    
+    conversation.markedToSave = confirm("Est-ce que tu veux sauvegarder la conversation ?");
 }
 
 
@@ -27,9 +31,9 @@ function launchNotifications(){
 }
 
 function launchAudioNotif(){
-    
+    new Audio('/path/to/audio/file.mp3').play(); // TODO : Change file path
 }
 
 function launchVisualNotif(){
-    
+    // TODO
 }

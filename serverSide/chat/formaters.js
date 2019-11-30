@@ -57,9 +57,14 @@ function nameFriend() {
 function generateName(){
     names = ["Ananas", "Banane", "Kiwi", "Noix de coco", "Papaye", "Durian", "Avocat", "Tangerine"];
     adjectives = ["bleu","rouge", "jaune", "vert", "orange", "mauve", "noir", "blanc"];
-    return names[getRandomInt(names.length)] + " " + adjectives[getRandomInt(adjectives.length)];
+    return names[getRandomInt(names.length)] + " " + adjectives[getRandomInt(adjectives.length)] + " " + getRandomInt(100);
 }
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
+}
+
+function getCurrentTime(){
+    let d = new Date();
+    return d.getHours() + ":" + d.getMinutes();
 }
