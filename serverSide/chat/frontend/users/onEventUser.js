@@ -14,7 +14,7 @@ function onClickSendMessage(e){
 }
 
 function onPressEnter(){
-    // TODO
+    // TODO : New_line vs Send
 }
 
 function onClickSendMessage() {

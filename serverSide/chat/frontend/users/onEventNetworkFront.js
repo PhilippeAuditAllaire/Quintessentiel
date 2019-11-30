@@ -27,17 +27,3 @@ function onUserConnected(){
 function onUserDisconnected(name){
     appendMessage(`${name} disconnected`);
 }
-
-function onUserConnect(name){
-    emitUserConnect(name);
-}
-
-
-function onSendChatMessage(message){
-    emitChatMessage(message);
-}
-
-
-function onDisconnect() {
-    emitDisconnect();
-}
