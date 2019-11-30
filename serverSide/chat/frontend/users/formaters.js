@@ -56,8 +56,8 @@ function nameFriend() {
 
 function generateName(){
     names = ["Ananas", "Banane", "Kiwi", "Noix de coco", "Papaye", "Durian", "Avocat", "Tangerine"];
-    adjectives = ["bleu","rouge", "jaune", "vert", "orange", "mauve", "noir", "blanc"];
-    return names[getRandomInt(names.length)] + " " + adjectives[getRandomInt(adjectives.length)] + " " + getRandomInt(100);
+    adjectives = ["Bleu","Rouge", "Jaune", "Vert", "Orange", "Mauve", "Noir", "Blanc"];
+    return names[getRandomInt(names.length)] + adjectives[getRandomInt(adjectives.length)] +  getRandomInt(100);
 }
 
 function getRandomInt(max) {

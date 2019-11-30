@@ -21,4 +21,10 @@ function startCustomerChat(){
 
 }
 
+function createConversationCustomer() {
+    createSocket();
+    let convo = new Conversation();
+}
+
+
 startCustomerChat();

@@ -1,23 +1,30 @@
 
 // ChatGuiEditor
 
-function showMessage(msg) {
-    console.log(formatMsg(msg));
-    // TODO : Show msg in DOM
-}
+// OUTPUT
 
 function appendMessage(message) {
+    console.log(message);
     const messageElement = document.createElement('div');
     messageElement.innerText = message;
     messageContainer.append(messageElement);
 }
 
-
-function showErrorMessage(msg) {
-    console.log(formatErrorMsg(msg));
-    // TODO : Modify DOM
+function showNormalMessage(msg) {
+    let fmsg = formatMsg(msg);
+    appendMessage(fmsg);
 }
 
+function showErrorMessage(msg) {
+    let fmsg = formatErrorMsg(msg);
+    appendMessage(fmsg);
+}
+
+function showUserDisconnect(name){
+    appendMessage(`${name} disconnected`);
+}
+
+// INPUT
 
 function popMsgFromInput(){
     const message = messageInput.value;

@@ -2,8 +2,8 @@
 
 
 function onOpenChat(){
-    showChat();
-    autoFirstMessage();
+    showChat(); // Unimplemented
+    showMessage(firstMessage(lang));
 }
 
 function onClickSendMessage(e){

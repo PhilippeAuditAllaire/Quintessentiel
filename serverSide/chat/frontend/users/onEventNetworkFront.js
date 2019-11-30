@@ -1,6 +1,7 @@
 
-function onReceiveMessage() {
-    showMessage(msg);
+
+function onChatMessage(data){
+    showNormalMessage(msg);
     
     if (isServerSide)
         checkForLongConversation();
@@ -15,15 +16,12 @@ function onConnectionError(lang) {
     showErrorMessage(connectionErrorMsg(lang));
 }
 
-
-function onChatMessage(data){
-    appendMessage(`${data.name}: ${data.message}`);
-}
-
 function onUserConnected(){
-    appendMessage(`${name} connected`);
+    
+    // TODO : join conversation
 }
 
 function onUserDisconnected(name){
-    appendMessage(`${name} disconnected`);
+    showUserDisconnect(name);
 }
+

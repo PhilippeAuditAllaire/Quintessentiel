@@ -18,8 +18,6 @@ Chaque utilisateur va ouvrir un socket avec le serveur, et le serveur va faire r
 | Folder  | Fichier             | Responsabilite                              |
 |---------|---------------------|---------------------------------------------|
 | backend | database            | Gestion de sauvegarde de la base de donnees |
-| backend | onEventNetworkBack  | Les evenements recu depuis un utilisateur   |
-| backend | userEmit            | Emit vers le serveur                        |
 | backend | startChatServer     | Demarre le serveur de chat                  |
 |         |                     |                                             |
 | admin   | serviceAdmin        | Operations effectuees par l'administrateur  |
@@ -31,7 +29,7 @@ Chaque utilisateur va ouvrir un socket avec le serveur, et le serveur va faire r
 | users   | classes             | Structure des donnees en memoire            |
 | users   | dynamicGui          | Modify l'interface graphique                |
 | users   | onEventUser         | Les evenements lances par l'utilisateur     |
-| backend | onEventNetworkFront | Les evenements recu depuis le reseau        |
+| users   | onEventNetworkFront | Les evenements recu depuis le reseau        |
 | users   | formaters           | Mise en forme du texte                      |
 
 ## How it work
