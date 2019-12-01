@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quintessentiel | Connexion</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style_application.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style_manageRecipe.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css" />
+    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+</head>
+
+<body>
+    <%include ./includes/appNavbar.ejs%>
+        <div class="recipe-header">
+            <div class="logo">
+                <img src="./images/logo.png" />
+            </div>
+            <div class="title">
+                Gestion des textes du site
+            </div>
+        </div>
+        <div class="mg-product-top-line middle">
+            <div class="wrapper-left-qty">
+
+            </div>
+            <div class="wrapper-right-btn">
+                <div class="wrapper-btn" onclick="add()">
+                    <a href="#" class="btnApp">+</a>
+                </div>
+            </div>
+        </div>
+        <div class="table">
+            <div class="border">
+                <table class="table-recipe">
+                    <thead class="table-recipe-header">
+                        <tr>
+                            <th>Texte</th>
+                            <th>Page</th>
+                            <th>Langue</th>
+                        </tr>
+                    </thead>
+                    <tbody id="textes">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="title">Modifier promotions</h4>
+                    </div>
+                    <div class="modal-body">
+                        <select name="" id="product">
+                            
+                        </select>
+                        <label for="">Rabais : </label>
+                        <input type="text" id="rabais-text">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn" onclick="doIt()">Modifier</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+        <script src="./javascript/renderer.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="./javascript/listbox.js"></script>
+        <script src="./javascript/tableProducts.js"></script>
+        <script src="http://malsup.github.com/jquery.form.js"></script>
+        <script>
+            /*
+            let isModify = false;
+
+            $.ajax({
+                url: "http://localhost:5000/ajaxRequest/managePromo",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    $('#promotions').html(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur");
+                }
+            });
+
+            $.ajax({
+                url: "http://localhost:5000/ajaxRequest/loadSelectPromo",
+                method: "POST",
+
+                success: function(response) {
+                    console.log(response);
+                    $('#product').html(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert("Erreur");
+                }
+            });
+            // k
+            function openPromo(line) {
+                isModify = true;
+
+                console.log(line.getElementsByClassName('rabais')[0].innerHTML);
+                $('#myModal').modal('toggle');
+                $('#rabais-text').val(line.getElementsByClassName('rabais')[0].innerHTML);
+            }
+
+            function add() {
+                $('#myModal').modal('toggle');
+            }
+
+            function doIt() {
+                if (isModify) {
+                    console.log($("#product").children(":selected").attr("id"));
+                    console.log("rabais " + $('#rabais-text').val());
+                    let rabaisA = $('#rabais-text').val();
+                    $.ajax({
+                        url: "http://localhost:5000/ajaxRequest/modifyPromo",
+                        method: "POST",
+                        data: {
+                            id: $("#product").children(":selected").attr("id"),
+                            rabais: rabaisA
+                        },
+                        success: function(response) {
+                            console.log(response);
+
+                        },
+                        error: function(response) {
+                            console.log(response);
+                            alert("Erreur");
+                        }
+                    });
+                } else {
+                    console.log($("#product").children(":selected").attr("id"));
+                    console.log("rabais " + $('#rabais-text').val());
+                    let rabaisA = $('#rabais-text').val();
+                    $.ajax({
+                        url: "http://localhost:5000/ajaxRequest/addPromo",
+                        method: "POST",
+                        data: {
+                            id: $("#product").children(":selected").attr("id"),
+                            rabais: rabaisA
+                        },
+                        success: function(response) {
+                            console.log(response);
+
+                        },
+                        error: function(response) {
+                            console.log(response);
+                            alert("Erreur");
+                        }
+                    });
+                }
+            }
+            */
+        </script>
+</body>
+
+</html>

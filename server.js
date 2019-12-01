@@ -622,6 +622,14 @@ app.get("/managePromotion", function(req, res) {
     }
 });
 
+app.get("/manageText", function(req, res) {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+        res.render("manageText.ejs");
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
+
 app.get("/addRecipe", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         res.render("addRecipe.ejs");

@@ -116,7 +116,7 @@ INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,12,"Florida");
 
 
 #User
-INSERT INTO Users VALUES (DEFAULT,1,"Admin","Admin","admin@admin.com","2019-01-01","$2b$10$jagLRkMveQSjVye8cY77M.9CS7rl4Y8uD2Q9sn9qVKbDXNZ5ma5oa",1,1,"admin",0,"J1R0B1",404,1,1)
+INSERT INTO Users VALUES (DEFAULT,1,"Admin","Admin","admin@admin.com","2019-01-01","$2b$10$jagLRkMveQSjVye8cY77M.9CS7rl4Y8uD2Q9sn9qVKbDXNZ5ma5oa",1,1,"admin",0,"J1R0B1",404,1,1);
 
 
 

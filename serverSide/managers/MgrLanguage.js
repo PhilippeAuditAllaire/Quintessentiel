@@ -37,6 +37,11 @@ class MgrLanguage {
         });
     }
 
+    loadAvailableLanguages() {
+        let query = "SELECT * FROM Language";
+        return this._queryEngine.executeQuery(query);
+    }
+
 }
 
 module.exports = MgrLanguage;
