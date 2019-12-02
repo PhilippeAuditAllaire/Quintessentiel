@@ -386,7 +386,7 @@ VALUES
     INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
     VALUES 
     ('61', '1', 'Produits'), 
-    ('61', '2', 'Products')
+    ('61', '2', 'Products');
 
     /* Fin catalogue */
 

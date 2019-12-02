@@ -47,7 +47,18 @@ class MgrLanguage {
         return this._queryEngine.executeQuery(query);
     }
 
-
+    loadText(id, code_lang) {
+        let query = "SELECT landingtext_attribute.*,ta_landingtextattribute_language.* FROM ta_landingtextattribute_language JOIN landingtext_attribute ON landingtext_attribute.id = ta_landingtextattribute_language.landingTextAttribute JOIN language ON ta_landingtextattribute_language.languageId = language.id WHERE language.id = ? AND ta_landingtextattribute_language.landingTextAttribute = ?";
+        let param = [code_lang, id];
+        let t;
+        return this._queryEngine.executeQuery(query, param).then(function(res) {
+            res.forEach(function(text) {
+                console.log(text);
+                t = text.value;
+            })
+            return t;
+        });
+    }
 
 }
 
