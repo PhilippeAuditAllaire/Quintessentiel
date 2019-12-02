@@ -39,7 +39,6 @@
                         <tr>
                             <th>Texte</th>
                             <th>Page</th>
-                            <th>Langue</th>
                         </tr>
                     </thead>
                     <tbody id="textes">
@@ -82,92 +81,92 @@
         <script src="http://malsup.github.com/jquery.form.js"></script>
         <script>
             /*
-            let isModify = false;
+                                    let isModify = false;
 
-            $.ajax({
-                url: "http://localhost:5000/ajaxRequest/managePromo",
-                method: "POST",
+                                    $.ajax({
+                                        url: "http://localhost:5000/ajaxRequest/loadText",
+                                        method: "POST",
 
-                success: function(response) {
-                    console.log(response);
-                    $('#promotions').html(response);
-                },
-                error: function(response) {
-                    console.log(response);
-                    alert("Erreur");
-                }
-            });
+                                        success: function(response) {
+                                            console.log(response);
+                                            $('#textes').html(response);
+                                        },
+                                        error: function(response) {
+                                            console.log(response);
+                                            alert("Erreur");
+                                        }
+                                    });
 
-            $.ajax({
-                url: "http://localhost:5000/ajaxRequest/loadSelectPromo",
-                method: "POST",
+                                    $.ajax({
+                                        url: "http://localhost:5000/ajaxRequest/loadSelectPromo",
+                                        method: "POST",
 
-                success: function(response) {
-                    console.log(response);
-                    $('#product').html(response);
-                },
-                error: function(response) {
-                    console.log(response);
-                    alert("Erreur");
-                }
-            });
-            // k
-            function openPromo(line) {
-                isModify = true;
+                                        success: function(response) {
+                                            console.log(response);
+                                            $('#product').html(response);
+                                        },
+                                        error: function(response) {
+                                            console.log(response);
+                                            alert("Erreur");
+                                        }
+                                    });
+                                    // k
+                                    function openPromo(line) {
+                                        isModify = true;
 
-                console.log(line.getElementsByClassName('rabais')[0].innerHTML);
-                $('#myModal').modal('toggle');
-                $('#rabais-text').val(line.getElementsByClassName('rabais')[0].innerHTML);
-            }
+                                        console.log(line.getElementsByClassName('rabais')[0].innerHTML);
+                                        $('#myModal').modal('toggle');
+                                        $('#rabais-text').val(line.getElementsByClassName('rabais')[0].innerHTML);
+                                    }
 
-            function add() {
-                $('#myModal').modal('toggle');
-            }
+                                    function add() {
+                                        $('#myModal').modal('toggle');
+                                    }
 
-            function doIt() {
-                if (isModify) {
-                    console.log($("#product").children(":selected").attr("id"));
-                    console.log("rabais " + $('#rabais-text').val());
-                    let rabaisA = $('#rabais-text').val();
-                    $.ajax({
-                        url: "http://localhost:5000/ajaxRequest/modifyPromo",
-                        method: "POST",
-                        data: {
-                            id: $("#product").children(":selected").attr("id"),
-                            rabais: rabaisA
-                        },
-                        success: function(response) {
-                            console.log(response);
+                                    function doIt() {
+                                        if (isModify) {
+                                            console.log($("#product").children(":selected").attr("id"));
+                                            console.log("rabais " + $('#rabais-text').val());
+                                            let rabaisA = $('#rabais-text').val();
+                                            $.ajax({
+                                                url: "http://localhost:5000/ajaxRequest/modifyPromo",
+                                                method: "POST",
+                                                data: {
+                                                    id: $("#product").children(":selected").attr("id"),
+                                                    rabais: rabaisA
+                                                },
+                                                success: function(response) {
+                                                    console.log(response);
 
-                        },
-                        error: function(response) {
-                            console.log(response);
-                            alert("Erreur");
-                        }
-                    });
-                } else {
-                    console.log($("#product").children(":selected").attr("id"));
-                    console.log("rabais " + $('#rabais-text').val());
-                    let rabaisA = $('#rabais-text').val();
-                    $.ajax({
-                        url: "http://localhost:5000/ajaxRequest/addPromo",
-                        method: "POST",
-                        data: {
-                            id: $("#product").children(":selected").attr("id"),
-                            rabais: rabaisA
-                        },
-                        success: function(response) {
-                            console.log(response);
+                                                },
+                                                error: function(response) {
+                                                    console.log(response);
+                                                    alert("Erreur");
+                                                }
+                                            });
+                                        } else {
+                                            console.log($("#product").children(":selected").attr("id"));
+                                            console.log("rabais " + $('#rabais-text').val());
+                                            let rabaisA = $('#rabais-text').val();
+                                            $.ajax({
+                                                url: "http://localhost:5000/ajaxRequest/addPromo",
+                                                method: "POST",
+                                                data: {
+                                                    id: $("#product").children(":selected").attr("id"),
+                                                    rabais: rabaisA
+                                                },
+                                                success: function(response) {
+                                                    console.log(response);
 
-                        },
-                        error: function(response) {
-                            console.log(response);
-                            alert("Erreur");
-                        }
-                    });
-                }
-            }
-            */
+                                                },
+                                                error: function(response) {
+                                                    console.log(response);
+                                                    alert("Erreur");
+                                                }
+                                            });
+                                        }
+                                    }
+                                    */
         </script>
 </body>
 

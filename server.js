@@ -164,13 +164,12 @@ website.get("/faq", function(req, res) {
 });
 
 website.get("/paymentPage", function(req, res) {
-    if (req.session.userId != undefined) { 
+    if (req.session.userId != undefined) {
         setLang(req);
         mgr.getTextByPage("payment", req.session.id_lang).then(function(resultat) {
-            res.render("paymentPage.ejs",JSON.parse(resultat));
+            res.render("paymentPage.ejs", JSON.parse(resultat));
         });
-    }
-    else{
+    } else {
         res.redirect("/catalogue");
     }
 
@@ -183,25 +182,25 @@ website.get("/paymentPage", function(req, res) {
 //Ajax requests
 
 
-website.post("/ajaxRequest/stripePayment",function(req,res){
+website.post("/ajaxRequest/stripePayment", function(req, res) {
     const token = req.body.stripeToken; // Using Express
     let ctrlCart = new CtrlCart();
     ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart));
 
-    (async () => {
-      const charge = await stripe.charges.create({
-        amount: 999,
-        currency: 'cad',
-        description: 'Example charge',
-        source: token,
-      });
+    (async() => {
+        const charge = await stripe.charges.create({
+            amount: 999,
+            currency: 'cad',
+            description: 'Example charge',
+            source: token,
+        });
     })();
 
     res.end();
 });
 
 
-website.post("/ajaxRequest/checkIfUserIsConnected",function(req,res){
+website.post("/ajaxRequest/checkIfUserIsConnected", function(req, res) {
 
     let isUserConnected = (req.session.userId != undefined);
     res.send(isUserConnected);
@@ -300,7 +299,7 @@ website.post("/ajaxRequest/resendRecover", function(req, res) {
 website.post("/ajaxRequest/catalogue", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
-    ctrlProduct.getProductCatalogue().then(function(result) {
+    ctrlProduct.getProductCatalogue(req.session.id_lang).then(function(result) {
         res.send(result);
     });
 
@@ -374,7 +373,7 @@ website.post("/ajaxRequest/getConditions", function(req, res) {
 website.post("/ajaxRequest/getCategories", function(req, res) {
     let ctrlCategories = new CtrlProduct();
 
-    ctrlCategories.loadAllSearchCategories(1).then(function(categoryList) {
+    ctrlCategories.loadAllSearchCategories(1, req.session.id_lang).then(function(categoryList) {
             res.send(categoryList);
         })
         .catch(function(error) {
@@ -594,7 +593,7 @@ app.get("/manageReseller", function(req, res) {
 });
 
 app.get("/manageProduct", function(req, res) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1) { 
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let ctrlProduct = new CtrlProduct();
 
         Promise.all([ctrlProduct.generateModalProductTabs("add"), ctrlProduct.loadAllCategoriesHTML(), ctrlProduct.generateModalProductTabs("update"), ctrlProduct.loadAllCategories()]).then(function(results) {
@@ -648,8 +647,7 @@ app.get("/updateRecipe", function(req, res) {
 
 
 app.get("/manageCategory", function(req, res) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1)
-    {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let ctrlCategory = new CtrlCategory();
 
         Promise.all([ctrlCategory.generateModalCategoryTabs("add"), ctrlCategory.generateModalCategoryTabs("update")]).then(function(result) {
@@ -663,8 +661,7 @@ app.get("/manageCategory", function(req, res) {
 
 
 app.post('/addProduct', upload.single('image'), function(req, res, next) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1)
-    {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let imgName = req.file.filename;
         let data = req.body;
         data.imgName = imgName;
@@ -681,8 +678,7 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 });
 
 app.post('/updateProduct', upload.single('image'), function(req, res, next) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1)
-    {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
         console.log("On est ici! Voici les informations envoyées:")
 
         let data = req.body;
@@ -705,8 +701,7 @@ app.post('/updateProduct', upload.single('image'), function(req, res, next) {
 });
 
 app.post('/addCategory', function(req, res) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1)
-    {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let ctrlCategory = new CtrlCategory();
 
         ctrlCategory.addCategory(req.body).then(function(result) {
@@ -718,8 +713,7 @@ app.post('/addCategory', function(req, res) {
 });
 
 app.post('/updateCategory', function(req, res) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1)
-    {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let ctrlCategory = new CtrlCategory();
 
         ctrlCategory.updateCategory(req.body).then(function(result) {
@@ -743,7 +737,7 @@ app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
 app.post("/ajaxRequest/loadAllResellers", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
-    ctrlReseller.getReseller().then(function(result){
+    ctrlReseller.getReseller().then(function(result) {
         console.log(result)
         res.send(result);
     })
@@ -752,7 +746,7 @@ app.post("/ajaxRequest/loadAllResellers", function(req, res) {
 app.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
-    ctrlReseller.getUsers().then(function(result){
+    ctrlReseller.getUsers().then(function(result) {
         console.log(result)
         res.send(result);
     })
@@ -761,7 +755,7 @@ app.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
 app.post("/ajaxRequest/addReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
-    ctrlReseller.addReseller(req.body).then(function(result){
+    ctrlReseller.addReseller(req.body).then(function(result) {
         console.log(result)
         res.send(result);
     })
@@ -771,20 +765,20 @@ app.post("/ajaxRequest/getRebate", function(req, res) {
     let ctrlReseller = new CtrlReseller();
     console.log(req.body);
 
-    ctrlReseller.getRebateList(req.body).then(function(result){
+    ctrlReseller.getRebateList(req.body).then(function(result) {
         console.log(result)
         res.send(result);
     })
 });
 
-app.post("/ajaxRequest/getTags",function(req,res){
-		let ctrlProduct = new CtrlProduct();
+app.post("/ajaxRequest/getTags", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
 
-		ctrlProduct.loadAllTags().then(function(result){
+    ctrlProduct.loadAllTags().then(function(result) {
 
-			
-			
-		});
+
+
+    });
 });
 
 

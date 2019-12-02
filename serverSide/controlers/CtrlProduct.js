@@ -211,8 +211,8 @@ class CtrlProduct {
     /*Generates the HTML to populate the dropdown for
     each categories 
     ProductCategoryID is optional*/
-    loadAllSearchCategories(productCategoryId) {
-        return this._mgrProduct.loadAllCategories().then(function(res) {
+    loadAllSearchCategories(productCategoryId, code_lang) {
+        return this._mgrProduct.loadAllCategories(code_lang).then(function(res) {
             let html = "";
 
             if (res != undefined) {
@@ -376,27 +376,21 @@ class CtrlProduct {
             ele += '<div class="produit-details-nom">';
             ele += '<h2>' + val[0].value + '</h2>';
             ele += '</div>';
-            ele += '<div class="catalogue-produit-review">';
-            ele += '<div class="catalogue-produit-etoile">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '</div>';
-            ele += '<div class="catalogue-produit-comm">';
-            ele += 'Aucun commentaire';
-            ele += '</div>';
-            ele += '</div>';
+
             ele += '<div class="produit-details-prix">';
             ele += '<h2> $ ' + val[0].retailPrice + ' CAD</h2>';
             ele += '</div>';
-            ele += '<div class="produit-details-cart"><button class="manager-button produit-cart-button">Ajouter au panier</button></div>';
+            console.log(val[0].amazonAffiliateLink);
+            if (val[0].amazonAffiliateLink == 'NULL') {
+                ele += '<div class="produit-details-cart"><button class="manager-button produit-cart-button"><%=buttonCart%></button></div>';
+            } else {
+                ele += '<div class="produit-details-cart"><button class="manager-button produit-cart-button"><a href="https://' + val[0].amazonAffiliateLink + '" target="_blank"><%=buttonSite%></a></button></div>';
+            }
+
 
             let desc = '<div class="details"><div class="tab">';
-            desc += '<button class="tablinks" onclick="openTab(event, \'info-1\')">Description</button>';
-            desc += '<button class="tablinks" onclick="openTab(event, \'info-2\')">Conseil d\'utilisation</button>';
-            desc += '<button class="tablinks" onclick="openTab(event, \'info-3\')">Ingrédients</button>';
+            desc += '<button class="tablinks" onclick="openTab(event, \'info-1\')"><%=description%></button>';
+            desc += '<button class="tablinks" onclick="openTab(event, \'info-2\')"><%=rituel%></button>';
             desc += '</div>';
 
             desc += '<div id="info-1" class="tabcontent">';
@@ -421,8 +415,8 @@ class CtrlProduct {
         });
     }
 
-    getProductCatalogue() {
-        let products = this._mgrProduct.loadProduct();
+    getProductCatalogue(code_lang) {
+        let products = this._mgrProduct.loadProduct(code_lang);
 
         return products.then(function(val) {
             let catalogue_product = [];
@@ -452,7 +446,9 @@ class CtrlProduct {
                 ele += '</div>';
                 ele += '</div>';
                 ele += '<div class="catalogue-produit-panier">';
-                ele += '<a href="#" class="product-cart" onclick="event.stopPropagation();event.preventDefault();catalogAddProductToCart('+product.product_id+')"><img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier"></a>';
+                if (product.amazonAffiliateLink == 'NULL') {
+                    ele += '<a href="#" class="product-cart" onclick="event.stopPropagation();event.preventDefault();catalogAddProductToCart(' + product.product_id + ')"><img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier"></a>';
+                }
                 ele += '</div>';
 
                 catalogue_product.push(ele);
