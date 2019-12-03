@@ -49,11 +49,11 @@ function formatErrorMsg(msg) {
 function formatDisconnection(name){
     switch (lang) {
         case "fr":
-            return `${name} s'est déconnecté`;
+            return `${name} s'est déconnecté.`;
         case "en":
-            return `${name} disconnected`;
+            return `${name} disconnected.`;
         default:
-            return `${name} s'est déconnecté`;
+            return `${name} s'est déconnecté.`;
     }
 }
 

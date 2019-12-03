@@ -24,10 +24,23 @@ function showUserDisconnect(name){
     appendMessage(formatDisconnection(name));
 }
 
+function removeIndicatorNewMsg(convo){
+    // TODO
+}
+
+function putNewMsgIndicator(convo){
+    // TODO
+}
+
+function showChatOption(){
+    // TODO :
+}
+
 // INPUT
 
 function popMsgFromInput(){
     const message = messageInput.value;
-    messageInput.value = '';
+    messageInput.value = "";
     return message;
 }
+

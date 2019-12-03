@@ -59,3 +59,7 @@ en meme temps mais il voit une seule conversation a la fois.
 ## Action flow
 
 eventHappen -> onEvent -> doSomething
+
+## TODO
+
+- C'est possible d'utiliser les id de client au lieu d'en generer un.
