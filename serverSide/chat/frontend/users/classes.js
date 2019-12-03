@@ -1,6 +1,8 @@
 // Things
 
-class Session {
+const NBR_MSG_FOR_LONG_CONVO = 20;
+
+class SocketData {
 
     constructor(conversation, id) {
         this.conversation = conversation;
@@ -8,7 +10,6 @@ class Session {
     }
 }
 
-const NBR_MSG_FOR_LONG_CONVO = 20;
 
 class Conversation {
 

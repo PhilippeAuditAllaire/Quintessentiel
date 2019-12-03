@@ -3,6 +3,7 @@
 
 const io = require('socket.io')(3000);
 
+const rooms = {};
 const users = {};
 const admins = {};
 
@@ -13,38 +14,31 @@ function onServerReady() {
     io.on('connection', socket => { setupSocket(socket); });
 }
 
-// Enum des types de messages
-const MSG_E = Object.freeze({
-    "ACTIVE_ADMIN": 1,
-    "NEW_ADMIN": 2,
-    "NEW_USER": 3,
-    "SEND_CHAT_MSG": 4,
-    "DISCONNECT": 5
-}); // TODO : Remplacer les int par des string plus lisible ?
-
-
 
 function setupSocket(socket){
-    socket.on(MSG_E.ACTIVE_ADMIN, name => emitAdminConnected() );
     
-    socket.on(MSG_E.NEW_ADMIN, name => onAdminConnect(name) );
+    // Receive
+    socket.on(MSG_TYPE.ACTIVE_ADMIN, name => emitAdminConnected() );
     
-    socket.on(MSG_E.NEW_USER, name => emitUserConnect(name) );
+    socket.on(MSG_TYPE.NEW_ADMIN, name => onAdminConnect(name) );
     
-    socket.on(MSG_E.SEND_CHAT_MSG, message => emitChatMessage(message) );
+    socket.on(MSG_TYPE.NEW_USER, name => emitUserConnect(name) );
     
-    socket.on(MSG_E.DISCONNECT, () => emitDisconnect() );
+    socket.on(MSG_TYPE.SEND_CHAT_MSG, message => emitChatMessage(message) );
+    
+    socket.on(MSG_TYPE.DISCONNECT, () => emitDisconnect() );
 }
 
 
 
 function emitAdminConnected(){
-    users[socket.id] = admins.length > 0;
-    socket.broadcast.emit('admin-connected', name); // TODO : to sender
+    isAdminConnected = admins.length > 0; //TODO
+    socket.broadcast.emit('admin-connected', isAdminConnected); // TODO : to sender
 }
 
 function onAdminConnect(name){
     // TODO
+    admins.push(admin);
 }
 
 

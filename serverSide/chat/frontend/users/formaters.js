@@ -12,31 +12,52 @@ function connectionErrorMsg(lang) {
     }
 }
 
+function formatAskName(){
+    
+    switch (lang) {
+        case "fr":
+            return "Quel est votre nom ?";
+        case "en":
+            return "What is your name?";
+        default:
+            return "Quel est votre nom ?";
+    }
+}
 
-function firstMessage(lang){
+function formatFirstMessage(lang){
     switch (lang) {
         case "fr":
             return "Comment puis-je vous aider ?";
         case "en":
-            return "How can I help you";
+            return "How can I help you ?";
         default:
             return "Comment puis-je vous aider ?";
     }
 }
 
-
 function formatMsg(msg) {
     if (msg.imSender)
-        return "<div class='msg'>" + selfName(lang) + " : " + msg.text + " " + msg.time + "</div>";
+        return "<div class='msg'>" + moi(lang) + " : " + msg.text + " " + msg.time + "</div>";
     else
-        return "<div class='msg'>" + nameFriend() + " : " + msg.text + " " + msg.time + "</div>";
+        return "<div class='msg'>" + correspondant() + " : " + msg.text + " " + msg.time + "</div>";
 }
 
 function formatErrorMsg(msg) {
     return "<div class='error_msg'>" + msg + "</div>";
 }
 
-function selfName(lang) {
+function formatDisconnection(name){
+    switch (lang) {
+        case "fr":
+            return `${name} s'est déconnecté`;
+        case "en":
+            return `${name} disconnected`;
+        default:
+            return `${name} s'est déconnecté`;
+    }
+}
+
+function moi(lang) {
     switch (lang) {
         case "fr":
             return "Moi";
@@ -47,7 +68,7 @@ function selfName(lang) {
     }
 }
 
-function nameFriend() {
+function correspondant() {
     if (imCustomer())
         return "Quintessentiel";
     else

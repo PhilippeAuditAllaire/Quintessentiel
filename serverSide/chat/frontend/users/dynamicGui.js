@@ -21,7 +21,7 @@ function showErrorMessage(msg) {
 }
 
 function showUserDisconnect(name){
-    appendMessage(`${name} disconnected`);
+    appendMessage(formatDisconnection(name));
 }
 
 // INPUT

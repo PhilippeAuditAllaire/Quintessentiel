@@ -1,24 +1,29 @@
-const socket = io('http://localhost:3000');
-const messageContainer = document.getElementById('message-container');
-const messageForm = document.getElementById('send-container');
-const messageInput = document.getElementById('message-input');
+// Admin Data
+var imCustomer = Object.freeze(false);
+const currentRoom = null;
+var convo = null;
+var listConvo = new Map();
 
 
-appendMessage('You joined');
+io.on('connect', startAdminChat );
+
+appendMessage("Vous etes connectée en tant qu'admin");
 
 function startAdminChat(){
 
-    socket.emit('new-admin', "Quintessentiel");
+    // Send
+    socket.emit(MSG_TYPE.NEW_ADMIN, "Quintessentiel");
     
-    socket.on('chat-message', data => { onChatMessage(); });
     
-    socket.on('user-connected', name => { onUserConnected(name); } );
+    //Receive
+    socket.to(currentRoom).on(MSG_TYPE.SEND_CHAT_MSG, data => { onChatMessage(); });
     
-    socket.on('user-disconnected', name => { onUserDisconnected(name); });
+    socket.to(currentRoom).on(MSG_TYPE.NEW_USER, name => { onUserConnected(name); } );
+    
+    socket.to(currentRoom).on(MSG_TYPE.DISCONNECT, name => { onUserDisconnected(name); });
     
     
     messageForm.addEventListener('submit', e => { onClickSendMessage(e); });
 
 }
 
-startAdminChat();

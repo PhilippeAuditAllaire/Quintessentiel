@@ -20,10 +20,25 @@ function askToMarkToSave(){
     conversation.markedToSave = confirm("Est-ce que tu veux sauvegarder la conversation ?");
 }
 
-
 function changeCustomerName() {
     customer.name = newName;
 }
+
+// Multi-Convo
+
+function onClickConversationTab(clickedConvo){
+    
+    if (isNotSameConversation(currentConvo, clickedConvo))
+    changeConversation();
+}
+
+function isNotSameConversation(currentConvo, clickedConvo){
+    return currentConvo != clickedConvo;
+}
+
+function changeConversation(){}
+
+// Notifications
 
 function launchNotifications(){
     launchAudioNotif();
