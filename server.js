@@ -187,15 +187,19 @@ website.post("/ajaxRequest/stripePayment",function(req,res){
     const token = req.body.stripeToken; // Using Express
     let ctrlCart = new CtrlCart();
     let subTotal = 0;
+    let taxes;
+    let total = 0;
 
     //Calculate the sub total from the items that are in the user's cart
     ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart)).then(function(calcSubTotal){
         subTotal = calcSubTotal; 
-        console.log("SOUS total")
-        console.log(subTotal);
+        taxes = ctrlCart.calculateTaxes(subTotal);
+        total = parseFloat(subTotal) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq));
+        console.log("TOTAL: ")
+        console.log(total);
         (async () => {
           const charge = await stripe.charges.create({
-            amount: parseInt(subTotal * 100),
+            amount: parseInt(total * 100),
             currency: 'cad',
             description: 'Example charge',
             source: token,

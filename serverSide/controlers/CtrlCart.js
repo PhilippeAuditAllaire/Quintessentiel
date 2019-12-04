@@ -63,17 +63,36 @@ class CtrlCart {
         //Load the products from the cart from the DB
         return this.loadProductsFromCart(cart).then((allProducts) => {
             let subTotal = 0;
-            console.log(allProducts);
           
             //For each product that has been loaded
             allProducts.forEach(function(product){
                 
                 subTotal += parseFloat(((product.qtyInCart * (parseFloat(product.product._retailPrice))*100) / 100).toFixed(2));
             });
-            
+            console.log("SUB TOTAL")
+            console.log(subTotal)
 
             return subTotal;
         });
+    }
+
+    //Calculates the taxes 
+    //@amount is the amount to
+    //calculate the taxes from
+    //@Returns an object containing
+    //both taxes amount
+    calculateTaxes(amount)
+    {
+        let taxes = {
+            tps:0,
+            tvq:0
+        };
+
+
+        taxes.tps = ((amount * 5) / 100).toFixed(2);
+        taxes.tvq = ((amount * 9.975) / 100).toFixed(2);
+
+        return taxes;
     }
 
 }
