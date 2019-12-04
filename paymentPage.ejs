@@ -51,6 +51,27 @@
 					  		<th>Sous-total</th>
 					  		<th id="completeSubTotal">100,00$</th>
 			  			</tr>
+			  			<tr>
+				  			<th></th>
+					  		<th></th>
+					  		<th></th>
+					  		<th>Tps:</th>
+					  		<th id="tpsTotal">15,00$</th>
+			  			</tr>
+			  			<tr>
+				  			<th></th>
+					  		<th></th>
+					  		<th></th>
+					  		<th>Tvq:</th>
+					  		<th id="tvqTotal">15,00$</th>
+			  			</tr>
+			  			<tr>
+				  			<th></th>
+					  		<th></th>
+					  		<th></th>
+					  		<th>Total:</th>
+					  		<th id="grandTotal">15,00$</th>
+			  			</tr>
 			  		</tfoot>
 			  	</table>
 
@@ -252,6 +273,24 @@
 		function changeCompleteSubTotal(price)
 		{
 			document.getElementById("completeSubTotal").innerHTML = price + "$"
+			changeGrandTotal();
+		}
+
+
+		//Changes the grand total 
+		//Gets the taxes from the Backend 
+		function changeGrandTotal()
+		{
+			$.ajax({
+				url: "http://localhost:8000/ajaxRequest/getCartTaxes",
+				method: "POST",
+				success: function(taxes){
+					taxes = JSON.parse(taxes);
+					displayTps(taxes.tps);
+					displayTvq(taxes.tvq);
+					displayGrandTotal(taxes)
+				}
+			});	
 		}
 
 		//Changes the price that is displayed for a given
@@ -278,6 +317,30 @@
 			return index;
 		}
 
+		//Displays the TPS amount
+		//@tps is the tps amount
+		//to displays
+		function displayTps(tps)
+		{
+			let tpsTotal = document.getElementById("tpsTotal");
+			tpsTotal.innerHTML = tps + "$";
+		}
+
+		//Displays the TPS amount
+		//@tps is the tps amount
+		//to displays
+		function displayTvq(tvq)
+		{
+			let tvqTotal = document.getElementById("tvqTotal");
+			tvqTotal.innerHTML = tvq + "$";
+		}
+
+		function displayGrandTotal(taxes)
+		{
+			console.log("hey!");
+			let grandTotal = document.getElementById("grandTotal");
+			grandTotal.innerHTML = (parseFloat(calculateSubTotal()) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq))).toFixed(2) + "$";
+		}
 
 
 		//Managing the next/previous buttons

@@ -209,12 +209,23 @@ website.post("/ajaxRequest/stripePayment",function(req,res){
 
     });
 
-
-
-
-
-
     res.end();
+});
+
+website.post("/ajaxRequest/getCartTaxes",function(req,res){
+    const token = req.body.stripeToken; // Using Express
+    let ctrlCart = new CtrlCart();
+    let taxes;
+
+    //Calculate the sub total from the items that are in the user's cart
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart)).then(function(calcSubTotal){
+        let subTotal = calcSubTotal; 
+        taxes = JSON.stringify(ctrlCart.calculateTaxes(subTotal));
+
+        res.send(taxes);
+    });
+
+
 });
 
 
