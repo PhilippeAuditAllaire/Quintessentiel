@@ -37,7 +37,7 @@ function setLang(req) {
 const QueryEngine = require("./serverSide/scripts/QueryEngine.js");
 const CtrlUser = require("./serverSide/controlers/CtrlUser.js");
 const CtrlProduct = require("./serverSide/controlers/CtrlProduct.js");
-const CtrlRecipe = require("./serverSide/controlers/CtrlRecipe.js");
+const CtrlRecipe = require("./serverSide/controlers/Ctrlrecipe.js");
 const CtrlCategory = require("./serverSide/controlers/CtrlCategory.js");
 const CtrlReseller = require("./serverSide/controlers/CtrlReseller.js");
 const CtrlCart = require("./serverSide/controlers/CtrlCart.js");
@@ -186,16 +186,29 @@ website.get("/paymentPage", function(req, res) {
 website.post("/ajaxRequest/stripePayment",function(req,res){
     const token = req.body.stripeToken; // Using Express
     let ctrlCart = new CtrlCart();
-    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart));
+    let subTotal = 0;
 
-    (async () => {
-      const charge = await stripe.charges.create({
-        amount: 999,
-        currency: 'cad',
-        description: 'Example charge',
-        source: token,
-      });
-    })();
+    //Calculate the sub total from the items that are in the user's cart
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart)).then(function(calcSubTotal){
+        subTotal = calcSubTotal; 
+        console.log("SOUS total")
+        console.log(subTotal);
+        (async () => {
+          const charge = await stripe.charges.create({
+            amount: parseInt(subTotal * 100),
+            currency: 'cad',
+            description: 'Example charge',
+            source: token,
+          });
+        })();
+
+
+    });
+
+
+
+
+
 
     res.end();
 });

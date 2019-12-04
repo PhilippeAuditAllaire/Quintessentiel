@@ -60,11 +60,19 @@ class CtrlCart {
     //Returns a promise that returns the subTotal
     calculateCartSubTotal(cart)
     {   
-        console.log("BEFORE");
-        console.log(cart)
-        console.log("ALL PRODUCTS FROM CART")
+        //Load the products from the cart from the DB
         return this.loadProductsFromCart(cart).then((allProducts) => {
+            let subTotal = 0;
             console.log(allProducts);
+          
+            //For each product that has been loaded
+            allProducts.forEach(function(product){
+                
+                subTotal += parseFloat(((product.qtyInCart * (parseFloat(product.product._retailPrice))*100) / 100).toFixed(2));
+            });
+            
+
+            return subTotal;
         });
     }
 
