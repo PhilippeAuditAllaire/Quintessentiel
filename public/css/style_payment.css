@@ -203,3 +203,20 @@ tr:nth-child(odd) {background: #F6F6F6}
 .deleteItemLink:hover{
 	color: green;
 }
+
+.infoBloc select{
+	width: 100%;
+}
+
+
+.formRowError p{
+	color:red;
+	width:50%;
+	text-align: left;
+	margin-bottom: 0;
+}
+
+.formRowError{
+	display: flex;
+	justify-content: flex-end;
+}

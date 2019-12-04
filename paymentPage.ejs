@@ -97,54 +97,73 @@
 			  		<div class="infoTabBottomWrapper infoBloc">
 			  			<h3>Utiliser une nouvelle adresse: </h3>
 			  			<div id="formInfoUser" class="formInfoUser">
-			  				<div class="formRow">
-			  					<div class="wrapperLabel">
-			  						<label>Pays</label>
-			  					</div>
-			  					<div class="wrapperInput">
-			  						<input type="text" id="formCountry" class="form-control"/>
-			  					</div>
+			  				<div class="formRowWrapper">
+				  				<div class="formRow">
+				  					<div class="wrapperLabel">
+				  						<label>Pays</label>
+				  					</div>
+				  					<div class="wrapperInput">
+				  						<select id="idCountry">
+				  							
+				  						</select>
+				  					</div>
+				  				</div>
 			  				</div>
-			  				<div class="formRow">
-			  					<div class="wrapperLabel">
-			  						<label>Province</label>
-			  					</div>
-			  					<div class="wrapperInput">
-			  						<input type="text" id="formProvince" class="form-control"/>
-			  					</div>
+			  				<div class="formRowWrapper">
+				  				<div class="formRow">
+				  					<div class="wrapperLabel">
+				  						<label>Province</label>
+				  					</div>
+				  					<div class="wrapperInput">
+				  						<select id="idProvince">
+				  							
+				  						</select>
+				  					</div>
+				  				</div>
 			  				</div>
-			  				<div class="formRow">
-			  					<div class="wrapperLabel">
-			  						<label>Rue</label>
-			  					</div>
-			  					<div class="wrapperInput">
-			  						<input type="text" id="formStreet" class="form-control"/>
-			  					</div>
+			  				<div class="formRowWrapper">
+			  					<div class="formRowError"><p id="formErrorStreet"></p></div>
+				  				<div class="formRow">
+				  					<div class="wrapperLabel">
+				  						<label>Rue</label>
+				  					</div>
+				  					<div class="wrapperInput">
+				  						<input type="text" id="formStreet" class="form-control"/>
+				  					</div>
+				  				</div>
 			  				</div>
-			  				<div class="formRow">
-			  					<div class="wrapperLabel">
-			  						<label>No Civic</label>
-			  					</div>
-			  					<div class="wrapperInput">
-			  						<input type="text" id="formNoCivic" class="form-control"/>
-			  					</div>
-			  				</div>
-			  				<div class="formRow">
-			  					<div class="wrapperLabel">
-			  						<label>Code postal</label>
-			  					</div>
-			  					<div class="wrapperInput">
-			  						<input type="text" id="formPostalCode" class="form-control"/>
-			  					</div>
-			  				</div>
-			  				<div class="formRow">
-			  					<div class="wrapperLabel">
-			  						<label>No appartement</label>
-			  					</div>
-			  					<div class="wrapperInput">
-			  						<input type="text" id="formNoApp" class="form-control"/>
-			  					</div>
-			  				</div>
+			  				<div class="formRowWrapper">
+			  					<div class="formRowError"><p id="formErrorNoCivic"></p></div>
+				  				<div class="formRow">
+				  					<div class="wrapperLabel">
+				  						<label>No Civic</label>
+				  					</div>
+				  					<div class="wrapperInput">
+				  						<input type="text" id="formNoCivic" class="form-control"/>
+				  					</div>
+				  				</div>
+				  			</div>
+				  			<div class="formRowWrapper">
+				  				<div class="formRowError"><p id="formErrorPostalCode"></p></div>
+				  				<div class="formRow">
+				  					<div class="wrapperLabel">
+				  						<label>Code postal</label>
+				  					</div>
+				  					<div class="wrapperInput">
+				  						<input type="text" id="formPostalCode" class="form-control"/>
+				  					</div>
+				  				</div>
+				  			</div>
+				  			<div class="formRowWrapper">
+				  				<div class="formRow">
+				  					<div class="wrapperLabel">
+				  						<label>No appartement</label>
+				  					</div>
+				  					<div class="wrapperInput">
+				  						<input type="text" id="formNoApp" class="form-control"/>
+				  					</div>
+				  				</div>
+				  			</div>
 			  			</div>
 			  		</div>
 			  	</div>
@@ -172,7 +191,55 @@
 			</div>	
 		</div>
 	</div>
-	<script src="./javascript/stripePayment.js"></script>
+
+	<script src="./javascript/loadCountries.js"></script>
+	<script>
+		loadAllCountries(); //Loads and displays the countries/provinces in the Form
+		let formStreet = document.getElementById("formStreet");
+		let formNoCivic = document.getElementById("formNoCivic");
+		let formPostalCode = document.getElementById("formPostalCode");
+		let formNoApp = document.getElementById("formNoApp");
+		let formIdCountry = document.getElementById("idCountry");
+		let formIdProvince = document.getElementById("idProvince");
+
+		let formErrorStreet = document.getElementById("formErrorStreet");
+		let formErrorNoCivic = document.getElementById("formErrorNoCivic");
+		let formErrorPostalCode = document.getElementById("formErrorPostalCode");
+
+
+
+		//Checks if the form is filled
+		function validateUserAddressForm()
+		{	
+			let validForm = true;
+
+			//If the street is valid
+			if(formStreet.value == "")
+			{	
+				console.log("la rue ne peut pas être vide!");
+				formErrorStreet.innerHTML = "Veuillez renseigner ce champ";
+				validForm = false;
+			}
+
+			//if the civic nb is valid
+			if(formNoCivic.value == "")
+			{
+				console.log("Le no civic ne peut pas être vide!");
+				formErrorNoCivic.innerHTML = "Veuillez renseigner ce champ";
+				validForm = false;
+			}
+
+			//if the postal code is valid
+			if(formPostalCode.value == "")
+			{
+				console.log("le code postal ne peut pas être vide!");
+				formErrorPostalCode.innerHTML = "Veuillez renseigner ce champ"
+				validForm = false;
+			}
+
+			return validForm;
+		}
+	</script>
 	<script> /* Script that fills the resume grid */
 		let bodyTableResume = document.getElementById("bodyTableResume");
 
@@ -397,6 +464,7 @@
 
 
 	</script>
+	<script src="./javascript/stripePayment.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<!-- Bootstrap -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

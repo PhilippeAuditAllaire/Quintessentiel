@@ -105,9 +105,7 @@ website.get("/userConnection", function(req, res) {
 website.get("/userRegister", function(req, res) {
     setLang(req);
 
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("userRegister", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("userRegister.ejs", JSON.parse(resultat));
     });
 });
@@ -184,21 +182,23 @@ website.get("/paymentPage", function(req, res) {
 
 
 website.post("/ajaxRequest/stripePayment",function(req,res){
+
     const token = req.body.stripeToken; // Using Express
     let ctrlCart = new CtrlCart();
     let subTotal = 0;
     let taxes;
     let total = 0;
 
+    //Get all the user's infos before doing the payment
     //Calculate the sub total from the items that are in the user's cart
     ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart)).then(function(calcSubTotal){
         subTotal = calcSubTotal; 
         taxes = ctrlCart.calculateTaxes(subTotal);
         total = parseFloat(subTotal) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq));
 
+        let userCustomAddress = req.body.userManualAddressInfos
         //generate the metadata so that we can keep track of what the user bought and at what price
-        let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart)).then(function(metadata){
-
+        let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart),req.session.userId,userCustomAddress).then(function(metadata){
             console.log("TOTAL: ")
             console.log(total);
             console.log("METADATA")
@@ -207,15 +207,16 @@ website.post("/ajaxRequest/stripePayment",function(req,res){
               const charge = await stripe.charges.create({
                 amount: parseInt(total * 100),
                 currency: 'cad',
-                description: 'Example charge',
+                description: 'Paiement d\'un panier',
                 source: token,
-                metadata: JSON.parse(metadata)
+                metadata: JSON.parse(metadata),
               });
             })();
         });
 
 
-    });
+    });        
+
 
     res.end();
 });
@@ -808,13 +809,11 @@ app.post("/ajaxRequest/getRebate", function(req, res) {
 app.post("/ajaxRequest/getTags",function(req,res){
 		let ctrlProduct = new CtrlProduct();
 
-		ctrlProduct.loadAllTags().then(function(result){
-
-			
-			
-		});
+		ctrlProduct.loadAllTags().then(function(result){});
 });
 
-
-website.listen(8000);
-app.listen(5000);
+//0 indique qu'on veut un port random non écouté (pour l'hébergement)
+var listener = website.listen(8000,(req,res)=>{
+    console.log(listener.address().port)
+});
+//app.listen(5000);
