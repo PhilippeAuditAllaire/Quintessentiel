@@ -95,6 +95,31 @@ class CtrlCart {
         return taxes;
     }
 
+    //Formats the cart's data as metadata
+    //that we can then pass to Stripe
+    generateMetadata(cart)
+    {
+       
+
+        //Load the products from the cart from the DB
+        return this.loadProductsFromCart(cart).then((allProducts) => {
+            let i = 1;
+
+            let metadata = "{";
+            //For each product that has been loaded
+            allProducts.forEach(function(product){
+                metadata += "\""+i+".Nom du produit\": \"" + product.product._name + "\",";
+                metadata += "\""+i+".Quantité commandée\": \"" + product.qtyInCart + "\",";
+                metadata += "\""+i+".Prix individuel du produit\": \"" + product.product._retailPrice + "\",";
+                i++;
+            });
+
+            metadata = metadata.slice(0,metadata.length - 1); //Remove the last comma
+            metadata += "}";
+            return metadata;
+        });
+    }
+
 }
 
 module.exports = CtrlCart;

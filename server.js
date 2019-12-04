@@ -195,16 +195,24 @@ website.post("/ajaxRequest/stripePayment",function(req,res){
         subTotal = calcSubTotal; 
         taxes = ctrlCart.calculateTaxes(subTotal);
         total = parseFloat(subTotal) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq));
-        console.log("TOTAL: ")
-        console.log(total);
-        (async () => {
-          const charge = await stripe.charges.create({
-            amount: parseInt(total * 100),
-            currency: 'cad',
-            description: 'Example charge',
-            source: token,
-          });
-        })();
+
+        //generate the metadata so that we can keep track of what the user bought and at what price
+        let metadataPaymentInfos = ctrlCart.generateMetadata(JSON.parse(req.session.userCart)).then(function(metadata){
+
+            console.log("TOTAL: ")
+            console.log(total);
+            console.log("METADATA")
+            console.log(metadata);
+            (async () => {
+              const charge = await stripe.charges.create({
+                amount: parseInt(total * 100),
+                currency: 'cad',
+                description: 'Example charge',
+                source: token,
+                metadata: JSON.parse(metadata)
+              });
+            })();
+        });
 
 
     });
