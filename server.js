@@ -525,21 +525,47 @@ app.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
 app.post("/ajaxRequest/addReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
-    ctrlReseller.addReseller(req.body).then(function(result){
+    ctrlReseller.addReseller(req.body);
+    res.send("true");
+});
+
+app.post("/ajaxRequest/removeReseller", function(req, res) {
+    let ctrlReseller = new CtrlReseller();
+
+    ctrlReseller.removeReseller(req.body);
+    res.send("true");
+});
+
+app.post("/ajaxRequest/getResellerProduct", function(req, res) {
+    let ctrlReseller = new CtrlReseller();
+
+    ctrlReseller.getProductList().then(function(result){
         console.log(result)
         res.send(result);
     })
 });
 
-app.post("/ajaxRequest/getRebate", function(req, res) {
+app.post("/ajaxRequest/getRebateReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
     console.log(req.body);
 
-    ctrlReseller.getRebateList(req.body).then(function(result){
+    ctrlReseller.getRebate(req.body).then(function(result){
         console.log(result)
         res.send(result);
     })
 });
+
+app.post("/ajaxRequest/updateRebateReseller", function(req, res) {
+    let ctrlReseller = new CtrlReseller();
+    let data= req.body;
+    let resellerId= data.resellerId;
+    let listRebateUpdated = data.listRebate;
+
+    ctrlReseller.updateResellerRebate(listRebateUpdated,resellerId);
+    res.send("true");
+});
+
+
 
 app.post("/ajaxRequest/getTags",function(req,res){
 		let ctrlProduct = new CtrlProduct();

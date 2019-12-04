@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quintessentiel | Distributeur</title>
+    <title>Quintessentiel | Connexion</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/style_application.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css"/>
     <link rel="stylesheet" type="text/css" href="./css/style_manageReseller.css"/>
+
+    <link rel="stylesheet" type="text/css" href="./css/style_productInfo.css"/>
 </head>
 <body>
         <div class="modal fade" tabindex="-1" role="dialog" id="addResellerModal"> <!-- Add reseller modal -->
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
+                <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title">Ajout d'un distributeur</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -21,42 +23,84 @@
                     </div>
                     <form id="addModalForm">
                         <div class="modal-body">
-                          <div id="addResellerSuccessAlert" class="alert alert-success fade" role="alert">
-                              Distributeur ajouté avec succès
-                          </div>
-                          <div class="addResellerFields">
-                                <div class="table">
-                                    <div class="border">
-                                        <table class="table-product">
-                                            <thead class="table-product-header">
-                                                <tr>
-                                                    <th>Nom</th>
-                                                    <th>Adresse courriel</th>
-                                                    <th>Distributeur?</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tableResellerModal">
-                        
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div> 
-                          </div>
+                            <div id="addResellerSuccessAlert" class="alert alert-success fade" role="alert">
+                                Distributeur ajouté avec succès
+                            </div>
+                            <div class="addResellerFields">
+                                    <div class="table">
+                                        <div class="border">
+                                            <table class="table-product">
+                                                <thead class="table-product-header">
+                                                    <tr>
+                                                        <th>Nom</th>
+                                                        <th>Adresse courriel</th>
+                                                        <th>Distributeur?</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableResellerModal">
+                            
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> 
+                            </div>
                     
-                        <div class="modal-footer">
-                          <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            </div>
                         </div>
-                      </div>
-                  </form>
+                    </form>
+                </div>
             </div>
           </div>
+          <div class="modal fade" tabindex="-1" role="dialog" id="removeResellerModal"> <!-- Remove Reseller Modal-->
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Retrait d'un distributeur</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form id="removeModalForm">
+                        <div class="modal-body">
+                            <div id="removeResellerSuccessAlert" class="alert alert-success fade" role="alert"> 
+                                Distributeur retiré avec succès
+                            </div>
+                            <div class="addResellerFields">
+                                    <div class="table">
+                                        <div class="border">
+                                            <table class="table-product">
+                                                <thead class="table-product-header">
+                                                    <tr>
+                                                        <th>Nom</th>
+                                                        <th>Adresse courriel</th>
+                                                        <th>Retirer de la liste de distributeur?</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableRemoveResellerModal">
+                            
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> 
+                            </div>
+                    
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-success" id="btnSend" value="Retirer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
           </div>
           <div class="modal fade" tabindex="-1" role="dialog" id="updateResellerModal">       <!-- Update modal reseller -->
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Modification d'un distributeur</h5>
+                      <h5 class="modal-title" id="modalTitleUpdate"></h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -66,9 +110,21 @@
                           <div id="updateResellerSuccessAlert" class="alert alert-success fade" role="alert">
                                 Distributeur modifié avec succès!
                           </div>
-                          <div class="addResellerFields">
-                              
-                          </div>
+                          <div class="table">
+                            <div class="border">
+                                <table class="table-product">
+                                    <thead class="table-product-header">
+                                        <tr>
+                                            <th>Produit</th>
+                                            <th style="width:15%;">Rabais</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableResellerUpdate">
+                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     
                         <div class="modal-footer">
                           <input type="submit" class="btn btn-success" id="btnModify" value="Modifier">
@@ -90,9 +146,16 @@
         </div>
         <div class="wrapper-manageProduct-section">
             <h2>Gestion des distributeurs</h2>
-            <div class="wrapper-right-btn">
-                <div class="wrapper-btn">
-                    <a href="#" class="btnApp" id="btnAddReseller">+</a>
+            <div class="mg-reseller-top-line">     
+                <div class="wrapper-right-btn">
+                    <div class="wrapper-btn">
+                        <button type="button" class="btnAppReseller" id="btnAddReseller">&#43</button>
+                    </div>
+                </div>
+                <div class="wrapper-right-btn">
+                    <div class="wrapper-btn">
+                        <button type="button" class="btnAppReseller" id="btnRemoveReseller">&#8722</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -117,8 +180,8 @@
     <script src="./javascript/renderer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="./public/javascript/listbox.js"></script>
-    <script src="./public/javascript/tableProducts.js"></script>
+    <script src="./javascript/listbox.js"></script>
+    <script src="./javascript/tableProducts.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script> 
     <script>
 
@@ -128,6 +191,8 @@
         let resellerList;
         let nonResellerList;
         let updateSelectedReseller;
+        let idReseller;
+
 
         loadResellersDisplayList();
         //Loads all the reseller that need to be displayed
@@ -139,6 +204,7 @@
                 type: "POST",
                 success: function(res){
                     resellerList = res;
+                    console.log("charger liste reseller");
                     console.log(resellerList);
                     displayResellerList(resellerList);
                 }
@@ -158,14 +224,13 @@
 
             resellerList.forEach(function(reseller){
                 tableReseller.innerHTML += `<tr data-product-id="`+reseller._id+`" ondblclick="openUpdateReseller(this,`+reseller._id+`)" class="rowTR">
-                            <th>`+reseller._firstName+' '+reseller._lastName+`</th>
-                            <th>`+reseller._email+`</th>
+                            <th style="width:33%;">`+reseller._firstName+' '+reseller._lastName+`</th>
+                            <th style="text-align:left;">`+reseller._email+`</th>
                         </tr>`;
             });
         }
 
         
-
         $("#btnAddReseller").on("click",function(e){
             e.preventDefault();
             $("#addResellerModal").modal();
@@ -178,8 +243,8 @@
                     displayNonResellerList(nonResellerList);
                 }
             })
-            console.log("adding a category!")
         });
+
 
         $("#addModalForm").on("submit",function(e){
             e.preventDefault();
@@ -204,7 +269,6 @@
         });
 
         //This function shows a success message
-        //and clears the form
         function successAddedReseller()
         {
             addResellerSuccessAlert.classList.add("show");
@@ -227,48 +291,205 @@
 
             nonResellerList.forEach(function(reseller){
                 tableReseller.innerHTML += `<tr data-product-id="`+reseller._id+` class="rowTR">
-                            <th>`+reseller._firstName+' '+reseller._lastName+`</th>
-                            <th>`+reseller._email+`</th>
-                            <th><input type="checkbox" name="toAdd" class="chckVisible" value="`+reseller._id+`"/></th>
+                            <th style="width:33%;">`+reseller._firstName+' '+reseller._lastName+`</th>
+                            <th style="width:33%;text-align:left;">`+reseller._email+`</th>
+                            <th style="text-align:center;"><input type="checkbox" name="toAdd" class="chckVisible" value="`+reseller._id+`"/></th>
                         </tr>`;
             });
         }
         
+        //Remove reseller script
 
-        //Update product script
+        $("#btnRemoveReseller").on("click",function(e){
+            e.preventDefault();
+            $("#removeResellerModal").modal();
+            return $.ajax({
+                url: "./ajaxRequest/loadAllResellers",
+                type: "POST",
+                success: function(res){
+                    resellerList = res;
+                    console.log(resellerList);
+                    displayRemoveResellerList(resellerList);
+                }
+            })
+        });
+
+        function loadRemoveResellersDisplayList()
+        {
+            return $.ajax({
+                url: "./ajaxRequest/loadAllResellers",
+                type: "POST",
+                success: function(res){
+                    resellerList = res;
+                    console.log(resellerList);
+                    displayRemoveResellerList(resellerList);
+                }
+            })
+        }
+
+        //Displays all the reseller that have been loaded
+        //from the server
+        //@resellerList is the list of resellers loaded
+        //from the server
+        function displayRemoveResellerList(resellerList)
+        {
+            let tableReseller = document.getElementById("tableRemoveResellerModal");
+            tableReseller.innerHTML = "";
+
+            resellerList.forEach(function(reseller){
+                tableReseller.innerHTML += `<tr data-product-id="`+reseller._id+` class="rowTR">
+                            <th style="width:33%;">`+reseller._firstName+' '+reseller._lastName+`</th>
+                            <th style="width:33%;text-align:left;">`+reseller._email+`</th>
+                            <th style="text-align:center;"><input type="checkbox" name="toRemove" class="chckVisible" value="`+reseller._id+`"/></th>
+                        </tr>`;
+            });
+        }
+
+        $("#removeModalForm").on("submit",function(e){
+            e.preventDefault();
+            var listRemoveReseller = []; 
+            $("input:checkbox[name=toRemove]:checked").each(function() { 
+                listRemoveReseller.push($(this).val()); 
+            });
+            console.log("voici le id a enlever:"+listRemoveReseller);
+            if(listRemoveReseller.length>0){
+                console.log("here we are");
+                $.ajax({
+                    url: "./ajaxRequest/removeReseller",
+                    type: "POST",
+                    data: {
+                        resellerId:listRemoveReseller
+                    },
+                    success: function(res){
+                        console.log("t rendu icite");
+                        successRemovedReseller();
+                        loadResellersDisplayList();
+                    }
+                })
+            }
+
+        });
+
+        //This function shows a success message
+        function successRemovedReseller(){
+            removeResellerSuccessAlert.classList.add("show");
+
+            setTimeout(function(){
+                removeResellerSuccessAlert.classList.remove("show");
+            },5000);
+
+        }
+        //Update reseller script
 
         //Opens the update category modal
         function openUpdateReseller(row,id)
         {   
-            console.log("celuila->:"+id);
+            idReseller= id;
             let updateModal = document.getElementById("updateResellerModal");
             let rowIndex = $("#tableReseller tr").index(row);
             updateSelectedReseller = resellerList[rowIndex];
+            
 
+            let resellerName= ""+updateSelectedReseller._firstName+" "+updateSelectedReseller._lastName+"";
             $.ajax({
-                    url: "./ajaxRequest/getRebate",
+                    url: "./ajaxRequest/getResellerProduct",
                     type: "POST",
                     data: {
                         resellerId: id
                     },
                     success: function(res){
-                        successAddedReseller();
-                        loadResellersDisplayList();
+                        displayProductList(res,resellerName);
                     }
                 })
             $(updateModal).modal();
         }
 
-        function fillUpdateModal(rowIndex)
+        /* Displays the list of product and the rebate in the list already
+        */
+        function displayProductList(productList,name)
         {
-            let updateModal = document.getElementById("updateCategoryModal");
+            
+            let tableProduct = document.getElementById("tableResellerUpdate");
+            tableProduct.innerHTML = "";
 
-            clearModalInfos(updateModal);
-            fillTranslatableFields(updateSelectedCategory._traductions);
+            let resellerName= document.getElementById("modalTitleUpdate");
+            resellerName.innerHTML = "Modification de : <i>"+name+"</i>";
 
-            updateModal.getElementsByClassName("chckVisible")[0].checked = updateSelectedCategory._isVisible;
+            productList.forEach(function(product){
+                tableProduct.innerHTML += `<tr data-product-id="`+product._id+`" class="rowTR">
+                            <th>`+product._name+`</th>
+                            <th><input type="number" step="0.001" id="rebate" name="rebate" min="0" max="100" value="0"></th>
+                        </tr>`;
+            });
+
+            getRebate(idReseller);
 
         }
+
+        function getRebate(id){
+            console.log("you now in the rebate function");
+            $.ajax({
+                    url: "./ajaxRequest/getRebateReseller",
+                    type: "POST",
+                    data: {
+                        resellerId: id
+                    },
+                    success: function(res){
+                        showRebate(res);
+                    }
+                })
+        }
+
+        function showRebate(productList){
+
+            productList.forEach(function(product){
+                $("#tableResellerUpdate th:has(:input)").each(function() {
+                    if($(this).closest('tr').attr('data-product-id') == product._id){
+                        $(this).find("#rebate").val(product._rebate);
+                    } 
+                });
+            })
+        }
+        
+        //This function shows a success message
+        function successUpdatedReseller()
+        {
+            updateResellerSuccessAlert.classList.add("show");
+
+            setTimeout(function(){
+                updateResellerSuccessAlert.classList.remove("show");
+            },5000);
+        }
+
+        $("#updateResellerModal").on("submit",function(e){
+            e.preventDefault();
+            var listRebate = []; 
+            $("input[name='rebate']").each(function() {
+                console.log("in the loop")
+
+                if($(this).val()!='0'){
+                    let rebateId = $(this).closest('tr').attr('data-product-id');
+                    let rebateVal = $(this).val();
+
+                    listRebate.push({id: rebateId,value: rebateVal});
+                }
+                
+            });
+
+            $.ajax({
+                url: "./ajaxRequest/updateRebateReseller",
+                type: "POST",
+                data: {
+                    resellerId:idReseller,
+                    listRebate:JSON.stringify(listRebate)
+                },
+                success: function(res){
+                    successUpdatedReseller();
+                    getRebate(idReseller);
+                }
+            })
+        });
+
     </script>
 
 </body>
