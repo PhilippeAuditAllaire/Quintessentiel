@@ -1,5 +1,7 @@
 <!-- Navbar du site web -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/javascript/lang.js"></script>
 <script>
     $(function() {
         $('#serumBanner').hide().delay(3000).slideDown(1000);
@@ -14,95 +16,184 @@
         <div class="wrapper-links-t">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link nav-link-current" href="index">Accueil</a>
+                    <a class="nav-link nav-link-current" href="index">
+                        <%=home%>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="catalogue">Produits</a>
+                    <a class="nav-link" href="catalogue">
+                        <%=products%>
+                    </a>
                 </li>
                 <li class="dropdown nav-item">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Visage
-                          </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Nettoyants</a>
-                        <a class="dropdown-item" href="#">Masque et exfoliants</a>
-                        <a class="dropdown-item" href="#">Contour des yeux</a>
-                        <a class="dropdown-item" href="#">Oléosérums</a>
-                        <a class="dropdown-item" href="#">Lotions toniques</a>
-                        <a class="dropdown-item" href="#">Hydrolats</a>
-                        <a class="dropdown-item" href="#">Trios et coffrets</a>
-                        <a class="dropdown-item" href="#">Huiles végétales</a>
-                        <a class="dropdown-item" href="#">Huiles essentielles</a>
-                        <a class="dropdown-item" href="#">Soins solaires</a>
-                        <a class="dropdown-item" href="#">Soins Anti-age</a>
-                        <a class="dropdown-item" href="#">Maquillage minéral</a>
-                        <a class="dropdown-item" href="#">Baume à lèvres</a>
-                        <a class="dropdown-item" href="#">Huile de Moringa</a>
-                    </div>
-                </li>
-                <li class="dropdown nav-item">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Corps
-                          </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Beurre fouetté douceur</a>
-                        <a class="dropdown-item" href="#">Baume exfoliant</a>
-                        <a class="dropdown-item" href="#">Huile hydratante douceur</a>
-                        <a class="dropdown-item" href="#">Huile réparatrice vergetures</a>
-                        <a class="dropdown-item" href="#">Savon noir</a>
-                        <a class="dropdown-item" href="#">Coffret Hammam</a>
-                        <a class="dropdown-item" href="#">Soins des mains</a>
-                        <a class="dropdown-item" href="#">Soins pour hommes</a>
-                        <a class="dropdown-item" href="#">Beurre de karité</a>
-                        <a class="dropdown-item" href="#">Gel d'aloès</a>
-                    </div>
-                </li>
-                <li class="dropdown nav-item">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Peau
-                              </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Peau jeune</a>
-                        <a class="dropdown-item" href="#">Peau sensible/intolérante</a>
-                        <a class="dropdown-item" href="#">Peau sèche</a>
-                        <a class="dropdown-item" href="#">Peau mixte</a>
-                        <a class="dropdown-item" href="#">Peau grasse</a>
-                        <a class="dropdown-item" href="#">Peau réactive/rougeurs</a>
-                        <a class="dropdown-item" href="#">Peau à tendeance acnéique</a>
-                        <a class="dropdown-item" href="#">Peau déshydratée</a>
-                        <a class="dropdown-item" href="#">Cellulite/vergetures</a>
-                        <a class="dropdown-item" href="#">Tâches brunes</a>
-                    </div>
-                </li>
-                <li class="dropdown nav-item">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Consultations
+                        <%=face%>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Consultation en aromathérapie</a>
-                        <a class="dropdown-item" href="#">Consultation en dermocosmétique naturelle</a>
-                        <a class="dropdown-item" href="serum">Sérum personnalisé</a>
-                        <a class="dropdown-item" href="#">Coaching par Skype</a>
+                        <a class="dropdown-item" href="#">
+                            <%=facenettoyants%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facemasque%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facecontour%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=faceoleoserum-%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facelotions%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facehydrolats%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facetrios%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facehuilevegetale%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facehuileessentielle%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facesoinssolaires%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facesoinsantiage%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facemaquillage%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facebaume%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=facehuilemoringa%>
+                        </a>
                     </div>
                 </li>
                 <li class="dropdown nav-item">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Formations
-                                      </a>
+                        <%=corps%>
+                    </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Aromathérapie : Le top 10 des huiles essentielles</a>
-                        <a class="dropdown-item" href="#">Halte aux maux de l'hiver</a>
-                        <a class="dropdown-item" href="#">Huiles essentielles et émotions</a>
-                        <a class="dropdown-item" href="#">Qu'y a-t-il dans mes cosmétiques</a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpsbeurredouceur%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpsbaume%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpshuiledouceur%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpshuilevergeture%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpssavon%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpscoffrets%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpssoinsmains%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpsbeurrekarite%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=corpsgel%>
+                        </a>
                     </div>
                 </li>
                 <li class="dropdown nav-item">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        À propos
-                                      </a>
+                        <%=peau%>
+                    </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="faq">FAQ</a>
-                        <a class="dropdown-item" href="contactus">Contactez-nous</a>
+                        <a class="dropdown-item" href="#">
+                            <%=peaujeune%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peausensible%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peauseche%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peaugrasse%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peauacneique%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peaudeshydratee%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peaucellulite%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peaumixte%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peaureactive%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=peautaches%>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%=consult%>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">
+                            <%=consultaromatherapie%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=consultdermoco%>
+                        </a>
+                        <a class="dropdown-item" href="serum">
+                            <%=consultserum%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=consultskype%>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%=form%>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">
+                            <%=formaromatherapie%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=formhiver%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=formhuiles%>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <%=formcosmetique%>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <%=propos%>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">
+                            <%=proposfaq%>
+                        </a>
+                        <a class="dropdown-item" href="contactus">
+                            <%=proposcontact%>
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -115,8 +206,8 @@
                 </form>
             </div>
             <div class="header-middle-wrapper">
-                <img src="./images/icons/account.png" />
-                <img src="./images/icons/cart.png" />
+                <a href="./userConnection" title="Connexion"><img src="./images/icons/account.png" /></a>
+                <a href="#" id="cartLink"><img src="./images/icons/cart.png"/></a>
             </div>
             <div class="header-top-wrapper">
                 <ul class="navbar-nav mr-auto">
@@ -124,9 +215,8 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Langue
 						</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Fr</a>
-                            <a class="dropdown-item" href="#">En</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="lang-dropdown">
+
                         </div>
                     </li>
                 </ul>
@@ -138,7 +228,36 @@
 <div id="serumBanner" class="navbar-serum">
     <p>Cliquez ici pour votre <a href="serum">serum personnalisé</a></p>
 </div>
+<div id="cartWrapper" class="cartWrapper"> <!-- sidebar cart -->
+    <div class="cartInnerWrapper">
+        <div class="cartTopWrapper">
+            <div class="cartWrapperTopTitle">
+                <a href="#" id="closeCartLink"><img src="./images/icons/cartCloseIcon.svg" class="closeCartIcon" id="closeCartIcon"/></a>
+                <h2>Panier</h2>
+            </div>
+        </div>
+        <div class="cartUnderTopWrapper">
+            <div class="cartContentWrapper" id="cartContentWrapper">
 
+            </div> 
+        </div>
+        <div class="cartBottomWrapper">
+            <div class="cart-subTotal">
+                <p>Sous-total: <span id="cartSubTotal">0$</span></p>    
+            </div>
+            <div class="cart-payButton">
+                <a href="./paymentPage" title="passer au paiement" id="cartPayLink">Paiement</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fullPageOverlay" class="fullPageOverlay"></div>
+<div id="popup"> <!-- Popup -->
+    <div class="wrapperLogoPopup"><img src="./images/logoApp.png"/></div>
+    <p id="popupMessage">voici le super contenu du popup et sa continue ainsi de suite</p>
+</div>
+<script src="javascript/popup.js"></script>
+<script src="./javascript/sidebarCart.js"></script>
 <script>
     // call ajax lang
     // call ajax lang choisie -> var session

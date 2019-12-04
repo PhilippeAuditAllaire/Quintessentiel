@@ -235,3 +235,306 @@
         align-self: auto;
     }
 }
+
+
+
+
+
+/*
+
+    Styling for the cart
+
+*/ 
+
+.fullPageOverlay{
+    position: fixed;
+    top:0;
+    background-color:#453F3F;
+    width:100%;
+    height:100%;
+    opacity:0;
+    z-index:10;
+    display:none;
+    transition-duration:0.7s;
+}
+
+.fullPageOverlay.toggled{
+    opacity: 0.6;
+}
+
+.cartWrapper{
+    background-color:#f5f5f5;
+    position: fixed;
+    right:0;
+    top:0;
+    min-height:100vh;
+    display: inline-block;
+    min-width:35vh;
+    max-width:100vh;
+    color:white;
+    z-index:11;
+    display: none;
+    transform: translate(100%);
+    transition: transform 0.2s;
+}
+
+.cartWrapper.toggled{
+    opacity:1;
+    transform: translate(0);
+    transition: transform 0.5s;
+}
+
+.cartInnerWrapper{
+    height:100vh;
+}
+
+.cartTopWrapper{
+    background-color:#292323;
+    text-align: center;
+    height:10vh;
+}
+
+.cartWrapperTopTitle{
+    position: relative;
+    height:100%;
+}
+
+
+.cartWrapperTopTitle h2{
+    margin-bottom:0;
+}
+
+.closeCartIcon{
+    width:50px;
+    position: absolute;
+    left:0;
+    top:0;
+    bottom:0;
+}
+
+.cartUnderTopWrapper{
+    height:75vh;
+    overflow-y: scroll;
+    color:#292323;
+    text-align: center;
+    font-size:25px;
+}
+
+.cartUnderTopWrapper{
+    display:flex;
+    flex-direction: column;
+    transition-duration: 1s;
+}
+
+.cart-item{
+    display:flex;
+    flex-direction:column;
+    margin:15px;
+    background-color:#FFFFFF;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.cartBottomWrapper{
+    height:15vh;
+    color:#292323;
+    font-size:22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-top: 3px solid #292323;
+
+}
+
+.itemUpperInfos{
+    display: flex;
+    flex-direction: row;
+}
+
+.wrapperItemImage{
+    width:35%;
+}
+
+
+
+.itemImage{
+   
+}
+
+.itemImage img{
+    width:100px;
+    height:100px;
+}
+
+.itemTitle{
+   display:flex;
+   flex-grow:1;
+   justify-content: flex-start;
+   text-align: left;
+}
+
+.itemClose a{
+    display:flex;
+}
+
+.itemClose img{
+    width:30px;
+}
+
+.itemBottomInfos{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top:10px;
+}
+
+.cartItemQty{
+    width:75px;
+    height:30px;
+    margin-left:;
+}
+
+.cart-item-inside{
+    margin:5px;
+}
+
+
+.wrapper-cart-error{
+    max-width:90%;
+    margin:auto;
+}
+
+.wrapper-cart-error p{
+    width:100%;
+    margin:0;
+    display: none;
+    color:red;
+}
+
+.wrapper-cart-error p.toggled{
+    display:block;
+    width:25vh;
+    margin:auto;
+}
+
+.cart-payButton{
+    text-align: center;
+}
+
+.cart-subTotal{
+    text-align: center;
+}
+
+#cartPayLink{
+    color:#FFFFFF;
+    background-color:#292323;
+    text-decoration: none;
+    border:1px solid black;
+    padding:10px 15px 10px 15px;
+}
+
+.cart-payButton{
+    margin-bottom:10px;
+}
+
+.disappear{
+    transform: scale(0.5);
+    animation: removeElement 1.5s;
+}
+
+
+@keyframes removeElement{
+
+    0%{
+        transform:scale(1) translate(0,0);
+        opacity:1;
+        max-height:1000px;
+    }
+
+
+    50%{
+        transform:scale(0.5) translate(0,0);
+        max-height:1000px;
+    }
+
+    90%{
+        transform:scale(0.5) translate(0,-100px);
+        opacity:0;
+        max-height:1000px;
+    }
+
+    100%{
+        opacity: 0;
+        transform:scale(0.5) translate(0,-100px);
+        max-height:0;
+    }
+
+}
+
+@media screen and (max-width: 425px)
+{
+    .cartWrapper{
+        width:100%;
+    }
+}
+
+
+
+/* popup */
+#popup{
+    position: fixed;
+    z-index:9999;
+    width:500px;
+    margin:auto;
+    bottom:-100px;
+    opacity:0;
+    right:0;
+    left:0;
+    background-color:#f5f5f5;
+    display:flex;
+    border-radius:10px;
+    transition-duration: 0.5s;
+    box-shadow: 0px 0px 10px #bcd13f;
+}
+
+#popup.show{
+   bottom:30px;
+   opacity:1;
+}
+
+#popup .wrapperLogoPopup{
+    width:100px;
+    align-items: center;
+    display: flex;
+    background-color:#453F3F;
+    border-radius:10px 0 0 10px;
+}
+
+#popup img{
+    width:90%;
+    padding:10px;
+}
+
+#popup p{
+    margin-left:5px;
+    margin-bottom:0;
+    align-self: center;
+    font-size:18px;
+}
+
+
+@media screen and (max-width:768px){
+
+    #popup{
+        width:300px;
+    }
+}
+
+.itemImage img{
+    width:100px;
+    height:100px;
+}
+
+.itemTitle{
+    margin-left: 14px;
+}
