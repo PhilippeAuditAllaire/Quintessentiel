@@ -197,7 +197,7 @@ website.post("/ajaxRequest/stripePayment",function(req,res){
         total = parseFloat(subTotal) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq));
 
         //generate the metadata so that we can keep track of what the user bought and at what price
-        let metadataPaymentInfos = ctrlCart.generateMetadata(JSON.parse(req.session.userCart)).then(function(metadata){
+        let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart)).then(function(metadata){
 
             console.log("TOTAL: ")
             console.log(total);

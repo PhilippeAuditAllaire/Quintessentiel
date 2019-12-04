@@ -97,7 +97,7 @@ class CtrlCart {
 
     //Formats the cart's data as metadata
     //that we can then pass to Stripe
-    generateMetadata(cart)
+    generateCartMetadata(cart)
     {
        
 
