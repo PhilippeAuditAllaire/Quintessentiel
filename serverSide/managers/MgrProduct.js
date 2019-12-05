@@ -268,38 +268,40 @@ class MgrProduct {
     }
 
 
-    loadAllCategories() {
+    loadAllCategories(code_lang = 1) {
 
-        let query = "SELECT id,value FROM Category INNER JOIN ta_categoryAttribute_language ON Category.id = ta_categoryAttribute_language.idCategory WHERE idLanguage = 1 AND idCategoryAttribute = 1";
-
-        return this._queryEngine.executeQuery(query).then(function(res) {
+        let query = "SELECT id,value FROM Category INNER JOIN ta_categoryAttribute_language ON Category.id = ta_categoryAttribute_language.idCategory WHERE idLanguage = ? AND idCategoryAttribute = 1";
+        let param = [code_lang];
+        return this._queryEngine.executeQuery(query, param).then(function(res) {
             return res;
         });
     }
 
     loadProductbyId(id_product, code_lang) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id = ? AND ta_productattribute_language.idLanguage = ? ORDER BY productattribute.id";
+        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice, product.amazonAffiliateLink FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id = ? AND ta_productattribute_language.idLanguage = ? ORDER BY productattribute.id";
         let param = [id_product, code_lang];
 
         return this._queryEngine.executeQuery(query, param);
     }
 
     loadProduct(code_lang) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title'";
-
-        return this._queryEngine.executeQuery(query);
+        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice, product.amazonAffiliateLink FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.idLanguage = ?";
+        let param = [code_lang];
+        return this._queryEngine.executeQuery(query, param);
     }
 
     loadProductSearch(code_lang, search) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.value LIKE '%" + search + "%'"
-        return this._queryEngine.executeQuery(query);
+        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.value LIKE '%" + search + "%' AND ta_productattribute_language.idLanguage = ?"
+        let param = [code_lang];
+        return this._queryEngine.executeQuery(query, pram);
     }
 
     /*Select the products that match all of the categories passed
     in the search array 
     */
     loadProductSearchCategory(code_lang, search) {
-        let query = "SELECT DISTINCT Product.id as product_id,ta_category_product.idCategory FROM product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_categoryattribute_language.value IN (";
+        let query = "SELECT DISTINCT Product.id as product_id,ta_category_product.idCategory FROM product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_productattribute_language.idLanguage = ? AND ta_categoryattribute_language.value IN (";
+        let param = [code_lang];
         for (let i = 0; i < search.length; i++) {
             if (i != (search.length - 1)) {
                 var conditions = "'" + search[i] + "',";
@@ -312,14 +314,15 @@ class MgrProduct {
         query = query.concat(endQuery);
 
         console.log(query);
-        return this._queryEngine.executeQuery(query);
+        return this._queryEngine.executeQuery(query, param);
     }
 
     /*Select the information necessary to populate the catalog
     by the ids of the product
     */
     loadCatalogProductID(code_lang, ids) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id IN (";
+        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE a_productattribute_language.idLanguage = ? AND product.id IN (";
+        let param = [code_lang];
         for (let i = 0; i < ids.length; i++) {
             if (i != (ids.length - 1)) {
                 var conditions = "'" + ids[i] + "',";
@@ -332,7 +335,7 @@ class MgrProduct {
         query = query.concat(endQuery);
 
         console.log(query);
-        return this._queryEngine.executeQuery(query);
+        return this._queryEngine.executeQuery(query, param);
     }
 
     insertTagAttribute(productId, tagList) {

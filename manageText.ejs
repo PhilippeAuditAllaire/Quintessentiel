@@ -12,45 +12,12 @@
 </head>
 
 <body>
-    <div class="modal fade" tabindex="-1" role="dialog" id="addCategoryModal">
-        <!-- Add category modal -->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ajout d'une catégorie</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <form id="addModalForm">
-                    <div class="modal-body">
-                        <div id="addCategorySuccessAlert" class="alert alert-success fade" role="alert">
-                            Catégorie ajoutée avec succès
-                        </div>
-                        <div class="addCategoryFields">
-                            <%- modalAdd %>
-                                <div class="wrapper-inputLabel-productModal visibleCheckbox">
-                                    <div class="wrapper-modal-input">
-                                        <label>Catégorie visible<input type="checkbox" class="chckVisible"/></label>
-                                    </div>
-                                </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="updateCategoryModal">
         <!-- Update modal category -->
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modification d'une catégorie</h5>
+                    <h5 class="modal-title">Modification d'un texte</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -58,15 +25,10 @@
                 <form id="updateModalForm">
                     <div class="modal-body">
                         <div id="updateCategorySuccessAlert" class="alert alert-success fade" role="alert">
-                            Catégorie modifiée avec succès!
+                            Text modifié avec succès!
                         </div>
                         <div class="addCategoryFields">
                             <%- modalUpdate %>
-                                <div class="wrapper-inputLabel-productModal visibleCheckbox">
-                                    <div class="wrapper-modal-input">
-                                        <label>Catégorie visible<input type="checkbox" class="chckVisible"/></label>
-                                    </div>
-                                </div>
                         </div>
 
                         <div class="modal-footer">
@@ -88,7 +50,7 @@
                     <p class="warning-error" id="warning-error"></p>
                 </div>
                 <div class="wrapper-manageProduct-section">
-                    <h2>Gestion des catégories</h2>
+                    <h2>Gestion des textes</h2>
                     <div class="wrapper-right-btn">
                         <div class="wrapper-btn">
                             <a href="#" class="btnApp" id="btnAddCategory">+</a>
@@ -121,7 +83,7 @@
             <script>
                 //Add category script
                 let btnSend = document.getElementById("btnSend");
-                let categoriesList;
+                let textList;
                 let updateSelectedCategory;
 
                 $("#addModalForm").on("submit", function(e) {
@@ -205,17 +167,19 @@
                 //Display categories script
                 let btnAddCategory = document.getElementById("btnAddCategory");
 
-                loadCategoriesDisplayList();
+                loadTextDisplayList();
 
                 //Loads all the products that need to be displayed
                 //in the list
-                function loadCategoriesDisplayList() {
+                function loadTextDisplayList() {
                     return $.ajax({
-                        url: "./ajaxRequest/loadAllCategoriesAdmin",
+                        url: "./ajaxRequest/loadAllText",
                         type: "POST",
                         success: function(res) {
-                            categoriesList = res;
-                            displayCategoriesList(categoriesList);
+                            console.log(res);
+
+                            textList = res;
+                            displayTextList(textList);
                         }
                     })
                 }
@@ -223,14 +187,14 @@
 
                 //Displays all the categories that have been loaded
                 //from the server
-                //@categoriesList is the list of categories loaded
+                //@textList is the list of categories loaded
                 //from the server
-                function displayCategoriesList(categoriesList) {
+                function displayTextList(textList) {
 
                     let tableProducts = document.getElementById("tableProducts");
                     tableProducts.innerHTML = "";
 
-                    categoriesList.forEach(function(category) {
+                    textList.forEach(function(category) {
                         tableProducts.innerHTML += `<tr data-product-id="` + category._id + `" ondblclick="openUpdateCategory(this)" class="rowTR">
                             <th>` + category._traductions[0]._name + `</th>
                         </tr>`;
@@ -251,8 +215,7 @@
                 function openUpdateCategory(row) {
                     let updateModal = document.getElementById("updateCategoryModal");
                     let rowIndex = $("#tableProducts tr").index(row);
-                    console.log(categoriesList[rowIndex]);
-                    updateSelectedCategory = categoriesList[rowIndex];
+                    updateSelectedCategory = textList[rowIndex];
 
                     fillUpdateModal(rowIndex)
                     $(updateModal).modal();
@@ -262,10 +225,8 @@
                     let updateModal = document.getElementById("updateCategoryModal");
 
                     clearModalInfos(updateModal);
+                    console.log(updateSelectedCategory)
                     fillTranslatableFields(updateSelectedCategory._traductions);
-
-                    updateModal.getElementsByClassName("chckVisible")[0].checked = updateSelectedCategory._isVisible;
-
                 }
 
                 //Fills the translatable fields with
@@ -273,15 +234,15 @@
                 function fillTranslatableFields(arrayTranslatable) {
                     let updateModal = document.getElementById("updateCategoryModal")
                     let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
-
+                    console.log(arrayTranslatable);
                     arrayTranslatable.forEach(function(traduction) {
 
                         let traductionLang = traduction._idLang;
-
+                        console.log(traductionLang);
                         for (let i = 0; i < updateModalTabs.length; i++) //For each modal language tabs
                         {
                             let modalTabLang = updateModalTabs[i].getAttribute("data-langId");
-
+                            console.log(modalTabLang);
                             if (modalTabLang == traductionLang) { //This tab has the same lang as this traduction
                                 let tabCatName = updateModalTabs[i].getElementsByClassName("categoryName")[0];
                                 $(tabCatName).val(traduction._name);
@@ -293,22 +254,22 @@
                 $("#updateModalForm").on("submit", function(e) {
                     e.preventDefault();
 
-                    let isVisible = document.getElementById("updateCategoryModal").getElementsByClassName("chckVisible")[0];
+
                     let allTranslatedNames = getAllTranslatedNames(document.getElementById("updateCategoryModal"));
 
                     if (allTranslatedNames.length > 0) //If theres at least one traduction
                     {
                         $.ajax({
-                            url: "./updateCategory",
+                            url: "./updateText",
                             type: "POST",
                             data: {
-                                categoryId: updateSelectedCategory._id,
+                                id: updateSelectedCategory._id,
                                 allTranslatedNames: allTranslatedNames,
-                                isVisible: isVisible.checked
                             },
                             success: function(res) {
+                                console.log("res" + res)
                                 successUpdatedCategory();
-                                loadCategoriesDisplayList(); //Reload the categories list 
+                                loadTextDisplayList(); //Reload the categories list 
                             }
                         })
                     }

@@ -2,10 +2,12 @@ const Product = require("../class/Product.js");
 const Category = require("../class/Category.js");
 const ProductInfos = require("../class/ProductInfos.js");
 const MgrProduct = require("../managers/MgrProduct.js");
+const MgrLanguage = require("../managers/MgrLanguage.js");
 
 class CtrlProduct {
     constructor() {
         this._mgrProduct = new MgrProduct();
+        this._mgrLanguage = new MgrLanguage();
     }
 
     updateProduct(productInfos) {
@@ -211,8 +213,8 @@ class CtrlProduct {
     /*Generates the HTML to populate the dropdown for
     each categories 
     ProductCategoryID is optional*/
-    loadAllSearchCategories(productCategoryId) {
-        return this._mgrProduct.loadAllCategories().then(function(res) {
+    loadAllSearchCategories(productCategoryId, code_lang) {
+        return this._mgrProduct.loadAllCategories(code_lang).then(function(res) {
             let html = "";
 
             if (res != undefined) {
@@ -365,7 +367,22 @@ class CtrlProduct {
 
     getProductInfo(id, code_lang) {
         let products = this._mgrProduct.loadProductbyId(id, code_lang);
-
+        let descr;
+        this._mgrLanguage.loadText(66, code_lang).then(function(res) {
+            descr = res;
+        });
+        let cart;
+        this._mgrLanguage.loadText(65, code_lang).then(function(res) {
+            cart = res;
+        });
+        let site;
+        this._mgrLanguage.loadText(64, code_lang).then(function(res) {
+            site = res;
+        });
+        let rituel;
+        this._mgrLanguage.loadText(67, code_lang).then(function(res) {
+            rituel = res;
+        });
         return products.then(function(val) {
             let catalogue_product = [];
             console.log(val);
@@ -376,27 +393,21 @@ class CtrlProduct {
             ele += '<div class="produit-details-nom">';
             ele += '<h2>' + val[0].value + '</h2>';
             ele += '</div>';
-            ele += '<div class="catalogue-produit-review">';
-            ele += '<div class="catalogue-produit-etoile">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '<img class="catalogue-produit-etoiles" src="./images/icons/star_full.png" alt="Star">';
-            ele += '</div>';
-            ele += '<div class="catalogue-produit-comm">';
-            ele += 'Aucun commentaire';
-            ele += '</div>';
-            ele += '</div>';
+
             ele += '<div class="produit-details-prix">';
             ele += '<h2> $ ' + val[0].retailPrice + ' CAD</h2>';
             ele += '</div>';
-            ele += '<div class="produit-details-cart"><button class="manager-button produit-cart-button">Ajouter au panier</button></div>';
+
+            if (val[0].amazonAffiliateLink == 'NULL') {
+                ele += '<div class="produit-details-cart"><button class="manager-button produit-cart-button">' + cart + '</button></div>';
+            } else {
+                ele += '<div class="produit-details-cart"><button class="manager-button produit-cart-button"><a href="https://' + val[0].amazonAffiliateLink + '" target="_blank">' + site + '</a></button></div>';
+            }
+
 
             let desc = '<div class="details"><div class="tab">';
-            desc += '<button class="tablinks" onclick="openTab(event, \'info-1\')">Description</button>';
-            desc += '<button class="tablinks" onclick="openTab(event, \'info-2\')">Conseil d\'utilisation</button>';
-            desc += '<button class="tablinks" onclick="openTab(event, \'info-3\')">Ingrédients</button>';
+            desc += '<button class="tablinks" onclick="openTab(event, \'info-1\')">' + descr + '</button>';
+            desc += '<button class="tablinks" onclick="openTab(event, \'info-2\')">' + rituel + '</button>';
             desc += '</div>';
 
             desc += '<div id="info-1" class="tabcontent">';
@@ -421,8 +432,8 @@ class CtrlProduct {
         });
     }
 
-    getProductCatalogue() {
-        let products = this._mgrProduct.loadProduct();
+    getProductCatalogue(code_lang) {
+        let products = this._mgrProduct.loadProduct(code_lang);
 
         return products.then(function(val) {
             let catalogue_product = [];
@@ -452,7 +463,9 @@ class CtrlProduct {
                 ele += '</div>';
                 ele += '</div>';
                 ele += '<div class="catalogue-produit-panier">';
-                ele += '<a href="#" class="product-cart" onclick="event.stopPropagation();event.preventDefault();catalogAddProductToCart('+product.product_id+')"><img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier"></a>';
+                if (product.amazonAffiliateLink == 'NULL') {
+                    ele += '<a href="#" class="product-cart" onclick="event.stopPropagation();event.preventDefault();catalogAddProductToCart(' + product.product_id + ')"><img class="catalogue-produit-image-panier" src="./images/icons/cart_black.png" alt="Panier"></a>';
+                }
                 ele += '</div>';
 
                 catalogue_product.push(ele);

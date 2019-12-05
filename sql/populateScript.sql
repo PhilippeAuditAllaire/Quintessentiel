@@ -116,7 +116,7 @@ INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,12,"Florida");
 
 
 #User
-INSERT INTO Users VALUES (DEFAULT,1,"Admin","Admin","admin@admin.com","2019-01-01","$2b$10$jagLRkMveQSjVye8cY77M.9CS7rl4Y8uD2Q9sn9qVKbDXNZ5ma5oa",1,1,"admin",0,"J1R0B1",404,1,1)
+INSERT INTO Users VALUES (DEFAULT,1,"Admin","Admin","admin@admin.com","2019-01-01","$2b$10$jagLRkMveQSjVye8cY77M.9CS7rl4Y8uD2Q9sn9qVKbDXNZ5ma5oa",1,1,"admin",0,"J1R0B1",404,1,1);
 
 
 
@@ -176,7 +176,9 @@ VALUES
     (51, 'formcosmetique', 'navbar'),
     (52, 'propos', 'navbar'),
     (53, 'proposfaq', 'navbar'),
-    (54, 'proposcontact', 'navbar');
+    (54, 'proposcontact', 'navbar'),
+    (62, 'banner', 'navbar'),
+    (63, 'banner2', 'navbar');
 
 
 INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
@@ -335,7 +337,15 @@ VALUES
     ('53', '2', 'FAQ ANGLAIS'),
     
     ('54', '1', 'Contactez-nous'), 
-    ('54', '2', 'Contactez-nous ANGLAIS');
+    ('54', '2', 'Contactez-nous ANGLAIS'),
+
+
+    ('62', '1', 'Cliquez ici pour votre'), 
+    ('62', '2', 'Click here for your'),
+
+    ('63', '1', 'sérum personnalisé'), 
+    ('63', '2', 'personnalised serum');
+    /* FIN NAVBAR */
 
 
     INSERT INTO landingtext_attribute (id, type, page) 
@@ -366,6 +376,47 @@ VALUES
 
     ('60', '1', 'Temoignages'), 
     ('60', '2', 'Témoignages');
+
+
+    /*  FIN INDEX */
+
+    /* Catalogue */
+
+    INSERT INTO landingtext_attribute (id, type, page) 
+    VALUES 
+    (61, 'titleCatalogue', 'catalogue');
+
+    INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
+    VALUES 
+    ('61', '1', 'Produits'), 
+    ('61', '2', 'Products');
+
+    /* Fin catalogue */
+
+    /* ProduitInfo */
+
+INSERT INTO landingtext_attribute (id, type, page) 
+    VALUES 
+    (64, 'buttonSite', 'productInfo'),
+    (65, 'buttonCart', 'productInfo'),
+    (66, 'description', 'productInfo'),
+    (67, 'rituel', 'productInfo');
+
+    INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
+    VALUES 
+    ('64', '1', 'Aller sur le site'), 
+    ('64', '2', 'Go to the website'),
+
+    ('65', '1', 'Ajouter au panier'), 
+    ('65', '2', 'Add to cart'),
+
+    ('66', '1', 'Description'), 
+    ('66', '2', 'Description'),
+
+    ('67', '1', 'Rituel'), 
+    ('67', '2', 'Ritual');
+
+    /* Fin ProduitInfo */
 
 
 
