@@ -7,167 +7,280 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/style_application.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./css/style_manageRecipe.css" />
     <link rel="stylesheet" type="text/css" href="./css/style_manageProduct.css" />
-    <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style_manageCategory.css" />
 </head>
 
 <body>
-    <%include ./includes/appNavbar.ejs%>
-        <div class="recipe-header">
-            <div class="logo">
-                <img src="./images/logo.png" />
-            </div>
-            <div class="title">
-                Gestion des textes du site
-            </div>
-        </div>
-        <div class="mg-product-top-line middle">
-            <div class="wrapper-left-qty">
-
-            </div>
-            <div class="wrapper-right-btn">
-                <div class="wrapper-btn" onclick="add()">
-                    <a href="#" class="btnApp">+</a>
+    <div class="modal fade" tabindex="-1" role="dialog" id="updateCategoryModal">
+        <!-- Update modal category -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modification d'un texte</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
                 </div>
-            </div>
-        </div>
-        <div class="table">
-            <div class="border">
-                <table class="table-recipe">
-                    <thead class="table-recipe-header">
-                        <tr>
-                            <th>Texte</th>
-                            <th>Page</th>
-                        </tr>
-                    </thead>
-                    <tbody id="textes">
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" id="title">Modifier promotions</h4>
-                    </div>
+                <form id="updateModalForm">
                     <div class="modal-body">
-                        <select name="" id="product">
-                            
-                        </select>
-                        <label for="">Rabais : </label>
-                        <input type="text" id="rabais-text">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn" onclick="doIt()">Modifier</button>
-                    </div>
-                </div>
+                        <div id="updateCategorySuccessAlert" class="alert alert-success fade" role="alert">
+                            Text modifié avec succès!
+                        </div>
+                        <div class="addCategoryFields">
+                            <%- modalUpdate %>
+                        </div>
 
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success" id="btnModify" value="Modifier">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
-        <script src="./javascript/renderer.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="./javascript/listbox.js"></script>
-        <script src="./javascript/tableProducts.js"></script>
-        <script src="http://malsup.github.com/jquery.form.js"></script>
-        <script>
-            /*
-                                    let isModify = false;
+    </div>
+    <%include ./includes/appNavbar.ejs%>
+        <section class="wrapper-content-manageProduct">
+            <section class="wrapper-content-manageProduct">
+                <div class="wrapper-body-mgProduct">
+                    <div class="wrapper-logo">
+                        <img src="./images/logo.png" />
+                    </div>
+                    <p class="warning-error" id="warning-error"></p>
+                </div>
+                <div class="wrapper-manageProduct-section">
+                    <h2>Gestion des textes</h2>
+                    <div class="wrapper-right-btn">
+                        <div class="wrapper-btn">
+                            <a href="#" class="btnApp" id="btnAddCategory">+</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table">
+                    <div class="border">
+                        <table class="table-product">
+                            <thead class="table-product-header">
+                                <tr>
+                                    <th>Nom</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableProducts">
 
-                                    $.ajax({
-                                        url: "http://localhost:5000/ajaxRequest/loadText",
-                                        method: "POST",
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-                                        success: function(response) {
-                                            console.log(response);
-                                            $('#textes').html(response);
-                                        },
-                                        error: function(response) {
-                                            console.log(response);
-                                            alert("Erreur");
-                                        }
-                                    });
+            <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+            <script src="./javascript/renderer.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="./javascript/listbox.js"></script>
+            <script src="./javascript/tableProducts.js"></script>
+            <script src="http://malsup.github.com/jquery.form.js"></script>
+            <script>
+                //Add category script
+                let btnSend = document.getElementById("btnSend");
+                let textList;
+                let updateSelectedCategory;
 
-                                    $.ajax({
-                                        url: "http://localhost:5000/ajaxRequest/loadSelectPromo",
-                                        method: "POST",
+                $("#addModalForm").on("submit", function(e) {
+                    e.preventDefault();
 
-                                        success: function(response) {
-                                            console.log(response);
-                                            $('#product').html(response);
-                                        },
-                                        error: function(response) {
-                                            console.log(response);
-                                            alert("Erreur");
-                                        }
-                                    });
-                                    // k
-                                    function openPromo(line) {
-                                        isModify = true;
+                    let isVisible = document.getElementById("addCategoryModal").getElementsByClassName("chckVisible")[0];
 
-                                        console.log(line.getElementsByClassName('rabais')[0].innerHTML);
-                                        $('#myModal').modal('toggle');
-                                        $('#rabais-text').val(line.getElementsByClassName('rabais')[0].innerHTML);
-                                    }
+                    let allTranslatedNames = getAllTranslatedNames(document.getElementById("addCategoryModal"));
 
-                                    function add() {
-                                        $('#myModal').modal('toggle');
-                                    }
+                    if (allTranslatedNames.length > 0) //If theres at least one traduction
+                    {
+                        console.log(allTranslatedNames)
+                        $.ajax({
+                            url: "./addCategory",
+                            type: "POST",
+                            data: {
+                                allTranslatedNames: allTranslatedNames,
+                                isVisible: isVisible.checked
+                            },
+                            success: function(res) {
+                                if (res) {
+                                    successAddedCategory();
+                                    loadCategoriesDisplayList(); //Reload the categories list 
+                                }
 
-                                    function doIt() {
-                                        if (isModify) {
-                                            console.log($("#product").children(":selected").attr("id"));
-                                            console.log("rabais " + $('#rabais-text').val());
-                                            let rabaisA = $('#rabais-text').val();
-                                            $.ajax({
-                                                url: "http://localhost:5000/ajaxRequest/modifyPromo",
-                                                method: "POST",
-                                                data: {
-                                                    id: $("#product").children(":selected").attr("id"),
-                                                    rabais: rabaisA
-                                                },
-                                                success: function(response) {
-                                                    console.log(response);
+                            }
+                        })
+                    }
 
-                                                },
-                                                error: function(response) {
-                                                    console.log(response);
-                                                    alert("Erreur");
-                                                }
-                                            });
-                                        } else {
-                                            console.log($("#product").children(":selected").attr("id"));
-                                            console.log("rabais " + $('#rabais-text').val());
-                                            let rabaisA = $('#rabais-text').val();
-                                            $.ajax({
-                                                url: "http://localhost:5000/ajaxRequest/addPromo",
-                                                method: "POST",
-                                                data: {
-                                                    id: $("#product").children(":selected").attr("id"),
-                                                    rabais: rabaisA
-                                                },
-                                                success: function(response) {
-                                                    console.log(response);
+                });
 
-                                                },
-                                                error: function(response) {
-                                                    console.log(response);
-                                                    alert("Erreur");
-                                                }
-                                            });
-                                        }
-                                    }
-                                    */
-        </script>
+                //Returns an object containing all of the
+                //names
+                function getAllTranslatedNames(modal) {
+                    let arrayAllNames = [];
+                    let allTabs = modal.getElementsByClassName("tab-pane");
+
+
+                    for (let i = 0; i < allTabs.length; i++) {
+                        let langId = allTabs[i].getAttribute("data-langid");
+                        let name = allTabs[i].getElementsByClassName("addCategoryInputName")[0];
+
+                        let obj = {
+                            langId: langId,
+                            name: name.value
+                        };
+
+                        if (name.value != "") {
+                            arrayAllNames.push(obj);
+                        }
+
+                    }
+
+                    return arrayAllNames;
+                }
+
+
+                //This function shows a success message
+                //and clears the form
+                function successAddedCategory() {
+                    addCategorySuccessAlert.classList.add("show");
+                    clearModalInfos(document.getElementById("addCategoryModal"));
+
+                    setTimeout(function() {
+                        addCategorySuccessAlert.classList.remove("show");
+                    }, 5000);
+                }
+
+                //Removes everything from the given modal
+                function clearModalInfos(modal) {
+                    let allTabs = modal.getElementsByClassName("tab-pane");
+
+
+                    for (let i = 0; i < allTabs.length; i++) {
+                        console.log("clearing?")
+                        let name = allTabs[i].getElementsByClassName("addCategoryInputName")[0];
+                        name.value = "";
+                    }
+                }
+
+                //Display categories script
+                let btnAddCategory = document.getElementById("btnAddCategory");
+
+                loadTextDisplayList();
+
+                //Loads all the products that need to be displayed
+                //in the list
+                function loadTextDisplayList() {
+                    return $.ajax({
+                        url: "./ajaxRequest/loadAllText",
+                        type: "POST",
+                        success: function(res) {
+                            console.log(res);
+
+                            textList = res;
+                            displayTextList(textList);
+                        }
+                    })
+                }
+
+
+                //Displays all the categories that have been loaded
+                //from the server
+                //@textList is the list of categories loaded
+                //from the server
+                function displayTextList(textList) {
+
+                    let tableProducts = document.getElementById("tableProducts");
+                    tableProducts.innerHTML = "";
+
+                    textList.forEach(function(category) {
+                        tableProducts.innerHTML += `<tr data-product-id="` + category._id + `" ondblclick="openUpdateCategory(this)" class="rowTR">
+                            <th>` + category._traductions[0]._name + `</th>
+                        </tr>`;
+                    });
+                }
+
+                $("#btnAddCategory").on("click", function(e) {
+                    e.preventDefault();
+                    $("#addCategoryModal").modal();
+                    console.log("adding a category!")
+                });
+
+
+
+                //Update product script
+
+                //Opens the update category modal
+                function openUpdateCategory(row) {
+                    let updateModal = document.getElementById("updateCategoryModal");
+                    let rowIndex = $("#tableProducts tr").index(row);
+                    updateSelectedCategory = textList[rowIndex];
+
+                    fillUpdateModal(rowIndex)
+                    $(updateModal).modal();
+                }
+
+                function fillUpdateModal(rowIndex) {
+                    let updateModal = document.getElementById("updateCategoryModal");
+
+                    clearModalInfos(updateModal);
+                    console.log(updateSelectedCategory)
+                    fillTranslatableFields(updateSelectedCategory._traductions);
+                }
+
+                //Fills the translatable fields with
+                //the category infos
+                function fillTranslatableFields(arrayTranslatable) {
+                    let updateModal = document.getElementById("updateCategoryModal")
+                    let updateModalTabs = updateModal.getElementsByClassName("tab-pane");
+                    console.log(arrayTranslatable);
+                    arrayTranslatable.forEach(function(traduction) {
+
+                        let traductionLang = traduction._idLang;
+                        console.log(traductionLang);
+                        for (let i = 0; i < updateModalTabs.length; i++) //For each modal language tabs
+                        {
+                            let modalTabLang = updateModalTabs[i].getAttribute("data-langId");
+                            console.log(modalTabLang);
+                            if (modalTabLang == traductionLang) { //This tab has the same lang as this traduction
+                                let tabCatName = updateModalTabs[i].getElementsByClassName("categoryName")[0];
+                                $(tabCatName).val(traduction._name);
+                            }
+                        }
+                    });
+                }
+
+                $("#updateModalForm").on("submit", function(e) {
+                    e.preventDefault();
+
+
+                    let allTranslatedNames = getAllTranslatedNames(document.getElementById("updateCategoryModal"));
+
+                    if (allTranslatedNames.length > 0) //If theres at least one traduction
+                    {
+                        $.ajax({
+                            url: "./updateText",
+                            type: "POST",
+                            data: {
+                                id: updateSelectedCategory._id,
+                                allTranslatedNames: allTranslatedNames,
+                            },
+                            success: function(res) {
+                                console.log("res" + res)
+                                successUpdatedCategory();
+                                loadTextDisplayList(); //Reload the categories list 
+                            }
+                        })
+                    }
+                })
+
+                //when the category has been updated, just hide it
+                function successUpdatedCategory() {
+                    $("#updateCategoryModal").modal('hide');
+                }
+            </script>
+
 </body>
 
 </html>

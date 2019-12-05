@@ -71,7 +71,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Website routes
 
 website.get("/serum", function(req, res) {
-    res.render("serum.ejs")
+    setLang(req);
+    console.log("lang id : " + req.session.id_lang);
+    mgr.getTextByPage("serum", req.session.id_lang).then(function(resultat) {
+        console.log("pageTraduction" + resultat);
+        res.render("serum.ejs", JSON.parse(resultat));
+    });
 });
 
 website.get("/", function(req, res) {
@@ -579,6 +584,13 @@ app.post("/ajaxRequest/modifyPromo", function(req, res) {
     })
 });
 
+app.post("/ajaxRequest/loadAllText", function(req, res) {
+    let mgrlang = new MgrLanguage();
+    mgrlang.loadAllText().then(function(resultat) {
+        res.send(resultat);
+    })
+});
+
 //Application routes
 app.get("/", function(req, res) {
     res.redirect("/manageProduct"); //res.redirect("/adminConnection");
@@ -623,7 +635,11 @@ app.get("/managePromotion", function(req, res) {
 
 app.get("/manageText", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
-        res.render("manageText.ejs");
+        let mgrlang = new MgrLanguage();
+
+        Promise.all([mgrlang.generateModalCategoryTabs("update")]).then(function(result) {
+            res.render("manageText.ejs", { modalUpdate: result[0] });
+        });
     } else {
         res.redirect("/adminConnection?pleaseConnect=true");
     }
@@ -714,9 +730,21 @@ app.post('/addCategory', function(req, res) {
 
 app.post('/updateCategory', function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
-        let ctrlCategory = new CtrlCategory();
+        let mgrlang = new MgrLanguage();
 
-        ctrlCategory.updateCategory(req.body).then(function(result) {
+        mgrlang.updateText(req.body).then(function(result) {
+            res.send(result)
+        });
+    } else {
+        res.redirect("/adminConnection?pleaseConnect=true");
+    }
+});
+
+app.post('/updateText', function(req, res) {
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+        let mgrlang = new MgrLanguage();
+
+        mgrlang.updateText(req.body).then(function(result) {
             res.send(result)
         });
     } else {
