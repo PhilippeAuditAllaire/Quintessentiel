@@ -172,8 +172,13 @@ tr:nth-child(odd) {background: #F6F6F6}
 #paymentTab{
 	width:50%;
 	margin:auto;
-	border:1px solid gray;
 	margin-top:50px;
+}
+
+#paymentTab p{
+	text-align: center;
+	color:green;
+	font-size:22px;
 }
 
 #card-element-label{

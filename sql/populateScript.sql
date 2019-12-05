@@ -122,7 +122,7 @@ INSERT INTO Users VALUES (DEFAULT,1,"Admin","Admin","admin@admin.com","2019-01-0
 
 #bd
 
-/* NAVBAR */
+
 INSERT INTO landingtext_attribute (id, type, page) 
 VALUES 
     (1, 'home', 'navbar'),
@@ -337,9 +337,7 @@ VALUES
     ('54', '1', 'Contactez-nous'), 
     ('54', '2', 'Contactez-nous ANGLAIS');
 
-    /* FIN NAVBAR */
 
-    /* INDEX */
     INSERT INTO landingtext_attribute (id, type, page) 
     VALUES 
     (55, 'titleIndex', 'index'),
@@ -368,4 +366,24 @@ VALUES
 
     ('60', '1', 'Temoignages'), 
     ('60', '2', 'Témoignages');
-    /*  FIN INDEX */
+
+
+
+
+    #troubles
+    INSERT INTO Conditions VALUES (DEFAULT);
+    INSERT INTO Conditions VALUES (DEFAULT);
+    INSERT INTO Conditions VALUES (DEFAULT);
+    INSERT INTO Conditions VALUES (DEFAULT);
+
+    INSERT INTO conditionsattribute VALUES (DEFAULT,"name");
+
+
+    INSERT INTO ta_conditionsattribute_language VALUES (1,1,1,"Peau grasse");
+    INSERT INTO ta_conditionsattribute_language VALUES (1,2,1,"Oily skin");
+
+    INSERT INTO ta_conditionsattribute_language VALUES (1,1,2,"Peau sec");
+    INSERT INTO ta_conditionsattribute_language VALUES (1,2,2,"Dry skin");
+
+    INSERT INTO ta_conditionsattribute_language VALUES (1,1,3,"Peau irritée");
+    INSERT INTO ta_conditionsattribute_language VALUES (1,2,3,"Irritated Skin");

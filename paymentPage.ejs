@@ -88,7 +88,7 @@
 				  				<p><span class="labelSpan">Pays: </span><span id="infoCountry" class="infoSpan"></span></p>
 				  				<p><span class="labelSpan">Province: </span><span id="infoProvince" class="infoSpan"></span></p>
 				  				<p><span class="labelSpan">Rue: </span><span id="infoStreet" class="infoSpan"></span></p>
-				  				<p><span class="labelSpan">No civic: </span><span id="infoCivic" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan">No civique: </span><span id="infoCivic" class="infoSpan"></span></p>
 				  				<p><span class="labelSpan">Code postal: </span><span id="infoPostalCode" class="infoSpan"></span></p>
 				  				<p><span class="labelSpan">No app: </span><span id="infoNoApp" class="infoSpan"></span></p>
 				  			</div>
@@ -136,7 +136,7 @@
 			  					<div class="formRowError"><p id="formErrorNoCivic"></p></div>
 				  				<div class="formRow">
 				  					<div class="wrapperLabel">
-				  						<label>No Civic</label>
+				  						<label>No Civique</label>
 				  					</div>
 				  					<div class="wrapperInput">
 				  						<input type="text" id="formNoCivic" class="form-control"/>
@@ -172,6 +172,7 @@
 				  </div>
 			  </div>
 			  <div class="tab-pane fade" id="paymentTab" role="paymentLink"> <!-- Payment form -->
+			  	<p id="successPayment"></p>
 			  	<form action="/stripePayment" method="post" id="payment-form">
 				  <div>
 				    <label id="card-element-label" for="card-element">
