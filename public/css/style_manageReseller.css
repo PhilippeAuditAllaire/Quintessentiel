@@ -86,3 +86,25 @@ th:nth-child(2) input[type=checkbox]{
 .tab-content{
 	border-bottom:0;
 }
+
+.btnAppReseller{
+	border:0;
+	outline:0;
+	background-color:#292323;
+	color:white;
+	width:60px;
+	height: 50px;
+	font-size:30px;
+	padding-right:20px;
+	padding-left:20px;
+	border-radius:5px;
+	margin: 5px;
+	text-align: center;
+}
+
+
+.mg-reseller-top-line{
+	display:flex;
+	justify-content: flex-end !important;
+	align-items: flex-end;
+}
