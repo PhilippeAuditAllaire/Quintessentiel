@@ -45,16 +45,19 @@ class CtrlReseller{
     }
 
     addReseller(ids){
-        let prodList=[];
 
-        return this.getProdId().then(function(res){
-            prodList=res;
+        let newMan = new MgrReseller;
+
+        newMan.setResellerAttribute(ids);
+        return true;
+    }
+
+    removeReseller(ids){
             
-            let newMan = new MgrReseller;
+        let newMan = new MgrReseller;
 
-            newMan.setInitialList(ids,prodList);
-            return true;
-        });
+        newMan.removeResellerAttribute(ids);
+        return true;
     }
 
     getProdId(){
@@ -86,12 +89,51 @@ class CtrlReseller{
         });
     }
 
-    getRebateList(id){
-        let listRebate=[];
-
+    getRebate(idReseller){
+        let rebateList = [];
+        let id = idReseller.resellerId
+        console.log("t icite caliss: "+id);
         return this._mgrReseller.getRebateList(id).then(function(res){
-            console.log(res);
-        })
+            res.forEach(function(row){
+                let prod= new Product();
+                prod.id= row.productId;
+                prod.rebate = row.rebate;
+                rebateList.push(prod);
+
+            });
+            return rebateList;
+        });
+    }
+
+    updateResellerRebate(listRebate,resellerId){
+        let rebateListUpdate=[];
+        rebateListUpdate = this.fillListUpdateRebate(listRebate);
+        rebateListUpdate.forEach(function(product){
+            let newMan = new MgrReseller;
+            return newMan.getRebateCount(resellerId, product.id).then(function(res){
+                    if(res==1){
+                        newMan.updateTaReseller(resellerId,product.id,product.rebate)
+                    }else{
+                        newMan.insertTaReseller(resellerId,product.id,product.rebate)
+                    }
+                }   
+            )}  
+        );      
+    }
+
+    fillListUpdateRebate(listRebate){
+        let rebateList = [];
+        let newlist= eval(listRebate);
+
+        for(let i=0; i<newlist.length;i++){
+            let rebate = newlist[i];
+            let prod = new Product();
+            prod.id = rebate.id;
+            prod.rebate = rebate.value;
+            rebateList.push(prod);
+            
+        }
+        return rebateList;
     }
 
 }

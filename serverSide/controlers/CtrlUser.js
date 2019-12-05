@@ -248,6 +248,68 @@ class CtrlUser{
 		})
 	}
 
+
+	/*
+		Gets the user's email
+		@idUser is the user's id to 
+		load the email from
+	*/
+	loadUserEmail(idUser)
+	{
+		return this._mgrUser.getUserEmail(idUser).then(function(loadedEmail){
+			let email = loadedEmail[0].email
+
+			return email;
+		});
+
+	}
+
+	/*
+		Loads the full (first and last) name
+		of the user
+		@userId is the id f the user to load the
+		infos from
+	*/
+	loadUserName(idUser)
+	{
+		return this._mgrUser.getUserName(idUser).then(function(loadedName){
+			let name = {
+				firstName: loadedName[0].firstName,
+				lastName: loadedName[0].lastName
+			}
+
+			return name;
+		});
+	}
+
+
+	/* 
+		Loads the country name by its id
+		@idCountry is the id of the country to load
+		@lang is the language in which to load the 
+		country's name
+	*/
+	loadCountryById(countryId,langId=1)
+	{
+		return this._mgrUser.getCountryById(countryId,langId).then(function(loadedCountry){
+			return loadedCountry[0];
+		});
+	}
+
+	/* 
+		Loads the province name by its id
+		@idProvince is the id of the country to load
+		@lang is the language in which to load the 
+		country's name
+	*/
+	loadProvinceById(provinceId,langId=1)
+	{
+		return this._mgrUser.getProvinceById(provinceId,langId).then(function(loadedProvince){
+			return loadedProvince[0];
+		});
+	}
+
+
 }
 
 
