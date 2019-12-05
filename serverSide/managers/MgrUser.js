@@ -9,6 +9,7 @@ class MgrUser{
 		this._queryEngine = new QueryEngine();
 	}
 
+
 	//Calls the dbManager to add
 	//the given user in the database
 	//after verifying if the email already exists
@@ -348,6 +349,34 @@ class MgrUser{
 
 		return this._queryEngine.executeQuery(query,param);
 	}
+
+
+	/* Gets the user's email based on the
+	   given userId
+	   @userId is the id of the user to load
+	*/
+	getUserEmail(userId)
+	{
+		let query = "SELECT email FROM Users WHERE id = ?";
+		let param = [userId];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
+	/*
+		Gets the user's full name based
+		on the given userId
+		@userId is the id of the user to
+		load
+	*/
+	getUserName(userId)
+	{
+		let query = "SELECT firstName,lastName FROM Users WHERE id = ?";
+		let param = [userId];
+
+		return this._queryEngine.executeQuery(query,param);
+	}
+
 }
 
 
