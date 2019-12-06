@@ -1,6 +1,7 @@
 const Cart = require("../class/Cart.js");
 const CartItem = require("../class/CartItem.js");
 const MgrProduct = require("../managers/MgrProduct.js");
+const CtrlUser = require("../controlers/CtrlUser.js");
 const Product = require("../class/Product.js");
 
 class CtrlCart {
@@ -60,12 +61,115 @@ class CtrlCart {
     //Returns a promise that returns the subTotal
     calculateCartSubTotal(cart)
     {   
-        console.log("BEFORE");
-        console.log(cart)
-        console.log("ALL PRODUCTS FROM CART")
+        //Load the products from the cart from the DB
         return this.loadProductsFromCart(cart).then((allProducts) => {
-            console.log(allProducts);
+            let subTotal = 0;
+          
+            //For each product that has been loaded
+            allProducts.forEach(function(product){
+                
+                subTotal += parseFloat(((product.qtyInCart * (parseFloat(product.product._retailPrice))*100) / 100).toFixed(2));
+            });
+            console.log("SUB TOTAL")
+            console.log(subTotal)
+
+            return subTotal;
         });
+    }
+
+    //Calculates the taxes 
+    //@amount is the amount to
+    //calculate the taxes from
+    //@Returns an object containing
+    //both taxes amount
+    calculateTaxes(amount)
+    {
+        let taxes = {
+            tps:0,
+            tvq:0
+        };
+
+
+        taxes.tps = ((amount * 5) / 100).toFixed(2);
+        taxes.tvq = ((amount * 9.975) / 100).toFixed(2);
+
+        return taxes;
+    }
+
+    //Formats the cart's data as metadata
+    //that we can then pass to Stripe
+    generateCartMetadata(cart,userId,userGivenAddress)
+    {
+      console.log("GENERATING THE METADATA WITH THIS")
+      console.log(userGivenAddress);
+        let ctrlUser = new CtrlUser();
+        let context = this;
+        let promisesToExecute = [ctrlUser.loadUserEmail(userId),ctrlUser.loadUserName(userId)];
+
+        //if the user entered a custom address, get the province/country name
+        if(userGivenAddress != undefined)
+        {
+          promisesToExecute.push(ctrlUser.loadCountryById(userGivenAddress.countryId,1));
+          promisesToExecute.push(ctrlUser.loadProvinceById(userGivenAddress.provinceId,1))
+        }
+        else{ //Else, load its address from the database
+          promisesToExecute.push(ctrlUser.loadCompleteUserAddress(userId,1));
+        }
+
+
+        //First of, we need to get the user's infos as wekk as the cart Infos
+        return Promise.all(promisesToExecute).then(function(userInfos){
+           let userEmail = userInfos[0];
+           let userName = userInfos[1];
+           let userAddress;
+
+           //if its a custom user address
+           if(userGivenAddress != undefined){
+              userGivenAddress.countryName = userInfos[2].countryName;
+              userGivenAddress.provinceName = userInfos[3].provinceName;
+
+              userAddress = userGivenAddress;
+           }
+           else{ //If its not a custom address
+              userAddress = userInfos[2];
+           }
+
+            
+
+           let formatedUserName = userName.lastName + " " + userName.firstName
+
+
+
+           //Load the products from the cart from the DB
+           return context.loadProductsFromCart(cart).then((allProducts) => {
+               let i = 1;
+
+               let metadata = "{";
+
+               metadata += "\"Nom du client \": \"" + formatedUserName + "\",";
+               metadata += "\"Email du client \": \"" + userEmail + "\",";
+               metadata += "\"Pays livraison \": \"" + userAddress.countryName + "\",";
+               metadata += "\"Province livraison \": \"" + userAddress.provinceName + "\",";
+               metadata += "\"Code postal livraison \": \"" + userAddress.postalCode + "\",";
+               metadata += "\"No civic livraison \": \"" + userAddress.noCivic + "\",";
+               metadata += "\"Rue livraison \": \"" + userAddress.street + "\",";
+               metadata += "\"No app \": \"" + userAddress.noApp + "\",";
+
+
+               //For each product that has been loaded
+               allProducts.forEach(function(product){
+                   metadata += "\""+i+".Nom du produit\": \"" + product.product._name + "\",";
+                   metadata += "\""+i+".Quantité commandée\": \"" + product.qtyInCart + "\",";
+                   metadata += "\""+i+".Prix individuel du produit\": \"" + product.product._retailPrice + "\",";
+                   i++;
+               });
+
+               metadata = metadata.slice(0,metadata.length - 1); //Remove the last comma
+               metadata += "}";
+               return metadata;
+           });
+        });
+
     }
 
 }

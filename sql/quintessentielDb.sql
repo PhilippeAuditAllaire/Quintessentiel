@@ -385,3 +385,9 @@ CREATE TABLE TA_ProvinceAttribute_Language(
 	value TEXT,
 	PRIMARY KEY(provinceAttributeId,idLanguage,idProvince)
 );
+
+CREATE TABLE promo(
+	id_product SMALLINT NOT NULL,
+	rabais SMALLINT NOT NULL,
+	PRIMARY KEY(id_product)
+);
