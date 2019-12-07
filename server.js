@@ -69,6 +69,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //Website routes
+website.get("/", function(req, res) {
+    console.log("HI");
+    res.redirect("/index")
+});
+
 
 website.get("/serum", function(req, res) {
     setLang(req);
@@ -77,11 +82,6 @@ website.get("/serum", function(req, res) {
         console.log("pageTraduction" + resultat);
         res.render("serum.ejs", JSON.parse(resultat));
     });
-});
-
-website.get("/", function(req, res) {
-    console.log("HI");
-    res.redirect("/index")
 });
 
 
@@ -630,7 +630,12 @@ app.post("/ajaxRequest/loadAllText", function(req, res) {
 
 //Application routes
 app.get("/", function(req, res) {
-    res.redirect("/manageProduct"); //res.redirect("/adminConnection");
+    //res.redirect("/manageProduct"); //res.redirect("/adminConnection");
+    res.redirect("/adminChat")
+});
+
+app.get("/adminChat", function(req, res) {
+    res.render("adminChat.ejs");
 });
 
 app.get("/adminConnection", function(req, res) {

@@ -1,0 +1,37 @@
+.wrapper-content-manageChat{
+	display: flex;
+	flex-direction: row;
+	width:100%;
+}
+
+.left-bar{
+	border:1px solid blue;
+	max-width:300px;
+	width:30vw;
+	height:calc(100vh - 25px);
+}
+
+.left-bar-header{
+	border:1px solid black;
+	height:20vh;			/* Total height: 100vh - 20vh; */
+	min-height:105px;
+}
+
+.left-bar-body{
+	border:1px solid green;
+	height:65vh;		/* Total height: 80vh - 65vh; */
+}
+
+.left-bar-footer{
+	border:1px solid purple;
+	height:15vh;
+}
+
+#wrapperLogo{
+	border:1px solid black;
+}
+
+#logo{
+	border:1px solid black;
+	width:100%;
+}
