@@ -2,8 +2,9 @@
 :root {
     --back1: white;
     --text1: black;
-    --back2: #AAA;
-    --text2: black;
+    
+    --my_msg_bg: lavender;
+    --other_msg_bg: pink;
 }
 
 body {
@@ -18,6 +19,7 @@ body {
     max-width: 1200px;
 }
 
+/* Alterne la couleur des message
 #message-container div {
     background-color: var(--back2);
     padding: 5px;
@@ -25,6 +27,15 @@ body {
 
 #message-container div:nth-child(2n) {
     background-color: var(--back1);
+}
+*/
+
+.my-msg{
+    background-color: var(--my_msg_bg);
+}
+
+.other-msg{
+    background-color: var(--other_msg_bg);
 }
 
 #send-container {

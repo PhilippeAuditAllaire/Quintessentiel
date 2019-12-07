@@ -37,9 +37,9 @@ function formatFirstMessage(lang){
 
 function formatMsg(msg) {
     if (msg.imSender)
-        return "<div class='msg'>" + moi(lang) + " : " + msg.text + " " + msg.time + "</div>";
+        return "<div class='msg my-msg'>" + moi(lang) + " : " + msg.text + " " + msg.time + "</div>";
     else
-        return "<div class='msg'>" + correspondant() + " : " + msg.text + " " + msg.time + "</div>";
+        return "<div class='msg other-msg'>" + correspondant() + " : " + msg.text + " " + msg.time + "</div>";
 }
 
 function formatErrorMsg(msg) {
