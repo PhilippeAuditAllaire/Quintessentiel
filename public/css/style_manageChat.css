@@ -5,7 +5,6 @@
 }
 
 .left-bar{
-	border:1px solid blue;
 	max-width:300px;
 	width:30vw;
 	height:calc(100vh - 25px);
@@ -15,11 +14,14 @@
 	border:1px solid black;
 	height:20vh;			/* Total height: 100vh - 20vh; */
 	min-height:105px;
+	display:flex;
+	justify-content: center;
 }
 
 .left-bar-body{
 	border:1px solid green;
 	height:65vh;		/* Total height: 80vh - 65vh; */
+	flex-grow:1;
 }
 
 .left-bar-footer{
@@ -28,10 +30,45 @@
 }
 
 #wrapperLogo{
-	border:1px solid black;
+	align-self: center;
 }
 
 #logo{
-	border:1px solid black;
 	width:100%;
 }
+
+#contact-bar-wrapper{
+	border:1px solid black;
+	height:100%;
+	display: flex;
+	justify-content: center;
+}
+
+#contact-bar{
+	border:1px solid black;
+	min-height:200px;
+	height:80%;
+	display:flex;
+	align-self:center;
+	width:95%;
+}
+
+.right-bar{
+	flex-grow:1;
+}
+
+.right-bar-header{
+	border:1px solid black;
+	height:75px;
+}
+
+.right-bar-body{
+	border:10px solid black;
+	height:calc(90vh - 100px);
+}
+
+.right-bar-footer{
+	border:10px solid blue;
+	height:calc(10vh);
+}
+
