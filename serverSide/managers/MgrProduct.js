@@ -5,6 +5,14 @@ class MgrProduct {
         this._queryEngine = new QueryEngine();
     }
 
+    //Gets the rebate for a product
+    getProductPromo(productId){
+        let query = "SELECT rabais FROM Promo WHERE id_product = ?";
+        let param = [productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     //Loads a product name
     //based on its id and on the language id
     //@Returns a promise

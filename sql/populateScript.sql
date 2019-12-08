@@ -345,7 +345,7 @@ VALUES
 
     ('63', '1', 'sérum personnalisé'), 
     ('63', '2', 'personnalised serum');
-    /* FIN NAVBAR */
+    #FIN NAVBAR 
 
 
     INSERT INTO landingtext_attribute (id, type, page) 
@@ -378,9 +378,9 @@ VALUES
     ('60', '2', 'Témoignages');
 
 
-    /*  FIN INDEX */
+ #FIN INDEX
 
-    /* Catalogue */
+ #Catalogue
 
     INSERT INTO landingtext_attribute (id, type, page) 
     VALUES 
@@ -391,9 +391,9 @@ VALUES
     ('61', '1', 'Produits'), 
     ('61', '2', 'Products');
 
-    /* Fin catalogue */
+ #Fin catalogue
 
-    /* ProduitInfo */
+ #ProduitInfo
 
 INSERT INTO landingtext_attribute (id, type, page) 
     VALUES 
@@ -416,10 +416,98 @@ INSERT INTO landingtext_attribute (id, type, page)
     ('67', '1', 'Rituel'), 
     ('67', '2', 'Ritual');
 
-    /* Fin ProduitInfo */
+    # Fin ProduitInfo
 
 
+    #Page de userRegister
+    INSERT INTO 
+    landingtext_attribute 
+    VALUES 
+    (68,'pageH1','userRegister'),
+    (69,'labelFirstName','userRegister'),
+    (70,'labelLastName','userRegister'),
+    (71,'labelEmail','userRegister'),
+    (72,'labelBirthDate','userRegister'),
+    (73,'labelCivility','userRegister'),
+    (74,'subTitleAddress','userRegister'),
+    (75,'labelStreet','userRegister'),
+    (76,'labelAppartment','userRegister'),
+    (77,'labelPostalCode','userRegister'),
+    (78,'labelCivicNo','userRegister'),
+    (79,'labelCountry','userRegister'),
+    (80,'labelProvince','userRegister'),
+    (81,'labelTrouble','userRegister'),
+    (82,'labelPassword','userRegister'),
+    (83,'labelConfirmPassword','userRegister'),
+    (84,'labelSubscribeNewsletter','userRegister'),
+    (85,'labelISubscribe','userRegister'),
+    (86,'labelComplete','userRegister'),
+    (87,'pageTitle','userRegister'),
+    (89,'errSameEmail','userRegister'),
+    (90,'errValidFirstName','userRegister'),
+    (91,'errValidLastName','userRegister'),
+    (92,'errValidEmail','userRegister'),
+    (93,'errValidPassword','userRegister'),
+    (94,'errConfirmPassword','userRegister'),
+    (94,'errWhileAddUser','userRegister')
 
+    INSERT INTO 
+    ta_landingtextattribute_language 
+    VALUES
+    (68,'1','Inscription'),
+    (68,'2','Register'),
+    (69,'1','Prénom'),
+    (69,'2','First name'),
+    (70,'1','Nom'),
+    (70,'2','Last name'),
+    (71,'1','Courriel'),
+    (71,'2','Email'),
+    (72,'1','Date de naissance'),
+    (72,'2','Birthdate'),
+    (73,'1','Civilité'),
+    (73,'2','Civility'),
+    (74,'1','Adresse'),
+    (74,'2','Address'),
+    (75,'1','Rue'),
+    (75,'2','Street'),
+    (76,'1','No app.'),
+    (76,'2','App nb.'),
+    (77,'1','Code postal'),
+    (77,'2','Postal code'),
+    (78,'1','No civique'),
+    (78,'2','Civic nb.'),
+    (79,'1','Pays'),
+    (79,'2','Country'),
+    (80,'1','Province'),
+    (80,'2','Province'),
+    (81,'1','troubles'),
+    (81,'2','Troubles'),
+    (82,'1','Mot de passe'),
+    (82,'2','Password'),
+    (83,'1','Confirmer le mot de passe'),
+    (83,'2','Confirm password'),
+    (84,'1','Abonnez-vous à l\'infolettre'),
+    (84,'2','Subscribe to the newsletter'),
+    (85,'1','je souhaite m\'abonner'),
+    (85,'2','I subscribe'),
+    (86,'1','Créer'),
+    (86,'2','Create'),
+    (87,'1','Quintessentiel | Nouveau compte'),
+    (87,'2','Quintessentiel | New account'),
+    (89,'1','L\'addresse courriel entrée est déjà utilisée.'),
+    (89,'2','The given email address is already used on the website.'),
+    (90,'1','Veuillez entrer un prénom valide'),
+    (90,'2','Please enter a valid first name'),
+    (91,'1','Veuillez entrer un nom valide'),
+    (91,'2','Please enter a valid last name'),
+    (92,'1','L\'adresse courriel entrée est invalide.'),
+    (92,'2','The given email address is invalid.'),
+    (93,'1','Mot de passe invalide. Le mot de passe doit contenir un minimum de 6 lettres, ainsi qu\'une majuscule et un chiffre'),
+    (93,'2','Invalid password. The password must contain at least 6 letters, a capital letter and a number'),
+    (94,'1','Les mots de passes ne correspondent pas.'),
+    (94,'2','The passwords don\'t match.'),
+    (95,'1','Erreur lors de l\'ajout de l\'utilisateur.veuillez réessayer plus tard.'),
+    (95,'2','Error while adding the user. Please try again later.')
 
     #troubles
     INSERT INTO Conditions VALUES (DEFAULT);

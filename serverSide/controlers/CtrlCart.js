@@ -22,6 +22,7 @@ class CtrlCart {
     	cartItems._itemArray.forEach(function(item){ //For each item in the cart, add it to a "queue"
     		getEachItemInfos.push(context._mgrProduct.loadProductsTranslatableInfosById(item._id));
     		getEachItemInfos.push(context._mgrProduct.loadProductName(item._id,1));
+        getEachItemInfos.push(context.getProductPromo(item._id));
     		//Get rabais here
     	});
 
@@ -31,20 +32,25 @@ class CtrlCart {
 
     		let allProducts = []; //Contains all the Product object created from the productInfos
 
-    		for(let i = 0;i < productsInfos.length;i+=2)
+    		for(let i = 0;i < productsInfos.length;i+=3)
     		{	
-   
+    
     			let productNonTranslatableInfos = productsInfos[i][0];
     			let productTranslatableInfos = productsInfos[i+1][0];
+          let productPromo = productsInfos[i+2];
+          let retaillerPromo = productInfos[i+2];
+          
+          console.log("Voici les promotions sur les produits")
+          console.log(productPromo);
 
     			let product = new Product();
     			product.id = productNonTranslatableInfos.id;
     			product.retailPrice = productNonTranslatableInfos.retailPrice;
-				product.qty = productNonTranslatableInfos.quantity;
-				product.image = productNonTranslatableInfos.image;
-				product.name = productTranslatableInfos.value;
+				  product.qty = productNonTranslatableInfos.quantity;
+				  product.image = productNonTranslatableInfos.image;
+				  product.name = productTranslatableInfos.value;
 
-				let productIndexInCart = i / 2;
+				let productIndexInCart = i / 3;
 				let productQtyInCart = cartItems._itemArray[productIndexInCart]._qty;
 
 				allProducts.push({product:product,qtyInCart:productQtyInCart});
@@ -52,6 +58,26 @@ class CtrlCart {
 
     		return allProducts;
     	});
+    }
+
+
+    //Gets the current promotion for
+    //the given product (if any)
+    getProductPromo(productId)
+    {
+    
+      //Gets the current promo for this item
+      return this._mgrProduct.getProductPromo(productId).then(function(res){
+
+        let promoPercent = 0;
+
+        //if there is a promo for this item
+        if(res.length > 0){
+          promoPercent = res[0].rabais;
+        }
+
+        return promoPercent;
+      });
     }
 
     //Calculates the sub total based

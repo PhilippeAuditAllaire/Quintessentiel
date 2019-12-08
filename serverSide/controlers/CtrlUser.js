@@ -147,11 +147,11 @@ class CtrlUser{
 	/*
 	  Loads all the civilities
 	*/
-	loadAllCivilities(){
+	loadAllCivilities(langId){
 
 		
 
-		return this._mgrUser.loadAllCivilities().then(function(val){
+		return this._mgrUser.loadAllCivilities(langId).then(function(val){
 				let optionArray = [];
 
 				val.forEach(function(civility) {
@@ -168,9 +168,9 @@ class CtrlUser{
 		Loads all the conditions that
 		a person could have 
 	*/
-	loadAllConditions()
+	loadAllConditions(idLang)
 	{
-		return this._mgrUser.loadAllConditions().then(function(res){
+		return this._mgrUser.loadAllConditions(idLang).then(function(res){
 
 			let htmlElements = "";
 

@@ -111,6 +111,7 @@ website.get("/userRegister", function(req, res) {
     setLang(req);
 
     mgr.getTextByPage("userRegister", req.session.id_lang).then(function(resultat) {
+        console.log(resultat)
         res.render("userRegister.ejs", JSON.parse(resultat));
     });
 });
@@ -273,7 +274,7 @@ website.post("/ajaxRequest/getCivilities", function(req, res) {
 
     let ctrlUserObj = new CtrlUser();
 
-    ctrlUserObj.loadAllCivilities().then(function(result) {
+    ctrlUserObj.loadAllCivilities(req.session.id_lang).then(function(result) {
         res.send(result);
     });
 
@@ -403,7 +404,7 @@ website.post("/ajaxRequest/userRecovering", function(req, res) {
 website.post("/ajaxRequest/getConditions", function(req, res) {
     let ctrlUserObj = new CtrlUser();
 
-    ctrlUserObj.loadAllConditions().then(function(conditionsList) {
+    ctrlUserObj.loadAllConditions(req.session.id_lang).then(function(conditionsList) {
             res.send(conditionsList);
         })
         .catch(function(error) {
