@@ -6,8 +6,8 @@
 }
 
 .left-bar{
-	max-width:300px;
-	width:30vw;
+	min-width:300px;
+	width:20vw;
 	height:calc(100vh - 25px);
 }
 
@@ -23,6 +23,9 @@
 	border:1px solid green;
 	height:65vh;		/* Total height: 80vh - 65vh; */
 	flex-grow:1;
+	display: flex;
+    flex-direction: column;
+
 }
 
 .left-bar-footer{
@@ -43,6 +46,7 @@
 	height:100%;
 	display: flex;
 	justify-content: center;
+	overflow-x: hidden;
 }
 
 #contact-bar{
@@ -57,7 +61,7 @@
 }
 
 .right-bar{
-	flex-grow:1;
+	width:80vw;
 }
 
 .right-bar-header{
@@ -75,6 +79,7 @@
 .right-bar-body{
 	border:1px solid black;
 	height:calc(88vh - 100px);
+	overflow-y: scroll;
 }
 
 .right-bar-footer{
@@ -100,6 +105,7 @@
 }
 
 .right-inner-footer{
+	min-width:100px;
 	width:20%;
 	border:1px solid green;
 }
@@ -107,12 +113,10 @@
 .right-inner-footer button{
 	width:100%;
 	height:100%;
-	font-size:24px;
 }
 
 .wrapper-btn-send{
 	height:100%;
-	padding:20px;
 }
 
 .single-contact{
@@ -149,4 +153,69 @@
 
 .tab-pane.active{
 	display:block;
+}
+
+.left-bar-footer{
+	display: flex;
+	justify-content: center;
+}
+
+.left-footer-close{
+	display: flex;
+	justify-content: center;
+	width:100%;
+	border:1px solid green;
+}
+
+.left-footer-close button{
+	display: flex;
+	align-self: center;
+	width:90%;
+	justify-content: center;
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+
+.wrapperSingleMessage{
+	display: flex;
+	margin-top:15px;
+}
+
+.wrapperMsgClient{
+	justify-content: flex-start;
+}
+
+.wrapperMsgAdmin{
+	justify-content: flex-end;
+}
+
+
+.messageWrapper{
+	width:45%;
+}
+
+.wrapperMsgClient{
+	padding-left:5%;
+}
+
+.wrapperMsgAdmin{
+	padding-right:5%;
+}
+
+.msgUserName{
+	position:relative;
+	left:10px;
+	color:gray;
+	font-style:italic;
+}
+
+.msgUserText{
+	padding:10px;
+	border-radius:10px;
+	background-color:#BBD23D;
+}
+
+.messageWrapper p{
+	margin:0;
 }

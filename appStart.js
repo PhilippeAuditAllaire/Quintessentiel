@@ -15,7 +15,7 @@ function createWindow () {
     width: 800,
     height: 600,
     'minHeight': 500,
-    'minWidth': 550,
+    'minWidth': 600,
     show: false
   });
 	
