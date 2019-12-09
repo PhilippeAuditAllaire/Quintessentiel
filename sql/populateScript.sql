@@ -116,7 +116,7 @@ INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,12,"Florida");
 
 
 #User
-INSERT INTO Users VALUES (DEFAULT,1,"Admin","Admin","admin@admin.com","2019-01-01","$2b$10$jagLRkMveQSjVye8cY77M.9CS7rl4Y8uD2Q9sn9qVKbDXNZ5ma5oa",1,1,"admin",0,"J1R0B1",404,1,1);
+#INSERT INTO Users VALUES (DEFAULT,1,"Admin","Admin","admin@admin.com","2019-01-01","$2b$10$jagLRkMveQSjVye8cY77M.9CS7rl4Y8uD2Q9sn9qVKbDXNZ5ma5oa",1,1,"admin",0,"J1R0B1",404,1,1);
 
 
 
@@ -449,7 +449,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (92,'errValidEmail','userRegister'),
     (93,'errValidPassword','userRegister'),
     (94,'errConfirmPassword','userRegister'),
-    (95,'errWhileAddUser','userRegister')
+    (95,'errWhileAddUser','userRegister');
 
     INSERT INTO 
     ta_landingtextattribute_language 
@@ -507,7 +507,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (94,'1','Les mots de passes ne correspondent pas.'),
     (94,'2','The passwords don\'t match.'),
     (95,'1','Erreur lors de l\'ajout de l\'utilisateur.veuillez réessayer plus tard.'),
-    (95,'2','Error while adding the user. Please try again later.')
+    (95,'2','Error while adding the user. Please try again later.');
 
 
 
@@ -531,7 +531,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (109,'errInvalidEmail','userConnection'),
     (110,'successCreatedAccount','userConnection'),
     (113,'errWrongInfo','userConnection'),
-    (114,'passwordModified','userConnection')
+    (114,'passwordModified','userConnection');
 
 
 
@@ -571,7 +571,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (113,'1','Le courriel/mot de passe ne correspondent pas.'),
     (113,'2','The email/password don\'t match.'),
     (114,'1','Votre mot de passe a été modifié avec succès!'),
-    (114,'2','Your password has been successfully modified!')
+    (114,'2','Your password has been successfully modified!');
 
 
     #Cart
@@ -588,7 +588,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (122,'lblCartCantBiggerStock','navbar'), 
     (123,'lblCartItemAdded','navbar'), 
     (124,'lblCartItemAlready','navbar'), 
-    (125,'lblCartMustBeConnected','navbar')
+    (125,'lblCartMustBeConnected','navbar');
     
 
     INSERT INTO 
@@ -615,7 +615,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (124,'1','L\'item se trouve déjà dans votre panier'), 
     (124,'2','This item is already in your cart!'), 
     (125,'1','Vous devez être connecté pour passer la commande!'),
-    (125,'2','You must be connected in order to pay.') 
+    (125,'2','You must be connected in order to pay.');
 
     #troubles
     INSERT INTO Conditions VALUES (DEFAULT);
@@ -634,3 +634,106 @@ INSERT INTO landingtext_attribute (id, type, page)
 
     INSERT INTO ta_conditionsattribute_language VALUES (1,1,3,"Peau irritée");
     INSERT INTO ta_conditionsattribute_language VALUES (1,2,3,"Irritated Skin");
+
+
+    #Payment page
+    INSERT INTO 
+    landingtext_attribute 
+    VALUES 
+    (156,'pageTitle','paymentPage'),
+    (126,'subTitleResume','paymentPage'), 
+    (127,'subTitleUseThese','paymentPage'), 
+    (128,'subTitleNewAddress','paymentPage'), 
+    (129,'tabPayment','paymentPage'), 
+    (130,'tabInformations','paymentPage'), 
+    (131,'tabResume','paymentPage'),
+    (132,'tableColCart','paymentPage'),
+    (133,'tableColPrice','paymentPage'),
+    (134,'tableColQuantity','paymentPage'),
+    (135,'tableColTotal','paymentPage'),
+    (136,'paymentSubTotal','paymentPage'),  
+    (137,'paymentTotal','paymentPage'),
+    (138,'paymentBtnEnterInfo','paymentPage'),
+    (139,'infoCountry','paymentPage'),
+    (140,'infoProvince','paymentPage'),
+    (141,'infoStreet','paymentPage'),
+    (142,'infoCivic','paymentPage'),
+    (143,'infoPostalCode','paymentPage'),
+    (144,'infoApp','paymentPage'),
+    (145,'infoBtnToPayment','paymentPage'),
+    (146,'paymentBtnPay','paymentPage'),
+    (147,'tps','paymentPage'),
+    (148,'tvq','paymentPage'),
+    (149,'lblErrFormStreet','paymentPage'),
+    (150,'lblErrFormCivic','paymentPage'),
+    (151,'lblErrFormPostalCode','paymentPage'),
+    (152,'lblAfterRebate','paymentPage'),
+    (153,'lblDeleteItem','paymentPage'),
+    (154,'creditOrDebit','paymentPage'),
+    (155,'paymentSuccessfull','paymentPage');
+
+    INSERT INTO 
+    ta_landingtextattribute_language 
+    VALUES
+    (126,'1','Résumé de la commande'), 
+    (126,'2','Order summary'),
+    (127,'1','Utiliser les informations suivantes'),  
+    (127,'2','Use the following informations'),  
+    (128,'1','Utiliser une nouvelle adresse'),  
+    (128,'2','Use a new address'),  
+    (129,'1','Paiement'),  
+    (129,'2','Payment'),  
+    (130,'1','Informations'),  
+    (130,'2','Informations'),  
+    (131,'1','Résumé de la commande'),
+    (131,'2','Order summary'),
+    (132,'1','Mon panier'),
+    (132,'2','My cart'),
+    (133,'1','Prix'),
+    (133,'2','Price'),
+    (134,'1','Qté'),
+    (134,'2','Qty'),
+    (135,'1','Total'),
+    (135,'2','Total'),
+    (136,'1','Sous-total'),
+    (136,'2','Sub-total'),
+    (137,'1','Total'),
+    (137,'2','Total'),
+    (138,'1','Entrer mes informations'),
+    (138,'2','Enter my informations'),
+    (139,'1','Pays'),
+    (139,'2','Country'),
+    (140,'1','Province'),
+    (140,'2','Province'),
+    (141,'1','Rue'),
+    (141,'2','Street'),
+    (142,'1','No Civique'),
+    (142,'2','Civic nb.'),
+    (143,'1','Code postal'),
+    (143,'2','Postal Code'),
+    (144,'1','No app.'),
+    (144,'2','App nb.'),
+    (145,'1','Passer au paiement'),
+    (145,'2','Checkout'),
+    (146,'1','Soumettre le paiement'),
+    (146,'2','Pay'),
+    (147,'1','Tps'),
+    (147,'2','Tps'),
+    (148,'1','Tvq'),
+    (148,'2','Tvq'),
+    (149,'1','Veuillez renseigner ce champ'),
+    (149,'2','Please fill this field'),
+    (150,'1','Veuillez renseigner ce champ'),
+    (150,'2','Please fill this field'),
+    (151,'1','Veuillez renseigner ce champ'),
+    (151,'2','Please fill this field'),
+    (152,'1','Après rabais de '),
+    (152,'2','After rebate of '),
+    (153,'1','Supprimer'),
+    (153,'2','Remove'),
+    (154,'1','Crédit ou débit'),
+    (154,'2','Credit or Debit'),
+    (155,'1','Paiement effectué avec succès'),
+    (155,'2','Payment successfully executed'),
+    (156,'1','Quintessentiel | Paiement'),
+    (156,'2','Quintessentiel | Payment');

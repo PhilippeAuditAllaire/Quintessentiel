@@ -149,7 +149,7 @@ website.get("/faq", function(req, res) {
 website.get("/paymentPage", function(req, res) {
     if (req.session.userId != undefined) {
         setLang(req);
-        mgr.getTextByPage("payment", req.session.id_lang).then(function(resultat) {
+        mgr.getTextByPage("paymentPage", req.session.id_lang).then(function(resultat) {
             res.render("paymentPage.ejs", JSON.parse(resultat));
         });
     } else {

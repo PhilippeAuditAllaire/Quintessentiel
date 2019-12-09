@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quintessentiel | Nouveau compte</title>
+	<title><%= pageTitle %></title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="/css/style_header.css"/>
@@ -18,26 +18,26 @@
 		<div class="wrapper-payment-bloc">
 			<ul class="nav nav-tabs" id="tabPayment" role="tablist">
 			  <li class="nav-item">
-			    <a class="nav-link active" id="resumeLink" data-toggle="tab" href="#resumeTab" role="tab">1. Résumé de commande</a>
+			    <a class="nav-link active" id="resumeLink" data-toggle="tab" href="#resumeTab" role="tab">1. <%= tabResume %></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="informationsLink" data-toggle="tab" href="#informationsTab" role="tab">2. Informations</a>
+			    <a class="nav-link" id="informationsLink" data-toggle="tab" href="#informationsTab" role="tab">2. <%= tabInformations %></a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" id="paymentLink" data-toggle="tab" href="#paymentTab" role="tab">3. Paiement</a>
+			    <a class="nav-link" id="paymentLink" data-toggle="tab" href="#paymentTab" role="tab">3. <%= tabPayment %></a>
 			  </li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
 			  <div class="tab-pane fade show active" id="resumeTab" role="resumeLink"> <!-- Résumé de la commande -->
-			  	<h2>Résumé de la commande</h2>
+			  	<h2><%= subTitleResume %></h2>
 
 			  	<table id="tableResume" class="table-resume">
 			  		<thead>
 			  			<tr>
-				  			<th>Mon panier</th>
-				  			<th>Prix</th>
-				  			<th>Qté</th>
-				  			<th>Total</th>
+				  			<th><%= tableColCart %></th>
+				  			<th><%= tableColPrice %></th>
+				  			<th><%= tableColQuantity %></th>
+				  			<th><%= tableColTotal %></th>
 				  			<th></th>
 				  		</tr>
 				  	</thead>
@@ -48,59 +48,59 @@
 				  			<th></th>
 					  		<th></th>
 					  		<th></th>
-					  		<th>Sous-total</th>
+					  		<th><%= paymentSubTotal %></th>
 					  		<th id="completeSubTotal"></th>
 			  			</tr>
 			  			<tr>
 				  			<th></th>
 					  		<th></th>
 					  		<th></th>
-					  		<th>Tps:</th>
+					  		<th><%= tps %>:</th>
 					  		<th id="tpsTotal"></th>
 			  			</tr>
 			  			<tr>
 				  			<th></th>
 					  		<th></th>
 					  		<th></th>
-					  		<th>Tvq:</th>
+					  		<th><%= tvq %>:</th>
 					  		<th id="tvqTotal"></th>
 			  			</tr>
 			  			<tr>
 				  			<th></th>
 					  		<th></th>
 					  		<th></th>
-					  		<th>Total:</th>
+					  		<th><%= paymentTotal %>:</th>
 					  		<th id="grandTotal"></th>
 			  			</tr>
 			  		</tfoot>
 			  	</table>
 
 			  	<div class="tabBtnChangeContainer">
-			  		<a href="#" id="btnToInfo" data-toggle="tab" class="btn btn-success">Entrer mes informations</a>
+			  		<a href="#" id="btnToInfo" data-toggle="tab" class="btn btn-success"><%= paymentBtnEnterInfo %></a>
 			  	</div>
 			  </div>
 			  <div class="tab-pane fade" id="informationsTab" role="informationsLink">
 			  	<div class="wrapperInfoTab">
 			  		<div class="topWrapperInfoTab infoBloc toggledBloc">
 				  		<div class="infoTabTopWrapper">
-				  			<h3>Utiliser les informations suivantes</h3>
+				  			<h3><%= subTitleUseThese %></h3>
 				  			<div class="infosBloc">
-				  				<p><span class="labelSpan">Pays: </span><span id="infoCountry" class="infoSpan"></span></p>
-				  				<p><span class="labelSpan">Province: </span><span id="infoProvince" class="infoSpan"></span></p>
-				  				<p><span class="labelSpan">Rue: </span><span id="infoStreet" class="infoSpan"></span></p>
-				  				<p><span class="labelSpan">No civique: </span><span id="infoCivic" class="infoSpan"></span></p>
-				  				<p><span class="labelSpan">Code postal: </span><span id="infoPostalCode" class="infoSpan"></span></p>
-				  				<p><span class="labelSpan">No app: </span><span id="infoNoApp" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan"><%= infoCountry %>: </span><span id="infoCountry" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan"><%= infoProvince %>: </span><span id="infoProvince" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan"><%= infoStreet %>: </span><span id="infoStreet" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan"><%= infoCivic %>: </span><span id="infoCivic" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan"><%= infoPostalCode %>: </span><span id="infoPostalCode" class="infoSpan"></span></p>
+				  				<p><span class="labelSpan"><%= infoApp %>: </span><span id="infoNoApp" class="infoSpan"></span></p>
 				  			</div>
 				  		</div>
 			  		</div>
 			  		<div class="infoTabBottomWrapper infoBloc">
-			  			<h3>Utiliser une nouvelle adresse: </h3>
+			  			<h3><%= subTitleNewAddress %>: </h3>
 			  			<div id="formInfoUser" class="formInfoUser">
 			  				<div class="formRowWrapper">
 				  				<div class="formRow">
 				  					<div class="wrapperLabel">
-				  						<label>Pays</label>
+				  						<label><%= infoCountry %></label>
 				  					</div>
 				  					<div class="wrapperInput">
 				  						<select id="idCountry">
@@ -112,7 +112,7 @@
 			  				<div class="formRowWrapper">
 				  				<div class="formRow">
 				  					<div class="wrapperLabel">
-				  						<label>Province</label>
+				  						<label><%= infoProvince %></label>
 				  					</div>
 				  					<div class="wrapperInput">
 				  						<select id="idProvince">
@@ -125,7 +125,7 @@
 			  					<div class="formRowError"><p id="formErrorStreet"></p></div>
 				  				<div class="formRow">
 				  					<div class="wrapperLabel">
-				  						<label>Rue</label>
+				  						<label><%= infoStreet %></label>
 				  					</div>
 				  					<div class="wrapperInput">
 				  						<input type="text" id="formStreet" class="form-control"/>
@@ -136,7 +136,7 @@
 			  					<div class="formRowError"><p id="formErrorNoCivic"></p></div>
 				  				<div class="formRow">
 				  					<div class="wrapperLabel">
-				  						<label>No Civique</label>
+				  						<label><%= infoCivic %></label>
 				  					</div>
 				  					<div class="wrapperInput">
 				  						<input type="text" id="formNoCivic" class="form-control"/>
@@ -147,7 +147,7 @@
 				  				<div class="formRowError"><p id="formErrorPostalCode"></p></div>
 				  				<div class="formRow">
 				  					<div class="wrapperLabel">
-				  						<label>Code postal</label>
+				  						<label><%= infoPostalCode %></label>
 				  					</div>
 				  					<div class="wrapperInput">
 				  						<input type="text" id="formPostalCode" class="form-control"/>
@@ -157,7 +157,7 @@
 				  			<div class="formRowWrapper">
 				  				<div class="formRow">
 				  					<div class="wrapperLabel">
-				  						<label>No appartement</label>
+				  						<label><%= infoApp %></label>
 				  					</div>
 				  					<div class="wrapperInput">
 				  						<input type="text" id="formNoApp" class="form-control"/>
@@ -168,7 +168,7 @@
 			  		</div>
 			  	</div>
 				  <div class="tabBtnChangeContainer">
-				  		<a href="#" id="btnToPayment" data-toggle="tab" class="btn btn-success">Passer au paiement</a>
+				  		<a href="#" id="btnToPayment" data-toggle="tab" class="btn btn-success"><%= infoBtnToPayment %></a>
 				  </div>
 			  </div>
 			  <div class="tab-pane fade" id="paymentTab" role="paymentLink"> <!-- Payment form -->
@@ -176,7 +176,7 @@
 			  	<form action="/stripePayment" method="post" id="payment-form">
 				  <div>
 				    <label id="card-element-label" for="card-element">
-				      Crédit ou débit
+				      <%= creditOrDebit %>
 				    </label>
 				    <div id="card-element">
 				      <!-- A Stripe Element will be inserted here. -->
@@ -186,7 +186,7 @@
 				    <div id="card-errors" role="alert"></div>
 				  </div>
 
-				  <button class="btn btn-success">Soumettre le paiement</button>
+				  <button class="btn btn-success"><%= paymentBtnPay %></button>
 				</form>
 			  </div>
 			</div>	
@@ -207,7 +207,12 @@
 		let formErrorNoCivic = document.getElementById("formErrorNoCivic");
 		let formErrorPostalCode = document.getElementById("formErrorPostalCode");
 
-
+		const lblErrFormStreet = "<%= lblErrFormStreet %>";
+		const lblErrFormCivic = "<%= lblErrFormCivic %>";
+		const lblErrFormPostalCode = "<%= lblErrFormPostalCode %>";
+		const lblDeleteItem = "<%= lblDeleteItem %>";
+		const lblAfterRebate = "<%= lblAfterRebate %>";
+		const paymentSuccessfull = "<%= paymentSuccessfull %>";
 
 		//Checks if the form is filled
 		function validateUserAddressForm()
@@ -217,24 +222,21 @@
 			//If the street is valid
 			if(formStreet.value == "")
 			{	
-				console.log("la rue ne peut pas être vide!");
-				formErrorStreet.innerHTML = "Veuillez renseigner ce champ";
+				formErrorStreet.innerHTML = lblErrFormStreet;
 				validForm = false;
 			}
 
 			//if the civic nb is valid
 			if(formNoCivic.value == "")
 			{
-				console.log("Le no civic ne peut pas être vide!");
-				formErrorNoCivic.innerHTML = "Veuillez renseigner ce champ";
+				formErrorNoCivic.innerHTML = lblErrFormCivic;
 				validForm = false;
 			}
 
 			//if the postal code is valid
 			if(formPostalCode.value == "")
 			{
-				console.log("le code postal ne peut pas être vide!");
-				formErrorPostalCode.innerHTML = "Veuillez renseigner ce champ"
+				formErrorPostalCode.innerHTML = lblErrFormPostalCode
 				validForm = false;
 			}
 
@@ -250,9 +252,9 @@
 			userCart.forEach(function(cartItem){
 
 				let rebateLine = "";
-				console.log(cartItem);
+
 				if(parseFloat(cartItem.product._rebate) > 0){
-					rebateLine = "<p class='afterRebateLine'>Après rabais de "+cartItem.product._rebate+"%";
+					rebateLine = "<p class='afterRebateLine'>"+lblAfterRebate+" "+cartItem.product._rebate+"%";
 				}
 
 				bodyTableResume.innerHTML += `
@@ -278,7 +280,7 @@
 							<p>`+calculateItemPrice(cartItem.qtyInCart,cartItem.product._priceAfterRebate)+`$</p>
 						</td>
 						<td class="deleteTd">
-							<p><a href="#" title="supprimer l'item" class="deleteItemLink">Supprimer</a></p>
+							<p><a href="#" title="supprimer l'item" class="deleteItemLink">`+lblDeleteItem+`</a></p>
 						</td>
 					</tr>
 				`;
@@ -326,7 +328,7 @@
 						itemTR.addEventListener("animationend",function(){
 							itemTR.remove();	
 							if(userCart.length <= 0){
-								$("#bodyTableResume").html("Votre panier est vide.");
+								$("#bodyTableResume").html("<%= lblCartEmpty %>");
 							}		
 						});
 
@@ -336,7 +338,7 @@
 			});
 
 			if(userCart.length <= 0){
-				$("#bodyTableResume").html("Votre panier est vide.");
+				$("#bodyTableResume").html("<%= lblCartEmpty %>");
 			}
 
 			changeCompleteSubTotal(calculateSubTotal());       //Change the sub total
@@ -413,7 +415,6 @@
 
 		function displayGrandTotal(taxes)
 		{
-			console.log("hey!");
 			let grandTotal = document.getElementById("grandTotal");
 			grandTotal.innerHTML = (parseFloat(calculateSubTotal()) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq))).toFixed(2) + "$";
 		}
