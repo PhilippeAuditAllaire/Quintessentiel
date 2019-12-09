@@ -1,231 +1,244 @@
-
-.wrapper-content-manageChat{
-	display: flex;
-	flex-direction: row;
-	width:100%;
+.wrapper-content-manageChat {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
-.left-bar{
-	min-width:200px;
-	width:20vw;
-	height:calc(100vh - 25px);
+.left-bar {
+    min-width: 200px;
+    width: 20vw;
+    height: calc(100vh - 25px);
 }
 
-.left-bar-header{
-	height:calc(20vh - 25px);			/* Total height: 100vh - 20vh; */
-	display:flex;
-	justify-content: center;
+.left-bar-header {
+    height: calc(20vh - 25px);
+    /* Total height: 100vh - 20vh; */
+    display: flex;
+    justify-content: center;
 }
 
-.left-bar-body{
-	border:1px solid green;
-	height:65vh;		/* Total height: 80vh - 65vh; */
-	display: flex;
+.left-bar-body {
+    height: 65vh;
+    /* Total height: 80vh - 65vh; */
+    display: flex;
     flex-direction: column;
 }
 
-.left-bar-footer{
-	border:1px solid purple;
-	height:15vh;
+.left-bar-footer {
+    height: 15vh;
 }
 
-#wrapperLogo{
-	align-self: center;
+#wrapperLogo {
+    align-self: center;
 }
 
-#logo{
-	width:100%;
+#logo {
+    width: 100%;
 }
 
-#contact-bar-wrapper{
-	border:1px solid black;
-	height:100%;
-	display: flex;
-	justify-content: center;
-	overflow-x: hidden;
+#contact-bar-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
 }
 
-#contact-bar{
-	border:1px solid black;
-	
-	height:80%;
-	display:flex;
-	align-self:center;
-	flex-direction: column;
-	width:95%;
-	overflow-y: scroll;
+#contact-bar {
+    height: 80%;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    width: 95%;
+    overflow-y: scroll;
 }
 
-.right-bar{
-	width:80vw;
+.right-bar {
+    width: 80vw;
 }
 
-.right-bar-header{
-	border:1px solid black;
-	height:75px;
-	display: flex;
-	justify-content: center;
+.right-bar-header {
+    height: 75px;
+    display: flex;
+    justify-content: center;
 }
 
-.right-bar-header h2{
-	display: flex;
-	align-self:center;
+.right-bar-header h2 {
+    display: flex;
+    align-self: center;
 }
 
-.right-bar-body{
-	border:1px solid black;
-	height:calc(88vh - 100px);
-	overflow-y: scroll;
+.right-bar-body {
+    border: 1px solid lightgrey;
+    height: calc(88vh - 100px);
+    overflow-y: scroll;
 }
 
-.right-bar-footer{
-	height:calc(12vh);
-	display: flex;
+.right-bar-footer {
+    height: calc(12vh);
+    display: flex;
 }
 
-.right-bar-footer-wrapper{
-	border:1px solid yellow;
-	width:100%;
-	display: flex;
+.right-bar-footer-wrapper {
+    width: 100%;
+    display: flex;
 }
 
-.left-inner-footer{
-	width:80%;
-	border:1px solid black;
+.left-inner-footer {
+    width: 80%;
 }
 
-.left-inner-footer textarea{
-	width:100%;
-	height:100%;
-	font-size:21px;
+.left-inner-footer textarea {
+    width: 100%;
+    height: 100%;
+    font-size: 21px;
 }
 
-.right-inner-footer{
-	min-width:100px;
-	width:20%;
-	border:1px solid green;
+.right-inner-footer {
+    min-width: 100px;
+    width: 20%;
 }
 
-.right-inner-footer button{
-	width:100%;
-	height:100%;
+.right-inner-footer button {
+    width: 100%;
+    height: 100%;
 }
 
-.wrapper-btn-send{
-	height:100%;
+.wrapper-btn-send {
+    height: 100%;
 }
 
-.single-contact{
-	border:1px solid black;
-	margin:5px;
-	color:black;
-	display: block;
+.single-contact {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    margin: 5px;
+    padding-left: 5px;
+    color: black;
+    display: block;
 }
 
-.single-contact:hover{
-	text-decoration: none;
-	color:black;
+.single-contact:hover {
+    text-decoration: none;
+    color: black;
+    background-color: lightgrey;
 }
 
-.contact-title-bar p{
-	font-weight:bold;
-	font-style: italic;
-	margin:0;
-	max-height:40px;
-	overflow: hidden;
+.contact-title-bar p {
+    font-weight: bold;
+    font-style: italic;
+    margin: 0;
+    overflow: hidden;
 }
 
-.contact-name-bar{
-	margin:0;
+.contact-name-bar {
+    margin: 0;
 }
 
-.contact-activity p{
-	margin:0;
+.contact-activity p {
+    margin: 0;
 }
 
-.tab-pane{
-	display:none;
+.contact-ok {
+    color: green;
 }
 
-.tab-pane.active{
-	display:block;
+.contact-not {
+    color: red;
 }
 
-.left-bar-footer{
-	display: flex;
-	justify-content: center;
+.tab-pane {
+    display: none;
 }
 
-.left-footer-close{
-	display: flex;
-	justify-content: center;
-	width:100%;
-	border:1px solid green;
+.tab-pane.active {
+    display: block;
 }
 
-.left-footer-close button{
-	display: flex;
-	align-self: center;
-	width:90%;
-	justify-content: center;
-	padding-top:10px;
-	padding-bottom:10px;
+.left-bar-footer {
+    display: flex;
+    justify-content: center;
 }
 
-
-.wrapperSingleMessage{
-	display: flex;
-	margin-top:15px;
+.left-footer-close {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
-.wrapperMsgClient{
-	justify-content: flex-start;
+.left-footer-close button {
+    display: flex;
+    align-self: center;
+    width: 90%;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-.wrapperMsgAdmin{
-	justify-content: flex-end;
+.wrapperSingleMessage {
+    display: flex;
+    margin-top: 15px;
 }
 
-
-.messageWrapper{
-	width:45%;
+.wrapperMsgClient {
+    justify-content: flex-start;
 }
 
-.wrapperMsgClient{
-	padding-left:5%;
+.wrapperMsgAdmin .msgUserText {
+    background-color: lightgrey;
 }
 
-.wrapperMsgAdmin{
-	padding-right:5%;
+.wrapperMsgAdmin {
+    justify-content: flex-end;
 }
 
-.msgUserName{
-	position:relative;
-	left:10px;
-	color:gray;
-	font-style:italic;
+.messageWrapper {
+    width: 45%;
 }
 
-.msgUserText{
-	padding:10px;
-	border-radius:10px;
-	background-color:#BBD23D;
+.wrapperMsgClient {
+    padding-left: 5%;
 }
 
-.messageWrapper p{
-	margin:0;
+.wrapperMsgAdmin {
+    padding-right: 5%;
 }
 
+.msgUserName {
+    position: relative;
+    left: 10px;
+    color: gray;
+    font-style: italic;
+}
 
-@media screen and (min-width:800px) and (max-height:700px)
-{
+.msgUserText {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #BBD23D;
+}
 
-	#logo{
-		width:70%;
-		margin:auto;
-	}
-	#wrapperLogo{
-		justify-content: center;
-    	display: flex;
-	}
+.messageWrapper p {
+    margin: 0;
+}
+
+.send {
+    background-color: #bcd13f !important;
+    border-color: #bcd13f !important;
+}
+
+.close-msg {
+    background-color: #292323;
+}
+
+.icon {
+    max-width: 60px;
+}
+
+@media screen and (min-width:800px) and (max-height:700px) {
+    #logo {
+        width: 70%;
+        margin: auto;
+    }
+    #wrapperLogo {
+        justify-content: center;
+        display: flex;
+    }
 }
