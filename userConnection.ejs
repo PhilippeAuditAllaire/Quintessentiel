@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quintessentiel | Nouveau compte</title>
+	<title><%= pageTitle %></title>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="/css/style_header.css"/>
@@ -19,29 +19,29 @@
 		</div>
 		<div class="right-user-form">
 			<form class="user-form" id="formConnection">
-				<h2>Connexion</h2>
+				<h2><%= pageH1 %></h2>
 				<p class="success-request" id="success-connexion"></p>
 				<p class="warning-error" id="warning-error"></p>
 				<div class="user-form-inner-wrapper">
 					<div class="wrapper-label-input"> <!-- Une ligne -->
 						<div class="wrapper-label"> <!-- wrapper du label -->
-							<label>Courriel: </label>
+							<label><%= labelEmail %>: </label>
 						</div>
 						<div class="wrapper-input"> <!-- wrapper du input -->
-							<input type="text" placeholder="Courriel" name="email" id="email" class="form-control" required/>
+							<input type="text" placeholder="<%= labelEmail %>" name="email" id="email" class="form-control" required/>
 						</div>
 					</div>
 					<div class="wrapper-label-input"> <!-- Une ligne -->
 						<div class="wrapper-label"> <!-- wrapper du label -->
-							<label>Mot de passe: </label>
+							<label><%= labelPassword %>: </label>
 						</div>
 						<div class="wrapper-input"> <!-- wrapper du input -->
 							<input type="password" name="password" id="password" class="form-control" required/>
 						</div>
 					</div>
-					<div class="wrapper-submit-button"><input type="submit" class="btn btn-success" value="Connexion"/></div>
-					<a href="#" id="userConnectForgot" onclick="$('#bp-modal-forgot').modal()">Mot de passe oublié?</a>	
-					<a href="./userRegister" id="userCreate">Se créer un compte</a>		
+					<div class="wrapper-submit-button"><input type="submit" class="btn btn-success" value="<%= btnConnection %>"/></div>
+					<a href="#" id="userConnectForgot" onclick="$('#bp-modal-forgot').modal()"><%= labelForgotPassword %></a>	
+					<a href="./userRegister" id="userCreate"><%= labelCreateAccount %></a>		
 				</div>
 			</form>
 			
@@ -54,7 +54,7 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">Mot de passe oublié</h5>
+	        <h5 class="modal-title"><%= titleForgotPassword %></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -65,17 +65,17 @@
 	        	<p class="error-request" id="error-request"></p>
 	        	<div class="modal-input-label">
 	        		<div class="modal-lbl">
-	        			<label>Entrez votre adresse courriel</label>
+	        			<label><%= labelForgotEmail %></label>
 	        		</div>
 	        		<div class="modal-input">
-	        			<input type="text" placeholder="Courriel" name="forgotEmail" id="recoverEmail" class="form-control" required />
+	        			<input type="text" placeholder="<%= labelEmail %>" name="forgotEmail" id="recoverEmail" class="form-control" required />
 	        		</div>
 	        	</div>
 	        </div>
 	      </div>
 	      <div class="modal-footer">
-	        <button id="btnRecoverPassword" type="button" class="btn btn-primary btn-success">Envoyer le courriel de récupération</button>
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+	        <button id="btnRecoverPassword" type="button" class="btn btn-primary btn-success"><%= btnSendEmail %></button>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal"><%= btnCancel %></button>
 	      </div>
 	    </div>
 	  </div>
@@ -108,7 +108,7 @@
 						document.location.href = "./index";
 					}
 					else{ //Coudlnt connect (bad infos)
-						$("#warning-error").html("Le courriel/mot de passe ne correspondent pas.");
+						$("#warning-error").html("<%= errWrongInfo %>");
 					}
 					
 				}
@@ -154,16 +154,16 @@
 					},
 					success: function(emailSent){
 						if(emailSent){
-							$("#success-request").html("Courriel de récupération envoyé!")
+							$("#success-request").html("<%= emailSent %>")
 						}
 						else{
-							$(".error-request").html("le courriel n'a pas été envoyé.")
+							$(".error-request").html("<%= errEmailNotSent %>")
 						}
 					}
 				});
 			}
 			else{
-				$(".error-request").html("Le courriel entré est invalide.");
+				$(".error-request").html("<%= errInvalidEmail %>");
 			}
 
 		}
@@ -178,7 +178,7 @@
 			if(newUserUrl != undefined){ //If the parameter exists
 
 				if(newUserUrl == "true"){ //This is a new user
-					$("#success-connexion").html("Votre compte a été crée avec succès!");
+					$("#success-connexion").html("<%= successCreatedAccount %>");
 				}
 			}
 		}
@@ -194,7 +194,7 @@
 			if(passwordChangedUrl != undefined){ //If the parameter exists
 
 				if(passwordChangedUrl == "true"){ //This is a new user
-					$("#success-connexion").html("Votre mot de passe a été modifié avec succès!");
+					$("#success-connexion").html("<%= passwordModified %>");
 				}
 			}
 		}		

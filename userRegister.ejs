@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Quintessentiel | Nouveau compte</title>
+	<title><%= pageTitle %></title>
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" type="text/css" href="/css/style_header.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/style_body.css"/>
@@ -18,7 +18,7 @@
 		</div>
 		<div class="right-user-form">
 			<form class="inscription-form" id="formRegister">
-				<h2>Inscription</h2>
+				<h2><%= pageH1 %></h2>
 				<p class="warning-error" id="warning-error"></p>
 				<div class="user-form-inner-wrapper">
 					<div class="wrapper-row">
@@ -27,10 +27,10 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="firstName">Prénom* </label>
+								<label for="firstName"><%= labelFirstName %>* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
-								<input type="text" placeholder="Prénom" name="firstName" id="firstName" class="form-control" required/>
+								<input type="text" placeholder="<%= labelFirstName %>" name="firstName" id="firstName" class="form-control" required/>
 							</div>
 						</div>
 					</div>
@@ -40,10 +40,10 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="lastName">Nom* </label>
+								<label for="lastName"><%= labelLastName %>* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
-								<input type="text" placeholder="Nom" name="lastName" id="lastName" class="form-control" required/>
+								<input type="text" placeholder="<%= labelLastName %>" name="lastName" id="lastName" class="form-control" required/>
 							</div>
 						</div>
 					</div>
@@ -53,10 +53,10 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="email">Courriel* </label>
+								<label for="email"><%= labelEmail %>* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
-								<input type="text" placeholder="Courriel" name="email" id="email" class="form-control" required/>
+								<input type="text" placeholder="<%= labelEmail %>" name="email" id="email" class="form-control" required/>
 							</div>
 						</div>
 					</div>
@@ -66,7 +66,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="birthDate">Date de naissance* </label>
+								<label for="birthDate"><%= labelBirthDate %>* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="date" name="birthDate" id="birthDate" class="form-control" required/>
@@ -79,7 +79,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="selectCivility">Civilité* </label>
+								<label for="selectCivility"><%= labelCivility %>* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du select -->
 								<select name="idCivility" id="selectCivility" class="form-control" required>
@@ -89,7 +89,7 @@
 						</div>
 					</div>
 					<div class="wrapper-announce-address">
-						<h4>Adresse</h4>	
+						<h4><%= subTitleAddress %></h4>	
 					</div>
 					<hr>
 					<div class="wrapper-row wrapper-address">
@@ -99,43 +99,43 @@
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-left-address">
 								<div class="wrapper-label"> <!-- wrapper du label -->
-									<label for="street">Rue* </label>
+									<label for="street"><%= labelStreet %>* </label>
 								</div>
 								<div class="wrapper-input"> <!-- wrapper du input -->
-									<input type="text" id="street" class="form-control" placeholder="Rue" required/>
+									<input type="text" id="street" class="form-control" placeholder="<%= labelStreet %>" required/>
 								</div>
 							</div>
 							<div class="wrapper-right-address">
 								<div class="wrapper-label"> <!-- wrapper du label -->
-									<label for="noApp">No app.</label>
+									<label for="noApp"><%= labelAppartment %></label>
 								</div>
 								<div class="wrapper-input"> <!-- wrapper du input -->
-									<input type="text" id="noApp" class="form-control" placeholder="No appartement" />
+									<input type="text" id="noApp" class="form-control" placeholder="<%= labelAppartment %>" />
 								</div>
 							</div>
 						</div>
 						<div class="wrapper-label-input wrapper-under-address"> <!-- Une ligne -->
 							<div class="wrapper-left-address">
 								<div class="wrapper-label"> <!-- wrapper du label -->
-									<label for="postalCode">Code postal* </label>
+									<label for="postalCode"><%= labelPostalCode %>* </label>
 								</div>
 								<div class="wrapper-input"> <!-- wrapper du input -->
-									<input type="text" id="postalCode" class="form-control" required placeholder="Code postal" />
+									<input type="text" id="postalCode" class="form-control" required placeholder="<%= labelPostalCode %>" />
 								</div>
 							</div>
 							<div id="wrapperCivic" class="wrapper-right-address">
 								<div class="wrapper-label"> <!-- wrapper du label -->
-									<label for="noCivic">No civique*</label>
+									<label for="noCivic"><%= labelCivicNo %>*</label>
 								</div>
 								<div class="wrapper-input"> <!-- wrapper du input -->
-									<input type="text" id="noCivic" class="form-control" placeholder="No civique" required/>
+									<input type="text" id="noCivic" class="form-control" placeholder="<%= labelCivicNo %>" required/>
 								</div>
 							</div>
 						</div>
 						<div id="wrapperLocation" class="wrapper-label-input wrapper-under-address"> <!-- Une ligne -->
 							<div class="wrapper-left-address">
 								<div class="wrapper-label"> <!-- wrapper du label -->
-									<label for="idCountry">Pays* </label>
+									<label for="idCountry"><%= labelCountry %>* </label>
 								</div>
 								<div class="wrapper-input"> <!-- wrapper du input -->
 									<select name="idCountry" id="idCountry" class="form-control" required>
@@ -144,7 +144,7 @@
 							</div>
 							<div class="wrapper-right-address">
 								<div class="wrapper-label"> <!-- wrapper du label -->
-									<label for="idProvince">Province* </label>
+									<label for="idProvince"><%= labelProvince %>* </label>
 								</div>
 								<div class="wrapper-input"> <!-- wrapper du input -->
 									<select name="idProvince" id="idProvince" class="form-control" required>
@@ -157,7 +157,7 @@
 					<hr id="bottomHr">
 					<div class="wrapper-label-input wrapper-trouble-total"> <!-- Une ligne -->
 						<div class="wrapper-label"> <!-- wrapper du label -->
-							<label>Troubles: </label>
+							<label><%= labelTrouble %>: </label>
 						</div>
 						<div class="wrapper-input"> <!-- wrapper du div select -->
 							<div class="select-trouble">
@@ -173,7 +173,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="password">Mot de passe* </label>
+								<label for="password"><%= labelPassword %>* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="password" name="password" id="password" class="form-control" required/>
@@ -186,7 +186,7 @@
 						</div>
 						<div class="wrapper-label-input"> <!-- Une ligne -->
 							<div class="wrapper-label"> <!-- wrapper du label -->
-								<label for="confirmPassword">Confirmer le mot de passe* </label>
+								<label for="confirmPassword"><%= labelConfirmPassword %>* </label>
 							</div>
 							<div class="wrapper-input"> <!-- wrapper du input -->
 								<input type="password" name="confirmPassword" id="confirmPassword" class="form-control"  required/>
@@ -195,18 +195,18 @@
 					</div>
 					<div id="wrapper-infolettre" class="wrapper-label-input"> <!-- Une ligne -->
 						<div class="wrapper-label"> <!-- wrapper du label -->
-							<label for="newsletter">Abonnez-vous à l'infolettre: </label>
+							<label for="newsletter"><%= labelSubscribeNewsletter %>: </label>
 						</div>
 						<div class="wrapper-input infolettre"> <!-- wrapper du input -->
 							<div class="sub-wrapper-chck"> <!-- wrapper du input -->
 								<input type="checkbox" name="newsletter" id="newsletter" checked="" />
 							</div>
 							<div class="sub-wrapper-lbl">
-								<label for="newsletter">Je souhaite m'abonner</label>
+								<label for="newsletter"><%= labelISubscribe %></label>
 							</div>		
 						</div>
 					</div>
-					<div class="wrapper-submit"><input type="submit" class="btn btn-success" value="Compléter"></div>
+					<div class="wrapper-submit"><input type="submit" class="btn btn-success" value="<%= labelComplete %>"></div>
 			</div>
 			</form>
 			
@@ -271,10 +271,10 @@
 							document.location.href = "./userConnection?newAccount=true"
 						}
 						else if(responseCode == 2){ //An error occured while adding the user
-							$("#warning-error").html("Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer plus tard.");
+							$("#warning-error").html("<%= errWhileAddUser %>");
 						}
 						else if(responseCode == 3){ //The email already exists in the db
-							$("#error-email").html("L'addresse courriel entrée est déjà utilisée.");
+							$("#error-email").html("<%= errSameEmail %>");
 						}
 
 						
@@ -313,28 +313,28 @@
 			let isValid = true;
 
 			if(firstName.val().match(firstNamePattern) == null){
-				$("#error-prenom").html('Veuillez entrer un prénom valide.');
+				$("#error-prenom").html('<%= errValidFirstName %>');
 				isValid = false;
 			}
 
 			if(lastName.val().match(lastNamePattern) == null){
-				$("#error-nom").html('Veuillez entrer un nom valide.');
+				$("#error-nom").html('<%= errValidLastName %>');
 				isValid = false;
 			}
 
 			if(email.val().match(emailPattern) == null)
 			{
-				$("#error-email").html("L'adresse email entré est invalide.");
+				$("#error-email").html("<%= errValidEmail %>");
 				isValid = false;
 			}
 
 			if(password.val().match(passwordPattern) == null){
-				$("#error-password").html("Mot de passe invalide. Le mot de pase doit contenir un minimum de 6 lettre, ainsi qu'une majuscule et un chiffre.");
+				$("#error-password").html("<%= errValidPassword %>");
 				isValid = false;
 			}
 			else{
 				if(password.val() != confirmPassword.val()){
-					$("#error-confirmPassword").html("Les mots de passes ne correspondent pas.");
+					$("#error-confirmPassword").html("<%= errConfirmPassword %>");
 					isValid = false;
 				}
 			}

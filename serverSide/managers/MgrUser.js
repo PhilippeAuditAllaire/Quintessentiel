@@ -231,10 +231,10 @@ class MgrUser{
 	  Loads all the civilities
 	  @Returns a promise
 	*/
-	loadAllCivilities(){
+	loadAllCivilities(idLang){
 
 		let query = "SELECT * FROM ta_civilityattribute_language WHERE idLanguage = ?"
-		let param = [1];
+		let param = [idLang];
  
 
 		return this._queryEngine.executeQuery(query,param);
@@ -245,10 +245,10 @@ class MgrUser{
 	 Loads all the conditions
 	 @Returns a promise
 	 */
-	loadAllConditions()
+	loadAllConditions(idLang)
 	{
 		let query = "SELECT idConditions,value FROM ta_conditionsattribute_language WHERE idLanguage = ?";
-		let param = [1];
+		let param = [idLang];
 
 
 		return this._queryEngine.executeQuery(query,param);

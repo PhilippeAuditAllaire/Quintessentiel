@@ -65,7 +65,8 @@ CREATE TABLE Users(
 	postalCode VARCHAR(20) NOT NULL,
 	noCivic VARCHAR(20) NOT NULL,
 	idCountry SMALLINT NOT NULL,
-	idProvince SMALLINT NOT NULL
+	idProvince SMALLINT NOT NULL,
+	isReseller BIT DEFAULT 0
 );
 
 CREATE TABLE Users_ResetCode(
@@ -391,3 +392,13 @@ CREATE TABLE promo(
 	rabais SMALLINT NOT NULL,
 	PRIMARY KEY(id_product)
 );
+
+CREATE TABLE ta_reseller_products (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  idUser int(11) NOT NULL,
+  productId int(11) NOT NULL,
+  rebate double DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY idUser (idUser),
+  KEY productId (productId)
+) 

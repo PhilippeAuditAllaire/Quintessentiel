@@ -41,13 +41,11 @@ function closeCartMenu()
 
 	//On the transition end of the remove, set the element's display to none
 	transitionEndOverlay = $(fullPageOverlay).one("transitionend",function(e){
-		console.log("Fin de la transition overlay")
 		fullPageOverlay.style.display = "none";
 	});
 
 	//On the transition end of the remove, set the element's display to none
 	transitionEndCart = $(cartWrapper).one("transitionend",function(e){
-		console.log("Fin de la transition cart")
 		cartWrapper.style.display = "none";
 	});
 
@@ -58,7 +56,6 @@ function closeCartMenu()
 //@cartItemsArray is the array of items
 //the user has in his cart
 function displayCartItems(){
-	console.log("display cart items!");
 
 	$("#cartContentWrapper").html("");
 
@@ -88,14 +85,14 @@ function displayCartItems(){
 	                        </div>
 	                        <div class="itemBottomInfos">
 	                            <div class="cartItemQuantity">
-	                                <label>Quantité:<input type="number" name="cartItemQty" class="cartItemQty" value="`+itemQty+`"/></label>
+	                                <label>`+lblCartQty+`:<input type="number" name="cartItemQty" class="cartItemQty" value="`+itemQty+`"/></label>
 	                            </div>
 	                            <div class="cartItemPrice">
-	                                `+calculateItemPrice(itemQty,item.product._retailPrice)+`$
+	                                `+calculateItemPrice(itemQty,item.product._priceAfterRebate)+`$
 	                            </div>
 	                        </div>
 	                        <div class="wrapper-cart-error">
-	                            <p>Quantité trop élevée!</p>
+	                            <p>`+lblCartQtyTooMuch+`</p>
 	                        </div>
 	                    </div>
 	                </div>
@@ -113,7 +110,7 @@ function displayCartItems(){
 				checkItemQty(e.target);
 				addProductToCart(userCart[elementIndexInArray].product._id,e.target.value);
 				loadCartItem().then(function(){ //When we loaded the cart items again
-				 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._retailPrice))
+				 displayItemPrice(cartItemPrice,calculateItemPrice(userCart[elementIndexInArray].qtyInCart,userCart[elementIndexInArray].product._priceAfterRebate))
 				 displaySubTotal(cartSubTotalWrapper,calculateSubTotal())
 				});
 			})
@@ -137,7 +134,7 @@ function displayCartItems(){
 							element.remove();	
 
 							if(userCart.length <= 0){
-								$("#cartContentWrapper").html("Votre panier est vide.");
+								$("#cartContentWrapper").html(lblCartEmpty);
 							}						
 						});
 
@@ -150,7 +147,7 @@ function displayCartItems(){
 		})	
 	}
 	else{
-		$("#cartContentWrapper").html("Votre panier est vide.");
+		$("#cartContentWrapper").html(lblCartEmpty);
 	}	
 
 	displaySubTotal(cartSubTotalWrapper,calculateSubTotal());
@@ -178,7 +175,7 @@ function calculateSubTotal()
 
 	for(let i = 0;i < userCart.length;i++) //For each item in the cart
 	{
-		let itemPrice = parseFloat(calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._retailPrice));
+		let itemPrice = parseFloat(calculateItemPrice(userCart[i].qtyInCart,userCart[i].product._priceAfterRebate));
 		subTotal += itemPrice;
 	}
 
@@ -218,13 +215,13 @@ function checkItemQty(target)
 	
 	if(validatedItemQty == 1 && elementQtyInCart != 1) //If the quantity has been fixed
 	{
-		displayErrorItem(errorP,"La quantité ne peut pas être plus petite que 1.");
+		displayErrorItem(errorP,lblCartCantSmallerOne);
 		qtyInput.value = validatedItemQty;
 		return false;
 	}
 	else if(validatedItemQty == maxElementQty && validatedItemQty != elementQtyInCart) //if the quantity has been fixed
 	{
-		displayErrorItem(errorP,"La quantité dépasse la quantité en stock.");
+		displayErrorItem(errorP,lblCartCantBiggerStock);
 		qtyInput.value = validatedItemQty;
 		return false;
 	}
@@ -272,10 +269,10 @@ function catalogAddProductToCart(productId)
 	addProductToCart(productId,1).then((isNewItem) => {
 
 		if(isNewItem){ //If its a new item
-			popup("Item ajouté à votre panier!");
+			popup(lblCartItemAdded);
 		}
 		else{
-			popup("L'item se trouve déjà dans votre panier.");
+			popup(lblCartItemAlready);
 		}	
 
 		//Load back the cart items only once the product
@@ -391,7 +388,7 @@ $("#cartPayLink").on("click",function(e){
 			document.location.href = "/paymentPage";
 		}
 		else{
-			popup("Vous devez être connecté pour passer la commande!");
+			popup(lblCartMustBeConnected);
 		}
 	})
 	
