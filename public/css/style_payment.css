@@ -225,3 +225,10 @@ tr:nth-child(odd) {background: #F6F6F6}
 	display: flex;
 	justify-content: flex-end;
 }
+
+
+.afterRebateLine{
+	color:#453F3F;
+	font-style: italic;
+	margin:0;
+}

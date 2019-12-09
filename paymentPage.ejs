@@ -49,28 +49,28 @@
 					  		<th></th>
 					  		<th></th>
 					  		<th>Sous-total</th>
-					  		<th id="completeSubTotal">100,00$</th>
+					  		<th id="completeSubTotal"></th>
 			  			</tr>
 			  			<tr>
 				  			<th></th>
 					  		<th></th>
 					  		<th></th>
 					  		<th>Tps:</th>
-					  		<th id="tpsTotal">15,00$</th>
+					  		<th id="tpsTotal"></th>
 			  			</tr>
 			  			<tr>
 				  			<th></th>
 					  		<th></th>
 					  		<th></th>
 					  		<th>Tvq:</th>
-					  		<th id="tvqTotal">15,00$</th>
+					  		<th id="tvqTotal"></th>
 			  			</tr>
 			  			<tr>
 				  			<th></th>
 					  		<th></th>
 					  		<th></th>
 					  		<th>Total:</th>
-					  		<th id="grandTotal">15,00$</th>
+					  		<th id="grandTotal"></th>
 			  			</tr>
 			  		</tfoot>
 			  	</table>
@@ -248,6 +248,13 @@
 		loadCartItem().then(function(){
 
 			userCart.forEach(function(cartItem){
+
+				let rebateLine = "";
+				console.log(cartItem);
+				if(parseFloat(cartItem.product._rebate) > 0){
+					rebateLine = "<p class='afterRebateLine'>Après rabais de "+cartItem.product._rebate+"%";
+				}
+
 				bodyTableResume.innerHTML += `
 					<tr class="itemTR">
 						<td class="infosTd">
@@ -261,13 +268,14 @@
 							</div>
 						</td>
 						<td class="priceTd">
-							<p>`+calculateItemPrice(1,cartItem.product._retailPrice)+`$</p>
+							<p>`+calculateItemPrice(1,cartItem.product._priceAfterRebate)+`$</p>
+							`+rebateLine+`
 						</td>
 						<td class="qtyTd">
 							<input type="number" class="qtyInput" value="`+cartItem.qtyInCart+`"/>
 						</td>
 						<td class="totalTd">
-							<p>`+calculateItemPrice(cartItem.qtyInCart,cartItem.product._retailPrice)+`$</p>
+							<p>`+calculateItemPrice(cartItem.qtyInCart,cartItem.product._priceAfterRebate)+`$</p>
 						</td>
 						<td class="deleteTd">
 							<p><a href="#" title="supprimer l'item" class="deleteItemLink">Supprimer</a></p>
@@ -285,7 +293,7 @@
 				let maxQty = userCart[elementIndex].product._qty;
 				element.value = validateItemQty(element.value,maxQty);
 
-				let newElementPrice = calculateItemPrice(element.value,userCart[elementIndex].product._retailPrice);
+				let newElementPrice = calculateItemPrice(element.value,userCart[elementIndex].product._priceAfterRebate);
 
 				//Add the new quantity to the cart
 				addProductToCart(userCart[elementIndex].product._id,element.value);

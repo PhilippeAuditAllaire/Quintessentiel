@@ -239,7 +239,7 @@
         <div class="cartTopWrapper">
             <div class="cartWrapperTopTitle">
                 <a href="#" id="closeCartLink"><img src="./images/icons/cartCloseIcon.svg" class="closeCartIcon" id="closeCartIcon" /></a>
-                <h2>Panier</h2>
+                <h2><%= cartTitle %></h2>
             </div>
         </div>
         <div class="cartUnderTopWrapper">
@@ -249,10 +249,10 @@
         </div>
         <div class="cartBottomWrapper">
             <div class="cart-subTotal">
-                <p>Sous-total: <span id="cartSubTotal">0$</span></p>
+                <p><%= cartSubTotal %>: <span id="cartSubTotal">0$</span></p>
             </div>
             <div class="cart-payButton">
-                <a href="./paymentPage" title="passer au paiement" id="cartPayLink">Paiement</a>
+                <a href="./paymentPage" title="passer au paiement" id="cartPayLink"><%= cartToPayment %></a>
             </div>
         </div>
     </div>
@@ -261,11 +261,17 @@
 <div id="popup">
     <!-- Popup -->
     <div class="wrapperLogoPopup"><img src="./images/logoApp.png" /></div>
-    <p id="popupMessage">voici le super contenu du popup et sa continue ainsi de suite</p>
+    <p id="popupMessage"></p>
 </div>
 <script src="javascript/popup.js"></script>
-<script src="./javascript/sidebarCart.js"></script>
 <script>
-    // call ajax lang
-    // call ajax lang choisie -> var session
+   const lblCartQty = "<%= lblCartQty %>";
+   const lblCartQtyTooMuch = "<%= lblCartQtyTooMuch %>";
+   const lblCartEmpty = "<%= lblCartEmpty %>";
+   const lblCartCantSmallerOne = "<%= lblCartCantSmallerOne %>";
+   const lblCartCantBiggerStock = "<%= lblCartCantBiggerStock %>";
+   const lblCartItemAdded = "<%= lblCartItemAdded %>";
+   const lblCartItemAlready = "<%= lblCartItemAlready %>";
+   const lblCartMustBeConnected = "<%= lblCartMustBeConnected %>";
 </script>
+<script src="./javascript/sidebarCart.js"></script>

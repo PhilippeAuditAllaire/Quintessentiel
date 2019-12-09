@@ -13,6 +13,18 @@ class MgrProduct {
         return this._queryEngine.executeQuery(query,param);
     }
 
+    //gets the reseller rebate for a product
+    getResellerPromoProduct(productId,resellerId)
+    {
+        console.log("RESELLER ID: "+resellerId);
+        console.log("Product ID: "+productId);
+
+        let query = "SELECT rebate FROM ta_reseller_products INNER JOIN Users ON users.id = ta_reseller_products.idUser WHERE IdUser = ? AND productId = ? AND Users.isReseller = 1";
+        let param = [resellerId,productId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     //Loads a product name
     //based on its id and on the language id
     //@Returns a promise

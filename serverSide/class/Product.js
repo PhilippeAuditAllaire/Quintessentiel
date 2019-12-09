@@ -90,6 +90,9 @@ class Product {
 
     get rebate() { return this._rebate; }
     set rebate(paramRebate) { this._rebate = paramRebate; }
+
+    get priceAfterRebate() { return this._priceAfterRebate; }
+    set priceAfterRebate(paramPriceAfterRebate) { this._priceAfterRebate = paramPriceAfterRebate; }
 }
 
 module.exports = Product;

@@ -14,7 +14,7 @@ class CtrlCart {
     //all the products of the cart
     //@cartItems is the array containing
     //all the items with their quantity
-    loadProductsFromCart(cartItems){
+    loadProductsFromCart(cartItems,userId){
 
     	let getEachItemInfos = [];	//This array contains all the promises to execute
     	let context = this;
@@ -23,6 +23,7 @@ class CtrlCart {
     		getEachItemInfos.push(context._mgrProduct.loadProductsTranslatableInfosById(item._id));
     		getEachItemInfos.push(context._mgrProduct.loadProductName(item._id,1));
         getEachItemInfos.push(context.getProductPromo(item._id));
+        getEachItemInfos.push(context.getProductResellerPromo(item._id,userId));
     		//Get rabais here
     	});
 
@@ -32,16 +33,14 @@ class CtrlCart {
 
     		let allProducts = []; //Contains all the Product object created from the productInfos
 
-    		for(let i = 0;i < productsInfos.length;i+=3)
+    		for(let i = 0;i < productsInfos.length;i+=4)
     		{	
     
     			let productNonTranslatableInfos = productsInfos[i][0];
     			let productTranslatableInfos = productsInfos[i+1][0];
-          let productPromo = productsInfos[i+2];
-          let retaillerPromo = productInfos[i+2];
-          
-          console.log("Voici les promotions sur les produits")
-          console.log(productPromo);
+          let productPromo = parseInt(productsInfos[i+2]);
+          let retaillerPromo = parseInt(productsInfos[i+3]);
+
 
     			let product = new Product();
     			product.id = productNonTranslatableInfos.id;
@@ -50,7 +49,19 @@ class CtrlCart {
 				  product.image = productNonTranslatableInfos.image;
 				  product.name = productTranslatableInfos.value;
 
-				let productIndexInCart = i / 3;
+
+          //Sets the promo for the product (if any)
+          //and always the biggest one
+          if(retaillerPromo > productPromo){
+            product.rebate = retaillerPromo;
+          }
+          else{
+            product.rebate = productPromo;
+          }
+
+          product.priceAfterRebate = (product.retailPrice - (product.retailPrice * (product.rebate / 100))).toFixed(2);
+
+				let productIndexInCart = i / 4;
 				let productQtyInCart = cartItems._itemArray[productIndexInCart]._qty;
 
 				allProducts.push({product:product,qtyInCart:productQtyInCart});
@@ -63,6 +74,8 @@ class CtrlCart {
 
     //Gets the current promotion for
     //the given product (if any)
+    //@productId is the id of the product
+    //to check the promos for
     getProductPromo(productId)
     {
     
@@ -80,24 +93,42 @@ class CtrlCart {
       });
     }
 
+    //Gets the current reseller promotion
+    //for the given product (if any)
+    //@productId is the id of the product
+    //to check the promos for
+    getProductResellerPromo(productId,resellerId)
+    {
+      return this._mgrProduct.getResellerPromoProduct(productId,resellerId).then(function(res){
+
+        let promoPercent = 0;
+
+        if(res.length > 0){
+          promoPercent = res[0].rebate;
+        }
+
+        return promoPercent;
+      });
+    }
+
     //Calculates the sub total based
     //on the items that are in the cart
     //@cartItems to calculate the subTotal
     //from
+    //@userId is the id of the connected user 
+    //(can be 0 if not connected)
     //Returns a promise that returns the subTotal
-    calculateCartSubTotal(cart)
+    calculateCartSubTotal(cart,userId)
     {   
         //Load the products from the cart from the DB
-        return this.loadProductsFromCart(cart).then((allProducts) => {
+        return this.loadProductsFromCart(cart,userId).then((allProducts) => {
             let subTotal = 0;
           
             //For each product that has been loaded
             allProducts.forEach(function(product){
-                
-                subTotal += parseFloat(((product.qtyInCart * (parseFloat(product.product._retailPrice))*100) / 100).toFixed(2));
+                subTotal += parseFloat(((product.qtyInCart * (parseFloat(product.product._priceAfterRebate))*100) / 100));
             });
-            console.log("SUB TOTAL")
-            console.log(subTotal)
+
 
             return subTotal;
         });
@@ -126,8 +157,7 @@ class CtrlCart {
     //that we can then pass to Stripe
     generateCartMetadata(cart,userId,userGivenAddress)
     {
-      console.log("GENERATING THE METADATA WITH THIS")
-      console.log(userGivenAddress);
+
         let ctrlUser = new CtrlUser();
         let context = this;
         let promisesToExecute = [ctrlUser.loadUserEmail(userId),ctrlUser.loadUserName(userId)];
@@ -186,7 +216,8 @@ class CtrlCart {
                allProducts.forEach(function(product){
                    metadata += "\""+i+".Nom du produit\": \"" + product.product._name + "\",";
                    metadata += "\""+i+".Quantité commandée\": \"" + product.qtyInCart + "\",";
-                   metadata += "\""+i+".Prix individuel du produit\": \"" + product.product._retailPrice + "\",";
+                   metadata += "\""+i+".Prix indv. avant rabais\": \"" + product.product._retailPrice + "\",";
+                   metadata += "\""+i+".Prix indv. du produit (après rabais)\": \"" + product.product._priceAfterRebate + "\",";
                    i++;
                });
 

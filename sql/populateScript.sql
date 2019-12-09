@@ -449,7 +449,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (92,'errValidEmail','userRegister'),
     (93,'errValidPassword','userRegister'),
     (94,'errConfirmPassword','userRegister'),
-    (94,'errWhileAddUser','userRegister')
+    (95,'errWhileAddUser','userRegister')
 
     INSERT INTO 
     ta_landingtextattribute_language 
@@ -508,6 +508,114 @@ INSERT INTO landingtext_attribute (id, type, page)
     (94,'2','The passwords don\'t match.'),
     (95,'1','Erreur lors de l\'ajout de l\'utilisateur.veuillez réessayer plus tard.'),
     (95,'2','Error while adding the user. Please try again later.')
+
+
+
+    #userConnection
+    INSERT INTO 
+    landingtext_attribute 
+    VALUES 
+    (96,'pageTitle','userConnection'),
+    (97,'pageH1','userConnection'),
+    (98,'labelEmail','userConnection'),
+    (99,'labelPassword','userConnection'),
+    (100,'btnConnection','userConnection'),
+    (101,'labelForgotPassword','userConnection'),
+    (102,'labelCreateAccount','userConnection'),
+    (103,'titleForgotPassword','userConnection'),
+    (104,'labelForgotEmail','userConnection'),
+    (105,'btnSendEmail','userConnection'),
+    (106,'btnCancel','userConnection'),
+    (107,'emailSent','userConnection'),
+    (108,'errEmailNotSent','userConnection'),
+    (109,'errInvalidEmail','userConnection'),
+    (110,'successCreatedAccount','userConnection'),
+    (113,'errWrongInfo','userConnection'),
+    (114,'passwordModified','userConnection')
+
+
+
+    INSERT INTO 
+    ta_landingtextattribute_language 
+    VALUES
+    (96,'1','Quintessentiel | Connexion'),
+    (96,'2','Quintessentiel | Connection'),
+    (97,'1','Connexion'),
+    (97,'2','Connection'),
+    (98,'1','Courriel'),
+    (98,'2','Email'),
+    (99,'1','Mot de passe'),
+    (99,'2','Password'),
+    (100,'1','Connexion'),
+    (100,'2','Connection'),
+    (101,'1','Mot de passe oublié?'),
+    (101,'2','Forgot password?'),
+    (102,'1','Se créer un compte'),
+    (102,'2','Create an account'),
+    (103,'1','Mot de passe oublié'),
+    (103,'2','Forgot password'),
+    (104,'1','Entrez l\'adresse courriel de votre compte'),
+    (104,'2','Type your account\'s email address'),
+    (105,'1','Envoyer le courriel de récupération'),
+    (105,'2','Send the recovery email'),
+    (106,'1','Annuler'),
+    (106,'2','Cancel'),
+    (107,'1','Courriel de récupération envoyé!'),
+    (107,'2','Recovery email sent!'),
+    (108,'1','Le courriel n\'a pas été envoyé!'),
+    (108,'2','The email couldn\'t be sent!'),
+    (109,'1','Le courriel entré est invalide.'),
+    (109,'2','The given email is invalid.'),
+    (110,'1','Votre compte a été créé avec succès!'),
+    (110,'2','Your account has been successfully created!'),
+    (113,'1','Le courriel/mot de passe ne correspondent pas.'),
+    (113,'2','The email/password don\'t match.'),
+    (114,'1','Votre mot de passe a été modifié avec succès!'),
+    (114,'2','Your password has been successfully modified!')
+
+
+    #Cart
+    INSERT INTO 
+    landingtext_attribute 
+    VALUES 
+    (115,'cartTitle','navbar'), 
+    (116,'cartSubTotal','navbar'), 
+    (117,'cartToPayment','navbar'), 
+    (118,'lblCartQty','navbar'),
+    (119,'lblCartQtyTooMuch','navbar'), 
+    (120,'lblCartEmpty','navbar'), 
+    (121,'lblCartCantSmallerOne','navbar'), 
+    (122,'lblCartCantBiggerStock','navbar'), 
+    (123,'lblCartItemAdded','navbar'), 
+    (124,'lblCartItemAlready','navbar'), 
+    (125,'lblCartMustBeConnected','navbar')
+    
+
+    INSERT INTO 
+    ta_landingtextattribute_language 
+    VALUES
+    (115,'1','Panier'), 
+    (115,'2','Cart'), 
+    (116,'1','Sous-total'), 
+    (116,'2','Sub-total'),
+    (117,'1','Paiement'), 
+    (117,'2','Payment'),
+    (118,'1','Quantité'),
+    (118,'2','Quantity'),
+    (119,'1','Quantité trop élevé!'), 
+    (119,'2','Too much of this item!'), 
+    (120,'1','Votre panier est vide.'),
+    (120,'2','Your cart is empty'), 
+    (121,'1','La quantité ne peut pas être plus petite que 1.'), 
+    (121,'2','The quantity can\'t be smaller than one.'), 
+    (122,'1','La quantité dépasse la quantité en stock.'), 
+    (122,'2','The quantity is greater than the in-stock quantity.'), 
+    (123,'1','Item ajouté à votre panier!'), 
+    (123,'2','The item has been added to your cart!'),
+    (124,'1','L\'item se trouve déjà dans votre panier'), 
+    (124,'2','This item is already in your cart!'), 
+    (125,'1','Vous devez être connecté pour passer la commande!'),
+    (125,'2','You must be connected in order to pay.') 
 
     #troubles
     INSERT INTO Conditions VALUES (DEFAULT);
