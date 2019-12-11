@@ -70,7 +70,7 @@ const stripeTokenHandler = (token) => {
         userManualAddressInfos: userManualAddressInfos
       },
       success: function(response) {
-          $("#successPayment").html("<%= paymentSuccessfull =%>")
+          $("#successPayment").html(paymentSuccessfull)
       },
       error: function(response) {
        
