@@ -108,13 +108,13 @@ class MgrRecipe {
     }
 
     getIngredients(id) {
-        let query = "SELECT Product.id , ta_productattribute_language.value FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND product.id = ?";
+        let query = "SELECT product.id , ta_productattribute_language.value FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND product.id = ?";
         let param = [id];
         return this._queryEngine.executeQuery(query, param);
     }
 
     getProducts() {
-        let query = "SELECT Product.id , ta_productattribute_language.value FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title'";
+        let query = "SELECT product.id , ta_productattribute_language.value FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title'";
         return this._queryEngine.executeQuery(query);
     }
 

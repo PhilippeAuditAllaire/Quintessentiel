@@ -246,7 +246,7 @@
 			if(isFormValid())
 			{
 				$.ajax({
-					url: "http://localhost:8000/ajaxRequest/userRegister",
+					url: "http://localhost:8081/ajaxRequest/userRegister",
 					method: "POST",
 					data:{
 						firstName:firstName.val(),
@@ -294,7 +294,7 @@
 		function loadCivilities(_callback)
 		{
 			$.ajax({
-				url: "http://localhost:8000/ajaxRequest/getCivilities",
+				url: "http://localhost:8081/ajaxRequest/getCivilities",
 				method: "POST",
 				success: function(response){
 					$("#selectCivility").html(response);
@@ -356,7 +356,7 @@
 		function loadConditions()
 		{
 			$.ajax({
-				url: "http://localhost:8000/ajaxRequest/getConditions",
+				url: "http://localhost:8081/ajaxRequest/getConditions",
 				method: "POST",
 				data:{
 					firstName:firstName.val(),

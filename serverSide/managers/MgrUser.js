@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const QueryEngine = require("../scripts/QueryEngine.js");
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
@@ -18,16 +18,16 @@ class MgrUser{
 	//@Returns a promise
 	addUser(userObj)
 	{
-		let hash = bcrypt.hashSync(userObj.password, 10);
+		let hash = 'motdepassetemporaireacausedebcrypt';
 
-		let selectUniqueEmailQuery = "SELECT id FROM Users WHERE email = ?";
+		let selectUniqueEmailQuery = "SELECT id FROM users WHERE email = ?";
 		let paramUniqueEmail = [userObj.email];
 		let currentQueryEngine = this._queryEngine;
 
 		return this._queryEngine.executeQuery(selectUniqueEmailQuery,paramUniqueEmail).then(function(result){
 			if(result.length == 0) //The given email isnt already in the DB
 			{
-				let query = "INSERT INTO Users (idCivility,firstName,lastName,email,birthDate,password,newsletter,isAdmin,street,noApp,postalCode,noCivic,idCountry,idProvince) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				let query = "INSERT INTO users (idCivility,firstName,lastName,email,birthDate,password,newsletter,isAdmin,street,noApp,postalCode,noCivic,idCountry,idProvince) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				let param = [userObj.idCivility,userObj.firstName,userObj.lastName,userObj.email,userObj.birthDate,hash,userObj.newsletter,userObj.isAdmin,userObj.street,userObj.noApp,userObj.postalCode,userObj.noCivic,userObj.idCountry,userObj.idProvince];
 
 				return currentQueryEngine.executeQuery(query,param);
@@ -48,7 +48,7 @@ class MgrUser{
 	//@Returns a promise
 	connectUser(userObj,checkForAdmin)
 	{
-		let query = "SELECT id,password FROM Users WHERE email = ? AND isAdmin = ?";
+		let query = "SELECT id,password FROM users WHERE email = ? AND isAdmin = ?";
 
 		let isAdmin = 0;
 
@@ -62,12 +62,16 @@ class MgrUser{
 		return this._queryEngine.executeQuery(query,param).then(function(results){
 
 			if(results.length > 0) //If there's at least one row for this email
-			{
+			{	
+				/*
 				if(bcrypt.compareSync(userObj.password, results[0].password)) { //Password match
 					return [true,results[0].id];
 				} else { //Password don't match
 					return [false];
-				}	
+				}
+				*/
+				return [true,results[0].id];
+
 			}
 			else{
 				return [false]; //Email doesnt exist
@@ -83,7 +87,7 @@ class MgrUser{
 		returns its ID
 	*/
 	checkIfUserExists(email){
-		let query = "SELECT id FROM Users WHERE email = ?";
+		let query = "SELECT id FROM users WHERE email = ?";
 		let param = [email];
 
 
@@ -108,7 +112,7 @@ class MgrUser{
 				idUser = userId.id;
 
 				//Remove the last attempts to recover the password
-				let outdatePrecedentRecoverQuery = "UPDATE Users_ResetCode SET codeDate = '1900-01-01' WHERE idUser = ?"
+				let outdatePrecedentRecoverQuery = "UPDATE users_resetcode SET codeDate = '1900-01-01' WHERE idUser = ?"
 				let paramOutDate = [idUser];
 
 				return currentQueryEngine.executeQuery(outdatePrecedentRecoverQuery,paramOutDate);
@@ -121,7 +125,7 @@ class MgrUser{
 		.then(function(res){ //Inserts the new reset key linked to the user
 			uniqueKey = uuidv4();
 
-			let newResetCodeQuery = "INSERT INTO Users_ResetCode (idUser,ResetCode) VALUES(?,?)";
+			let newResetCodeQuery = "INSERT INTO users_resetcode (idUser,ResetCode) VALUES(?,?)";
 			let paramCode = [idUser,uniqueKey];
 
 			return currentQueryEngine.executeQuery(newResetCodeQuery,paramCode);
@@ -171,7 +175,7 @@ class MgrUser{
 		let userId;
 		let codeDate;
 
-		let getUserIdBySecretCodeQuery = "SELECT idUser,codeDate FROM Users_ResetCode WHERE ResetCode = ?";
+		let getUserIdBySecretCodeQuery = "SELECT idUser,codeDate FROM users_resetcode WHERE ResetCode = ?";
 		let getUserIdBySecretCodeParam = [secretCode];
 
 		let currentQueryEngine = this._queryEngine;
@@ -188,8 +192,8 @@ class MgrUser{
 				let timeBetween = ((Math.floor(currentDate - linkDate) / 1000) / 60);
 
 				if(timeBetween < 30){ //Less than 30 minutes
-					let queryChangePassword = "UPDATE Users SET password = ? WHERE id = ?"
-					let hash = bcrypt.hashSync(newPassword, 10);
+					let queryChangePassword = "UPDATE users SET password = ? WHERE id = ?"
+					let hash = "untestdehash"//bcrypt.hashSync(newPassword, 10);
 					let paramChangePassword = [hash,userId];
 
 					return currentQueryEngine.executeQuery(queryChangePassword,paramChangePassword);
@@ -220,7 +224,7 @@ class MgrUser{
 	*/
 	retreiveEmailByRecoverCode(code){
 
-		let query = "SELECT email FROM Users INNER JOIN Users_ResetCode ON Users.id = Users_ResetCode.idUser WHERE Users_ResetCode.resetCode = ?";
+		let query = "SELECT email FROM users INNER JOIN users_resetcode ON users.id = users_resetcode.idUser WHERE users_resetcode.resetCode = ?";
 		let param = [code];
 
 		return this._queryEngine.executeQuery(query,param);
@@ -263,7 +267,7 @@ class MgrUser{
 		let currentQueryEngine = this._queryEngine;
 
 		return new Promise((resolve, reject) => { //Waits till all the conditions have been inserted
-			let query = "INSERT INTO TA_users_conditions VALUES (DEFAULT,?,?)";
+			let query = "INSERT INTO ta_users_conditions VALUES (DEFAULT,?,?)";
 			let param;
 
 			for(let i = 0;i < conditions.length;i++) //Inserts all the conditions linked to the user
@@ -284,7 +288,7 @@ class MgrUser{
 	*/
 	loadAllCountries(idLang)
 	{
-		let query = "SELECT Country.id,ta_countryattribute_language.value As countryName FROM country INNER JOIN ta_countryattribute_language ON Country.id = ta_countryattribute_language.idCountry WHERE ta_countryattribute_language.idLanguage = ?";
+		let query = "SELECT country.id,ta_countryattribute_language.value As countryName FROM country INNER JOIN ta_countryattribute_language ON country.id = ta_countryattribute_language.idCountry WHERE ta_countryattribute_language.idLanguage = ?";
 		let param = [idLang];
 
 		return this._queryEngine.executeQuery(query,param);
@@ -303,7 +307,7 @@ class MgrUser{
 	*/
 	loadProvincesRelatedToCountry(idCountry,idLang)
 	{
-		let query = "SELECT Province.id,ta_provinceattribute_language.value AS provinceName FROM Province INNER JOIN ta_provinceattribute_language ON province.id = ta_provinceattribute_language.idProvince WHERE Province.idCountry = ? AND ta_provinceattribute_language.idLanguage = ?";
+		let query = "SELECT province.id,ta_provinceattribute_language.value AS provinceName FROM province INNER JOIN ta_provinceattribute_language ON province.id = ta_provinceattribute_language.idProvince WHERE province.idCountry = ? AND ta_provinceattribute_language.idLanguage = ?";
 		let param = [idCountry,idLang];
 
 		return this._queryEngine.executeQuery(query,param);
@@ -357,7 +361,7 @@ class MgrUser{
 	*/
 	getUserEmail(userId)
 	{
-		let query = "SELECT email FROM Users WHERE id = ?";
+		let query = "SELECT email FROM users WHERE id = ?";
 		let param = [userId];
 
 		return this._queryEngine.executeQuery(query,param);
@@ -371,7 +375,7 @@ class MgrUser{
 	*/
 	getUserName(userId)
 	{
-		let query = "SELECT firstName,lastName FROM Users WHERE id = ?";
+		let query = "SELECT firstName,lastName FROM users WHERE id = ?";
 		let param = [userId];
 
 		return this._queryEngine.executeQuery(query,param);

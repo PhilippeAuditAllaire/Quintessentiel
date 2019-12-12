@@ -1,6 +1,6 @@
  // call ajax lang
  $.ajax({
-     url: "http://localhost:8000/ajaxRequest/lang",
+     url: "./ajaxRequest/lang",
      method: "POST",
 
      success: function(response) {
@@ -31,7 +31,7 @@
      console.log("change" + id);
 
      $.ajax({
-         url: "http://localhost:8000/ajaxRequest/changeLang",
+         url: "./ajaxRequest/changeLang",
          method: "POST",
          data: {
              id_lang: id

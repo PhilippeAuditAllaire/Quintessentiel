@@ -3,7 +3,7 @@
 function loadAllCountries()
 {
 	$.ajax({
-		url: "http://localhost:8000/ajaxRequest/getAllCountries",
+		url: "./ajaxRequest/getAllCountries",
 		method: "POST",
 		success: function(countryList){
 			allCountriesList = countryList;

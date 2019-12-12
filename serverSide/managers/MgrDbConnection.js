@@ -9,6 +9,8 @@ class MgrDbConnection {
 			user: username,
 			password: password,
 			database: database,
+			timeout: 60000,
+			port: 3306,
 		    typeCast: function castField( field, useDefaultTypeCasting ) {
 
 	        	if ( ( field.type === "BIT" ) && ( field.length === 1 ) ) {

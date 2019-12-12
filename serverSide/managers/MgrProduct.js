@@ -7,7 +7,7 @@ class MgrProduct {
 
     //Gets the rebate for a product
     getProductPromo(productId){
-        let query = "SELECT rabais FROM Promo WHERE id_product = ?";
+        let query = "SELECT rabais FROM promo WHERE id_product = ?";
         let param = [productId];
 
         return this._queryEngine.executeQuery(query,param);
@@ -19,7 +19,7 @@ class MgrProduct {
         console.log("RESELLER ID: "+resellerId);
         console.log("Product ID: "+productId);
 
-        let query = "SELECT rebate FROM ta_reseller_products INNER JOIN Users ON users.id = ta_reseller_products.idUser WHERE IdUser = ? AND productId = ? AND Users.isReseller = 1";
+        let query = "SELECT rebate FROM ta_reseller_products INNER JOIN users ON users.id = ta_reseller_products.idUser WHERE IdUser = ? AND productId = ? AND users.isReseller = 1";
         let param = [resellerId,productId];
 
         return this._queryEngine.executeQuery(query,param);
@@ -39,7 +39,7 @@ class MgrProduct {
     //of a product by its id
     //@Returns a promise
     loadProductsTranslatableInfosById(productId) {
-        let query = "SELECT * FROM Product WHERE id = ?";
+        let query = "SELECT * FROM product WHERE id = ?";
         let param = [productId];
 
         return this._queryEngine.executeQuery(query, param);
@@ -50,7 +50,7 @@ class MgrProduct {
     //@productId is the id of the 
     //product to look for its categories
     loadCategoryByProductId(productId) {
-        let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryAttribute_language.idCategory WHERE idProduct = ? AND ta_categoryAttribute_language.idLanguage = 1";
+        let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryattribute_language.idCategory WHERE idProduct = ? AND ta_categoryattribute_language.idLanguage = 1";
         let param = [productId];
 
         return this._queryEngine.executeQuery(query, param).then(function(res) {
@@ -94,7 +94,7 @@ class MgrProduct {
     //all the non translatable infos to add to the DB
     //@Returns a promise
     addNonTranslatableInfos(productInfos) {
-        let query = `INSERT INTO Product 
+        let query = `INSERT INTO product 
                     (id,retailPrice,costPrice,quantity,image,featured,isVisible,dropWeightGram,amazonAffiliateLink,format) 
                     VALUES
                     (DEFAULT,?,?,?,?,?,?,?,?,?)`;
@@ -129,7 +129,7 @@ class MgrProduct {
     //Loads all the languages that are in the DB
     //@Returns a promise
     loadAvailableLanguages() {
-        let query = "SELECT * FROM Language";
+        let query = "SELECT * FROM language";
         return this._queryEngine.executeQuery(query);
     }
 
@@ -138,7 +138,7 @@ class MgrProduct {
     //@productId is the id of the
     //product to delete
     deleteProduct(productId) {
-        let query = "DELETE FROM Product WHERE id = ?";
+        let query = "DELETE FROM product WHERE id = ?";
         let param = [productId];
 
         return this._queryEngine.executeQuery(query, param);
@@ -173,13 +173,13 @@ class MgrProduct {
     }
 
     loadProductFeatured() {
-        let query = "SELECT * FROM Product where featured = '1'";
+        let query = "SELECT * FROM product where featured = '1'";
 
         return this._queryEngine.executeQuery(query);
     }
     updateProduct(product) {
 
-        let queryUpdateBasicInfos = "UPDATE Product SET retailPrice = ?,costPrice = ?,quantity = ?,image = ?,featured = ?,isVisible = ?,dropWeightGram = ? WHERE id = ?";
+        let queryUpdateBasicInfos = "UPDATE product SET retailPrice = ?,costPrice = ?,quantity = ?,image = ?,featured = ?,isVisible = ?,dropWeightGram = ? WHERE id = ?";
         let basicParam = [product.retailPrice, product.costPrice, product.qty, product.image, product.featured, product.isVisible, product.dropWeightGram, product.id];
         let currentQueryEngine = this._queryEngine;
         let context = this;
@@ -224,7 +224,7 @@ class MgrProduct {
     }
 
     loadProductInfosById(productId) {
-        let queryProduct = "SELECT * FROM Product WHERE Product.id = ?";
+        let queryProduct = "SELECT * FROM product WHERE Product.id = ?";
         let paramProduct = [productId];
         let currentQueryEngine = this._queryEngine;
         let context = this;
@@ -261,12 +261,12 @@ class MgrProduct {
 
     loadAllTags(exceptTags) {
 
-        let query = "SELECT Tag.id,value FROM Tag INNER JOIN ta_tagAttribute_language ON Tag.id = ta_tagAttribute_language.idTag";
+        let query = "SELECT tag.id,value FROM tag INNER JOIN ta_tagAttribute_language ON tag.id = ta_tagAttribute_language.idTag";
 
         let param = [];
 
         if (exceptTags != undefined && exceptTags.length > 0) {
-            query += " WHERE Tag.id NOT IN (";
+            query += " WHERE tag.id NOT IN (";
 
             for (let i = 0; i < exceptTags.length; i++) {
                 if (i < exceptTags.length - 1) {
@@ -290,7 +290,7 @@ class MgrProduct {
 
     loadAllCategories(code_lang = 1) {
 
-        let query = "SELECT id,value FROM Category INNER JOIN ta_categoryAttribute_language ON Category.id = ta_categoryAttribute_language.idCategory WHERE idLanguage = ? AND idCategoryAttribute = 1";
+        let query = "SELECT id,value FROM category INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE idLanguage = ? AND idCategoryAttribute = 1";
         let param = [code_lang];
         return this._queryEngine.executeQuery(query, param).then(function(res) {
             return res;
@@ -298,20 +298,20 @@ class MgrProduct {
     }
 
     loadProductbyId(id_product, code_lang) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice, product.amazonAffiliateLink FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id = ? AND ta_productattribute_language.idLanguage = ? ORDER BY productattribute.id";
+        let query = "SELECT product.id as product_id, productattribute.*, ta_productattribute_language.*, product.image as image, product.retailPrice, product.amazonAffiliateLink FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE product.id = ? AND ta_productattribute_language.idLanguage = ? ORDER BY productattribute.id";
         let param = [id_product, code_lang];
 
         return this._queryEngine.executeQuery(query, param);
     }
 
     loadProduct(code_lang) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice, product.amazonAffiliateLink FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.idLanguage = ?";
+        let query = "SELECT product.id as product_id, productattribute.*, ta_productattribute_language.*, product.image as image, product.retailPrice, product.amazonAffiliateLink FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.idLanguage = ?";
         let param = [code_lang];
         return this._queryEngine.executeQuery(query, param);
     }
 
     loadProductSearch(code_lang, search) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.value LIKE '%" + search + "%' AND ta_productattribute_language.idLanguage = ?"
+        let query = "SELECT product.id as product_id, productattribute.*, ta_productattribute_language.*, product.image as image, Product.retailPrice FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.value LIKE '%" + search + "%' AND ta_productattribute_language.idLanguage = ?"
         let param = [code_lang];
         return this._queryEngine.executeQuery(query, pram);
     }
@@ -320,7 +320,7 @@ class MgrProduct {
     in the search array 
     */
     loadProductSearchCategory(code_lang, search) {
-        let query = "SELECT DISTINCT Product.id as product_id,ta_category_product.idCategory FROM product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_productattribute_language.idLanguage = ? AND ta_categoryattribute_language.value IN (";
+        let query = "SELECT DISTINCT product.id as product_id,ta_category_product.idCategory FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id INNER JOIN ta_category_product ON product.id = ta_category_product.idProduct INNER JOIN category ON ta_category_product.idCategory = category.id INNER JOIN ta_categoryattribute_language ON category.id = ta_categoryattribute_language.idCategory WHERE ta_productattribute_language.idLanguage = ? AND ta_categoryattribute_language.value IN (";
         let param = [code_lang];
         for (let i = 0; i < search.length; i++) {
             if (i != (search.length - 1)) {
@@ -330,7 +330,7 @@ class MgrProduct {
             }
             query = query.concat(conditions);
         }
-        let endQuery = ") Order BY Product.id";
+        let endQuery = ") Order BY product.id";
         query = query.concat(endQuery);
 
         console.log(query);
@@ -341,7 +341,7 @@ class MgrProduct {
     by the ids of the product
     */
     loadCatalogProductID(code_lang, ids) {
-        let query = "SELECT Product.id as product_id, productattribute.*, ta_productattribute_language.*, Product.image as image, Product.retailPrice FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE a_productattribute_language.idLanguage = ? AND product.id IN (";
+        let query = "SELECT product.id as product_id, productattribute.*, ta_productattribute_language.*, product.image as image, product.retailPrice FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE a_productattribute_language.idLanguage = ? AND product.id IN (";
         let param = [code_lang];
         for (let i = 0; i < ids.length; i++) {
             if (i != (ids.length - 1)) {
@@ -381,7 +381,7 @@ class MgrProduct {
     }
 
     addProduct(product) {
-        let query = "INSERT INTO Product VALUES (DEFAULT,?,?,?,?,1,1,12,NULL)";
+        let query = "INSERT INTO product VALUES (DEFAULT,?,?,?,?,1,1,12,NULL)";
         let param = [product.retailPrice, product.costPrice, product.qty, product.image, product.featured, product.isVisible, product.dropWeightGram];
         let currentQueryEngine = this._queryEngine;
 
@@ -418,7 +418,7 @@ class MgrProduct {
 
 
     getAllProducts() {
-        let query = "SELECT Product.id as product_id, ta_productattribute_language.value, Product.retailPrice, product.costPrice, product.isVisible FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id where productattribute.type='title' AND ta_productattribute_language.idLanguage = 1";
+        let query = "SELECT product.id as product_id, ta_productattribute_language.value, product.retailPrice, product.costPrice, product.isVisible FROM product INNER JOIN ta_productattribute_language ON product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id where productattribute.type='title' AND ta_productattribute_language.idLanguage = 1";
         return this._queryEngine.executeQuery(query);
     }
 

@@ -57,7 +57,7 @@
             load() {
                 let id_product = findGetParameter('id');
                 $.ajax({
-                    url: "http://localhost:8000/ajaxRequest/produitInfo",
+                    url: "http://localhost:8081/ajaxRequest/produitInfo",
                     method: "POST",
                     data: {
                         id: id_product

@@ -13,7 +13,7 @@ class QueryEngine{
 
 		query = mysql.format(query,parameters); //Inserts the Parameters in the SQL statement
 		//dgcreati_test2, &q)YB]y86?g&, dgcreati_quintessentiel
-		let dbConnector = new MgrDbConnect("localhost","root","","quintessentiel");
+		let dbConnector = new MgrDbConnect("test.cbaqrovpvqmu.ca-central-1.rds.amazonaws.com","root","rootroot","Quintessentiel");
 
 		return new Promise(function(resolve,reject){
 

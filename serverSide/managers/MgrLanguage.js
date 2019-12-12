@@ -105,7 +105,7 @@ class MgrLanguage {
     }
 
     loadAvailableLanguages() {
-        let query = "SELECT * FROM Language";
+        let query = "SELECT * FROM language";
         return this._queryEngine.executeQuery(query);
     }
 

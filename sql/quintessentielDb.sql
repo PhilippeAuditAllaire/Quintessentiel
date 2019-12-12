@@ -3,56 +3,56 @@ CREATE DATABASE Quintessentiel;
 USE Quintessentiel;
 
 -- Langage
-CREATE TABLE Language(
+CREATE TABLE language(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(3) NOT NULL
 );
 
 -- Tables en relations avec les Users
-CREATE TABLE Civility(
+CREATE TABLE civility(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY
 );
 
-CREATE TABLE CivilityAttribute(
+CREATE TABLE civilityattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type TEXT NOT NULL
 );
 
-CREATE TABLE TA_CivilityAttribute_Language(
+CREATE TABLE ta_civilityattribute_language(
 	civilityAttributeId SMALLINT NOT NULL,
-	FOREIGN KEY (civilityAttributeId) REFERENCES CivilityAttribute(id),
+	FOREIGN KEY (civilityAttributeId) REFERENCES civilityattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	idCivility SMALLINT NOT NULL,
-	FOREIGN KEY (idCivility) REFERENCES Civility(id),
+	FOREIGN KEY (idCivility) REFERENCES civility(id),
 	value TEXT,
 	PRIMARY KEY(civilityAttributeId,idLanguage,idCivility)
 );
 
-CREATE TABLE Conditions(
+CREATE TABLE conditions(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY
 );
 
-CREATE TABLE ConditionsAttribute(
+CREATE TABLE conditionsattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type TEXT NOT NULL
 );
 
-CREATE TABLE TA_ConditionsAttribute_Language(
+CREATE TABLE ta_conditionsattribute_language(
 	conditionAttributeId SMALLINT NOT NULL,
-	FOREIGN KEY (conditionAttributeId) REFERENCES ConditionsAttribute(id),
+	FOREIGN KEY (conditionAttributeId) REFERENCES conditionsattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	idConditions SMALLINT NOT NULL,
-	FOREIGN KEY (idConditions) REFERENCES Conditions(id),
+	FOREIGN KEY (idConditions) REFERENCES conditions(id),
 	value TEXT,
 	PRIMARY KEY(conditionAttributeId,idLanguage,idConditions)
 );
 
-CREATE TABLE Users(
+CREATE TABLE users(
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	idCivility SMALLINT NOT NULL,
-	FOREIGN KEY (idCivility) REFERENCES Civility(id),
+	FOREIGN KEY (idCivility) REFERENCES civility(id),
 	firstName VARCHAR(20) NOT NULL,
 	lastName VARCHAR(20) NOT NULL,
 	email VARCHAR(40) NOT NULL,
@@ -69,24 +69,24 @@ CREATE TABLE Users(
 	isReseller BIT DEFAULT 0
 );
 
-CREATE TABLE Users_ResetCode(
+CREATE TABLE users_resetcode(
 	idUser INT NOT NULL,
-	FOREIGN KEY (idUser) REFERENCES Users(id),
+	FOREIGN KEY (idUser) REFERENCES users(id),
 	resetCode VARCHAR(255) NOT NULL,
 	codeDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(idUser,resetCode)
 );
 
-CREATE TABLE TA_Users_Conditions(
+CREATE TABLE ta_users_conditions(
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	idUsers INT NOT NULL,
-	FOREIGN KEY (idUsers) REFERENCES Users(id),
+	FOREIGN KEY (idUsers) REFERENCES users(id),
 	conditionsId SMALLINT NOT NULL,
-	FOREIGN KEY (conditionsId) REFERENCES Conditions(id)
+	FOREIGN KEY (conditionsId) REFERENCES conditions(id)
 );
 
 -- Product
-CREATE TABLE Product(
+CREATE TABLE product(
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	retailPrice FLOAT NOT NULL,
 	costPrice FLOAT NOT NULL,
@@ -99,18 +99,18 @@ CREATE TABLE Product(
 	format VARCHAR(10)
 );
 
-CREATE TABLE ProductAttribute(
+CREATE TABLE productattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE TA_ProductAttribute_Language(
+CREATE TABLE ta_productattribute_language(
 	productAttributeId SMALLINT NOT NULL,
-	FOREIGN KEY (productAttributeId) REFERENCES ProductAttribute(id),
+	FOREIGN KEY (productAttributeId) REFERENCES productattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	idProduct INT NOT NULL,
-	FOREIGN KEY (idProduct) REFERENCES Product(id),
+	FOREIGN KEY (idProduct) REFERENCES product(id),
 	value TEXT,
 	PRIMARY KEY(productAttributeId,idLanguage,idProduct)
 );
@@ -118,12 +118,12 @@ CREATE TABLE TA_ProductAttribute_Language(
 
 -- Blogs
 
-CREATE TABLE BlogAttribute(
+CREATE TABLE blogattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type VARCHAR(20)
 );
 
-CREATE TABLE BlogArticle(
+CREATE TABLE blogarticle(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	imageStart VARCHAR(100),
 	imageMiddle VARCHAR(100),
@@ -131,68 +131,68 @@ CREATE TABLE BlogArticle(
 	postedDate DATE
 );
 
-CREATE TABLE BlogComment(
+CREATE TABLE blogcomment(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	idBlogArticle SMALLINT NOT NULL,
-	FOREIGN KEY (idBlogArticle) REFERENCES BlogArticle(id),
+	FOREIGN KEY (idBlogArticle) REFERENCES blogarticle(id),
 	content VARCHAR(255),
 	postedDate DATE
 );
 
-CREATE TABLE CommentStatus(
+CREATE TABLE commentstatus(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(50) NOT NULL
 );
 
 
-CREATE TABLE BlogComment_CommentStatus(
+CREATE TABLE blogcomment_commentstatus(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	idBlogComment SMALLINT,
-	FOREIGN KEY (idBlogComment) REFERENCES BlogComment(id),
+	FOREIGN KEY (idBlogComment) REFERENCES blogcomment(id),
 	idCommentStatus SMALLINT,
-	FOREIGN KEY (idCommentStatus) REFERENCES CommentStatus(id)
+	FOREIGN KEY (idCommentStatus) REFERENCES commentstatus(id)
 );
 
 
-CREATE TABLE Ta_blogAttribute_Language(
+CREATE TABLE ta_blogattribute_language(
 	idBlogAttribute SMALLINT NOT NULL,
-	FOREIGN KEY (idBlogAttribute) REFERENCES BlogAttribute(id),
+	FOREIGN KEY (idBlogAttribute) REFERENCES blogattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	value TEXT,
 	PRIMARY KEY(idBlogAttribute,idLanguage)
 );
 
 
 -- Tables en liens avec Order
-CREATE TABLE OrderStatus(
+CREATE TABLE orderstatus(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(25),
 	description VARCHAR(50)
 );
 
-CREATE TABLE Orders(
+CREATE TABLE orders(
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	idStatus SMALLINT,
-	FOREIGN KEY (idStatus) REFERENCES OrderStatus(id),
+	FOREIGN KEY (idStatus) REFERENCES orderstatus(id),
 	taxes FLOAT,
 	orderDate DATE
 );
 
-CREATE TABLE TA_Order_Product(
+CREATE TABLE ta_order_product(
 	idProduct INT NOT NULL,
-	FOREIGN KEY (idProduct) REFERENCES Product(id),
+	FOREIGN KEY (idProduct) REFERENCES product(id),
 	idOrders INT NOT NULL,
-	FOREIGN KEY (idOrders) REFERENCES Orders(id),
+	FOREIGN KEY (idOrders) REFERENCES orders(id),
 	quantity SMALLINT NOT NULL,
 	PRIMARY KEY(idProduct,idOrders)
 );
 
 
-CREATE TABLE Shipping(
+CREATE TABLE shipping(
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	idOrders INT NOT NULL,
-	FOREIGN KEY (idOrders) REFERENCES Orders(id),
+	FOREIGN KEY (idOrders) REFERENCES orders(id),
 	deliveryAddress VARCHAR(50),
 	parcelFee FLOAT,
 	shippingDate Date NOT NULL
@@ -201,7 +201,7 @@ CREATE TABLE Shipping(
 
 
 -- Tables en lien avec les recettes
-CREATE TABLE Recipe(
+CREATE TABLE recipe(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	description TEXT,
 	instruction TEXT,
@@ -209,56 +209,56 @@ CREATE TABLE Recipe(
 	productName VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE MeasureUnit(
+CREATE TABLE measureunit(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(20)
 );
 
-CREATE TABLE Ingredient(
+CREATE TABLE ingredient(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	idProduct INT NOT NULL,
-	FOREIGN KEY (idProduct) REFERENCES Product(id),
+	FOREIGN KEY (idProduct) REFERENCES product(id),
 	IdMeasure SMALLINT NOT NULL,
-	FOREIGN KEY (IdMeasure) REFERENCES MeasureUnit(id),
+	FOREIGN KEY (IdMeasure) REFERENCES measureunit(id),
 	quantity SMALLINT
 );
 
-CREATE TABLE TA_Ingredients_Recipe(
+CREATE TABLE ta_ingredients_recipe(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	idIngredient SMALLINT,
-	FOREIGN KEY (idIngredient) REFERENCES Ingredient(id),
+	FOREIGN KEY (idIngredient) REFERENCES ingredient(id),
 	idRecipe SMALLINT,
-	FOREIGN KEY (idRecipe) REFERENCES Recipe(id)
+	FOREIGN KEY (idRecipe) REFERENCES recipe(id)
 );
 
 
 -- Tables en lien avec les catégories
 
-CREATE TABLE Category(
+CREATE TABLE category(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	isVisible BIT NOT NULL
 );
 
-CREATE TABLE TA_Category_Product(
+CREATE TABLE ta_category_product(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	idCategory SMALLINT NOT NULL,
-	FOREIGN KEY (idCategory) REFERENCES Category(id),
+	FOREIGN KEY (idCategory) REFERENCES category(id),
 	idProduct INT NOT NULL,
-	FOREIGN KEY (idProduct) REFERENCES Product(id)	
+	FOREIGN KEY (idProduct) REFERENCES product(id)	
 );
 
-CREATE TABLE CategoryAttribute(
+CREATE TABLE categoryattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type VARCHAR(30)
 );
 
-CREATE TABLE TA_CategoryAttribute_Language(
+CREATE TABLE ta_categoryattribute_language(
 	idCategoryAttribute SMALLINT NOT NULL,
-	FOREIGN KEY (idCategoryAttribute) REFERENCES CategoryAttribute(id),
+	FOREIGN KEY (idCategoryAttribute) REFERENCES categoryattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	idCategory SMALLINT NOT NULL,
-	FOREIGN KEY (idCategory) REFERENCES Category(id),
+	FOREIGN KEY (idCategory) REFERENCES category(id),
 	value VARCHAR(255),
 	PRIMARY KEY(idCategoryAttribute,idLanguage,idCategory)
 );
@@ -267,14 +267,14 @@ CREATE TABLE TA_CategoryAttribute_Language(
 -- Tables comment
 
 
-CREATE TABLE Comment(
+CREATE TABLE comment(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	idProduct INT NOT NULL,
-	FOREIGN KEY (idProduct) REFERENCES Product(id),
+	FOREIGN KEY (idProduct) REFERENCES product(id),
 	idUser INT NOT NULL,
-	FOREIGN KEY (idUser) REFERENCES Users(id),
+	FOREIGN KEY (idUser) REFERENCES users(id),
 	idStatus SMALLINT NOT NULL,
-	FOREIGN KEY (idStatus) REFERENCES CommentStatus(id),
+	FOREIGN KEY (idStatus) REFERENCES commentstatus(id),
 	title VARCHAR(50) NOT NULL,
 	commentTxt VARCHAR(1000) NOT NULL,
 	postedDate DATE NOT NULL,
@@ -285,19 +285,19 @@ CREATE TABLE Comment(
 
 -- Landing text tables
 
-CREATE TABLE LandingText(
+CREATE TABLE landingtext(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	title VARCHAR(30) NOT NULL,
 	content VARCHAR(500) NOT NULL
 );
 
-CREATE TABLE LandingText_Attribute(
+CREATE TABLE landingtext_attribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type VARCHAR(255) NOT NULL,
 	page VARCHAR(32) NOT NULL
 );
 
-CREATE TABLE TA_LandingTextAttribute_Language(
+CREATE TABLE ta_landingtextattribute_language(
  	landingTextAttribute SMALLINT NOT NULL,
  	languageId SMALLINT NOT NULL,
  	value TEXT NOT NULL
@@ -306,37 +306,37 @@ CREATE TABLE TA_LandingTextAttribute_Language(
 
 
 -- Faq tables
-CREATE TABLE FAQCategory(
+CREATE TABLE faqcategory(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY
 );
 
-CREATE TABLE FAQCategoryAttribute(
+CREATE TABLE faqcategoryattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type TEXT NOT NULL
 );
 
-CREATE TABLE TA_FAQCategoryAttribute_Language(
+CREATE TABLE ta_faqcategoryattribute_language(
 	faqCategoryAttributeId SMALLINT NOT NULL,
-	FOREIGN KEY (faqCategoryAttributeId) REFERENCES FAQCategoryAttribute(id),
+	FOREIGN KEY (faqCategoryAttributeId) REFERENCES faqcategoryattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	idFaqCategory SMALLINT NOT NULL,
-	FOREIGN KEY (idFaqCategory) REFERENCES FAQCategory(id),
+	FOREIGN KEY (idFaqCategory) REFERENCES faqcategory(id),
 	value TEXT,
 	PRIMARY KEY(faqCategoryAttributeId,idLanguage,idFaqCategory)
 );
 
-CREATE TABLE FAQQuestion(
+CREATE TABLE faqquestion(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	isVisible BIT NOT NULL
 );
 
-CREATE TABLE FAQQuestionAttribute(
+CREATE TABLE faqquestionattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE TA_FAQQuestionAttribute_Language(
+CREATE TABLE ta_faqquestionattribute_language(
 	idQuestionAttribute SMALLINT NOT NULL,
 	idLanguage SMALLINT NOT NULL,
 	value TEXT,
@@ -345,44 +345,44 @@ CREATE TABLE TA_FAQQuestionAttribute_Language(
 
 
 
-CREATE TABLE Country(
+CREATE TABLE country(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY
 );
 
-CREATE TABLE CountryAttribute(
+CREATE TABLE countryattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type TEXT NOT NULL
 );
 
-CREATE TABLE TA_CountryAttribute_Language(
+CREATE TABLE ta_countryattribute_language(
 	countryAttributeId SMALLINT NOT NULL,
-	FOREIGN KEY (countryAttributeId) REFERENCES CountryAttribute(id),
+	FOREIGN KEY (countryAttributeId) REFERENCES countryattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	idCountry SMALLINT NOT NULL,
-	FOREIGN KEY (idCountry	) REFERENCES Country(id),
+	FOREIGN KEY (idCountry) REFERENCES country(id),
 	value TEXT,
 	PRIMARY KEY(countryAttributeId,idLanguage,idCountry)
 );
 
-CREATE TABLE Province(
+CREATE TABLE province(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	idCountry SMALLINT NOT NULL,
-	FOREIGN KEY (idCountry) REFERENCES Country(id)
+	FOREIGN KEY (idCountry) REFERENCES country(id)
 );
 
-CREATE TABLE ProvinceAttribute(
+CREATE TABLE provinceattribute(
 	id SMALLINT AUTO_INCREMENT PRIMARY KEY,
 	type TEXT NOT NULL
 );
 
-CREATE TABLE TA_ProvinceAttribute_Language(
+CREATE TABLE ta_provinceattribute_language(
 	provinceAttributeId SMALLINT NOT NULL,
-	FOREIGN KEY (provinceAttributeId) REFERENCES ProvinceAttribute(id),
+	FOREIGN KEY (provinceAttributeId) REFERENCES provinceattribute(id),
 	idLanguage SMALLINT NOT NULL,
-	FOREIGN KEY (idLanguage) REFERENCES Language(id),
+	FOREIGN KEY (idLanguage) REFERENCES language(id),
 	idProvince SMALLINT NOT NULL,
-	FOREIGN KEY (idProvince) REFERENCES Province(id),
+	FOREIGN KEY (idProvince) REFERENCES province(id),
 	value TEXT,
 	PRIMARY KEY(provinceAttributeId,idLanguage,idProvince)
 );

@@ -36,7 +36,7 @@ class MgrCategory {
     //Adds the given category to
     //the database
     addCategory(category){
-        let query = "INSERT INTO Category VALUES (DEFAULT,?)";
+        let query = "INSERT INTO category VALUES (DEFAULT,?)";
         let param = [category.isVisible];
 
         return this._queryEngine.executeQuery(query,param);
@@ -47,7 +47,7 @@ class MgrCategory {
     //@Returns a promise
     loadAllCategoriesBasicInfos()
     {
-        let query = "SELECT * FROM Category";
+        let query = "SELECT * FROM category";
 
         return this._queryEngine.executeQuery(query);
     }
@@ -70,7 +70,7 @@ class MgrCategory {
     //@Returns a promise
     loadAvailableLanguages()
     {
-        let query = "SELECT * FROM Language";
+        let query = "SELECT * FROM language";
         return this._queryEngine.executeQuery(query);
     }
 

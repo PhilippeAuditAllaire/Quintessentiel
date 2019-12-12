@@ -50,7 +50,7 @@
 
 
                 $.ajax({
-                    url: "http://localhost:8000/ajaxRequest/catalogue",
+                    url: "./ajaxRequest/catalogue",
                     method: "POST",
 
                     success: function(response) {
@@ -68,7 +68,7 @@
                 let searchbar = document.getElementById("research");
                 searchbar.addEventListener("keyup", function(e) {
                     $.ajax({
-                        url: "http://localhost:8000/ajaxRequest/catalogueSearch",
+                        url: "./ajaxRequest/catalogueSearch",
                         type: "post",
                         data: {
                             search: $('#research').val()
@@ -84,7 +84,7 @@
                 });
 
                 $.ajax({
-                    url: "http://localhost:8000/ajaxRequest/getCategories",
+                    url: "./ajaxRequest/getCategories",
                     method: "POST",
 
                     success: function(response) {
@@ -110,7 +110,7 @@
                 $('.search-tag').remove();
                 catSearch = [];
                 $.ajax({
-                    url: "http://localhost:8000/ajaxRequest/catalogue",
+                    url: "./ajaxRequest/catalogue",
                     method: "POST",
 
                     success: function(response) {
@@ -132,7 +132,7 @@
                 //console.log(catSearch);
 
                 $.ajax({
-                    url: "http://localhost:8000/ajaxRequest/categoryCatalogueSearch",
+                    url: "./ajaxRequest/categoryCatalogueSearch",
                     type: "post",
                     data: {
                         search: catSearch

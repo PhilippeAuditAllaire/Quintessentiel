@@ -2,117 +2,117 @@ USE Quintessentiel;
 
 
 #Language table
-INSERT INTO Language VALUES (DEFAULT,'fr');
-INSERT INTO Language VALUES (DEFAULT,'en');
+INSERT INTO language VALUES (DEFAULT,'fr');
+INSERT INTO language VALUES (DEFAULT,'en');
 
 
 #Civility
-INSERT INTO Civility VALUES (DEFAULT); #Id1
-INSERT INTO Civility VALUES (DEFAULT); #Id2
-INSERT INTO Civility VALUES (DEFAULT); #Id3
+INSERT INTO civility VALUES (DEFAULT); #Id1
+INSERT INTO civility VALUES (DEFAULT); #Id2
+INSERT INTO civility VALUES (DEFAULT); #Id3
 
 
-INSERT INTO CivilityAttribute VALUES (DEFAULT,"civilityName");
+INSERT INTO civilityattribute VALUES (DEFAULT,"civilityName");
 
-INSERT INTO TA_CivilityAttribute_Language VALUES (1,1,1,"Homme");
-INSERT INTO TA_CivilityAttribute_Language VALUES (1,2,1,"Male");
+INSERT INTO ta_civilityattribute_language VALUES (1,1,1,"Homme");
+INSERT INTO ta_civilityattribute_language VALUES (1,2,1,"Male");
 
-INSERT INTO TA_CivilityAttribute_Language VALUES (1,1,2,"Femme");
-INSERT INTO TA_CivilityAttribute_Language VALUES (1,2,2,"Female");
+INSERT INTO ta_civilityattribute_language VALUES (1,1,2,"Femme");
+INSERT INTO ta_civilityattribute_language VALUES (1,2,2,"Female");
 
 
 
 
 #Products
-INSERT INTO ProductAttribute VALUES(DEFAULT,"title");
-INSERT INTO ProductAttribute VALUES(DEFAULT,"description");
-INSERT INTO ProductAttribute VALUES(DEFAULT,"advice");
+INSERT INTO productattribute VALUES(DEFAULT,"title");
+INSERT INTO productattribute VALUES(DEFAULT,"description");
+INSERT INTO productattribute VALUES(DEFAULT,"advice");
 
 
 #Categories
-INSERT INTO CategoryAttribute VALUES (DEFAULT,"title");
+INSERT INTO categoryattribute VALUES (DEFAULT,"title");
 
-INSERT INTO Category VALUES (DEFAULT,1);
-INSERT INTO Category VALUES (DEFAULT,1);
-INSERT INTO Category VALUES (DEFAULT,1);
+INSERT INTO category VALUES (DEFAULT,1);
+INSERT INTO category VALUES (DEFAULT,1);
+INSERT INTO category VALUES (DEFAULT,1);
 
-INSERT INTO TA_CategoryAttribute_Language VALUES (1,1,1,"Catégorie A");
-INSERT INTO TA_CategoryAttribute_Language VALUES (1,1,2,"Catégorie B");
-INSERT INTO TA_CategoryAttribute_Language VALUES (1,1,3,"Catégorie C");
+INSERT INTO ta_categoryattribute_language VALUES (1,1,1,"Catégorie A");
+INSERT INTO ta_categoryattribute_language VALUES (1,1,2,"Catégorie B");
+INSERT INTO ta_categoryattribute_language VALUES (1,1,3,"Catégorie C");
 
 #Country
-INSERT INTO CountryAttribute VALUES(DEFAULT,"name");
+INSERT INTO countryattribute VALUES(DEFAULT,"name");
 
-INSERT INTO Country VALUES (DEFAULT);   #Canada
-INSERT INTO Country VALUES (DEFAULT);   #United States
+INSERT INTO country VALUES (DEFAULT);   #Canada
+INSERT INTO country VALUES (DEFAULT);   #United States
 
 
 
-INSERT INTO TA_CountryAttribute_Language VALUES (1,1,1,"Canada");
-INSERT INTO TA_CountryAttribute_Language VALUES (1,2,1,"Canada");
+INSERT INTO ta_countryattribute_language VALUES (1,1,1,"Canada");
+INSERT INTO ta_countryattribute_language VALUES (1,2,1,"Canada");
 
-INSERT INTO TA_CountryAttribute_Language VALUES (1,1,2,"États-unis");
-INSERT INTO TA_CountryAttribute_Language VALUES (1,2,2,"United States");
+INSERT INTO ta_countryattribute_language VALUES (1,1,2,"États-unis");
+INSERT INTO ta_countryattribute_language VALUES (1,2,2,"United States");
 
 
 #Provinces
-INSERT INTO ProvinceAttribute VALUES(DEFAULT,"name");
+INSERT INTO provinceattribute VALUES(DEFAULT,"name");
 
     #Canada provinces
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
-INSERT INTO Province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
+INSERT INTO province VALUES (DEFAULT,1);
     
     #United states provinces
-INSERT INTO Province VALUES (DEFAULT,2);
-INSERT INTO Province VALUES (DEFAULT,2);
+INSERT INTO province VALUES (DEFAULT,2);
+INSERT INTO province VALUES (DEFAULT,2);
 
 #attributeId,languageId,provinceId
 
     #Canada provinces
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,1,"Ontario");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,1,"Ontario");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,1,"Ontario");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,1,"Ontario");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,2,"Québec");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,2,"Quebec");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,2,"Québec");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,2,"Quebec");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,3,"Nouvelle Écosse");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,3,"Nova Scotia");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,3,"Nouvelle Écosse");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,3,"Nova Scotia");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,4,"Nouveau Brunswick");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,4,"New Brunswick");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,4,"Nouveau Brunswick");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,4,"New Brunswick");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,5,"Manitoba");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,5,"Manitoba");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,5,"Manitoba");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,5,"Manitoba");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,6,"Colombie Britanique");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,6,"British Columbia");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,6,"Colombie Britanique");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,6,"British Columbia");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,7,"Île du prince Édouard");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,7,"Prince Edward Island");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,7,"Île du prince Édouard");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,7,"Prince Edward Island");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,8,"Saskatchewan");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,8,"Saskatchewan");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,8,"Saskatchewan");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,8,"Saskatchewan");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,9,"Alberta");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,9,"Alberta");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,9,"Alberta");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,9,"Alberta");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,10,"Terre neuve et Labrador");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,10,"Newfoundland and Labrador");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,10,"Terre neuve et Labrador");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,10,"Newfoundland and Labrador");
     
     #United States Provinces
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,11,"Californie");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,11,"California");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,11,"Californie");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,11,"California");
 
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,1,12,"Floride");
-INSERT INTO TA_ProvinceAttribute_Language VALUES (1,2,12,"Florida");
+INSERT INTO ta_provinceattribute_language VALUES (1,1,12,"Floride");
+INSERT INTO ta_provinceattribute_language VALUES (1,2,12,"Florida");
 
 
 #User
@@ -618,10 +618,10 @@ INSERT INTO landingtext_attribute (id, type, page)
     (125,'2','You must be connected in order to pay.');
 
     #troubles
-    INSERT INTO Conditions VALUES (DEFAULT);
-    INSERT INTO Conditions VALUES (DEFAULT);
-    INSERT INTO Conditions VALUES (DEFAULT);
-    INSERT INTO Conditions VALUES (DEFAULT);
+    INSERT INTO conditions VALUES (DEFAULT);
+    INSERT INTO conditions VALUES (DEFAULT);
+    INSERT INTO conditions VALUES (DEFAULT);
+    INSERT INTO conditions VALUES (DEFAULT);
 
     INSERT INTO conditionsattribute VALUES (DEFAULT,"name");
 

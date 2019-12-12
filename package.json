@@ -2,10 +2,10 @@
   "name": "quintessentielapplicationweb",
   "version": "1.0.0",
   "description": "Ceci est l'application web de quintessentiel",
-  "main": "appStart.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,6 @@
     "electron": "^6.1.5"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
     "custom-electron-titlebar": "^3.1.0",
     "ejs": "^2.7.1",
     "electron-reload": "^1.5.0",

@@ -63,7 +63,7 @@ const stripeTokenHandler = (token) => {
   }
 
   $.ajax({
-      url: "http://localhost:8000/ajaxRequest/stripePayment",
+      url: "./ajaxRequest/stripePayment",
       method: "POST",
       data: {
       	stripeToken: token.id,
