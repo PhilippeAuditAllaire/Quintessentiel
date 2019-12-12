@@ -144,7 +144,7 @@
             let idClick = "";
 
             $.ajax({
-                url: "http://localhost:5000/ajaxRequest/addRecipeHandlerIngre",
+                url: "./ajaxRequest/addRecipeHandlerIngre",
                 method: "POST",
 
                 success: function(response) {
@@ -200,7 +200,7 @@
                 }
                 console.log(ingredients);
                 $.ajax({
-                    url: "http://localhost:5000/ajaxRequest/addRecipeHandler",
+                    url: "./ajaxRequest/addRecipeHandler",
                     method: "POST",
                     data: {
                         name: $('#name').find(":selected").text(),

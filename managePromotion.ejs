@@ -83,7 +83,7 @@
             let isModify = false;
 
             $.ajax({
-                url: "http://localhost:5000/ajaxRequest/managePromo",
+                url: "./ajaxRequest/managePromo",
                 method: "POST",
 
                 success: function(response) {
@@ -97,7 +97,7 @@
             });
 
             $.ajax({
-                url: "http://localhost:5000/ajaxRequest/loadSelectPromo",
+                url: "./ajaxRequest/loadSelectPromo",
                 method: "POST",
 
                 success: function(response) {
@@ -128,7 +128,7 @@
                     console.log("rabais " + $('#rabais-text').val());
                     let rabaisA = $('#rabais-text').val();
                     $.ajax({
-                        url: "http://localhost:5000/ajaxRequest/modifyPromo",
+                        url: "./ajaxRequest/modifyPromo",
                         method: "POST",
                         data: {
                             id: $("#product").children(":selected").attr("id"),
@@ -148,7 +148,7 @@
                     console.log("rabais " + $('#rabais-text').val());
                     let rabaisA = $('#rabais-text').val();
                     $.ajax({
-                        url: "http://localhost:5000/ajaxRequest/addPromo",
+                        url: "./ajaxRequest/addPromo",
                         method: "POST",
                         data: {
                             id: $("#product").children(":selected").attr("id"),

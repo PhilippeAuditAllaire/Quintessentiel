@@ -1,4 +1,4 @@
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const QueryEngine = require("../scripts/QueryEngine.js");
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
@@ -18,7 +18,8 @@ class MgrUser{
 	//@Returns a promise
 	addUser(userObj)
 	{
-		let hash = 'motdepassetemporaireacausedebcrypt';
+		let salt = bcrypt.genSaltSync(10);
+		let hash = bcrypt.hashSync(userObj.password, salt);
 
 		let selectUniqueEmailQuery = "SELECT id FROM users WHERE email = ?";
 		let paramUniqueEmail = [userObj.email];
@@ -63,13 +64,13 @@ class MgrUser{
 
 			if(results.length > 0) //If there's at least one row for this email
 			{	
-				/*
+				
 				if(bcrypt.compareSync(userObj.password, results[0].password)) { //Password match
 					return [true,results[0].id];
 				} else { //Password don't match
 					return [false];
 				}
-				*/
+				
 				return [true,results[0].id];
 
 			}
@@ -193,7 +194,8 @@ class MgrUser{
 
 				if(timeBetween < 30){ //Less than 30 minutes
 					let queryChangePassword = "UPDATE users SET password = ? WHERE id = ?"
-					let hash = "untestdehash"//bcrypt.hashSync(newPassword, 10);
+					let salt = bcrypt.genSaltSync(10);
+					let hash = bcrypt.hashSync(newPassword, salt);
 					let paramChangePassword = [hash,userId];
 
 					return currentQueryEngine.executeQuery(queryChangePassword,paramChangePassword);
