@@ -19,15 +19,9 @@ let upload = multer({ storage: storage });
 
 
 function setLang(req) {
-    if (req.session.id_lang == 1) {
-        console.log("if 1");
-    } else if (req.session.id_lang == 2) {
-        console.log("if 2");
-    } else if (req.session.id_lang != undefined) {
-        console.log("if undefined");
+    if (req.session.id_lang == 1) {} else if (req.session.id_lang == 2) {} else if (req.session.id_lang != undefined) {
         req.session.id_lang = 1;
     } else {
-        console.log("default");
         req.session.id_lang = 1;
     }
 }
@@ -70,16 +64,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Website routes
 website.get("/", function(req, res) {
-    console.log("HI");
     res.redirect("/index")
 });
 
 
 website.get("/serum", function(req, res) {
     setLang(req);
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("serum", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("serum.ejs", JSON.parse(resultat));
     });
 });
@@ -88,9 +79,7 @@ website.get("/serum", function(req, res) {
 website.get("/index", function(req, res) {
     /* TODO:req.session.code_lang selon le header */
     setLang(req);
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("index", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("index.ejs", JSON.parse(resultat));
     });
 
@@ -99,9 +88,8 @@ website.get("/index", function(req, res) {
 website.get("/userConnection", function(req, res) {
     setLang(req);
 
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("userConnection", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
+        console.log(resultat)
         res.render("userConnection.ejs", JSON.parse(resultat));
     });
 });
@@ -118,9 +106,7 @@ website.get("/userRegister", function(req, res) {
 website.get("/recoverPassword", function(req, res) {
     setLang(req);
 
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("recoverPassword", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("recoverPassword.ejs", JSON.parse(resultat));
     });
 });
@@ -129,9 +115,7 @@ website.get("/recoverPassword", function(req, res) {
 website.get("/contactus", function(req, res) {
     setLang(req);
 
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("contactus", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("contactus.ejs", JSON.parse(resultat));
     });
 });
@@ -139,9 +123,7 @@ website.get("/contactus", function(req, res) {
 website.get("/catalogue", function(req, res) {
     setLang(req);
 
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("catalogue", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("catalogue.ejs", JSON.parse(resultat));
     });
 
@@ -150,18 +132,14 @@ website.get("/catalogue", function(req, res) {
 website.get("/productInfo", function(req, res) {
     setLang(req);
 
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("productInfo", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("productInfo.ejs", JSON.parse(resultat));
     });
 });
 
 website.get("/faq", function(req, res) {
     setLang(req);
-    console.log("lang id : " + req.session.id_lang);
     mgr.getTextByPage("faq", req.session.id_lang).then(function(resultat) {
-        console.log("pageTraduction" + resultat);
         res.render("faq.ejs", JSON.parse(resultat));
     });
 });
@@ -169,7 +147,7 @@ website.get("/faq", function(req, res) {
 website.get("/paymentPage", function(req, res) {
     if (req.session.userId != undefined) {
         setLang(req);
-        mgr.getTextByPage("payment", req.session.id_lang).then(function(resultat) {
+        mgr.getTextByPage("paymentPage", req.session.id_lang).then(function(resultat) {
             res.render("paymentPage.ejs", JSON.parse(resultat));
         });
     } else {
@@ -194,9 +172,10 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
     let taxes;
     let total = 0;
 
+    let userId = (req.session.userId != undefined ? req.session.userId : 0);
     //Get all the user's infos before doing the payment
     //Calculate the sub total from the items that are in the user's cart
-    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart)).then(function(calcSubTotal) {
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart), userId).then(function(calcSubTotal) {
         subTotal = calcSubTotal;
         taxes = ctrlCart.calculateTaxes(subTotal);
         total = parseFloat(subTotal) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq));
@@ -230,8 +209,10 @@ website.post("/ajaxRequest/getCartTaxes", function(req, res) {
     let ctrlCart = new CtrlCart();
     let taxes;
 
+    let userId = (req.session.userId != undefined ? req.session.userId : 0);
+
     //Calculate the sub total from the items that are in the user's cart
-    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart)).then(function(calcSubTotal) {
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart), userId).then(function(calcSubTotal) {
         let subTotal = calcSubTotal;
         taxes = JSON.stringify(ctrlCart.calculateTaxes(subTotal));
 
@@ -257,14 +238,11 @@ website.post("/ajaxRequest/lang", function(req, res) {
 });
 
 website.post("/ajaxRequest/defLang", function(req, res) {
-
-    console.log("deflang" + req.session.id_lang);
     res.send(req.session.id_lang);
 });
 
 website.post("/ajaxRequest/changeLang", function(req, res) {
     req.session.id_lang = req.body.id_lang;
-    console.log(req.session.id_lang);
     res.send(req.session.id_lang);
 });
 
@@ -273,7 +251,7 @@ website.post("/ajaxRequest/getCivilities", function(req, res) {
 
     let ctrlUserObj = new CtrlUser();
 
-    ctrlUserObj.loadAllCivilities().then(function(result) {
+    ctrlUserObj.loadAllCivilities(req.session.id_lang).then(function(result) {
         res.send(result);
     });
 
@@ -294,8 +272,6 @@ website.post("/ajaxRequest/getUserAdress", function(req, res) {
     let ctrlUser = new CtrlUser();
     //req.session.userId
     ctrlUser.loadCompleteUserAddress(1, 1).then(function(userAddress) {
-        console.log("Heres what we get")
-        console.log(userAddress);
         res.send(userAddress);
     });
 
@@ -360,7 +336,6 @@ website.post("/ajaxRequest/categoryCatalogueSearch", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
     let ctrlres = new CtrlReseller();
-    console.log(ctrlres.getReseller());
     ctrlProduct.loadProductSearchCategory(1, req.body.search).then(function(result) {
         res.send(result);
     });
@@ -403,7 +378,7 @@ website.post("/ajaxRequest/userRecovering", function(req, res) {
 website.post("/ajaxRequest/getConditions", function(req, res) {
     let ctrlUserObj = new CtrlUser();
 
-    ctrlUserObj.loadAllConditions().then(function(conditionsList) {
+    ctrlUserObj.loadAllConditions(req.session.id_lang).then(function(conditionsList) {
             res.send(conditionsList);
         })
         .catch(function(error) {
@@ -424,7 +399,6 @@ website.post("/ajaxRequest/getCategories", function(req, res) {
 });
 
 website.post("/ajaxRequest/addProductToCart", function(req, res) {
-    console.log("Adding the product to the cart");
     let itemId = req.body.productId;
     let itemQty = req.body.qty;
 
@@ -460,13 +434,13 @@ website.post("/ajaxRequest/removeProductFromCart", function(req, res) {
 });
 
 website.post("/ajaxRequest/loadCartItem", function(req, res) {
-    console.log("Loading the products from the cart");
     if (req.session.userCart != undefined && req.session.userCart.length > 0) //If the user has something in his cart
     {
+        let userId = (req.session.userId != undefined ? req.session.userId : 0);
+
         let ctrlCart = new CtrlCart();
-        ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart)).then(function(productsArray) {
-            console.log("Voici le contenu du cart")
-            console.log(productsArray);
+
+        ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart), userId).then(function(productsArray) {
             res.send(productsArray);
         });
     } else {
@@ -609,7 +583,6 @@ app.post("/ajaxRequest/managePromo", function(req, res) {
 app.post("/ajaxRequest/addPromo", function(req, res) {
     let ctrlPromo = new CtrlPromo();
     ctrlPromo.addPromo(req.body.id, req.body.rabais).then(function(result) {
-        console.log(res);
         res.send(result)
     })
 });
@@ -737,7 +710,6 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
 
 app.post('/updateProduct', upload.single('image'), function(req, res, next) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
-        console.log("On est ici! Voici les informations envoyées:")
 
         let data = req.body;
         data.translatedFields = JSON.parse(data.translatedFields);
@@ -798,7 +770,6 @@ app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
     let ctrlCategory = new CtrlCategory();
 
     ctrlCategory.loadAllCategoriesAdmin().then(function(result) {
-        console.log(result)
         res.send(result);
     })
 });
@@ -808,7 +779,6 @@ app.post("/ajaxRequest/loadAllResellers", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
     ctrlReseller.getReseller().then(function(result) {
-        console.log(result)
         res.send(result);
     })
 });
@@ -817,7 +787,6 @@ app.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
     ctrlReseller.getUsers().then(function(result) {
-        console.log(result)
         res.send(result);
     })
 });
@@ -841,7 +810,6 @@ app.post("/ajaxRequest/getResellerProduct", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
     ctrlReseller.getProductList().then(function(result) {
-        console.log(result)
         res.send(result);
     })
 });
@@ -851,7 +819,6 @@ app.post("/ajaxRequest/getRebateReseller", function(req, res) {
     console.log(req.body);
 
     ctrlReseller.getRebate(req.body).then(function(result) {
-        console.log(result)
         res.send(result);
     })
 });
