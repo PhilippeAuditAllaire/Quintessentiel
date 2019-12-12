@@ -2,10 +2,10 @@
   "name": "quintessentielapplicationweb",
   "version": "1.0.0",
   "description": "Ceci est l'application web de quintessentiel",
-  "main": "server.js",
+  "main": "appStart.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",

@@ -132,7 +132,7 @@ class MgrUser{
 			return currentQueryEngine.executeQuery(newResetCodeQuery,paramCode);
 		})
 		.then(function(res){ //Sending the email with this generated key
-			let link = "http://localhost:8000/recoverPassword?secretId="+uniqueKey;
+			let link = "http://quintessentiel-env-1.ipa5fdcs4m.ca-central-1.elasticbeanstalk.com/recoverPassword?secretId="+uniqueKey;
 
 			let transporter = nodemailer.createTransport({
 			  service: 'gmail',
@@ -348,8 +348,6 @@ class MgrUser{
 	*/
 	getCountryById(countryId,idLang)
 	{
-		console.log("chargement avec le country id: "+ countryId);
-		console.log("et la langue: "+idLang);
 		let query = "SELECT value As countryName FROM ta_countryattribute_language WHERE ta_countryattribute_language.idCountry = ? AND idLanguage = ?";
 		let param = [countryId,idLang];
 

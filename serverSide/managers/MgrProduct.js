@@ -50,7 +50,7 @@ class MgrProduct {
     //@productId is the id of the 
     //product to look for its categories
     loadCategoryByProductId(productId) {
-        let query = "SELECT ta_category_product.idCategory,ta_categoryAttribute_language.value FROM ta_category_product INNER JOIN ta_categoryAttribute_language ON ta_category_product.idCategory = ta_categoryattribute_language.idCategory WHERE idProduct = ? AND ta_categoryattribute_language.idLanguage = 1";
+        let query = "SELECT ta_category_product.idCategory,ta_categoryattribute_language.value FROM ta_category_product INNER JOIN ta_categoryattribute_language ON ta_category_product.idCategory = ta_categoryattribute_language.idCategory WHERE idProduct = ? AND ta_categoryattribute_language.idLanguage = 1";
         let param = [productId];
 
         return this._queryEngine.executeQuery(query, param).then(function(res) {
@@ -68,7 +68,7 @@ class MgrProduct {
 
     //Loads all the products infos
     loadAllProductsNonTranslatableInfos() {
-        let query = "SELECT * FROM Product";
+        let query = "SELECT * FROM product";
         return this._queryEngine.executeQuery(query);
     }
 
