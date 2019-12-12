@@ -71,6 +71,8 @@ const stripeTokenHandler = (token) => {
       },
       success: function(response) {
           $("#successPayment").html(paymentSuccessfull)
+          popup("Paiement effectué avec succès!")
+          $("#payment-form").reset();
       },
       error: function(response) {
        

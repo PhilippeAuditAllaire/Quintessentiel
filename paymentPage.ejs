@@ -171,23 +171,34 @@
 				  		<a href="#" id="btnToPayment" data-toggle="tab" class="btn btn-success"><%= infoBtnToPayment %></a>
 				  </div>
 			  </div>
+
+			  
+			  
+
 			  <div class="tab-pane fade" id="paymentTab" role="paymentLink"> <!-- Payment form -->
-			  	<p id="successPayment"></p>
-			  	<form action="/stripePayment" method="post" id="payment-form">
-				  <div>
-				    <label id="card-element-label" for="card-element">
-				      <%= creditOrDebit %>
-				    </label>
-				    <div id="card-element">
-				      <!-- A Stripe Element will be inserted here. -->
-				    </div>
 
-				    <!-- Used to display Element errors. -->
-				    <div id="card-errors" role="alert"></div>
-				  </div>
+			  	<div class="topPaymentForm">
+			  		<img id="stripe_logo" src="./images/powered_by_stripe.png" alt="Payment powered by stripe" />
+			  		<img src="./images/logo.png" alt="logo"/>
+			  	</div>
+			  	<div class="wrapperPaymentForm">
+				  	<p id="successPayment"></p>
+				  	<form action="/stripePayment" method="post" id="payment-form">
+					  <div>
+					    <label id="card-element-label" for="card-element">
+					      <%= creditOrDebit %>
+					    </label>
+					    <div id="card-element">
+					      <!-- A Stripe Element will be inserted here. -->
+					    </div>
 
-				  <button class="btn btn-success"><%= paymentBtnPay %></button>
-				</form>
+					    <!-- Used to display Element errors. -->
+					    <div id="card-errors" role="alert"></div>
+					  </div>
+
+					  <button class="btn btn-success"><%= paymentBtnPay %></button>
+					</form>
+				</div>
 			  </div>
 			</div>	
 		</div>
