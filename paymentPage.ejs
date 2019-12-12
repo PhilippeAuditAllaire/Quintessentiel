@@ -360,7 +360,7 @@
 		function changeGrandTotal()
 		{
 			$.ajax({
-				url: "http://localhost:8081/ajaxRequest/getCartTaxes",
+				url: "./ajaxRequest/getCartTaxes",
 				method: "POST",
 				success: function(taxes){
 					taxes = JSON.parse(taxes);
@@ -434,7 +434,7 @@
 		function loadUserAddress()
 		{
 			return $.ajax({
-				url: "http://localhost:8081/ajaxRequest/getUserAdress",
+				url: "./ajaxRequest/getUserAdress",
 				method: "POST",
 				success: function(userAddress){
 

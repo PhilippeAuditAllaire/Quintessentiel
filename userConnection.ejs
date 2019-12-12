@@ -96,7 +96,7 @@
 			e.preventDefault();
 
 			$.ajax({
-				url: "http://localhost:8081/ajaxRequest/userConnection",
+				url: "./ajaxRequest/userConnection",
 				method: "POST",
 				data:{
 					email:email.val(),
@@ -120,7 +120,7 @@
 		function loadCivilities(_callback)
 		{
 			$.ajax({
-				url: "http://localhost:8081/getCivilities",
+				url: "./getCivilities",
 				method: "POST",
 				success: function(response){
 					$("#selectCivility").html(response);
@@ -147,7 +147,7 @@
 				
 
 				$.ajax({
-					url: "http://localhost:8081/ajaxRequest/userRecoverPassword",
+					url: "./ajaxRequest/userRecoverPassword",
 					method: "POST",
 					data:{
 						email:recoverPasswordEmail.val(),
