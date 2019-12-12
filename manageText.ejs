@@ -53,7 +53,7 @@
                     <h2>Gestion des textes</h2>
                     <div class="wrapper-right-btn">
                         <div class="wrapper-btn">
-                            <a href="#" class="btnApp" id="btnAddCategory">+</a>
+
                         </div>
                     </div>
                 </div>
@@ -63,6 +63,7 @@
                             <thead class="table-product-header">
                                 <tr>
                                     <th>Nom</th>
+                                    <th>Page</th>
                                 </tr>
                             </thead>
                             <tbody id="tableProducts">
@@ -193,10 +194,11 @@
 
                     let tableProducts = document.getElementById("tableProducts");
                     tableProducts.innerHTML = "";
-
+                    console.log(textList);
                     textList.forEach(function(category) {
                         tableProducts.innerHTML += `<tr data-product-id="` + category._id + `" ondblclick="openUpdateCategory(this)" class="rowTR">
                             <th>` + category._traductions[0]._name + `</th>
+                            <th>` + category._traductions[0]._page + `</th>
                         </tr>`;
                     });
                 }
