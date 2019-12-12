@@ -23,7 +23,7 @@ function createWindow () {
   mainWindow.once('ready-to-show',() => mainWindow.show());
 
   //Redirect to the URL
-  mainWindow.loadURL('http://localhost:5000/');
+  mainWindow.loadURL('http://quintessentiel-env-1.ipa5fdcs4m.ca-central-1.elasticbeanstalk.com/adminConnection#');
 }
 
 

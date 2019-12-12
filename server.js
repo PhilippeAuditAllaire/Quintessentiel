@@ -53,13 +53,9 @@ website.use(bodyParser.json()); // support json encoded bodies
 website.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 website.set("views", path.join(__dirname, './'));
 
-app.use(session({ secret: 'your secret', saveUninitialized: true, resave: false }));
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.set("views", path.join(__dirname, './'));
 
 website.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 //Website routes
@@ -449,7 +445,7 @@ website.post("/ajaxRequest/loadCartItem", function(req, res) {
 });
 
 
-app.post("/ajaxRequest/adminConnection", function(req, res) {
+website.post("/ajaxRequest/adminConnection", function(req, res) {
     let ctrlUserObj = new CtrlUser();
 
     ctrlUserObj.connectUser(req.body, true).then(function(result) {
@@ -467,7 +463,7 @@ app.post("/ajaxRequest/adminConnection", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/addRecipeHandler", function(req, res) {
+website.post("/ajaxRequest/addRecipeHandler", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.addRecipe(req.body.name, req.body.desc, req.body.instru, req.body.is_custom, req.body.product, req.body.ingre).then(function(result) {
@@ -476,7 +472,7 @@ app.post("/ajaxRequest/addRecipeHandler", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/addRecipeHandlerIngre", function(req, res) {
+website.post("/ajaxRequest/addRecipeHandlerIngre", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getProducts().then(function(result) {
@@ -485,7 +481,7 @@ app.post("/ajaxRequest/addRecipeHandlerIngre", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/updateRecipeHandler", function(req, res) {
+website.post("/ajaxRequest/updateRecipeHandler", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.updateRecipe(req.body.id, req.body.name, req.body.desc, req.body.instru, req.body.is_custom, req.body.product, req.body.ingre).then(function(result) {
@@ -494,7 +490,7 @@ app.post("/ajaxRequest/updateRecipeHandler", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/updateRecipeHandlerIngre", function(req, res) {
+website.post("/ajaxRequest/updateRecipeHandlerIngre", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getIngredients(req.body.id).then(function(result) {
@@ -503,7 +499,7 @@ app.post("/ajaxRequest/updateRecipeHandlerIngre", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/updateRecipeHandlerDesc", function(req, res) {
+website.post("/ajaxRequest/updateRecipeHandlerDesc", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getDescription(req.body.id).then(function(result) {
@@ -512,7 +508,7 @@ app.post("/ajaxRequest/updateRecipeHandlerDesc", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/manageRecipe", function(req, res) {
+website.post("/ajaxRequest/manageRecipe", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getAllRecipe().then(function(result) {
@@ -521,7 +517,7 @@ app.post("/ajaxRequest/manageRecipe", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/updateRecipeHandlerInstru", function(req, res) {
+website.post("/ajaxRequest/updateRecipeHandlerInstru", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getInstruction(req.body.id).then(function(result) {
@@ -530,7 +526,7 @@ app.post("/ajaxRequest/updateRecipeHandlerInstru", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/updateRecipeHandlerName", function(req, res) {
+website.post("/ajaxRequest/updateRecipeHandlerName", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getName(req.body.id).then(function(result) {
@@ -539,7 +535,7 @@ app.post("/ajaxRequest/updateRecipeHandlerName", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/updateRecipeHandlerCustom", function(req, res) {
+website.post("/ajaxRequest/updateRecipeHandlerCustom", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.getCustom(req.body.id).then(function(result) {
@@ -548,7 +544,7 @@ app.post("/ajaxRequest/updateRecipeHandlerCustom", function(req, res) {
 
 });
 
-app.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
+website.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
     let ctrl = new CtrlRecipe();
 
     ctrl.deleteRecipe(req.body.id).then(function(result) {
@@ -558,7 +554,7 @@ app.post("/ajaxRequest/deleteRecipeHandler", function(req, res) {
 });
 
 
-app.post("/ajaxRequest/loadAllProducts", function(req, res) {
+website.post("/ajaxRequest/loadAllProducts", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
     ctrlProduct.loadAllProductsAdmin().then(function(result) {
@@ -566,35 +562,35 @@ app.post("/ajaxRequest/loadAllProducts", function(req, res) {
     })
 });
 
-app.post("/ajaxRequest/loadSelectPromo", function(req, res) {
+website.post("/ajaxRequest/loadSelectPromo", function(req, res) {
     let ctrl = new CtrlProduct();
     ctrl.getProductsSelectPromo().then(function(result) {
         res.send(result)
     })
 });
 
-app.post("/ajaxRequest/managePromo", function(req, res) {
+website.post("/ajaxRequest/managePromo", function(req, res) {
     let ctrl = new CtrlPromo();
     ctrl.loadAllPromotions().then(function(result) {
         res.send(result)
     })
 });
 
-app.post("/ajaxRequest/addPromo", function(req, res) {
+website.post("/ajaxRequest/addPromo", function(req, res) {
     let ctrlPromo = new CtrlPromo();
     ctrlPromo.addPromo(req.body.id, req.body.rabais).then(function(result) {
         res.send(result)
     })
 });
 
-app.post("/ajaxRequest/modifyPromo", function(req, res) {
+website.post("/ajaxRequest/modifyPromo", function(req, res) {
     let ctrlPromo = new CtrlPromo();
     ctrlPromo.updatePromo(req.body.id, req.body.rabais).then(function(result) {
         res.send(result)
     })
 });
 
-app.post("/ajaxRequest/loadAllText", function(req, res) {
+website.post("/ajaxRequest/loadAllText", function(req, res) {
     let mgrlang = new MgrLanguage();
     mgrlang.loadAllText().then(function(resultat) {
         res.send(resultat);
@@ -602,24 +598,24 @@ app.post("/ajaxRequest/loadAllText", function(req, res) {
 });
 
 //Application routes
-app.get("/", function(req, res) {
+website.get("/", function(req, res) {
     //res.redirect("/manageProduct"); //res.redirect("/adminConnection");
     res.redirect("/adminChat")
 });
 
-app.get("/adminChat", function(req, res) {
+website.get("/adminChat", function(req, res) {
     res.render("adminChat.ejs");
 });
 
-app.get("/adminConnection", function(req, res) {
+website.get("/adminConnection", function(req, res) {
     res.render("adminConnection.ejs");
 });
 
-app.get("/manageReseller", function(req, res) {
+website.get("/manageReseller", function(req, res) {
     res.render("manageReseller.ejs");
 });
 
-app.get("/manageProduct", function(req, res) {
+website.get("/manageProduct", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let ctrlProduct = new CtrlProduct();
 
@@ -632,7 +628,7 @@ app.get("/manageProduct", function(req, res) {
     }
 });
 
-app.get("/manageRecipe", function(req, res) {
+website.get("/manageRecipe", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         res.render("manageRecipe.ejs");
     } else {
@@ -640,7 +636,7 @@ app.get("/manageRecipe", function(req, res) {
     }
 });
 
-app.get("/managePromotion", function(req, res) {
+website.get("/managePromotion", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         res.render("managePromotion.ejs");
     } else {
@@ -648,7 +644,7 @@ app.get("/managePromotion", function(req, res) {
     }
 });
 
-app.get("/manageText", function(req, res) {
+website.get("/manageText", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let mgrlang = new MgrLanguage();
 
@@ -660,7 +656,7 @@ app.get("/manageText", function(req, res) {
     }
 });
 
-app.get("/addRecipe", function(req, res) {
+website.get("/addRecipe", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         res.render("addRecipe.ejs");
     } else {
@@ -668,7 +664,7 @@ app.get("/addRecipe", function(req, res) {
     }
 });
 
-app.get("/updateRecipe", function(req, res) {
+website.get("/updateRecipe", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         res.render("updateRecipe.ejs");
     } else {
@@ -677,7 +673,7 @@ app.get("/updateRecipe", function(req, res) {
 });
 
 
-app.get("/manageCategory", function(req, res) {
+website.get("/manageCategory", function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let ctrlCategory = new CtrlCategory();
 
@@ -691,7 +687,7 @@ app.get("/manageCategory", function(req, res) {
 });
 
 
-app.post('/addProduct', upload.single('image'), function(req, res, next) {
+website.post('/addProduct', upload.single('image'), function(req, res, next) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let imgName = req.file.filename;
         let data = req.body;
@@ -708,7 +704,7 @@ app.post('/addProduct', upload.single('image'), function(req, res, next) {
     }
 });
 
-app.post('/updateProduct', upload.single('image'), function(req, res, next) {
+website.post('/updateProduct', upload.single('image'), function(req, res, next) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
 
         let data = req.body;
@@ -730,7 +726,7 @@ app.post('/updateProduct', upload.single('image'), function(req, res, next) {
     }
 });
 
-app.post('/addCategory', function(req, res) {
+website.post('/addCategory', function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let ctrlCategory = new CtrlCategory();
 
@@ -742,7 +738,7 @@ app.post('/addCategory', function(req, res) {
     }
 });
 
-app.post('/updateCategory', function(req, res) {
+website.post('/updateCategory', function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let mgrlang = new MgrLanguage();
 
@@ -754,7 +750,7 @@ app.post('/updateCategory', function(req, res) {
     }
 });
 
-app.post('/updateText', function(req, res) {
+website.post('/updateText', function(req, res) {
     if (req.session.userId != undefined && req.session.isAdmin == 1) {
         let mgrlang = new MgrLanguage();
 
@@ -766,7 +762,7 @@ app.post('/updateText', function(req, res) {
     }
 });
 
-app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
+website.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
     let ctrlCategory = new CtrlCategory();
 
     ctrlCategory.loadAllCategoriesAdmin().then(function(result) {
@@ -775,7 +771,7 @@ app.post("/ajaxRequest/loadAllCategoriesAdmin", function(req, res) {
 });
 
 
-app.post("/ajaxRequest/loadAllResellers", function(req, res) {
+website.post("/ajaxRequest/loadAllResellers", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
     ctrlReseller.getReseller().then(function(result) {
@@ -783,7 +779,7 @@ app.post("/ajaxRequest/loadAllResellers", function(req, res) {
     })
 });
 
-app.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
+website.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
     ctrlReseller.getUsers().then(function(result) {
@@ -791,7 +787,7 @@ app.post("/ajaxRequest/loadAllNonResellers", function(req, res) {
     })
 });
 
-app.post("/ajaxRequest/addReseller", function(req, res) {
+website.post("/ajaxRequest/addReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
 
@@ -799,14 +795,14 @@ app.post("/ajaxRequest/addReseller", function(req, res) {
     res.send("true");
 });
 
-app.post("/ajaxRequest/removeReseller", function(req, res) {
+website.post("/ajaxRequest/removeReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
     ctrlReseller.removeReseller(req.body);
     res.send("true");
 });
 
-app.post("/ajaxRequest/getResellerProduct", function(req, res) {
+website.post("/ajaxRequest/getResellerProduct", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
     ctrlReseller.getProductList().then(function(result) {
@@ -814,7 +810,7 @@ app.post("/ajaxRequest/getResellerProduct", function(req, res) {
     })
 });
 
-app.post("/ajaxRequest/getRebateReseller", function(req, res) {
+website.post("/ajaxRequest/getRebateReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
     console.log(req.body);
 
@@ -824,7 +820,7 @@ app.post("/ajaxRequest/getRebateReseller", function(req, res) {
 });
 
 
-app.post("/ajaxRequest/updateRebateReseller", function(req, res) {
+website.post("/ajaxRequest/updateRebateReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
     let data = req.body;
     let resellerId = data.resellerId;
@@ -836,7 +832,7 @@ app.post("/ajaxRequest/updateRebateReseller", function(req, res) {
 
 
 
-app.post("/ajaxRequest/getTags", function(req, res) {
+website.post("/ajaxRequest/getTags", function(req, res) {
     let ctrlProduct = new CtrlProduct();
 
     ctrlProduct.loadAllTags().then(function(result) {});
