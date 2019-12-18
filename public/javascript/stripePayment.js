@@ -78,9 +78,7 @@ const stripeTokenHandler = (token) => {
           popup("Erreur lors du paiement!")
         }
         else{ //Payment successfull
-          $("#errorPayment").html("")
-          $("#successPayment").html(paymentSuccessfull)
-          popup(paymentSuccessfull)
+          document.location.href = "./catalogue?payment=true";
         }
 
       }

@@ -195,6 +195,10 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
                     source: token,
                     metadata: JSON.parse(metadata),
                 }).then(function(){
+                    req.session.userCart = undefined; //reset the user's cart
+                    console.log(req.session.userCart)
+                    console.log("Cart")
+                    console.log(req.session.userCart)
                     res.send(true);
                     res.end();
                     console.log("Done!");
