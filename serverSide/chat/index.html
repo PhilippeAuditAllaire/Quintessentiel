@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="chatt.css">
+    <!-- TODO : Faire les importation de js de la bonne facon -->
+    <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script defer src="chatt_const.js"></script>
+    <script defer src="users/user_const.js"></script>
+    <script defer src="users/classes.js"></script>
+    <script defer src="users/onEventUser.js"></script>
+    <script defer src="users/onEventNetworkFront.js"></script>
+    <script defer src="users/formaters.js"></script>
+    <script defer src="users/dynamicGui.js"></script>
+    <script defer src="customer/serviceCustomer.js"></script>
+    <script defer src="customer/startCustomerChat.js"></script>
+</head>
+
+<body>
+    <div id="message-container"></div>
+    <form id="send-container">
+        <input type="text" id="message-input">
+        <button type="submit" id="send-button">Send</button>
+        <!-- TODO : Mark-to-save checkbox ? -->
+    </form>
+</body>
+
+</html>

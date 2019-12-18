@@ -19,9 +19,7 @@ let upload = multer({ storage: storage });
 
 
 function setLang(req) {
-    if (req.session.id_lang == 1) {
-    } else if (req.session.id_lang == 2) {
-    } else if (req.session.id_lang != undefined) {
+    if (req.session.id_lang == 1) {} else if (req.session.id_lang == 2) {} else if (req.session.id_lang != undefined) {
         req.session.id_lang = 1;
     } else {
         req.session.id_lang = 1;
@@ -166,7 +164,7 @@ website.get("/paymentPage", function(req, res) {
 
 
 
-website.post("/ajaxRequest/stripePayment",function(req,res){
+website.post("/ajaxRequest/stripePayment", function(req, res) {
 
     const token = req.body.stripeToken; // Using Express
     let ctrlCart = new CtrlCart();
@@ -177,36 +175,44 @@ website.post("/ajaxRequest/stripePayment",function(req,res){
     let userId = (req.session.userId != undefined ? req.session.userId : 0);
     //Get all the user's infos before doing the payment
     //Calculate the sub total from the items that are in the user's cart
-    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart),userId).then(function(calcSubTotal){
-        subTotal = calcSubTotal; 
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart), userId).then(function(calcSubTotal) {
+        subTotal = calcSubTotal;
         taxes = ctrlCart.calculateTaxes(subTotal);
         total = parseFloat(subTotal) + (parseFloat(taxes.tps) + parseFloat(taxes.tvq));
 
         let userCustomAddress = req.body.userManualAddressInfos
-        //generate the metadata so that we can keep track of what the user bought and at what price
-        let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart),req.session.userId,userCustomAddress).then(function(metadata){
+            //generate the metadata so that we can keep track of what the user bought and at what price
+        let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart), req.session.userId, userCustomAddress).then(function(metadata) {
             console.log("TOTAL: ")
             console.log(total);
             console.log("METADATA")
             console.log(metadata);
-            (async () => {
-              const charge = await stripe.charges.create({
-                amount: parseInt(total * 100),
-                currency: 'cad',
-                description: 'Paiement d\'un panier',
-                source: token,
-                metadata: JSON.parse(metadata),
-              });
+            (async() => {
+                const charge = await stripe.charges.create({
+                    amount: parseInt(total * 100),
+                    currency: 'cad',
+                    description: 'Paiement d\'un panier',
+                    source: token,
+                    metadata: JSON.parse(metadata),
+                }).then(function(){
+                    res.send(true);
+                    res.end();
+                    console.log("Done!");
+                }).catch(function(){
+                    res.send(false);
+                    res.end();
+                    console.log("Erreur lors de la transaction!")
+                });
             })();
         });
 
 
-    });        
+    });
 
-    res.end();
+    
 });
 
-website.post("/ajaxRequest/getCartTaxes",function(req,res){
+website.post("/ajaxRequest/getCartTaxes", function(req, res) {
     const token = req.body.stripeToken; // Using Express
     let ctrlCart = new CtrlCart();
     let taxes;
@@ -214,8 +220,8 @@ website.post("/ajaxRequest/getCartTaxes",function(req,res){
     let userId = (req.session.userId != undefined ? req.session.userId : 0);
 
     //Calculate the sub total from the items that are in the user's cart
-    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart),userId).then(function(calcSubTotal){
-        let subTotal = calcSubTotal; 
+    ctrlCart.calculateCartSubTotal(JSON.parse(req.session.userCart), userId).then(function(calcSubTotal) {
+        let subTotal = calcSubTotal;
         taxes = JSON.stringify(ctrlCart.calculateTaxes(subTotal));
 
         res.send(taxes);
@@ -441,8 +447,8 @@ website.post("/ajaxRequest/loadCartItem", function(req, res) {
         let userId = (req.session.userId != undefined ? req.session.userId : 0);
 
         let ctrlCart = new CtrlCart();
-        
-        ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart),userId).then(function(productsArray) {
+
+        ctrlCart.loadProductsFromCart(JSON.parse(req.session.userCart), userId).then(function(productsArray) {
             res.send(productsArray);
         });
     } else {
@@ -811,7 +817,7 @@ app.post("/ajaxRequest/removeReseller", function(req, res) {
 app.post("/ajaxRequest/getResellerProduct", function(req, res) {
     let ctrlReseller = new CtrlReseller();
 
-    ctrlReseller.getProductList().then(function(result){
+    ctrlReseller.getProductList().then(function(result) {
         res.send(result);
     })
 });
@@ -820,7 +826,7 @@ app.post("/ajaxRequest/getRebateReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
     console.log(req.body);
 
-    ctrlReseller.getRebate(req.body).then(function(result){
+    ctrlReseller.getRebate(req.body).then(function(result) {
         res.send(result);
     })
 });
@@ -828,24 +834,24 @@ app.post("/ajaxRequest/getRebateReseller", function(req, res) {
 
 app.post("/ajaxRequest/updateRebateReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
-    let data= req.body;
-    let resellerId= data.resellerId;
+    let data = req.body;
+    let resellerId = data.resellerId;
     let listRebateUpdated = data.listRebate;
 
-    ctrlReseller.updateResellerRebate(listRebateUpdated,resellerId);
+    ctrlReseller.updateResellerRebate(listRebateUpdated, resellerId);
     res.send("true");
 });
 
 
 
-app.post("/ajaxRequest/getTags",function(req,res){
-		let ctrlProduct = new CtrlProduct();
+app.post("/ajaxRequest/getTags", function(req, res) {
+    let ctrlProduct = new CtrlProduct();
 
-		ctrlProduct.loadAllTags().then(function(result){});
+    ctrlProduct.loadAllTags().then(function(result) {});
 });
 
 //0 indique qu'on veut un port random non écouté (pour l'hébergement)
-var listener = website.listen(8000,(req,res)=>{
+var listener = website.listen(8000, (req, res) => {
     console.log(listener.address().port)
 });
 app.listen(5000);
