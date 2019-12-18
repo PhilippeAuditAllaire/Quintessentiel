@@ -70,7 +70,9 @@ const stripeTokenHandler = (token) => {
         userManualAddressInfos: userManualAddressInfos
       },
       success: function(response) {
-          $("#successPayment").html("<%= paymentSuccessfull =%>")
+          $("#successPayment").html(paymentSuccessfull)
+          popup("Paiement effectué avec succès!")
+          $("#payment-form").reset();
       },
       error: function(response) {
        
