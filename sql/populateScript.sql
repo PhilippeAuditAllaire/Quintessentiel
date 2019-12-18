@@ -741,10 +741,7 @@ INSERT INTO landingtext_attribute (id, type, page)
 
 
     #Ajouts dernières minutes
-    INSERT INTO 
-    landingtext_attribute 
-    VALUES 
-    (1000,'paymentSuccessfull','catalogue');
+    INSERT INTO landingtext_attribute VALUES (1000,'paymentSuccessfull','catalogue');
 
     INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
     VALUES 
