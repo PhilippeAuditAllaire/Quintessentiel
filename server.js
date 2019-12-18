@@ -194,6 +194,14 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
                     description: 'Paiement d\'un panier',
                     source: token,
                     metadata: JSON.parse(metadata),
+                }).then(function(){
+                    res.send(true);
+                    res.end();
+                    console.log("Done!");
+                }).catch(function(){
+                    res.send(false);
+                    res.end();
+                    console.log("Erreur lors de la transaction!")
                 });
             })();
         });
@@ -201,7 +209,7 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
 
     });
 
-    res.end();
+    
 });
 
 website.post("/ajaxRequest/getCartTaxes", function(req, res) {

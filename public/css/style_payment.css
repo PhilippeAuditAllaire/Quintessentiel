@@ -10,7 +10,6 @@
 
 #tabPayment{
 	display: flex;
-    flex-direction: column;
     text-align: center;
 }
 
@@ -189,9 +188,13 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 #paymentTab p{
 	text-align: center;
-	color:green;
 	font-size:22px;
 }
+
+#successPayment{
+	color:green;
+}
+
 
 .topPaymentForm{
 	display: flex;
@@ -265,6 +268,11 @@ tr:nth-child(odd) {background: #F6F6F6}
 #stripe_logo{
 	position: absolute;
 	right:10px;
+	width:100px;
+}
+
+#errorPayment{
+	color:red;
 }
 
 #tableWrapper{
@@ -277,4 +285,13 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 .infosBloc{
 	margin:10px;
+}
+
+
+@media screen and (max-width: 700px)
+{
+
+	#tabPayment{
+    	flex-direction: column;
+	}
 }

@@ -180,11 +180,12 @@
 			  <div class="tab-pane fade" id="paymentTab" role="paymentLink"> <!-- Payment form -->
 
 			  	<div class="topPaymentForm">
-			  		<img id="stripe_logo" src="./images/powered_by_stripe.png" alt="Payment powered by stripe" />
+			  		<img id="stripe_logo" src="./images/icons/powered_by_stripe.png" alt="Payment powered by stripe" />
 			  		<img src="./images/logo.png" alt="logo"/>
 			  	</div>
 			  	<div class="wrapperPaymentForm">
 				  	<p id="successPayment"></p>
+				  	<p id="errorPayment"></p>
 				  	<form action="/stripePayment" method="post" id="payment-form">
 					  <div>
 					    <label id="card-element-label" for="card-element">
