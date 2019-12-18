@@ -194,7 +194,7 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
                     description: 'Paiement d\'un panier',
                     source: token,
                     metadata: JSON.parse(metadata),
-                }).then(function(){
+                }).then(function() {
                     req.session.userCart = undefined; //reset the user's cart
                     console.log(req.session.userCart)
                     console.log("Cart")
@@ -202,7 +202,7 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
                     res.send(true);
                     res.end();
                     console.log("Done!");
-                }).catch(function(){
+                }).catch(function() {
                     res.send(false);
                     res.end();
                     console.log("Erreur lors de la transaction!")
@@ -213,7 +213,7 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
 
     });
 
-    
+
 });
 
 website.post("/ajaxRequest/getCartTaxes", function(req, res) {
