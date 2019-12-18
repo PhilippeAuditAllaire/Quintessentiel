@@ -1,6 +1,7 @@
 .slider-main {
     display: flex;
     padding-bottom: 20px;
+    max-height: 1200px;
 }
 
 .slick-dots {
@@ -11,16 +12,11 @@
 .slider-main-item {
     display: flex;
     justify-content: center;
-    padding-left: 50px;
-    
-
 }
 
 .slider-main-item-a {
     display: flex;
     justify-content: center;
-    
-    width: -webkit-fill-available;
 }
 
 .center-aligned {
@@ -57,8 +53,10 @@
 }
 
 .background-image {
-    /*max-width: 1000px;*/
-
+    height: 70vh;
+    /* For 100% screen height */
+    width: 100vw;
+    /* For 100% screen width */
 }
 
 .index-download {
@@ -68,25 +66,87 @@
 }
 
 .index-presentation {
-    padding-left: 300px;
-    padding-right: 300px;
+    padding-left: 45vh;
+    padding-right: 45vh;
     text-align: justify;
+    font-size: 20px;
 }
 
-.slider-temoignages {}
+.index-presentation-mobile {
+    padding-left: 4px!important;
+    padding-right: 4px!important;
+}
 
-.slider-temoignage-item {}
+.slider-temoignages {
+    padding-top: 12vh;
+    padding-bottom: 12vh;
+    padding-left: 65vh;
+    padding-right: 65vh;
+}
+
+.slider-temoignages-mobile {
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+}
+
+.slider-featured-item {
+    display: flex!important;
+    justify-content: center;
+}
 
 .temoignage-person {
-    font-size: 20px;
+    font-size: 25px;
     font-style: italic;
     justify-content: center;
     display: flex;
 }
 
 .temoignage-texte {
-    font-size: 12px;
+    font-size: 18px;
     word-wrap: break-word;
     justify-content: center;
     display: flex;
+    text-align: justify;
+}
+
+.c {
+    display: flex;
+    flex: 0 0 33.333333%;
+    justify-content: center;
+    align-self: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.carres {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    justify-content: center;
+}
+
+.carre {
+    position: relative;
+    display: inline-block;
+}
+
+.carre img {
+    display: block;
+    max-width: 200px;
+}
+
+.carre p {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translate(0, -50%);
+    text-align: center;
+    color: #212529;
+    background-color: #bcd13f;
+    font-weight: bold;
+}
+
+.c-mobile {
+    flex: 0 0 50%!important;
 }

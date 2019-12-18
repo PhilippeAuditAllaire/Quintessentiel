@@ -334,7 +334,7 @@ class CtrlProduct {
 
                 let ele = '<div class="slider-temoignage-item">';
                 ele += '<div class="temoignage-person">';
-                ele += product.firstName + ' ' + product.lastName;
+                ele += product.title;
                 ele += '</div>';
                 ele += '<div class="temoignage-texte">';
                 ele += product.commentTxt;
@@ -353,12 +353,11 @@ class CtrlProduct {
             let catalogue_product = [];
 
             val.forEach(function(product) {
-
-                let ele = '<div class="slider-featured-item">';
-                ele += '<div class="slider-main-item-a" onclick="sliderFeaturedClick(' + product.id + ')">';
-                ele += '<img class="slider-featured-image" src="./images/' + product.image + '" alt="' + product.image + '">';
-                ele += "</div></div>";
+                let ele = '<div onclick="sliderFeaturedClick(' + product.id + ')" class="slider-featured-item">';
+                ele += '<img src="./images/' + product.image + '" alt="' + product.image + '" class="slider-featured-image">';
+                ele += '</div>';
                 catalogue_product.push(ele);
+                console.log(ele);
             });
 
             return catalogue_product;
