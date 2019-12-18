@@ -6,23 +6,22 @@ class MgrProduct {
     }
 
     //Gets the rebate for a product
-    getProductPromo(productId){
+    getProductPromo(productId) {
         let query = "SELECT rabais FROM Promo WHERE id_product = ?";
         let param = [productId];
 
-        return this._queryEngine.executeQuery(query,param);
+        return this._queryEngine.executeQuery(query, param);
     }
 
     //gets the reseller rebate for a product
-    getResellerPromoProduct(productId,resellerId)
-    {
-        console.log("RESELLER ID: "+resellerId);
-        console.log("Product ID: "+productId);
+    getResellerPromoProduct(productId, resellerId) {
+        console.log("RESELLER ID: " + resellerId);
+        console.log("Product ID: " + productId);
 
         let query = "SELECT rebate FROM ta_reseller_products INNER JOIN Users ON users.id = ta_reseller_products.idUser WHERE IdUser = ? AND productId = ? AND Users.isReseller = 1";
-        let param = [resellerId,productId];
+        let param = [resellerId, productId];
 
-        return this._queryEngine.executeQuery(query,param);
+        return this._queryEngine.executeQuery(query, param);
     }
 
     //Loads a product name
@@ -167,7 +166,7 @@ class MgrProduct {
     }
 
     loadCommentSlider(code_lang) {
-        let query = "SELECT * FROM comment JOIN users ON users.id = comment.idUser JOIN commentstatus ON commentstatus.id = comment.idStatus WHERE commentstatus.name = 'Approved'";
+        let query = "SELECT * FROM comment";
 
         return this._queryEngine.executeQuery(query);
     }

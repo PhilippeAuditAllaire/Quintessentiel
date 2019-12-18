@@ -2,7 +2,9 @@
 <html>
 
 <head>
-    <title>Quintessentiel | <%=titleIndex%></title>
+    <title>Quintessentiel |
+        <%=titleIndex%>
+    </title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="/css/style_header.css" />
     <link rel="stylesheet" type="text/css" href="/css/style_body.css" />
@@ -21,7 +23,7 @@
                     <div class="slider-main-item-a">
                         <section class="center-aligned">
                             <img class="background-image" src="./images/slider.webp" />
-                            
+
                         </section>
                     </div>
                 </div>
@@ -29,7 +31,7 @@
                     <div class="slider-main-item-a">
                         <section class=" center-aligned">
                             <img class="background-image" src="./images/slider.webp" />
-                            
+
                         </section>
                     </div>
                 </div>
@@ -37,32 +39,84 @@
                     <div class="slider-main-item-a">
                         <section class="center-aligned">
                             <img class="background-image" src="./images/slider.webp" />
-                            
+
                         </section>
                     </div>
                 </div>
             </div>
+
+            <div class="carres">
+                <div class="c" id="carre1">
+                    <div class="carre">
+                        <img src="./images/soins_visage.webp" alt="Soins visage" class="img-carre">
+                        <p> Soins visage</p>
+                    </div>
+                </div>
+
+                <div class="c" id="carre2">
+                    <div class="carre">
+                        <img src="./images/soins_visage.webp" alt="Soins visage">
+                        <p> Soins corps</p>
+                    </div>
+                </div>
+                <div class="c" id="carre3">
+                    <div class="carre">
+                        <img src="./images/soins_visage.webp" alt="Soins visage">
+                        <p> Consultations en dermo-cosmétiques et aromathérapie</p>
+                    </div>
+                </div>
+                <div class="c" id="carre4">
+                    <div class="carre">
+                        <img src="./images/soins_visage.webp" alt="Soins visage">
+                        <p> Nos trios visage et coffrets</p>
+                    </div>
+                </div>
+                <div class="c" id="carre5">
+                    <div class="carre">
+                        <img src="./images/soins_visage.webp" alt="Soins visage">
+                        <p> Accessoires et beauté</p>
+                    </div>
+                </div>
+                <div class="c" id="carre6">
+                    <div class="carre">
+                        <img src="./images/soins_visage.webp" alt="Soins visage">
+                        <p> Aromathérapie et bien-être <br> Parfums naturels <br> Moringa</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="index-title">
                 <%=featured%>
             </div>
-            <div class="slider-featured" id="slider-featured">
-
-            </div>
-
-            <div class="index-download">
-                <a href="#" download><%=ebook%></a>
+            <div class="sliderFeatured" id="slider-featured">
+                <div onclick="sliderFeaturedClick(1)" class="slider-featured-item">
+                    <img src="./images/default.jpg" alt="" class="slider-featured-image">
+                </div>
+                <div onclick="sliderFeaturedClick(1)" class="slider-featured-item">
+                    <img src="./images/default.jpg" alt="" class="slider-featured-image">
+                </div>
+                <div onclick="sliderFeaturedClick(1)" class="slider-featured-item">
+                    <img src="./images/default.jpg" alt="" class="slider-featured-image">
+                </div>
+                <div onclick="sliderFeaturedClick(1)" class="slider-featured-item">
+                    <img src="./images/default.jpg" alt="" class="slider-featured-image">
+                </div>
+                <div onclick="sliderFeaturedClick(1)" class="slider-featured-item">
+                    <img src="./images/default.jpg" alt="" class="slider-featured-image">
+                </div>
+                <div onclick="sliderFeaturedClick(1)" class="slider-featured-item">
+                    <img src="./images/default.jpg" alt="" class="slider-featured-image">
+                </div>
             </div>
 
             <div class="index-title">
                 <%=presentationTitle%>
             </div>
-            <div class="index-presentation">
+            <div class="index-presentation" id="presentation">
                 <%=presentation%>
             </div>
 
-            <div class="index-title">
-                <%=temoignage%>
-            </div>
+
             <div class="slider-temoignages" id="slider-temoignages">
 
             </div>
@@ -76,57 +130,49 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="slick/slick.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $('.slider-main').slick({
-                    infinite: true,
-                    dots: true
-                        /*autoplay: true,
-                        autoplaySpeed: 3000,*/
-
-                });
-            });
-            let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile) {
-                $(document).ready(function() {
-                    $('.slider-featured').slick({
-                        infinite: true,
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        /* autoplay: true,
-                         autoplaySpeed: 3000,*/
-                        arrows: true
-                    });
-                });
-            } else {
-                $(document).ready(function() {
-                    $('.slider-featured').slick({
-                        infinite: true,
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
-                        arrows: true
-                    });
-                });
-            }
-            $(document).ready(function() {
-                $('.slider-temoignages').slick({
-                    infinite: true,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    dots: true
-                        /*autoplay: true,
-                        autoplaySpeed: 3000,*/
-
-                });
-            });
-
             $.ajax({
                 url: "http://localhost:8000/ajaxRequest/sliderFeature",
                 method: "POST",
 
                 success: function(response) {
-                    //console.log(response);
+                    console.log(response);
                     //alert("good");
                     $("#slider-featured").html(response);
+
+                    let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    if (isMobile) {
+                        $('.sliderFeatured').slick({
+                            infinite: true,
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            autoplay: true,
+                            autoplaySpeed: 3000
+                                /*arrows: true*/
+
+                        });
+                        let presentation = document.getElementById("presentation");
+                        presentation.classList.add("index-presentation-mobile");
+
+                        let temoignage = document.getElementById("slider-temoignages");
+                        temoignage.classList.add("slider-temoignages-mobile");
+
+                        for (let i = 0; i < 6; i++) {
+                            let temoignage = document.getElementById("carre" + (i + 1));
+                            temoignage.classList.add("c-mobile");
+                        }
+
+                    } else {
+                        console.log('fml');
+
+
+                        $('.sliderFeatured').slick({
+                            infinite: true,
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            arrows: true
+
+                        });
+                    }
 
                 },
                 error: function(response) {
@@ -143,17 +189,35 @@
                     // console.log(response);
                     //alert("good");
                     $("#slider-temoignages").html(response);
+                    $('.slider-temoignages').slick({
+                        infinite: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        arrows: false,
+                        autoplay: true,
+                        autoplaySpeed: 3000,
 
+                    });
                 },
                 error: function(response) {
                     console.log(response);
                     alert("Erreur dans l'affichage du slider featured");
                 }
             });
+            $(document).ready(function() {
+                $('.slider-main').slick({
+                    infinite: true,
+                    dots: true
+                        /*autoplay: true,
+                        autoplaySpeed: 3000,*/
 
-            function sliderMainClick(id) {
-                //console.log(id);
-            }
+                });
+            });
+
+
+            $(document).ready(function() {
+
+            });
 
             function sliderFeaturedClick(id) {
                 document.location.href = './productInfo?id=' + id;
