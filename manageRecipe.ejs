@@ -13,6 +13,177 @@
 </head>
 
 <body>
+    <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST" id="formProduct">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajout d'une recette</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="addProductSuccessAlert" class="alert alert-success fade" role="alert">
+                            Recette ajoutée avec succès!
+                        </div>
+                        <div class="addProductFields">
+                            <div class="">
+                                <div class="">
+                                    <div class="">
+                                        <label>Produit créé par la recette :</label>
+                                        <select name="" id="">
+                                            <option value="1">Produit Test A</option>
+                                        </select>
+                                    </div>
+                                    <div class="wrapper-input-label" id="wrapperDescription">
+                                        <div class="wrapper-label">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="wrapper-input">
+                                            <textarea class="form-control" id="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-input-label" id="wrapperInstructions">
+                                        <div class="wrapper-label">
+                                            <label>Instructions</label>
+                                        </div>
+                                        <div class="wrapper-input">
+                                            <textarea class="form-control" id="instru"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <p class="errorMsgForm" id="errorMsgAddCategory"></p>
+                            <div id="categoryWrapper" class="wrapper-inputLabel-productModal categoryList modal-single-wrapper">
+                                <div class="availableTags">
+                                    <div class="left-available-wrapper" id="">
+                                        <p>Catégories non-attribuées</p>
+                                        <div class="list-group categoryAvailableList" id="categoryAvailableList">
+                                            <!-- INGRÉDIENTS -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-btnChange">
+                                    <button id="categoryRightBtn" class="rightBtn">></button>
+                                    <button id="categoryLeftBtn" class="leftBtn"><</button>
+                                </div>
+                                <div class="choosenTags">
+                                    <div class="right-choosen-wrapper">
+                                        <p>Catégories attribuées</p>
+                                        <div class="list-group categoryAttributedList" id="categoryAttributedList">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="wrapper-input-label" id="wrapperVedette">
+
+                                <label><input type="checkbox"id="custom"/><span>Recette personnalisée</span></label>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="updateModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST" id="formProduct">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ajout d'une recette</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="addProductSuccessAlert" class="alert alert-success fade" role="alert">
+                            Recette ajoutée avec succès!
+                        </div>
+                        <div class="addProductFields">
+                            <div class="">
+                                <div class="">
+                                    <div class="">
+                                        <label>Produit créé par la recette :</label>
+                                        <select name="" id="">
+                                            <option value="1">Produit Test A</option>
+                                        </select>
+                                    </div>
+                                    <div class="wrapper-input-label" id="wrapperDescription">
+                                        <div class="wrapper-label">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="wrapper-input">
+                                            <textarea class="form-control" id="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper-input-label" id="wrapperInstructions">
+                                        <div class="wrapper-label">
+                                            <label>Instructions</label>
+                                        </div>
+                                        <div class="wrapper-input">
+                                            <textarea class="form-control" id="instru"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <p class="errorMsgForm" id="errorMsgAddCategory"></p>
+                            <div id="categoryWrapper" class="wrapper-inputLabel-productModal categoryList modal-single-wrapper">
+                                <div class="availableTags">
+                                    <div class="left-available-wrapper" id="">
+                                        <p>Catégories non-attribuées</p>
+                                        <div class="list-group categoryAvailableList" id="categoryAvailableList">
+                                            <!-- INGRÉDIENTS -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="wrapper-btnChange">
+                                    <button id="categoryRightBtn" class="rightBtn">></button>
+                                    <button id="categoryLeftBtn" class="leftBtn"><</button>
+                                </div>
+                                <div class="choosenTags">
+                                    <div class="right-choosen-wrapper">
+                                        <p>Catégories attribuées</p>
+                                        <div class="list-group categoryAttributedList" id="categoryAttributedList">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="wrapper-input-label" id="wrapperVedette">
+
+                                <label><input type="checkbox"id="custom"/><span>Recette personnalisée</span></label>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" id="btnSend" value="Modifier">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
 
     <%include ./includes/appNavbar.ejs%>
         <div class="recipe-header">
@@ -43,6 +214,7 @@
                             <th>Recette</th>
                             <th>Description</th>
                             <th>Instructions</th>
+                            <th>Personnalisée</th>
                         </tr>
                     </thead>
                     <tbody id="recipes">
@@ -59,26 +231,34 @@
         <script src="./javascript/tableProducts.js"></script>
         <script src="http://malsup.github.com/jquery.form.js"></script>
         <script>
+            function loading() {
+                /*
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/manageRecipe",
+                    method: "POST",
+
+                    success: function(response) {
+                        console.log(response);
+                        $('#recipes').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
+                */
+            }
+
             function openRecipe(id) {
                 console.log(id);
                 let updateModal = document.getElementById("updateModal");
                 $("#updateModal").modal();
             }
-            /*
-            $.ajax({
-                url: "http://localhost:5000/ajaxRequest/manageRecipe",
-                method: "POST",
 
-                success: function(response) {
-                    console.log(response);
-                    $('#recipes').html(response);
-                },
-                error: function(response) {
-                    console.log(response);
-                    alert("Erreur");
-                }
-            });
-            */
+            function add() {
+                let addModal = document.getElementById("addModal");
+                $("#addModal").modal();
+            }
         </script>
 </body>
 
