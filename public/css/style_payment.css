@@ -171,6 +171,7 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 #paymentTab{
 	width:50%;
+	min-width:315px;
 	margin:auto;
 	margin-top:50px;
 }
@@ -231,4 +232,16 @@ tr:nth-child(odd) {background: #F6F6F6}
 	color:#453F3F;
 	font-style: italic;
 	margin:0;
+}
+
+#tableWrapper{
+	overflow-x: scroll;
+}
+
+.infoTabTopWrapper h3{
+	text-align: center;
+}
+
+.infosBloc{
+	margin:10px;
 }

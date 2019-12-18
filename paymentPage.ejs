@@ -31,7 +31,8 @@
 			  <div class="tab-pane fade show active" id="resumeTab" role="resumeLink"> <!-- Résumé de la commande -->
 			  	<h2><%= subTitleResume %></h2>
 
-			  	<table id="tableResume" class="table-resume">
+			  	<div id="tableWrapper">
+			  		<table id="tableResume" class="table-resume">
 			  		<thead>
 			  			<tr>
 				  			<th><%= tableColCart %></th>
@@ -74,6 +75,7 @@
 			  			</tr>
 			  		</tfoot>
 			  	</table>
+			  	</div>
 
 			  	<div class="tabBtnChangeContainer">
 			  		<a href="#" id="btnToInfo" data-toggle="tab" class="btn btn-success"><%= paymentBtnEnterInfo %></a>
