@@ -148,6 +148,19 @@
 
             });
         </script>
+        <script>
+            const paymentSuccessfull = "<%= paymentSuccessfull %>";
+            
+            let paramPayment = document.location.href.split("payment");
+
+            if(paramPayment.length > 1){ //If the parameter exists
+                let success = paramPayment[1].split("=")[1]
+
+                if(success == "true"){
+                     popup(paymentSuccessfull)
+                }
+            }
+        </script>
         <!-- Bootstrap -->
 
 </body>

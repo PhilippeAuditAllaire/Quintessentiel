@@ -670,7 +670,7 @@ INSERT INTO landingtext_attribute (id, type, page)
     (152,'lblAfterRebate','paymentPage'),
     (153,'lblDeleteItem','paymentPage'),
     (154,'creditOrDebit','paymentPage'),
-    (155,'paymentSuccessfull','paymentPage');
+    (155,'paymentError','paymentPage');
 
     INSERT INTO 
     ta_landingtextattribute_language 
@@ -733,7 +733,17 @@ INSERT INTO landingtext_attribute (id, type, page)
     (153,'2','Remove'),
     (154,'1','Crédit ou débit'),
     (154,'2','Credit or Debit'),
-    (155,'1','Paiement effectué avec succès'),
-    (155,'2','Payment successfully executed'),
+    (155,'1','Erreur lors du paiement'),
+    (155,'2','Error while processing the payment'),
     (156,'1','Quintessentiel | Paiement'),
     (156,'2','Quintessentiel | Payment');
+
+
+
+    #Ajouts dernières minutes
+    INSERT INTO landingtext_attribute VALUES (1000,'paymentSuccessfull','catalogue');
+
+    INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
+    VALUES 
+        ('1000', '1', 'Paiement effectué avec succès!'), 
+        ('1000', '2', 'Payment successfull!'),
