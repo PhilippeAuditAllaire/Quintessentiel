@@ -142,7 +142,9 @@
     right: 0;
     transform: translate(0, -50%);
     text-align: center;
-    color: balck;
+    color: #212529;
+    background-color: #bcd13f;
+    font-weight: bold;
 }
 
 .c-mobile {
