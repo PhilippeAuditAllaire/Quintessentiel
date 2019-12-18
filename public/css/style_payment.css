@@ -8,6 +8,12 @@
 	color:#D6DE20!important;
 }
 
+#tabPayment{
+	display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 #resumeTab h2{
 	margin-top:50px;
 	margin-bottom:20px;
@@ -171,6 +177,7 @@ tr:nth-child(odd) {background: #F6F6F6}
 
 #paymentTab{
 	width:50%;
+	min-width:315px;
 	margin:auto;
 	margin-top:50px;
 	background-color:#F6F6F6;
@@ -258,4 +265,16 @@ tr:nth-child(odd) {background: #F6F6F6}
 #stripe_logo{
 	position: absolute;
 	right:10px;
+}
+
+#tableWrapper{
+	overflow-x: scroll;
+}
+
+.infoTabTopWrapper h3{
+	text-align: center;
+}
+
+.infosBloc{
+	margin:10px;
 }

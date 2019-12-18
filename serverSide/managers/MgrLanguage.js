@@ -1,6 +1,8 @@
 const QueryEngine = require("../scripts/QueryEngine.js");
 const Category = require("../class/Category.js");
 const CategoryInfos = require("../class/CategoryInfos.js");
+const Text = require("../class/Text.js");
+const TextInfos = require("../class/TextInfos.js");
 
 class MgrLanguage {
 
@@ -71,17 +73,17 @@ class MgrLanguage {
                 const loadAllTextInfos = async() => {
 
                     await context.asyncForEach(categories, async(cat) => { //For each categories
-
-                        let category = new Category({ id: cat.id });
+                        console.log(cat);
+                        let category = new Text({ id: cat.id, page: cat.page });
                         categoriesArray.push(category);
 
                         await context.asyncForEach(resLang, async(lang) => { //For each languages, find all their traductions
 
                             await context.loadTextAttributes(category.id, lang.id).then(function(categoryAttributes) { //Load its infos
                                 categoryAttributes = categoryAttributes[0]
-
+                                console.log(category);
                                 if (categoryAttributes != undefined) {
-                                    let traduction = new CategoryInfos(category.id, categoryAttributes.languageId, categoryAttributes.value)
+                                    let traduction = new TextInfos(category.id, categoryAttributes.languageId, categoryAttributes.value, category.page)
                                     console.log(traduction);
                                     category.traductions.push(traduction);
                                 }
