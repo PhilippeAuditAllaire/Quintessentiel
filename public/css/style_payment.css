@@ -8,6 +8,12 @@
 	color:#D6DE20!important;
 }
 
+#tabPayment{
+	display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 #resumeTab h2{
 	margin-top:50px;
 	margin-bottom:20px;
