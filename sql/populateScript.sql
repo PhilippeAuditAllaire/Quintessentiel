@@ -745,5 +745,5 @@ INSERT INTO landingtext_attribute (id, type, page)
 
     INSERT INTO ta_landingtextattribute_language (landingTextAttribute, languageId, value) 
     VALUES 
-        ('1000', '1', 'Paiement effectué avec succès!'), 
-        ('1000', '2', 'Payment successfull!'),
+        (1000, '1', 'Paiement effectué avec succès!'), 
+        (1000, '2', 'Payment successfull!');
