@@ -59,7 +59,7 @@ class MgrChat {
                     VALUES (DEFAULT,?,?,?,?,NOW())`;
 
         if(!isAdmin){
-            infos.userId = "NULL";
+            infos.userId = null;
         }
 
         let param = [infos.roomId,infos.userId,infos.message,isAdmin]

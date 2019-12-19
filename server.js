@@ -941,7 +941,15 @@ nspAdmin.on('connection', function (socket) {
     console.log("ADMIN CONNECTED")
 
     socket.on("sendMessage",(messageInfos) =>{
-        nspClient.to(messageInfos.toSocketId).emit("incomingMessage",messageInfos.message)
+        nspClient.to(messageInfos.toSocketId).emit("incomingMessage",messageInfos.message);
+
+        //Insert the message into the database
+        let ctrlChat = new CtrlChat();
+        ctrlChat.insertNewMessage({
+            roomId: messageInfos.roomId,
+            userId: 1, //CHANGE THIS ID TO THE REQ.SESSION.USERID WHEN FINISHED
+            message: messageInfos.message,
+        },true)
     });
 
 });
