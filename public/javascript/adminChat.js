@@ -121,3 +121,38 @@ function switchPane(pane)
 
 	currentRoomId = panelRoomId;
 }
+
+
+//When clicking on the submit button
+let btnSend = document.getElementById("btnSend");
+
+btnSend.addEventListener("click",() =>{
+
+	let message = document.getElementById("inputMsg").value;
+
+	//If there is something in the message box
+	if(message != "")
+	{	
+		//Get the socket to which we need to send the message
+		let socketId = getSocketIdFromRoomId(currentRoomId);
+
+		socket.emit("sendMessage",{roomId: currentRoomId,toSocketId: socketId,message: message})
+	}
+
+});
+
+
+//Gets the socket id from the given
+//room id
+function getSocketIdFromRoomId(roomId)
+{
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		//if the roomId is the same as the one the
+		//admin wants to send a message to
+		if(allConnectedClients[i].roomId == roomId)
+		{
+			return allConnectedClients[i].socketId;
+		}
+	}
+}

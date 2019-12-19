@@ -47,6 +47,10 @@ btnSendMessage.addEventListener("click",() => {
 })
 
 
+socket.on("incomingMessage",(messageInfos) =>{
+	console.log(messageInfos)
+})
+
 
 //Shows the chat panel instead of the start discussion panel
 //on the chat bar

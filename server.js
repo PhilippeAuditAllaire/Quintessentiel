@@ -939,8 +939,11 @@ nspClient.on('connection', function (socket) {
 //When the admin socket's connected
 nspAdmin.on('connection', function (socket) {
     console.log("ADMIN CONNECTED")
-    let ctrlChat = new CtrlChat();
-    ctrlChat.getAllActiveChats();
+
+    socket.on("sendMessage",(messageInfos) =>{
+        nspClient.to(messageInfos.toSocketId).emit("incomingMessage",messageInfos.message)
+    });
+
 });
 
 
