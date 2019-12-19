@@ -396,6 +396,6 @@ function deleteHTMLConversation(infos)
 //by email
 function deleteConversation(sendEmail)
 {
-	socket.emit("deleteConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "projetwebquintessentiel@gmail.com"})
+	socket.emit("deleteConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
 	$("#modalEmail").modal("hide");
 }

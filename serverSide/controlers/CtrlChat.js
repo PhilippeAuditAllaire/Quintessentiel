@@ -169,7 +169,7 @@ class CtrlChat{
 
           var mailOptions = {
             from: 'projetwebquintessentiel@gmail.com',
-            to: 'quebecoisepic@gmail.com',
+            to: emailAddress,
             subject: 'Quintessentiel | Conversation instantannée',
             html: messageHTML
           };
@@ -199,12 +199,11 @@ class CtrlChat{
         //For each message add it to the HTML
         for(let i = 0;i < infos.messages.length;i++)
         {
-            console.log(infos.messages[i]);
+
             let name;
 
             //If its an admin
             if(infos.messages[i].isAdmin == 1){
-              console.log("passe ici")
               name = `Admin`
             }
             else{ //If its a user
@@ -217,7 +216,7 @@ class CtrlChat{
 
 
         html += messagesHTML;
-        console.log(html);
+
         return html;
 
     }
