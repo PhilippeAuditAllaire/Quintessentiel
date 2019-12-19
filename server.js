@@ -895,7 +895,7 @@ nspClient.on('connection', function (socket) {
             roomId: chatRoomId,
             socketId: socket.id
         });
-
+        
         socket.emit("discussionAlreadyStarted",true);  
 
     }
