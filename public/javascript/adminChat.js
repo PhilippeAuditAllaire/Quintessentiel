@@ -1,6 +1,11 @@
 let socket = io.connect('http://localhost:8000/admin');
+let currentDiscussionUserId;
+let currentRoomId;
+
+
 
 socket.on("startDiscussion",(data) =>{
+	console.log(data)
 	addNewDiscussion(data);
 });
 
@@ -19,12 +24,18 @@ function addNewDiscussion(userInfos)
 
 	//Main wrappers
 	let li = document.createElement("li");
+	li.addEventListener("click",() =>{
+		switchPane();
+	})
+
+
 	let linkTab = document.createElement("a");
-	linkTab.href = "#chat"+userInfos.userUniqueId;
+	linkTab.href = "#chat"+userInfos.roomId;
 	linkTab.classList.add("single-contact");
 	linkTab.setAttribute("data-toggle","tab");
-	linkTab.setAttribute("data-userUniqueId",userInfos.userUniqueId);
+	linkTab.setAttribute("data-roomId",userInfos.roomId);
 	linkTab.setAttribute("data-userSocketId",userInfos.socketId);
+
 
 	
 	//First div wrapper
@@ -79,19 +90,25 @@ function addNewDiscussion(userInfos)
     contactBar.appendChild(li);
 
 
-    createMessageBox(userInfos.userUniqueId);
+    createMessageBox(userInfos.roomId);
 }
 
 //Creates the div where all the messages
 //of a discussion will be stored
-function createMessageBox(userUniqueId){
+function createMessageBox(roomId){
 
 	let rightBarBody = document.getElementById("rightBarBody");
 
 	let messageBoxWrapper = document.createElement("div");
-	messageBoxWrapper.id = "chat"+userUniqueId;
+	messageBoxWrapper.id = "chat"+roomId;
 	messageBoxWrapper.classList.add("tab-pane");
 	messageBoxWrapper.classList.add("fade");
 
 	rightBarBody.appendChild(messageBoxWrapper);
+}
+
+//Switches between a discussion to another
+function switchPane()
+{
+
 }

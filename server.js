@@ -888,33 +888,28 @@ nspClient.on('connection', function (socket) {
 
     //When receiving a start discussion event
     socket.on("startDiscussion", (data) =>{
-        let userUniqueId = uuidv4().slice(1,8);
-
-        //Give the user a unique Id
-        socket.handshake.session.chat = {
-            userUniqueId: userUniqueId
-        };
-        socket.handshake.session.save();
 
         //Take the user's socket id
         let socketId = socket.id;
 
-        //Emit the event to the admins
-        io.of("admin").emit("startDiscussion",
-        {
-            username:data.username,
-            question:data.question,
-            userUniqueId:userUniqueId,
-            socketId:socketId
-        });
 
         //Insert the discussion into the DB
         let ctrlChat = new CtrlChat();
-        ctrlChat.createNewDiscussion({username:data.username,question:data.question,userUniqueId:userUniqueId}).then(function(res){
+        ctrlChat.createNewDiscussion({username:data.username,question:data.question}).then(function(res){
             //Give the chatroom id to the socket so that it can retrieve it
             //when sending messages
-            socket.handshake.session.chat.roomId = res.insertId;
+            socket.handshake.session.chatRoomId = res.insertId;
             socket.handshake.session.save();
+
+
+            //Emit the event to the admins
+            io.of("admin").emit("startDiscussion",
+            {
+                username:data.username,
+                roomId: res.insertId,
+                question:data.question,
+                socketId:socketId
+            });
         });
 
     });
@@ -922,19 +917,17 @@ nspClient.on('connection', function (socket) {
 
     //When receiving a sendMessage event
     socket.on("sendMessage", (message) =>{
-        let userUniqueId = socket.handshake.session.chat.userUniqueId;
-        let roomId = socket.handshake.session.chat.roomId;
+        let roomId = socket.handshake.session.chatRoomId;
 
         //Emit the even to the admins
         io.of("admin").emit("incomingMessage",{
-            userUniqueId: userUniqueId,
+            chatRoomId: roomId,
             message: message.message
         });
 
         //Insert the message into the database
         let ctrlChat = new CtrlChat();
         ctrlChat.insertNewMessage({
-            userId: userUniqueId,
             roomId: roomId,
             message: message.message,
         },false)

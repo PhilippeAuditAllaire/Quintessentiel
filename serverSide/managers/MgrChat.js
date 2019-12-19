@@ -15,10 +15,9 @@ class MgrChat {
     createNewDiscussion(discussionInfos)
     {
         let query = `INSERT INTO chatroom 
-                    (id,idUser,username,question,isActive)
-                    VALUES (DEFAULT,?,?,?,true)`;
+                    (id,username,question,isActive)
+                    VALUES (DEFAULT,?,?,true)`;
         let param = [
-                        discussionInfos.userUniqueId,
                         discussionInfos.username,
                         discussionInfos.question
                     ];
@@ -58,6 +57,11 @@ class MgrChat {
         let query = `INSERT INTO chatroommessage
                     (id,idChatRoom,idSender,message,isAdmin,dhMsg)
                     VALUES (DEFAULT,?,?,?,?,NOW())`;
+
+        if(!isAdmin){
+            infos.userId = "NULL";
+        }
+
         let param = [infos.roomId,infos.userId,infos.message,isAdmin]
 
 
