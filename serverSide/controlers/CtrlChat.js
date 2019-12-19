@@ -66,37 +66,49 @@ class CtrlChat{
 
     }
 
+    //Gets all the active rooms and
+    //gets all of their informations and
+    //messages
+    //@Return a promise that returns a 
+    //formatted object
+    getAllActiveRoomsAndInfos()
+    {
+      let context = this;
+      let allPromisesRoomInfo = [];
+      let adminRoomsObj = {
+        rooms: []
+      };
+
+      return this.getAllActiveChats().then(function(allChats){
+
+          //Push all the load all infos about rooms promises in 
+          //an array
+          for(let i = 0;i < allChats.length;i++)
+          {
+            allPromisesRoomInfo.push(context.getAllRoomInformations(allChats[i].id))
+          }
+
+          //Execute all the promises at once
+          return Promise.all(allPromisesRoomInfo).then(function(roomInfos){
+              
+              //Put all the infos in the rooms object
+              for(let i = 0;i < allChats.length;i++)
+              {
+                adminRoomsObj.rooms.push(roomInfos[i]);
+              }
+
+              return adminRoomsObj;
+
+          });
+      });
+    }
+
     //Gets all the chats that are still
     //active and loads each of their messages
     getAllActiveChats()
     {
-
-      let context = this;
-
       //Load all the active chat rooms
-      return this._mgrChat.getAllActiveChats().then((chatRooms) => {
-          
-          //Create the room object
-          let roomObj = chatRooms;
-          roomObj.allMessages = {};
-
-
-          if(chatRooms.length > 0) //There is currently at least one active chat room
-          {
-            console.log(chatRooms)
-            let allRequestsMessages = [];
-
-            //Put all the promises to load the messages in the array
-            chatRooms.forEach((room)=>{
-                allRequestsMessages.push(context._mgrChat.getChatRoomMessages(room.id));
-            });
-
-            return Promise.all(allRequestsMessages,(messages) =>{
-              console.log(messages)
-            })
-
-          }
-      });
+      return this._mgrChat.getAllActiveChats();
     }
 
     //Inserts a message in the database

@@ -21,6 +21,9 @@ socket.on("updateSocketId", (infos) => {
 	updateSocketIdByRoom(infos.roomId,infos.socketId)
 })
 
+socket.on("discussionAlreadyStarted", (infos) => {
+	console.log(infos);
+})
 
 //Adds a new discussion to the left
 //list

@@ -53,13 +53,13 @@ socket.on("incomingMessage",(messageInfos) =>{
 	console.log(messageInfos)
 })
 
-socket.on("discussionAlreadyStarted",(isStarted) =>{
+socket.on("discussionAlreadyStarted",(informations) =>{
 
-	if(isStarted){
-		console.log("Le client est déjà en discussion!");
-		showChatBodyDiscussion();
-		toggleChatWindow();
-	}
+	console.log("Le client est déjà en discussion!");
+	showChatBodyDiscussion();
+	toggleChatWindow();
+	console.log(informations)
+
 
 })
 

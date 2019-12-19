@@ -889,14 +889,7 @@ nspClient.on('connection', function (socket) {
 
     //If the user is already in a chat room
     if(chatRoomId != undefined){
-        console.log("Déjà connecté! Voici les messages")
-
         let ctrlChat = new CtrlChat();
-
-        //Load all the messages from the room
-        ctrlChat.getAllRoomInformations(chatRoomId).then(function(messages){
-            console.log(messages)
-        })
 
         //Emit the new socketID to the admins
         io.of("admin").emit("updateSocketId",
@@ -905,8 +898,12 @@ nspClient.on('connection', function (socket) {
             socketId: socket.id
         });
         
-        socket.emit("discussionAlreadyStarted",true);  
 
+        //Load all the informations and messages from the room the user is in
+        //and emits it to him (so the chat can keep up through the pages)
+        ctrlChat.getAllRoomInformations(chatRoomId).then(function(infos){
+            socket.emit("discussionAlreadyStarted",infos);  
+        })
     }
 
 
@@ -962,7 +959,15 @@ nspClient.on('connection', function (socket) {
 
 //When the admin socket's connected
 nspAdmin.on('connection', function (socket) {
-    console.log("ADMIN CONNECTED")
+    
+    let ctrlChat = new CtrlChat();
+    //Loads all the room that are still active along with all of their
+    //informations
+    ctrlChat.getAllActiveRoomsAndInfos().then(function(infos){
+        console.log(infos)
+        socket.emit("discussionAlreadyStarted",infos);  
+    })
+
 
     socket.on("sendMessage",(messageInfos) =>{
         nspClient.to(messageInfos.toSocketId).emit("incomingMessage",messageInfos.message);
