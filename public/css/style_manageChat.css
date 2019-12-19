@@ -239,9 +239,16 @@
     top:0;
     background-color:#e0e0e0;
     text-align: center;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: flex-end;
+    opacity: 0;
+}
+
+
+.eventBanner.showBanner{
+    transition-duration:0.7s;
+    opacity: 1;
 }
 
 @media screen and (min-width:800px) and (max-height:700px) {

@@ -64,8 +64,10 @@ class CtrlChat{
             username: info.username,
             question: info.question,
             socketId: info.socketId,
+            isActive: info.isActive,
             messages: []
           };
+
 
           for(let i = 0;i < messages.length;i++)
           {

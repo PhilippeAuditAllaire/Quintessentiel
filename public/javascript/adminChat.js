@@ -8,6 +8,8 @@ let allConnectedClients = [];
 
 socket.on("startDiscussion",(data) =>{
 	console.log(data)
+	data.isActive = 1;
+
 	addNewDiscussion(data);
 });
 
@@ -19,8 +21,6 @@ socket.on("incomingMessage",(message) =>{
 let test;
 
 socket.on("updateSocketId", (infos) => {
-	console.log("Updating the socket id")
-	console.log(infos);
 
 	updateSocketIdByRoom(infos.roomId,infos.socketId)
 })
@@ -31,8 +31,6 @@ socket.on("discussionAlreadyStarted", (infos) => {
 })
 
 socket.on("userDisconnected", (infos) => {
-	console.log("Un utilisateur s'est déconnecté!")
-	console.log(infos);
 	userDisconnected(infos);
 })
 
@@ -81,10 +79,20 @@ function addNewDiscussion(userInfos)
 	let pActivity = document.createElement("p");
 	let spanActivity = document.createElement("span");
 	spanActivity.classList.add("contact-active");
-	spanActivity.classList.add("contact-ok");
+	
 
 	pActivity.innerHTML = "État: ";
-	spanActivity.innerHTML = "Actif"
+
+	//If the room is currently active
+	if(userInfos.isActive){
+		spanActivity.innerHTML = "Actif"
+		spanActivity.classList.add("contact-ok");
+	}
+	else{
+		spanActivity.innerHTML = "Déconnecté"
+		spanActivity.classList.add("contact-not");
+	}
+	
 	pActivity.appendChild(spanActivity);
 
 
@@ -108,7 +116,7 @@ function addNewDiscussion(userInfos)
     contactBar.appendChild(li);
 
 
-    createMessageBox(userInfos.roomId);
+    createMessageBox(userInfos.roomId,userInfos.isActive);
 
 
     allConnectedClients.push({
@@ -120,7 +128,7 @@ function addNewDiscussion(userInfos)
 
 //Creates the div where all the messages
 //of a discussion will be stored
-function createMessageBox(roomId){
+function createMessageBox(roomId,isActive){
 
 	let rightBarBody = document.getElementById("rightBarBody");
 
@@ -131,6 +139,11 @@ function createMessageBox(roomId){
 
 	let eventBanner = document.createElement("div");
 	eventBanner.classList.add("eventBanner");
+	eventBanner.innerHTML = "L'utilisateur s'est déconnecté!"
+	//If the user isnt active
+	if(!isActive){
+		eventBanner.classList.add("showBanner")
+	}
 
 	messageBoxWrapper.appendChild(eventBanner);
 	rightBarBody.appendChild(messageBoxWrapper);
@@ -210,7 +223,8 @@ function displayAllRoomsAndMessages(allRoomAndMessagesInfos)
 			roomId: allRoomAndMessagesInfos.rooms[i].roomId,
 			username: allRoomAndMessagesInfos.rooms[i].username,
 			question: allRoomAndMessagesInfos.rooms[i].question,
-			socketId: allRoomAndMessagesInfos.rooms[i].socketId
+			socketId: allRoomAndMessagesInfos.rooms[i].socketId,
+			isActive: allRoomAndMessagesInfos.rooms[i].isActive
 		})
 
 		//Display the messages in the room
@@ -322,6 +336,5 @@ function showUserDisconnectedBanner(roomId)
 {
 	let userPanel = document.getElementById("chat"+roomId);
 	let banner = userPanel.getElementsByClassName("eventBanner")[0];
-	banner.innerHTML = "L'utilisateur s'est déconnecté!";
-	banner.style.display = "flex";
+	banner.classList.add("showBanner")
 }
