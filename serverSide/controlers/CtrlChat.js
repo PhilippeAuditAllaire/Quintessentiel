@@ -16,6 +16,16 @@ class CtrlChat{
         return this._mgrChat.createNewDiscussion(discussionInfos);
     }
 
+    //Updates the client's socket id
+    //@roomId is the id of the room from which
+    //to update the socketId
+    //@newSocketId is the new socket Id that'll replace
+    //the older one
+    updateSocketId(roomId,newSocketId)
+    {
+      return this._mgrChat.updateSocketId(roomId,newSocketId);
+    }
+
 
     //Loads all the messages from a
     //given room Id
@@ -51,7 +61,9 @@ class CtrlChat{
           //Format everything into objects
           let objRoom = {
             roomId: roomId,
+            username: info.username,
             question: info.question,
+            socketId: info.socketId,
             messages: []
           };
 

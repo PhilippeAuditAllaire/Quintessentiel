@@ -16,13 +16,18 @@ socket.on("incomingMessage",(message) =>{
 	console.log(message)
 });
 
+let test;
+
 socket.on("updateSocketId", (infos) => {
+	console.log("Updating the socket id")
 	console.log(infos);
+
 	updateSocketIdByRoom(infos.roomId,infos.socketId)
 })
 
 socket.on("discussionAlreadyStarted", (infos) => {
-	console.log(infos);
+	test= infos
+	displayAllRoomsAndMessages(infos);
 })
 
 //Adds a new discussion to the left
@@ -38,7 +43,6 @@ function addNewDiscussion(userInfos)
 	linkTab.classList.add("single-contact");
 	linkTab.setAttribute("data-toggle","tab");
 	linkTab.setAttribute("data-roomId",userInfos.roomId);
-	linkTab.setAttribute("data-userSocketId",userInfos.socketId);
 	linkTab.addEventListener("click",(e) =>{
 		switchPane(e.target);
 	})
@@ -181,4 +185,28 @@ function updateSocketIdByRoom(roomId,newSocketId)
 			return;
 		}
 	}
+}
+
+//Displays all the rooms and the messages
+function displayAllRoomsAndMessages(allRoomAndMessagesInfos)
+{
+
+	for(let i = 0;i < allRoomAndMessagesInfos.rooms.length;i++)
+	{	
+		addNewDiscussion({
+			roomId: allRoomAndMessagesInfos.rooms[i].roomId,
+			username: allRoomAndMessagesInfos.rooms[i].username,
+			question: allRoomAndMessagesInfos.rooms[i].question,
+			socketId: allRoomAndMessagesInfos.rooms[i].socketId
+		})
+		
+	}
+}
+
+
+//Adds a new message to a pane
+function addNewMessage(roomId,messageObj)
+{
+	let messageBoxPane = document.getElementById("chat"+roomId);
+	console.log(messageBoxPane);
 }

@@ -15,12 +15,29 @@ class MgrChat {
     createNewDiscussion(discussionInfos)
     {
         let query = `INSERT INTO chatroom 
-                    (id,username,question,isActive)
-                    VALUES (DEFAULT,?,?,true)`;
+                    (id,username,question,socketId,isActive)
+                    VALUES (DEFAULT,?,?,?,true)`;
         let param = [
                         discussionInfos.username,
-                        discussionInfos.question
+                        discussionInfos.question,
+                        discussionInfos.socketId
                     ];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Updates the socket id from a room
+    //@roomId is the room to update the
+    //socket id from
+    //@newSocketId is the new socketId that
+    //will replace the older one
+    updateSocketId(roomId,newSocketId)
+    {
+        let query = `UPDATE chatroom
+                     SET socketId = ? WHERE
+                     id = ?`;
+        let param = [newSocketId,roomId];
+
         return this._queryEngine.executeQuery(query,param);
     }
 

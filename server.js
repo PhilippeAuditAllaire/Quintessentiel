@@ -898,6 +898,8 @@ nspClient.on('connection', function (socket) {
             socketId: socket.id
         });
         
+        //Updates the socketId in the DB
+        ctrlChat.updateSocketId(chatRoomId,socket.id);
 
         //Load all the informations and messages from the room the user is in
         //and emits it to him (so the chat can keep up through the pages)
@@ -916,7 +918,7 @@ nspClient.on('connection', function (socket) {
 
         //Insert the discussion into the DB
         let ctrlChat = new CtrlChat();
-        ctrlChat.createNewDiscussion({username:data.username,question:data.question}).then(function(res){
+        ctrlChat.createNewDiscussion({username:data.username,question:data.question,socketId:socketId}).then(function(res){
             //Give the chatroom id to the socket so that it can retrieve it
             //when sending messages
             socket.handshake.session.chatRoomId = res.insertId;
