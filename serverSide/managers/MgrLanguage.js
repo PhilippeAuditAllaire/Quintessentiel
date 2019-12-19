@@ -73,7 +73,7 @@ class MgrLanguage {
                 const loadAllTextInfos = async() => {
 
                     await context.asyncForEach(categories, async(cat) => { //For each categories
-                        console.log(cat);
+
                         let category = new Text({ id: cat.id, page: cat.page });
                         categoriesArray.push(category);
 
@@ -81,10 +81,10 @@ class MgrLanguage {
 
                             await context.loadTextAttributes(category.id, lang.id).then(function(categoryAttributes) { //Load its infos
                                 categoryAttributes = categoryAttributes[0]
-                                console.log(category);
+                     
                                 if (categoryAttributes != undefined) {
                                     let traduction = new TextInfos(category.id, categoryAttributes.languageId, categoryAttributes.value, category.page)
-                                    console.log(traduction);
+      
                                     category.traductions.push(traduction);
                                 }
 
@@ -115,7 +115,7 @@ class MgrLanguage {
         let t;
         return this._queryEngine.executeQuery(query, param).then(function(res) {
             res.forEach(function(text) {
-                console.log(text);
+
                 t = text.value;
             })
             return t;
@@ -142,9 +142,9 @@ class MgrLanguage {
         const addTranslations = async() => {
 
             await context.asyncForEach(translations, async(transl) => {
-                console.log(transl);
+
                 await context.update(transl.idLang, id, transl.name).then(function(res) {
-                    console.log(res);
+      
                 });
 
             })

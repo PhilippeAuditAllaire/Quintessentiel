@@ -8,7 +8,7 @@ const session = require("express-session")({
 const ejs = require("ejs");
 const multer = require("multer");
 const stripe = require('stripe')('sk_test_IHvUqWlOZpF6fpSXlX9k119n00Cf1LJM5v');
-
+const uuidv4 = require('uuid/v4');
 
 const sharedsession = require("express-socket.io-session");
 
@@ -101,7 +101,7 @@ website.get("/userConnection", function(req, res) {
     setLang(req);
 
     mgr.getTextByPage("userConnection", req.session.id_lang).then(function(resultat) {
-        console.log(resultat)
+  
         res.render("userConnection.ejs", JSON.parse(resultat));
     });
 });
@@ -195,10 +195,7 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
         let userCustomAddress = req.body.userManualAddressInfos
             //generate the metadata so that we can keep track of what the user bought and at what price
         let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart), req.session.userId, userCustomAddress).then(function(metadata) {
-            console.log("TOTAL: ")
-            console.log(total);
-            console.log("METADATA")
-            console.log(metadata);
+ 
             (async() => {
                 const charge = await stripe.charges.create({
                     amount: parseInt(total * 100),
@@ -208,16 +205,14 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
                     metadata: JSON.parse(metadata),
                 }).then(function(){
                     req.session.userCart = undefined; //reset the user's cart
-                    console.log(req.session.userCart)
-                    console.log("Cart")
-                    console.log(req.session.userCart)
+ 
                     res.send(true);
                     res.end();
-                    console.log("Done!");
+           
                 }).catch(function(){
                     res.send(false);
                     res.end();
-                    console.log("Erreur lors de la transaction!")
+                
                 });
             })();
         });
@@ -840,7 +835,7 @@ app.post("/ajaxRequest/getResellerProduct", function(req, res) {
 
 app.post("/ajaxRequest/getRebateReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
-    console.log(req.body);
+
 
     ctrlReseller.getRebate(req.body).then(function(result) {
         res.send(result);
@@ -874,5 +869,53 @@ app.listen(5000);
 /*
     Socket.io chat starts from here
 */
+
+const nspAdmin = io.of('/admin');
+const nspClient = io.of('/client');
+
+//Shares the session used with express-session
+//to the sockets
+io.of("/client").use(sharedsession(session, {
+    autoSave:true
+})); 
+
+
+//When the client socket's connected
+nspClient.on('connection', function (socket) {
+
+    console.log("Connected!")
+
+    //When receiving a start discussion event
+    socket.on("startDiscussion", (data) =>{
+        let userUniqueId = uuidv4().slice(1,8);
+        console.log(data)
+        //Give the user a unique Id
+        socket.handshake.session.chat = {
+            userUniqueId: userUniqueId
+        };
+
+        //Take the user's socket id
+        let socketId = socket.id;
+
+        //Emit the event to the admin
+        io.of("admin").emit("startDiscussion",
+        {
+            username:data.username,
+            question:data.question,
+            userUniqueId:userUniqueId,
+            socketId:socketId
+        });
+
+    })
+
+});
+
+//When the admin socket's connected
+nspAdmin.on('connection', function (socket) {
+    console.log("ADMIN CONNECTED")
+
+});
+
+
 
 server.listen(8000);
