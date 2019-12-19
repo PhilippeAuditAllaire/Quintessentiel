@@ -338,3 +338,22 @@ function showUserDisconnectedBanner(roomId)
 	let banner = userPanel.getElementsByClassName("eventBanner")[0];
 	banner.classList.add("showBanner")
 }
+
+
+let btnCloseConverstation = document.getElementById("btnCloseConverstation");
+
+btnCloseConverstation.addEventListener("click",() =>{
+	console.log("closing it!")
+	let roomToClose = currentRoomId;
+	let modalEmail = document.getElementById("modalEmail");
+
+	$(modalEmail).modal()
+})
+
+
+//Deletes the conversation and sends a copy 
+//by email
+function deleteConversation(sendEmail)
+{
+	socket.emit("deleteConversation",{roomId:currentRoomId,sendEmail:sendEmail,sendToEmail: "projetwebquintessentiel@gmail.com"})
+}

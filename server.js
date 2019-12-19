@@ -1046,6 +1046,20 @@ nspAdmin.on('connection', function (socket) {
         },true)
     });
 
+    //Deletes the converstaion and can send it by email 
+    socket.on("deleteConversation",(param) =>{
+
+        let ctrlChat = new CtrlChat();
+
+        //If the admin wants it by email
+        if(param.sendEmail)
+        {
+
+        }
+
+        ctrlChat.deleteConversation(param.roomId);
+    });
+
 });
 
 

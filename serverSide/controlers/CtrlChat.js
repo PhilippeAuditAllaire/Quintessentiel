@@ -143,6 +143,14 @@ class CtrlChat{
     }
 
 
+    //Deletes the conversation from
+    //the database
+    deleteConversation(roomId)
+    {
+      return this._mgrChat.deleteConversation(roomId);
+    }
+
+
 }
 
 module.exports = CtrlChat;

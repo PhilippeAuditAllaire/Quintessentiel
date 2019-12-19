@@ -88,8 +88,28 @@ class MgrChat {
         return this._queryEngine.executeQuery(query,param);
     }
 
+    //Deletes a conversation from
+    //the database
+    //@roomId is the id of the conversation
+    //to remove
+    deleteConversation(roomId)
+    {
+        let queryMsg = "DELETE FROM chatroommessage WHERE idChatRoom = ?";
+        let queryRoom = "DELETE FROM chatroom WHERE id = ?";
 
+        let paramMsg = [roomId];
+        let paramRoom = [roomId];
 
+        let context = this;
+
+        //Delete the messages
+        return this._queryEngine.executeQuery(queryMsg,paramMsg).then(function(res){
+
+            //Delete the room
+            return context._queryEngine.executeQuery(queryRoom,paramRoom);
+
+        })
+    }
 
     //Inserts a new message in the database
     //related to a room
