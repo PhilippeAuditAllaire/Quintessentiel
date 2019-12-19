@@ -885,6 +885,19 @@ io.of("/client").use(sharedsession(session, {
 //When the client socket's connected
 nspClient.on('connection', function (socket) {
 
+    let chatRoomId = socket.handshake.session.chatRoomId;
+
+    //If the user is already in a chat room
+    if(chatRoomId != undefined){
+        //Emit the new socketID to the admins
+        io.of("admin").emit("updateSocketId",
+        {
+            roomId: chatRoomId,
+            socketId: socket.id
+        });  
+
+    }
+
 
     //When receiving a start discussion event
     socket.on("startDiscussion", (data) =>{

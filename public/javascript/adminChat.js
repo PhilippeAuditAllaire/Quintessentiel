@@ -16,6 +16,10 @@ socket.on("incomingMessage",(message) =>{
 	console.log(message)
 });
 
+socket.on("updateSocketId", (infos) => {
+	console.log(infos);
+	updateSocketIdByRoom(infos.roomId,infos.socketId)
+})
 
 
 //Adds a new discussion to the left
@@ -153,6 +157,25 @@ function getSocketIdFromRoomId(roomId)
 		if(allConnectedClients[i].roomId == roomId)
 		{
 			return allConnectedClients[i].socketId;
+		}
+	}
+}
+
+//Updates the socket id of a room by finding it 
+//into the all Connected Clients list
+//@roomId is the id of the room to look for
+//@newSocketId is the socketId that will replace
+//the older one
+function updateSocketIdByRoom(roomId,newSocketId)
+{
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		//if the roomId is the same as the one the
+		//admin wants to send a message to
+		if(allConnectedClients[i].roomId == roomId)
+		{
+			allConnectedClients[i].socketId = newSocketId;
+			return;
 		}
 	}
 }
