@@ -889,6 +889,15 @@ nspClient.on('connection', function (socket) {
 
     //If the user is already in a chat room
     if(chatRoomId != undefined){
+        console.log("Déjà connecté! Voici les messages")
+
+        let ctrlChat = new CtrlChat();
+
+        //Load all the messages from the room
+        ctrlChat.getAllRoomInformations(chatRoomId).then(function(messages){
+            console.log(messages)
+        })
+
         //Emit the new socketID to the admins
         io.of("admin").emit("updateSocketId",
         {

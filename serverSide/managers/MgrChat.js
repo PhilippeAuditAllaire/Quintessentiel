@@ -45,6 +45,20 @@ class MgrChat {
         return this._queryEngine.executeQuery(query,param);
     }
 
+    //Gets all the informations about the
+    //given chatroomId
+    //@chatroomId is the room from which to load
+    //the infos
+    getRoomInfos(chatroomId)
+    {
+        let query = "SELECT * FROM chatroom WHERE id = ?";
+        let param = [chatroomId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+
+
 
     //Inserts a new message in the database
     //related to a room

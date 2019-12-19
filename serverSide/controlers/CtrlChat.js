@@ -17,6 +17,55 @@ class CtrlChat{
     }
 
 
+    //Loads all the messages from a
+    //given room Id
+    //@roomId is the id of the room in from which
+    //we want to load the messages from
+    getMessagesFromRoom(roomId)
+    {
+      return this._mgrChat.getChatRoomMessages(roomId);
+    }
+
+    //Loads the informations about a given
+    //room
+    //@roomId is the id of the room
+    //to load the infos from
+    getRoomInfos(roomId)
+    {
+      return this._mgrChat.getRoomInfos(roomId);
+    }
+
+    //Gets all the informations about a room, 
+    //including the messages
+    //@roomId is the id of the room to load all the
+    //infos from
+    //@Returns the formatted informations
+    getAllRoomInformations(roomId)
+    {
+      //Load all the infos and messages related to the roomId
+      return Promise.all([this.getRoomInfos(roomId),this.getMessagesFromRoom(roomId)]).then((infos) =>{
+         
+          let info = infos[0][0];
+          let messages = infos[1];
+
+          //Format everything into objects
+          let objRoom = {
+            roomId: roomId,
+            question: info.question,
+            messages: []
+          };
+
+          for(let i = 0;i < messages.length;i++)
+          {
+            objRoom.messages.push({isAdmin:messages[i].isAdmin,message:messages[i].message})
+          }
+
+          return objRoom;
+
+        });
+
+    }
+
     //Gets all the chats that are still
     //active and loads each of their messages
     getAllActiveChats()
