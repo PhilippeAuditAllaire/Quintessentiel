@@ -217,6 +217,7 @@ function displayAllRoomsAndMessages(allRoomAndMessagesInfos)
 //the incoming message
 function insertIncomingMessage(msgInfos)
 {
+	console.log(msgInfos)
 	let username;
 
 	//Look for the client's username
@@ -228,7 +229,7 @@ function insertIncomingMessage(msgInfos)
 		}
 	}
 
-	addNewMessage(username,msgInfos.chatRoomId,{isAdmin:0,message:msgInfos.message})
+	addNewMessage(username,msgInfos.chatRoomId,{isAdmin:msgInfos.isAdmin,message:msgInfos.message})
 }
 
 //Adds a new message to a pane

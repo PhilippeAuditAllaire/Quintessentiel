@@ -945,7 +945,8 @@ nspClient.on('connection', function (socket) {
         //Emit the even to the admins
         io.of("admin").emit("incomingMessage",{
             chatRoomId: roomId,
-            message: message.message
+            message: message.message,
+            isAdmin: false
         });
 
         //Insert the message into the database
@@ -972,7 +973,17 @@ nspAdmin.on('connection', function (socket) {
 
 
     socket.on("sendMessage",(messageInfos) =>{
+
+        //Send the message to the client
         nspClient.to(messageInfos.toSocketId).emit("incomingMessage",messageInfos.message);
+
+        //Emits the mesage to the admins
+        io.of("admin").emit("incomingMessage",{
+            chatRoomId: messageInfos.roomId,
+            message: messageInfos.message,
+            isAdmin: true
+        });
+
 
         //Insert the message into the database
         let ctrlChat = new CtrlChat();
