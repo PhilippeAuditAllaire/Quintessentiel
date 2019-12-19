@@ -949,6 +949,12 @@ nspClient.on('connection', function (socket) {
             isAdmin: false
         });
 
+        //Emits the event to himself
+        socket.emit("incomingMessage",{
+            message: message.message,
+            isAdmin: false
+        })
+
         //Insert the message into the database
         let ctrlChat = new CtrlChat();
         ctrlChat.insertNewMessage({
@@ -967,7 +973,6 @@ nspAdmin.on('connection', function (socket) {
     //Loads all the room that are still active along with all of their
     //informations
     ctrlChat.getAllActiveRoomsAndInfos().then(function(infos){
-        console.log(infos)
         socket.emit("discussionAlreadyStarted",infos);  
     })
 
@@ -975,7 +980,10 @@ nspAdmin.on('connection', function (socket) {
     socket.on("sendMessage",(messageInfos) =>{
 
         //Send the message to the client
-        nspClient.to(messageInfos.toSocketId).emit("incomingMessage",messageInfos.message);
+        nspClient.to(messageInfos.toSocketId).emit("incomingMessage",{
+            message: messageInfos.message,
+            isAdmin: true
+        });
 
         //Emits the mesage to the admins
         io.of("admin").emit("incomingMessage",{

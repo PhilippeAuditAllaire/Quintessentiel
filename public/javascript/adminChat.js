@@ -217,7 +217,6 @@ function displayAllRoomsAndMessages(allRoomAndMessagesInfos)
 //the incoming message
 function insertIncomingMessage(msgInfos)
 {
-	console.log(msgInfos)
 	let username;
 
 	//Look for the client's username

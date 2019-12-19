@@ -50,19 +50,64 @@ btnSendMessage.addEventListener("click",() => {
 
 
 socket.on("incomingMessage",(messageInfos) =>{
+	console.log("incomingMessage!")
 	console.log(messageInfos)
-})
+	displayMessage(messageInfos.message,messageInfos.isAdmin)
+});
 
 socket.on("discussionAlreadyStarted",(informations) =>{
-
-	console.log("Le client est déjà en discussion!");
 	showChatBodyDiscussion();
 	toggleChatWindow();
-	console.log(informations)
-
-
+	addAllInformations(informations);
 })
 
+//Adds the given informations to the chat window
+function addAllInformations(informations)
+{
+	for(let i = 0;i < informations.messages.length;i++)
+	{
+		let message = informations.messages[i];
+		displayMessage(message.message,message.isAdmin);
+	}
+}
+
+//Displays a message in the chat window
+function displayMessage(message,isAdmin)
+{
+	let chatWindow = document.getElementById("chatMessageBox");
+
+	let divSingleMsg = document.createElement("div");
+	divSingleMsg.classList.add("wrapperSingleMessage");
+	
+
+	let msgWrapper = document.createElement("div");
+	msgWrapper.classList.add("messageWrapper");
+
+	let pUsername = document.createElement("p");
+	pUsername.classList.add("msgUserName");
+
+	//If the message comes from an admin
+	if(isAdmin){
+		pUsername.innerHTML = "Admin"
+		divSingleMsg.classList.add("wrapperMsgAdmin");
+	}
+	else{ //If the message comes from the user himself
+		pUsername.innerHTML = "Vous"
+		divSingleMsg.classList.add("wrapperMsgClient");
+	}
+
+
+	let pMessage = document.createElement("p");
+	pMessage.classList.add("msgUserText");
+	pMessage.innerHTML = message;
+
+	msgWrapper.appendChild(pUsername);
+	msgWrapper.appendChild(pMessage);
+
+	divSingleMsg.appendChild(msgWrapper);
+
+	chatWindow.appendChild(divSingleMsg);
+}
 
 //Shows the chat panel instead of the start discussion panel
 //on the chat bar

@@ -281,7 +281,6 @@
         </div>
         <div id="chatBodyDiscussion">
             <div id="chatMessageBox" class="chat-messageBox">
-               
             </div>
             <div class="chat-labelInput-wrapper">
                 <textarea class="form-control" id="sendMessage"></textarea>
@@ -302,6 +301,10 @@
         margin-right:20px;
         font-size:20px;
         text-align: center;
+    }
+
+    #chatMessageBox{
+        overflow-y: scroll;
     }
 
     #clientChat.opened #chatBody{
@@ -350,6 +353,59 @@
 
     #btnChatSendMessage{
         margin-top:15px;
+    }
+
+
+    .wrapperSingleMessage {
+        display: flex;
+        margin-top: 15px;
+    }
+
+    .wrapperMsgAdmin {
+        justify-content: flex-start;
+    }
+
+    .wrapperMsgClient .msgUserText {
+        background-color: lightgrey;
+
+    }
+
+    .wrapperMsgClient {
+        justify-content: flex-end;
+    }
+
+    .messageWrapper {
+        width: 70%;
+    }
+
+    .wrapperMsgAdmin {
+        padding-left: 5%;
+    }
+
+    .wrapperMsgClient {
+        padding-right: 5%;
+    }
+
+    .msgUserName {
+        position: relative;
+        left: 10px;
+        color: gray;
+        font-style: italic;
+    }
+
+    .msgUserText {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #BBD23D;
+    }
+
+    .messageWrapper p {
+        margin: 0;
+    }
+
+
+    .wrapperMsgClient,.wrapperMsgAdmin{
+        text-align: left;
     }
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
