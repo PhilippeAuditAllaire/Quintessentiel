@@ -1,7 +1,9 @@
 let socket = io.connect('http://localhost:8000/admin');
-let currentDiscussionUserId;
+
 let currentRoomId;
 
+
+let allConnectedClients = [];
 
 
 socket.on("startDiscussion",(data) =>{
@@ -24,17 +26,15 @@ function addNewDiscussion(userInfos)
 
 	//Main wrappers
 	let li = document.createElement("li");
-	li.addEventListener("click",() =>{
-		switchPane();
-	})
-
-
 	let linkTab = document.createElement("a");
 	linkTab.href = "#chat"+userInfos.roomId;
 	linkTab.classList.add("single-contact");
 	linkTab.setAttribute("data-toggle","tab");
 	linkTab.setAttribute("data-roomId",userInfos.roomId);
 	linkTab.setAttribute("data-userSocketId",userInfos.socketId);
+	linkTab.addEventListener("click",(e) =>{
+		switchPane(e.target);
+	})
 
 
 	
@@ -91,6 +91,12 @@ function addNewDiscussion(userInfos)
 
 
     createMessageBox(userInfos.roomId);
+
+
+    allConnectedClients.push({
+    	roomId: userInfos.roomId,
+    	socketId: userInfos.socketId
+    })
 }
 
 //Creates the div where all the messages
@@ -108,7 +114,10 @@ function createMessageBox(roomId){
 }
 
 //Switches between a discussion to another
-function switchPane()
+function switchPane(pane)
 {
+	let clickedPane = $(pane).closest(".single-contact")[0];
+	let panelRoomId = clickedPane.getAttribute("data-roomId");
 
+	currentRoomId = panelRoomId;
 }
