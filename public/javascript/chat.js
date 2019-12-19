@@ -4,8 +4,11 @@ let isChatWindowOpened = false;
 
 
 //When clicking on the chat topbar
-chatTopbar.addEventListener("click",() =>{
+chatTopbar.addEventListener("click",toggleChatWindow)
 
+//Opens or closes the chat window
+function toggleChatWindow()
+{
 	if(isChatWindowOpened){ //If the window is opened, close it
 		clientChat.classList.remove("opened");
 		isChatWindowOpened = false;
@@ -14,8 +17,7 @@ chatTopbar.addEventListener("click",() =>{
 		clientChat.classList.add("opened");
 		isChatWindowOpened = true;
 	}
-})
-
+}
 
 //Connect to the namespace
 var socket = io.connect('/client');
@@ -49,6 +51,16 @@ btnSendMessage.addEventListener("click",() => {
 
 socket.on("incomingMessage",(messageInfos) =>{
 	console.log(messageInfos)
+})
+
+socket.on("discussionAlreadyStarted",(isStarted) =>{
+
+	if(isStarted){
+		console.log("Le client est déjà en discussion!");
+		showChatBodyDiscussion();
+		toggleChatWindow();
+	}
+
 })
 
 
