@@ -479,6 +479,15 @@ app.post("/ajaxRequest/adminConnection", function(req, res) {
 
 });
 
+app.post("/ajaxRequest/getProductsCrees", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.addRecipe(req.body.name, req.body.desc, req.body.instru, req.body.is_custom, req.body.product, req.body.ingre).then(function(result) {
+        res.send(result);
+    });
+
+});
+
 app.post("/ajaxRequest/addRecipeHandler", function(req, res) {
     let ctrl = new CtrlRecipe();
 
@@ -667,22 +676,6 @@ app.get("/manageText", function(req, res) {
         Promise.all([mgrlang.generateModalCategoryTabs("update")]).then(function(result) {
             res.render("manageText.ejs", { modalUpdate: result[0] });
         });
-    } else {
-        res.redirect("/adminConnection?pleaseConnect=true");
-    }
-});
-
-app.get("/addRecipe", function(req, res) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1) {
-        res.render("addRecipe.ejs");
-    } else {
-        res.redirect("/adminConnection?pleaseConnect=true");
-    }
-});
-
-app.get("/updateRecipe", function(req, res) {
-    if (req.session.userId != undefined && req.session.isAdmin == 1) {
-        res.render("updateRecipe.ejs");
     } else {
         res.redirect("/adminConnection?pleaseConnect=true");
     }

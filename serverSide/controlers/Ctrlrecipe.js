@@ -29,6 +29,11 @@ class CtrlRecipe {
                 ele += '<th>' + ingre.productName + '</th>';
                 ele += '<th>' + ingre.description + '</th>';
                 ele += '<th>' + ingre.instruction + '</th>';
+                if (ingre.isCustom == '0') {
+                    ele += '<th> Non </th>';
+                } else {
+                    ele += '<th> Oui </th>';
+                }
                 ele += '</tr>';
                 html.push(ele);
             });
