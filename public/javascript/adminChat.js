@@ -13,7 +13,7 @@ socket.on("startDiscussion",(data) =>{
 
 
 socket.on("incomingMessage",(message) =>{
-	console.log(message)
+	insertIncomingMessage(message);
 });
 
 let test;
@@ -106,6 +106,7 @@ function addNewDiscussion(userInfos)
 
     allConnectedClients.push({
     	roomId: userInfos.roomId,
+    	username: userInfos.username,
     	socketId: userInfos.socketId
     })
 }
@@ -193,20 +194,76 @@ function displayAllRoomsAndMessages(allRoomAndMessagesInfos)
 
 	for(let i = 0;i < allRoomAndMessagesInfos.rooms.length;i++)
 	{	
+		//Create the new discussion
 		addNewDiscussion({
 			roomId: allRoomAndMessagesInfos.rooms[i].roomId,
 			username: allRoomAndMessagesInfos.rooms[i].username,
 			question: allRoomAndMessagesInfos.rooms[i].question,
 			socketId: allRoomAndMessagesInfos.rooms[i].socketId
 		})
+
+		//Display the messages in the room
+		for(let j = 0;j < allRoomAndMessagesInfos.rooms[i].messages.length;j++)
+		{
+			addNewMessage(allRoomAndMessagesInfos.rooms[i].username,
+						allRoomAndMessagesInfos.rooms[i].roomId,
+						allRoomAndMessagesInfos.rooms[i].messages[j]);
+		}
 		
 	}
 }
 
+//Gathers the infos and then inserts
+//the incoming message
+function insertIncomingMessage(msgInfos)
+{
+	let username;
+
+	//Look for the client's username
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		if(allConnectedClients[i].roomId == msgInfos.chatRoomId)
+		{
+			username = allConnectedClients[i].username;
+		}
+	}
+
+	addNewMessage(username,msgInfos.chatRoomId,{isAdmin:0,message:msgInfos.message})
+}
 
 //Adds a new message to a pane
-function addNewMessage(roomId,messageObj)
+function addNewMessage(username,roomId,messageObj)
 {
 	let messageBoxPane = document.getElementById("chat"+roomId);
-	console.log(messageBoxPane);
+	console.log(roomId);
+    let messageCompleteWrapper = document.createElement("div");
+    messageCompleteWrapper.classList.add("wrapperSingleMessage");
+   
+
+    let messageWrapper = document.createElement("div");
+    messageWrapper.classList.add("messageWrapper");
+
+    let pUsername = document.createElement("p");
+    pUsername.classList.add("msgUserName");
+
+    //If its an admin message
+    if(messageObj.isAdmin){
+    	pUsername.innerHTML = "Vous"
+    	 messageCompleteWrapper.classList.add("wrapperMsgAdmin");
+    }
+    else{ //If the message comes from a client
+    	 pUsername.innerHTML = username;
+    	  messageCompleteWrapper.classList.add("wrapperMsgClient");
+    }
+   
+
+    let pUserText = document.createElement("p");
+    pUserText.classList.add("msgUserText");
+    pUserText.innerHTML = messageObj.message;
+
+    messageWrapper.appendChild(pUsername);
+    messageWrapper.appendChild(pUserText);
+    messageCompleteWrapper.appendChild(messageWrapper);
+
+    messageBoxPane.appendChild(messageCompleteWrapper)
 }
