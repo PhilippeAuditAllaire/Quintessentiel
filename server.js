@@ -987,7 +987,7 @@ nspClient.on('connection', function (socket) {
         //Delete the chatRoomId Session
         socket.handshake.session.chatRoomId = undefined;
         socket.handshake.session.save();
-        
+
     });
 
     //When the user disconnects
@@ -1065,14 +1065,20 @@ nspAdmin.on('connection', function (socket) {
         //If the admin wants it by email
         if(param.sendEmail)
         {
+            console.log("SENDING AN EMAIL")
+            ctrlChat.sendDiscussionByEmail(param.roomId,param.email).then(function(){
+                //Delete the conversation from the database
+                ctrlChat.deleteConversation(param.roomId);
+            })
+        }
+        else{ //If there is no email to send
 
+            //Delete the conversation from the database
+            ctrlChat.deleteConversation(param.roomId);
         }
 
         //Tells the user the conversation has ended
         nspClient.to(param.toSocketId).emit("conversationEnded"); 
-
-        //Delete the conversation from the database
-        ctrlChat.deleteConversation(param.roomId);
 
         //Emits the mesage to the admins
         io.of("admin").emit("deleteConversation",{

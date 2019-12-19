@@ -1,4 +1,5 @@
 const MgrChat = require("../managers/MgrChat.js");
+const nodemailer = require('nodemailer');
 
 class CtrlChat{
 
@@ -148,6 +149,77 @@ class CtrlChat{
     deleteConversation(roomId)
     {
       return this._mgrChat.deleteConversation(roomId);
+    }
+
+
+    //Send the discussion by email
+    sendDiscussionByEmail(roomId,emailAddress)
+    {
+      return this.getAllRoomInformations(roomId).then((infos) =>{
+          let messageHTML = this.formatInfosAsEmail(infos);
+
+
+          let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'projetwebquintessentiel@gmail.com',
+              pass: 'Pr0jetWeb'
+            }
+          });
+
+          var mailOptions = {
+            from: 'projetwebquintessentiel@gmail.com',
+            to: 'quebecoisepic@gmail.com',
+            subject: 'Quintessentiel | Conversation instantannée',
+            html: messageHTML
+          };
+
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error)
+            }
+          });
+
+      })
+    }
+
+    //Formats the informations as
+    //HTML to send the infos
+    formatInfosAsEmail(infos)
+    {
+      let username = infos.username;
+      let question = infos.question;
+
+        let html = `<h1>Question: ${question} </h1>
+                    <h2>Nom de l'utilisateur: ${username}</h2>
+        `;
+
+        let messagesHTML = ``;
+
+        //For each message add it to the HTML
+        for(let i = 0;i < infos.messages.length;i++)
+        {
+            console.log(infos.messages[i]);
+            let name;
+
+            //If its an admin
+            if(infos.messages[i].isAdmin == 1){
+              console.log("passe ici")
+              name = `Admin`
+            }
+            else{ //If its a user
+              name = username;
+            }
+
+            //Append it to the HTML string
+            messagesHTML += `<p><strong>${name}:</strong> ${infos.messages[i].message}</p>`
+        }
+
+
+        html += messagesHTML;
+        console.log(html);
+        return html;
+
     }
 
 
