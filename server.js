@@ -915,7 +915,7 @@ nspClient.on('connection', function (socket) {
         {
             if(allRooms[i].roomId == chatRoomId)
             {
-               // clearTimeout(allRooms[i].disconnectTimeout);
+               clearTimeout(allRooms[i].disconnectTimeout);
             }
         }
     }
@@ -989,7 +989,7 @@ nspClient.on('connection', function (socket) {
         {
             if(allRooms[i].roomId == roomId)
             {   
-                let timeoutDisconnect = setTimeout(() => console.log("TOTALY DISCONNECTED"),5000);
+                let timeoutDisconnect = setTimeout(() => io.of("admin").emit("userDisconnected",{roomId:roomId}),5000);
                 allRooms[i].disconnectTimeout = timeoutDisconnect;
             }
         }

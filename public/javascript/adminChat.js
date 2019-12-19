@@ -30,6 +30,11 @@ socket.on("discussionAlreadyStarted", (infos) => {
 	displayAllRoomsAndMessages(infos);
 })
 
+socket.on("userDisconnected", (infos) => {
+	console.log("Un utilisateur s'est déconnecté!")
+	console.log(infos);
+})
+
 //Adds a new discussion to the left
 //list
 function addNewDiscussion(userInfos)
