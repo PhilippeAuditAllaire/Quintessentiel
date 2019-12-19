@@ -34,7 +34,7 @@ class MgrLanguage {
         });
         let res = json.substring(0, json.length - 1);
         res += '}';
-        console.log("JSON : " + res);
+
         return res;
     }
 

@@ -263,6 +263,75 @@
     <div class="wrapperLogoPopup"><img src="./images/logoApp.png" /></div>
     <p id="popupMessage"></p>
 </div>
+<div id="clientChat">
+    <div id="chatTopbar">
+        Discussion instantannée
+    </div>
+    <div id="chatBody">
+        <div id="chatBodyStartDiscussion">
+            <div class="chat-labelInput-wrapper">
+                <label>Nom</label>
+                <input type="text" placeholder="Entrez votre nom" class="form-control"/>
+            </div>
+            <div class="chat-labelInput-wrapper">
+                <label>Message/Question</label>
+                <textarea class="form-control"></textarea>
+            </div>
+            <button type="button" class="btn btn-success">Commencer</button>
+        </div>
+        <div id="chatBodyDiscussion">
+            
+        </div>
+    </div>
+</div>
+<style>
+    #clientChat{
+        border:1px solid black;
+        width:20vw;
+        min-width:300px;
+        position: fixed;
+        z-index:999;
+        right:0;
+        bottom:0;
+        margin-right:20px;
+        font-size:20px;
+        text-align: center;
+    }
+
+    #clientChat.opened #chatBody{
+        max-height:500px;
+    }
+
+    #chatBody{
+        max-height:0;
+        transition-duration: 0.1s;
+    }
+
+    #chatTopbar{
+        border:1px solid black;
+        background-color:#453F3F;
+        color:white;
+    }
+
+    #chatBodyStartDiscussion{
+        border:1px solid black;
+        background-color:white;
+        padding:10px;
+    }
+
+    .chat-labelInput-wrapper{
+        display: flex;
+        flex-direction: column;
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+
+    #chatBodyStartDiscussion button{
+        margin-top:30px;
+        margin-bottom: 40px;
+    }
+</style>
+<script src="javascript/chat.js"></script>
 <script src="javascript/popup.js"></script>
 <script>
    const lblCartQty = "<%= lblCartQty %>";

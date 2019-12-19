@@ -1,9 +1,16 @@
 const express = require("express");
 const path = require("path")
-const session = require('express-session');
+const session = require("express-session")({
+    secret: "my-secret",
+    resave: true,
+    saveUninitialized: true
+});
 const ejs = require("ejs");
 const multer = require("multer");
 const stripe = require('stripe')('sk_test_IHvUqWlOZpF6fpSXlX9k119n00Cf1LJM5v');
+
+
+const sharedsession = require("express-socket.io-session");
 
 //FOR THE FILE UPLOAD
 let storage = multer.diskStorage({
@@ -44,16 +51,21 @@ let mgr = new MgrLanguage();
 let website = express();
 let app = express();
 
+//Create the server for socket.io
+var server = require('http').createServer(website);
+var io = require('socket.io')(server);
+
+
 website.set('view engine', 'ejs');
 app.set('view engine', 'ejs');
 //For the Posts
 var bodyParser = require('body-parser');
-website.use(session({ secret: 'your secret', saveUninitialized: true, resave: false }));
+website.use(session);
 website.use(bodyParser.json()); // support json encoded bodies
 website.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 website.set("views", path.join(__dirname, './'));
 
-app.use(session({ secret: 'your secret', saveUninitialized: true, resave: false }));
+app.use(session);
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.set("views", path.join(__dirname, './'));
@@ -854,8 +866,13 @@ app.post("/ajaxRequest/getTags", function(req, res) {
     ctrlProduct.loadAllTags().then(function(result) {});
 });
 
-//0 indique qu'on veut un port random non écouté (pour l'hébergement)
-var listener = website.listen(8000, (req, res) => {
-    console.log(listener.address().port)
-});
+
 app.listen(5000);
+
+
+
+/*
+    Socket.io chat starts from here
+*/
+
+server.listen(8000);
