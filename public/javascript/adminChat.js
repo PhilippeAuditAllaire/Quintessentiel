@@ -5,6 +5,11 @@ socket.on("startDiscussion",(data) =>{
 });
 
 
+socket.on("incomingMessage",(message) =>{
+	console.log(message)
+});
+
+
 
 //Adds a new discussion to the left
 //list
@@ -15,7 +20,7 @@ function addNewDiscussion(userInfos)
 	//Main wrappers
 	let li = document.createElement("li");
 	let linkTab = document.createElement("a");
-	linkTab.href = "#"+userInfos.userUniqueId;
+	linkTab.href = "#chat"+userInfos.userUniqueId;
 	linkTab.classList.add("single-contact");
 	linkTab.setAttribute("data-toggle","tab");
 	linkTab.setAttribute("data-userUniqueId",userInfos.userUniqueId);
@@ -84,7 +89,7 @@ function createMessageBox(userUniqueId){
 	let rightBarBody = document.getElementById("rightBarBody");
 
 	let messageBoxWrapper = document.createElement("div");
-	messageBoxWrapper.id = userUniqueId;
+	messageBoxWrapper.id = "chat"+userUniqueId;
 	messageBoxWrapper.classList.add("tab-pane");
 	messageBoxWrapper.classList.add("fade");
 

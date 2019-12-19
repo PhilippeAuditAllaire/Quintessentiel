@@ -25,12 +25,36 @@ var socket = io.connect('/client');
 let btnStartChat = document.getElementById("btnStartChat");
 
 btnStartChat.addEventListener("click",() => {
-	console.log("clicked")
 	let startInputName = document.getElementById("startInputName").value;
-	let startQuestion = document.getElementById("startMessage").value;
+	let startQuestion = document.getElementById("startQuestion").value;
 
-	if(startInputName != "" && startMessage != ""){
+	if(startInputName != "" && startQuestion != ""){
 		socket.emit("startDiscussion",{username:startInputName,question:startQuestion})
+		showChatBodyDiscussion();
 	}
+});
 
+//On the send message button click
+let btnSendMessage = document.getElementById("btnChatSendMessage");
+
+btnSendMessage.addEventListener("click",() => {
+	let message = document.getElementById("sendMessage").value;
+
+	//If the message contains something
+	if(message != ""){
+		socket.emit("sendMessage",{message:message});
+	}
 })
+
+
+
+//Shows the chat panel instead of the start discussion panel
+//on the chat bar
+function showChatBodyDiscussion()
+{
+	let chatBodyDiscussion = document.getElementById("chatBodyDiscussion");
+	let chatBodyStartDiscussion = document.getElementById("chatBodyStartDiscussion");
+
+	chatBodyStartDiscussion.style.display = "none";
+	chatBodyDiscussion.style.display = "block";
+}

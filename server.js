@@ -10,6 +10,7 @@ const multer = require("multer");
 const stripe = require('stripe')('sk_test_IHvUqWlOZpF6fpSXlX9k119n00Cf1LJM5v');
 const uuidv4 = require('uuid/v4');
 
+
 const sharedsession = require("express-socket.io-session");
 
 //FOR THE FILE UPLOAD
@@ -45,6 +46,7 @@ const CtrlCart = require("./serverSide/controlers/CtrlCart.js");
 const Cart = require("./serverSide/class/Cart.js");
 const MgrLanguage = require("./serverSide/managers/MgrLanguage.js");
 const CtrlPromo = require("./serverSide/controlers/CtrlPromotion.js");
+const CtrlChat = require("./serverSide/controlers/CtrlChat.js");
 
 let mgr = new MgrLanguage();
 
@@ -883,21 +885,21 @@ io.of("/client").use(sharedsession(session, {
 //When the client socket's connected
 nspClient.on('connection', function (socket) {
 
-    console.log("Connected!")
 
     //When receiving a start discussion event
     socket.on("startDiscussion", (data) =>{
         let userUniqueId = uuidv4().slice(1,8);
-        console.log(data)
+
         //Give the user a unique Id
         socket.handshake.session.chat = {
             userUniqueId: userUniqueId
         };
+        socket.handshake.session.save();
 
         //Take the user's socket id
         let socketId = socket.id;
 
-        //Emit the event to the admin
+        //Emit the event to the admins
         io.of("admin").emit("startDiscussion",
         {
             username:data.username,
@@ -906,14 +908,46 @@ nspClient.on('connection', function (socket) {
             socketId:socketId
         });
 
-    })
+        //Insert the discussion into the DB
+        let ctrlChat = new CtrlChat();
+        ctrlChat.createNewDiscussion({username:data.username,question:data.question,userUniqueId:userUniqueId}).then(function(res){
+            //Give the chatroom id to the socket so that it can retrieve it
+            //when sending messages
+            socket.handshake.session.chat.roomId = res.insertId;
+            socket.handshake.session.save();
+        });
+
+    });
+
+
+    //When receiving a sendMessage event
+    socket.on("sendMessage", (message) =>{
+        let userUniqueId = socket.handshake.session.chat.userUniqueId;
+        let roomId = socket.handshake.session.chat.roomId;
+
+        //Emit the even to the admins
+        io.of("admin").emit("incomingMessage",{
+            userUniqueId: userUniqueId,
+            message: message.message
+        });
+
+        //Insert the message into the database
+        let ctrlChat = new CtrlChat();
+        ctrlChat.insertNewMessage({
+            userId: userUniqueId,
+            roomId: roomId,
+            message: message.message,
+        },false)
+
+    });
 
 });
 
 //When the admin socket's connected
 nspAdmin.on('connection', function (socket) {
     console.log("ADMIN CONNECTED")
-
+    let ctrlChat = new CtrlChat();
+    ctrlChat.getAllActiveChats();
 });
 
 

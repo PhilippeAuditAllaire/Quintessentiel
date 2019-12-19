@@ -275,18 +275,25 @@
             </div>
             <div class="chat-labelInput-wrapper">
                 <label>Message/Question</label>
-                <textarea class="form-control" id="startMessage"></textarea>
+                <textarea class="form-control" id="startQuestion"></textarea>
             </div>
             <button id="btnStartChat" type="button" class="btn btn-success">Commencer</button>
         </div>
         <div id="chatBodyDiscussion">
-            
+            <div id="chatMessageBox" class="chat-messageBox">
+               
+            </div>
+            <div class="chat-labelInput-wrapper">
+                <textarea class="form-control" id="sendMessage"></textarea>
+            </div>
+            <button id="btnChatSendMessage" type="button" class="btn btn-success">Envoyer</button>
+        </div>   
         </div>
     </div>
 </div>
 <style>
     #clientChat{
-        width:20vw;
+        width:35vw;
         min-width:300px;
         position: fixed;
         z-index:999;
@@ -314,12 +321,12 @@
         cursor: pointer;
     }
 
-    #chatBodyStartDiscussion{
+    #chatBodyStartDiscussion,#chatBodyDiscussion{
         background-color:white;
         padding:10px;
     }
 
-    .chat-labelInput-wrapper{
+    #chatBodyStartDiscussion .chat-labelInput-wrapper{
         display: flex;
         flex-direction: column;
         margin-top:15px;
@@ -329,6 +336,20 @@
     #chatBodyStartDiscussion button{
         margin-top:30px;
         margin-bottom: 40px;
+    }
+
+    #chatBodyDiscussion{
+        display: none;
+    }
+
+    #chatMessageBox{
+        height:350px;
+        background-color:#ededed;
+
+    }
+
+    #btnChatSendMessage{
+        margin-top:15px;
     }
 </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>

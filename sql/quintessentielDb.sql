@@ -401,4 +401,23 @@ CREATE TABLE ta_reseller_products (
   PRIMARY KEY (id),
   KEY idUser (idUser),
   KEY productId (productId)
-) 
+);
+
+
+CREATE TABLE chatroom (
+	id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	idUser VARCHAR(30) NOT NULL,
+	username VARCHAR(30),
+	question VARCHAR(100),
+	isActive BOOLEAN DEFAULT 0
+);
+
+CREATE TABLE chatroommessage (
+	id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	idChatRoom SMALLINT NOT NULL,
+	FOREIGN KEY (idChatRoom) REFERENCES chatroom(id),
+	idSender VARCHAR(30) NOT NULL,
+	message VARCHAR(1500) NOT NULL,
+	isAdmin BOOLEAN DEFAULT 0,
+	dhMsg DATETIME DEFAULT NOW()
+);
