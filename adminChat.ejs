@@ -20,38 +20,13 @@
                 <div class="left-bar-body">
                     <div id="contact-bar-wrapper">
                         <ul id="contact-bar" class="nav nav-tabs">
-                            <li>
-                                <a href="#client101" class="single-contact" data-toggle="tab">
-                                    <div class="contact-title-bar">
-                                        <p>"<span class="title-contact">Problème avec tels chose</span>"</p>
-                                    </div>
-                                    <div class="contact-name-bar">
-                                        <p>- <span class="contact-name">Réjeanne B.</span></p>
-                                    </div>
-                                    <div class="contact-activity">
-                                        <p>État: <span class="contact-active contact-ok">Actif</span></p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#client102" class="single-contact" data-toggle="tab">
-                                    <div class="contact-title-bar">
-                                        <p>"<span class="title-contact">Problème avec tels chose</span>"</p>
-                                    </div>
-                                    <div class="contact-name-bar">
-                                        <p>- <span class="contact-name">Réjeanne B.</span></p>
-                                    </div>
-                                    <div class="contact-activity">
-                                        <p>État: <span class="contact-active contact-not">Déconnecté</span></p>
-                                    </div>
-                                </a>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="left-bar-footer">
                     <div class="left-footer-close">
-                        <button class="btn btn-primary close-msg">Fermer la conversation</button>
+                        <button id="btnCloseConverstation" class="btn btn-primary close-msg">Fermer la conversation</button>
                     </div>
                 </div>
             </section>
@@ -59,68 +34,51 @@
                 <div class="right-bar-header">
                     <h2>Système de clavardage</h2>
                 </div>
-                <div class="right-bar-body">
-                    <div id="client101" class="tab-pane fade">
-                        <div class="wrapperSingleMessage wrapperMsgClient">
-                            <div class="messageWrapper">
-                                <p class="msgUserName">Réjeanne B.</p>
-                                <p class="msgUserText">Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit Amet Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit</p>
-                            </div>
-                        </div>
-                        <div class="wrapperSingleMessage wrapperMsgAdmin">
-                            <div class="messageWrapper">
-                                <p class="msgUserName">Vous</p>
-                                <p class="msgUserText">Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit Amet Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit</p>
-                            </div>
-                        </div>
-                        <div class="wrapperSingleMessage wrapperMsgAdmin">
-                            <div class="messageWrapper">
-                                <p class="msgUserName">Vous</p>
-                                <p class="msgUserText">Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit Amet Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit</p>
-                            </div>
-                        </div>
-                        <div class="wrapperSingleMessage wrapperMsgAdmin">
-                            <div class="messageWrapper">
-                                <p class="msgUserName">Vous</p>
-                                <p class="msgUserText">Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit Amet Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit</p>
-                            </div>
-                        </div>
-                        <div class="wrapperSingleMessage wrapperMsgAdmin">
-                            <div class="messageWrapper">
-                                <p class="msgUserName">Vous</p>
-                                <p class="msgUserText">Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit Amet Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit</p>
-                            </div>
-                        </div>
-                        <div class="wrapperSingleMessage wrapperMsgAdmin">
-                            <div class="messageWrapper">
-                                <p class="msgUserName">Vous</p>
-                                <p class="msgUserText">Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit Amet Lorem ipsum Dolor sit amet Lorem Ipsum Dolor sit Amet Lorem Ipsum Dolor Sit</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div id="client102" class="tab-pane fade">
-                        <p>Les messages du client 2</p>
-                    </div>
-                    <div id="client103" class="tab-pane fade">
-                        <p>Les messages du client 3</p>
-                    </div>
+                <div id="rightBarBody" class="right-bar-body">
+   
                 </div>
                 <div class="right-bar-footer">
                     <div class="right-bar-footer-wrapper">
                         <div class="left-inner-footer">
-                            <textarea placeholder="Écrivez un message ici"></textarea>
+                            <textarea id="inputMsg" placeholder="Écrivez un message ici"></textarea>
                         </div>
                         <div class="right-inner-footer">
                             <div class="wrapper-btn-send">
-                                <button class="btn btn-primary send"><img class="icon" src="./images/icons/send.png" alt="Envoyer"></button>
+                                <button class="btn btn-primary send"><img class="icon" id="btnSend" src="./images/icons/send.png" alt="Envoyer"></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
         </section>
-
+        <div id="modalEmail" class="modal fade" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Fermeture de la conversation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Souhaitez-vous recevoir la conversation par courriel ?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="deleteConversation(true)">Oui</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="deleteConversation(false)">Non</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </div>
+</div>
+        <div id="popup">
+            <!-- Popup -->
+            <div class="wrapperLogoPopup"><img src="./images/logoApp.png" /></div>
+            <p id="popupMessage"></p>
+        </div>
+        <script src="javascript/popup.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+        <script src="./javascript/adminChat.js"></script>
         <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
         <script src="./javascript/renderer.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

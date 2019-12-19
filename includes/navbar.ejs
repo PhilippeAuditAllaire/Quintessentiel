@@ -263,6 +263,179 @@
     <div class="wrapperLogoPopup"><img src="./images/logoApp.png" /></div>
     <p id="popupMessage"></p>
 </div>
+<div id="clientChat">
+    <div id="chatTopbar">
+        Discussion instantannée
+    </div>
+    <div id="chatBody">
+        <div id="chatBodyStartDiscussion">
+            <div class="chat-labelInput-wrapper">
+                <label>Nom</label>
+                <input type="text" id="startInputName" placeholder="Entrez votre nom" class="form-control"/>
+            </div>
+            <div class="chat-labelInput-wrapper">
+                <label>Message/Question</label>
+                <textarea class="form-control" id="startQuestion"></textarea>
+            </div>
+            <button id="btnStartChat" type="button" class="btn btn-success">Commencer</button>
+        </div>
+        <div id="chatBodyDiscussion">
+            <div id="chatMessageBox" class="chat-messageBox">
+            </div>
+            <div class="chat-labelInput-wrapper">
+                <textarea class="form-control" id="sendMessage"></textarea>
+            </div>
+            <button id="btnChatSendMessage" type="button" class="btn btn-success">Envoyer</button>
+            
+        </div>  
+        <div id="chatFooter">
+          <a id="btnSaveEmail" href="#"></a>
+        </div> 
+
+        </div>
+    </div>
+</div>
+<style>
+    #clientChat{
+        width:35vw;
+        min-width:300px;
+        position: fixed;
+        z-index:999;
+        right:0;
+        bottom:0;
+        margin-right:20px;
+        font-size:20px;
+        text-align: center;
+    }
+
+    #chatMessageBox{
+        overflow-y: scroll;
+    }
+
+    #clientChat.opened #chatBody{
+        max-height:700px;
+        border-left:1px solid #453F3F;
+        border-right:1px solid #453F3F;
+    }
+
+    #chatBody{
+        max-height:0;
+        transition-duration: 0.1s;
+    }
+
+    #chatTopbar{
+        background-color:#453F3F;
+        color:white;
+        cursor: pointer;
+    }
+
+    #chatBodyStartDiscussion,#chatBodyDiscussion{
+        background-color:white;
+        padding:10px;
+    }
+
+    #chatBodyStartDiscussion .chat-labelInput-wrapper{
+        display: flex;
+        flex-direction: column;
+        margin-top:15px;
+        margin-bottom:15px;
+    }
+
+    #chatBodyStartDiscussion button{
+        margin-top:30px;
+        margin-bottom: 40px;
+    }
+
+    #chatBodyDiscussion{
+        display: none;
+    }
+
+    #chatMessageBox{
+        height:350px;
+        background-color:#ededed;
+
+    }
+
+    #btnChatSendMessage{
+        margin-top:15px;
+    }
+
+
+    .wrapperSingleMessage {
+        display: flex;
+        margin-top: 15px;
+    }
+
+    .wrapperMsgAdmin {
+        justify-content: flex-start;
+    }
+
+    .wrapperMsgClient .msgUserText {
+        background-color: lightgrey;
+
+    }
+
+    .wrapperMsgClient {
+        justify-content: flex-end;
+    }
+
+    .messageWrapper {
+        width: 70%;
+    }
+
+    .wrapperMsgAdmin {
+        padding-left: 5%;
+    }
+
+    .wrapperMsgClient {
+        padding-right: 5%;
+    }
+
+    .msgUserName {
+        position: relative;
+        left: 10px;
+        color: gray;
+        font-style: italic;
+    }
+
+    .msgUserText {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #BBD23D;
+    }
+
+    .messageWrapper p {
+        margin: 0;
+    }
+
+
+    .wrapperMsgClient,.wrapperMsgAdmin{
+        text-align: left;
+    }
+
+    .conversationEndedP{
+        color:gray;
+        font-weight: italic;
+    }
+
+    #btnSaveEmail{
+        background-image: url(./images/icons/send.png);
+        background-size:cover;
+        display: block;
+        width:50px;
+        height:50px;
+        margin:10px;
+        background-color:gray;
+
+    }
+
+    #chatFooter{
+        width:100%;
+        display: flex;
+    }
+</style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script src="javascript/chat.js"></script>
 <script src="javascript/popup.js"></script>
 <script>
    const lblCartQty = "<%= lblCartQty %>";

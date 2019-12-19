@@ -1,9 +1,17 @@
 const express = require("express");
 const path = require("path")
-const session = require('express-session');
+const session = require("express-session")({
+    secret: "my-secret",
+    resave: true,
+    saveUninitialized: true
+});
 const ejs = require("ejs");
 const multer = require("multer");
 const stripe = require('stripe')('sk_test_IHvUqWlOZpF6fpSXlX9k119n00Cf1LJM5v');
+const uuidv4 = require('uuid/v4');
+
+
+const sharedsession = require("express-socket.io-session");
 
 //FOR THE FILE UPLOAD
 let storage = multer.diskStorage({
@@ -38,22 +46,28 @@ const CtrlCart = require("./serverSide/controlers/CtrlCart.js");
 const Cart = require("./serverSide/class/Cart.js");
 const MgrLanguage = require("./serverSide/managers/MgrLanguage.js");
 const CtrlPromo = require("./serverSide/controlers/CtrlPromotion.js");
+const CtrlChat = require("./serverSide/controlers/CtrlChat.js");
 
 let mgr = new MgrLanguage();
 
 let website = express();
 let app = express();
 
+//Create the server for socket.io
+var server = require('http').createServer(website);
+var io = require('socket.io')(server);
+
+
 website.set('view engine', 'ejs');
 app.set('view engine', 'ejs');
 //For the Posts
 var bodyParser = require('body-parser');
-website.use(session({ secret: 'your secret', saveUninitialized: true, resave: false }));
+website.use(session);
 website.use(bodyParser.json()); // support json encoded bodies
 website.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 website.set("views", path.join(__dirname, './'));
 
-app.use(session({ secret: 'your secret', saveUninitialized: true, resave: false }));
+app.use(session);
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.set("views", path.join(__dirname, './'));
@@ -89,7 +103,7 @@ website.get("/userConnection", function(req, res) {
     setLang(req);
 
     mgr.getTextByPage("userConnection", req.session.id_lang).then(function(resultat) {
-        console.log(resultat)
+  
         res.render("userConnection.ejs", JSON.parse(resultat));
     });
 });
@@ -183,10 +197,7 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
         let userCustomAddress = req.body.userManualAddressInfos
             //generate the metadata so that we can keep track of what the user bought and at what price
         let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart), req.session.userId, userCustomAddress).then(function(metadata) {
-            console.log("TOTAL: ")
-            console.log(total);
-            console.log("METADATA")
-            console.log(metadata);
+ 
             (async() => {
                 const charge = await stripe.charges.create({
                     amount: parseInt(total * 100),
@@ -196,16 +207,19 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
                     metadata: JSON.parse(metadata),
                 }).then(function() {
                     req.session.userCart = undefined; //reset the user's cart
-                    console.log(req.session.userCart)
-                    console.log("Cart")
-                    console.log(req.session.userCart)
+ 
                     res.send(true);
                     res.end();
+<<<<<<< HEAD
                     console.log("Done!");
                 }).catch(function() {
+=======
+           
+                }).catch(function(){
+>>>>>>> master
                     res.send(false);
                     res.end();
-                    console.log("Erreur lors de la transaction!")
+                
                 });
             })();
         });
@@ -821,7 +835,7 @@ app.post("/ajaxRequest/getResellerProduct", function(req, res) {
 
 app.post("/ajaxRequest/getRebateReseller", function(req, res) {
     let ctrlReseller = new CtrlReseller();
-    console.log(req.body);
+
 
     ctrlReseller.getRebate(req.body).then(function(result) {
         res.send(result);
@@ -847,8 +861,232 @@ app.post("/ajaxRequest/getTags", function(req, res) {
     ctrlProduct.loadAllTags().then(function(result) {});
 });
 
-//0 indique qu'on veut un port random non écouté (pour l'hébergement)
-var listener = website.listen(8000, (req, res) => {
-    console.log(listener.address().port)
-});
+
 app.listen(5000);
+
+
+
+/*
+    Socket.io chat starts from here
+*/
+
+const nspAdmin = io.of('/admin');
+const nspClient = io.of('/client');
+
+
+let allRooms = []; 
+
+//Shares the session used with express-session
+//to the sockets
+io.of("/client").use(sharedsession(session, {
+    autoSave:true
+})); 
+
+
+//When the client socket's connected
+nspClient.on('connection', function (socket) {
+
+    let chatRoomId = socket.handshake.session.chatRoomId;
+
+    //If the user is already in a chat room
+    if(chatRoomId != undefined){
+        console.log("DÉJÀ CONNECTED!")
+        console.log(chatRoomId)
+        let ctrlChat = new CtrlChat();
+
+        //Emit the new socketID to the admins
+        io.of("admin").emit("updateSocketId",
+        {
+            roomId: chatRoomId,
+            socketId: socket.id
+        });
+        
+        //Updates the socketId in the DB
+        ctrlChat.updateSocketId(chatRoomId,socket.id);
+
+        //Load all the informations and messages from the room the user is in
+        //and emits it to him (so the chat can keep up through the pages)
+        ctrlChat.getAllRoomInformations(chatRoomId).then(function(infos){
+            socket.emit("discussionAlreadyStarted",infos);  
+        })
+
+        //Tells the server he came back (under a new socket)
+        for(let i = 0;i < allRooms.length;i++)
+        {
+            if(allRooms[i].roomId == chatRoomId)
+            {
+               clearTimeout(allRooms[i].disconnectTimeout);
+            }
+        }
+    }
+
+
+    //When receiving a start discussion event
+    socket.on("startDiscussion", (data) =>{
+
+        //Take the user's socket id
+        let socketId = socket.id;
+
+
+        //Insert the discussion into the DB
+        let ctrlChat = new CtrlChat();
+        ctrlChat.createNewDiscussion({username:data.username,question:data.question,socketId:socketId}).then(function(res){
+            //Give the chatroom id to the socket so that it can retrieve it
+            //when sending messages
+            socket.handshake.session.chatRoomId = res.insertId;
+            socket.handshake.session.save();
+
+
+            //Emit the event to the admins
+            io.of("admin").emit("startDiscussion",
+            {
+                username:data.username,
+                roomId: res.insertId,
+                question:data.question,
+                socketId:socketId
+            });
+
+            //Push the created room to the server's room list
+            allRooms.push({roomId: res.insertId,disconnectTimeout:null})
+        });
+
+    });
+
+
+    //When receiving a sendMessage event
+    socket.on("sendMessage", (message) =>{
+        let roomId = socket.handshake.session.chatRoomId;
+
+        //Emit the even to the admins
+        io.of("admin").emit("incomingMessage",{
+            chatRoomId: roomId,
+            message: message.message,
+            isAdmin: false
+        });
+
+        //Emits the event to himself
+        socket.emit("incomingMessage",{
+            message: message.message,
+            isAdmin: false
+        })
+
+        //Insert the message into the database
+        let ctrlChat = new CtrlChat();
+        ctrlChat.insertNewMessage({
+            roomId: roomId,
+            message: message.message,
+        },false)
+
+    });
+
+    //When the conversation has ended
+    socket.on("conversationEnded",() =>{
+
+        //Delete the chatRoomId Session
+        socket.handshake.session.chatRoomId = undefined;
+        socket.handshake.session.save();
+
+    });
+
+    //When the user disconnects
+    socket.on("disconnect",()=>{
+        let roomId = socket.handshake.session.chatRoomId;
+        
+        //Find the object that coresponds to this room
+        //in the server's list
+        for(let i = 0;i < allRooms.length;i++)
+        {
+            if(allRooms[i].roomId == roomId)
+            {   
+                let timeoutDisconnect = setTimeout(() => {
+                    //Tell the admins the user is disconnected
+                    io.of("admin").emit("userDisconnected",{roomId:roomId});
+
+                    //Remove his chat room id
+                    socket.handshake.session.chatRoomId = undefined;
+                    socket.handshake.session.save();
+
+                    //Update de database status
+                    let ctrlChat = new CtrlChat();
+                    ctrlChat.updateRoomStatus(roomId,0);
+
+                },5000);
+
+                allRooms[i].disconnectTimeout = timeoutDisconnect;
+            }
+        }
+    })
+
+});
+
+//When the admin socket's connected
+nspAdmin.on('connection', function (socket) {
+    
+    let ctrlChat = new CtrlChat();
+    //Loads all the room that are still active along with all of their
+    //informations
+    ctrlChat.getAllActiveRoomsAndInfos().then(function(infos){
+        socket.emit("discussionAlreadyStarted",infos);  
+    })
+
+
+    socket.on("sendMessage",(messageInfos) =>{
+
+        //Send the message to the client
+        nspClient.to(messageInfos.toSocketId).emit("incomingMessage",{
+            message: messageInfos.message,
+            isAdmin: true
+        });
+
+        //Emits the mesage to the admins
+        io.of("admin").emit("incomingMessage",{
+            chatRoomId: messageInfos.roomId,
+            message: messageInfos.message,
+            isAdmin: true
+        });
+
+
+        //Insert the message into the database
+        let ctrlChat = new CtrlChat();
+        ctrlChat.insertNewMessage({
+            roomId: messageInfos.roomId,
+            userId: 1, //CHANGE THIS ID TO THE REQ.SESSION.USERID WHEN FINISHED
+            message: messageInfos.message,
+        },true)
+    });
+
+    //Deletes the converstaion and can send it by email 
+    socket.on("deleteConversation",(param) =>{
+
+        let ctrlChat = new CtrlChat();
+
+        //If the admin wants it by email
+        if(param.sendEmail)
+        {
+            console.log("SENDING AN EMAIL")
+            ctrlChat.sendDiscussionByEmail(param.roomId,param.email).then(function(){
+                //Delete the conversation from the database
+                ctrlChat.deleteConversation(param.roomId);
+            })
+        }
+        else{ //If there is no email to send
+
+            //Delete the conversation from the database
+            ctrlChat.deleteConversation(param.roomId);
+        }
+
+        //Tells the user the conversation has ended
+        nspClient.to(param.toSocketId).emit("conversationEnded"); 
+
+        //Emits the mesage to the admins
+        io.of("admin").emit("deleteConversation",{
+            roomId: param.roomId,
+        });
+
+    });
+
+});
+
+
+
+server.listen(8000);
