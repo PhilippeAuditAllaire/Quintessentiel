@@ -69,7 +69,9 @@ socket.on("discussionAlreadyStarted",(informations) =>{
 })
 
 socket.on("conversationEnded",() =>{
-	console.log("The admin has ended the conversation")
+	
+	socket.emit("conversationEnded");
+
 	let p = document.createElement("p");
 	p.classList.add("conversationEndedP")
 	p.innerHTML = "La conversation est terminée.";

@@ -981,6 +981,15 @@ nspClient.on('connection', function (socket) {
 
     });
 
+    //When the conversation has ended
+    socket.on("conversationEnded",() =>{
+
+        //Delete the chatRoomId Session
+        socket.handshake.session.chatRoomId = undefined;
+        socket.handshake.session.save();
+        
+    });
+
     //When the user disconnects
     socket.on("disconnect",()=>{
         let roomId = socket.handshake.session.chatRoomId;
