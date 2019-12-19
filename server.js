@@ -875,6 +875,9 @@ app.listen(5000);
 const nspAdmin = io.of('/admin');
 const nspClient = io.of('/client');
 
+
+let allRooms = []; 
+
 //Shares the session used with express-session
 //to the sockets
 io.of("/client").use(sharedsession(session, {
@@ -906,6 +909,15 @@ nspClient.on('connection', function (socket) {
         ctrlChat.getAllRoomInformations(chatRoomId).then(function(infos){
             socket.emit("discussionAlreadyStarted",infos);  
         })
+
+        //Tells the server he came back (under a new socket)
+        for(let i = 0;i < allRooms.length;i++)
+        {
+            if(allRooms[i].roomId == chatRoomId)
+            {
+               // clearTimeout(allRooms[i].disconnectTimeout);
+            }
+        }
     }
 
 
@@ -933,6 +945,9 @@ nspClient.on('connection', function (socket) {
                 question:data.question,
                 socketId:socketId
             });
+
+            //Push the created room to the server's room list
+            allRooms.push({roomId: res.insertId,disconnectTimeout:null})
         });
 
     });
@@ -963,6 +978,22 @@ nspClient.on('connection', function (socket) {
         },false)
 
     });
+
+    //When the user disconnects
+    socket.on("disconnect",()=>{
+        let roomId = socket.handshake.session.chatRoomId;
+        
+        //Find the object that coresponds to this room
+        //in the server's list
+        for(let i = 0;i < allRooms.length;i++)
+        {
+            if(allRooms[i].roomId == roomId)
+            {   
+                let timeoutDisconnect = setTimeout(() => console.log("TOTALY DISCONNECTED"),5000);
+                allRooms[i].disconnectTimeout = timeoutDisconnect;
+            }
+        }
+    })
 
 });
 
