@@ -1,7 +1,7 @@
 let clientChat = document.getElementById("clientChat");
 let chatTopbar = document.getElementById("chatTopbar");
 let isChatWindowOpened = false;
-
+let isConversationEnded = false;
 
 //When clicking on the chat topbar
 chatTopbar.addEventListener("click",toggleChatWindow)
@@ -40,11 +40,18 @@ btnStartChat.addEventListener("click",() => {
 let btnSendMessage = document.getElementById("btnChatSendMessage");
 
 btnSendMessage.addEventListener("click",() => {
-	let message = document.getElementById("sendMessage").value;
 
-	//If the message contains something
-	if(message != ""){
-		socket.emit("sendMessage",{message:message});
+	if(!isConversationEnded) //If the converstaion is still going
+	{
+		let message = document.getElementById("sendMessage").value;
+
+		//If the message contains something
+		if(message != ""){
+			socket.emit("sendMessage",{message:message});
+		}
+	}
+	else{ //If it has ended
+		popup("La conversation est fermée.")
 	}
 })
 
@@ -59,6 +66,17 @@ socket.on("discussionAlreadyStarted",(informations) =>{
 	showChatBodyDiscussion();
 	toggleChatWindow();
 	addAllInformations(informations);
+})
+
+socket.on("conversationEnded",() =>{
+	console.log("The admin has ended the conversation")
+	let p = document.createElement("p");
+	p.classList.add("conversationEndedP")
+	p.innerHTML = "La conversation est terminée.";
+
+	isConversationEnded = true;
+
+	chatMessageBox.appendChild(p)
 })
 
 //Adds the given informations to the chat window
@@ -119,3 +137,4 @@ function showChatBodyDiscussion()
 	chatBodyStartDiscussion.style.display = "none";
 	chatBodyDiscussion.style.display = "block";
 }
+

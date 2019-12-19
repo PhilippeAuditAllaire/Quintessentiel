@@ -892,6 +892,8 @@ nspClient.on('connection', function (socket) {
 
     //If the user is already in a chat room
     if(chatRoomId != undefined){
+        console.log("DÉJÀ CONNECTED!")
+        console.log(chatRoomId)
         let ctrlChat = new CtrlChat();
 
         //Emit the new socketID to the admins
@@ -1057,7 +1059,17 @@ nspAdmin.on('connection', function (socket) {
 
         }
 
+        //Tells the user the conversation has ended
+        nspClient.to(param.toSocketId).emit("conversationEnded"); 
+
+        //Delete the conversation from the database
         ctrlChat.deleteConversation(param.roomId);
+
+        //Emits the mesage to the admins
+        io.of("admin").emit("deleteConversation",{
+            roomId: param.roomId,
+        });
+
     });
 
 });

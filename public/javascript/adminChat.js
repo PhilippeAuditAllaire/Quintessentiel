@@ -34,6 +34,11 @@ socket.on("userDisconnected", (infos) => {
 	userDisconnected(infos);
 })
 
+socket.on("deleteConversation", (infos) => {
+	console.log("A conversation has been deleted");
+	deleteHTMLConversation(infos);
+})
+
 //Adds a new discussion to the left
 //list
 function addNewDiscussion(userInfos)
@@ -310,7 +315,7 @@ function showDisconnectedLabel(userRoomId)
 
 	//Look for the active bar of the contact in the left
 	//contact bar
-	let disconnectedContactBloc
+	let disconnectedContactBloc;
 
 	for(let i = 0;i < singleContact.length;i++)
 	{
@@ -351,9 +356,46 @@ btnCloseConverstation.addEventListener("click",() =>{
 })
 
 
+//Deletes the conversation from the client side
+function deleteHTMLConversation(infos)
+{
+	//Delete the room infos from the JS
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		//If we found the good one
+		if(allConnectedClients[i].roomId == infos.roomId)
+		{
+			allConnectedClients.slice(i,1);
+		}
+	}
+
+	//Remove the message box panel
+	let roomPanel = document.getElementById("chat"+infos.roomId);
+	roomPanel.remove();
+
+	//Remove the room from the left contact bar
+	let singleContact = document.getElementsByClassName("single-contact");
+	let toRemoveContactBloc;
+
+	for(let i = 0;i < singleContact.length;i++)
+	{
+		let roomId;
+		roomId = singleContact[i].getAttribute("data-roomId");
+
+		if(roomId == infos.roomId){
+			toRemoveContactBloc = singleContact[i];
+		}
+	}
+
+
+	toRemoveContactBloc.remove();
+}
+
+
 //Deletes the conversation and sends a copy 
 //by email
 function deleteConversation(sendEmail)
 {
-	socket.emit("deleteConversation",{roomId:currentRoomId,sendEmail:sendEmail,sendToEmail: "projetwebquintessentiel@gmail.com"})
+	socket.emit("deleteConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "projetwebquintessentiel@gmail.com"})
+	$("#modalEmail").modal("hide");
 }
