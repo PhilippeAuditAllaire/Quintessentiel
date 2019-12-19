@@ -31,6 +31,7 @@ class MgrChat {
     //socket id from
     //@newSocketId is the new socketId that
     //will replace the older one
+    //@Returns a promise
     updateSocketId(roomId,newSocketId)
     {
         let query = `UPDATE chatroom
@@ -41,11 +42,24 @@ class MgrChat {
         return this._queryEngine.executeQuery(query,param);
     }
 
+    //Updates the status of the given room
+    //id
+    //@roomId is the room to update the status to
+    //@status is the new status to give to the room
+    //@Returns a promise
+    updateRoomStatus(roomId,status)
+    {
+        let query = "UPDATE chatroom SET isActive = ? WHERE id = ?";
+        let param = [status,roomId];
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
     //Gets all the active chat rooms
     //@Returns a promise
     getAllActiveChats()
     {
-        let query = "SELECT * FROM chatroom WHERE isActive = true";
+        let query = "SELECT * FROM chatroom";
 
         return this._queryEngine.executeQuery(query);
     }

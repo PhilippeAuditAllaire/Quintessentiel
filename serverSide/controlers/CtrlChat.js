@@ -131,6 +131,15 @@ class CtrlChat{
         return this._mgrChat.insertNewMessage(infos,isAdmin);
     }
 
+    //Updates the status of the given room
+    //id
+    //@roomId is the room to update the status to
+    //@status is the new status to give to the room
+    updateRoomStatus(roomId,status)
+    {
+      return this._mgrChat.updateRoomStatus(roomId,status);
+    }
+
 
 }
 

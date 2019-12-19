@@ -33,6 +33,7 @@ socket.on("discussionAlreadyStarted", (infos) => {
 socket.on("userDisconnected", (infos) => {
 	console.log("Un utilisateur s'est déconnecté!")
 	console.log(infos);
+	userDisconnected(infos);
 })
 
 //Adds a new discussion to the left
@@ -83,6 +84,7 @@ function addNewDiscussion(userInfos)
 	spanActivity.classList.add("contact-ok");
 
 	pActivity.innerHTML = "État: ";
+	spanActivity.innerHTML = "Actif"
 	pActivity.appendChild(spanActivity);
 
 
@@ -127,6 +129,10 @@ function createMessageBox(roomId){
 	messageBoxWrapper.classList.add("tab-pane");
 	messageBoxWrapper.classList.add("fade");
 
+	let eventBanner = document.createElement("div");
+	eventBanner.classList.add("eventBanner");
+
+	messageBoxWrapper.appendChild(eventBanner);
 	rightBarBody.appendChild(messageBoxWrapper);
 }
 
@@ -271,4 +277,51 @@ function addNewMessage(username,roomId,messageObj)
     messageCompleteWrapper.appendChild(messageWrapper);
 
     messageBoxPane.appendChild(messageCompleteWrapper)
+}
+
+//The user is disconnected
+function userDisconnected(infos)
+{
+	let userRoomId = infos.roomId;
+
+	showDisconnectedLabel(userRoomId);
+	showUserDisconnectedBanner(userRoomId);
+}
+
+
+//Changes the state of the user in the left bloc
+function showDisconnectedLabel(userRoomId)
+{
+	let singleContact = document.getElementsByClassName("single-contact");
+
+	//Look for the active bar of the contact in the left
+	//contact bar
+	let disconnectedContactBloc
+
+	for(let i = 0;i < singleContact.length;i++)
+	{
+		let roomId;
+		roomId = singleContact[i].getAttribute("data-roomId");
+
+		if(roomId == userRoomId){
+			disconnectedContactBloc = singleContact[i];
+		}
+	}
+
+	let activitySpan = disconnectedContactBloc.getElementsByClassName("contact-active")[0]
+
+	activitySpan.classList.remove("contact-ok");
+	activitySpan.classList.add("contact-not");
+
+	activitySpan.innerHTML = "Déconnecté";
+}
+
+
+//Shows a user disconnected banner on the user's bloc
+function showUserDisconnectedBanner(roomId)
+{
+	let userPanel = document.getElementById("chat"+roomId);
+	let banner = userPanel.getElementsByClassName("eventBanner")[0];
+	banner.innerHTML = "L'utilisateur s'est déconnecté!";
+	banner.style.display = "flex";
 }

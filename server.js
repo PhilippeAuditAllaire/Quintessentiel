@@ -989,7 +989,20 @@ nspClient.on('connection', function (socket) {
         {
             if(allRooms[i].roomId == roomId)
             {   
-                let timeoutDisconnect = setTimeout(() => io.of("admin").emit("userDisconnected",{roomId:roomId}),5000);
+                let timeoutDisconnect = setTimeout(() => {
+                    //Tell the admins the user is disconnected
+                    io.of("admin").emit("userDisconnected",{roomId:roomId});
+
+                    //Remove his chat room id
+                    socket.handshake.session.chatRoomId = undefined;
+                    socket.handshake.session.save();
+
+                    //Update de database status
+                    let ctrlChat = new CtrlChat();
+                    ctrlChat.updateRoomStatus(roomId,0);
+
+                },5000);
+
                 allRooms[i].disconnectTimeout = timeoutDisconnect;
             }
         }
