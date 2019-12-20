@@ -312,3 +312,9 @@
         width:300px;
     }
 }
+
+.btn-primary:disabled{
+    background-color: #e0e0e0;
+    border:gray;
+}
+

@@ -127,6 +127,12 @@ function addNewDiscussion(userInfos)
     	username: userInfos.username,
     	socketId: userInfos.socketId
     })
+    
+    if(allConnectedClients.length <= 1)
+    {
+    	linkTab.click()	
+    }
+    
 }
 
 //Creates the div where all the messages
@@ -157,6 +163,11 @@ function switchPane(pane)
 {
 	let clickedPane = $(pane).closest(".single-contact")[0];
 	let panelRoomId = clickedPane.getAttribute("data-roomId");
+
+	//if there had no selected pane before
+	if(currentRoomId == undefined){
+		enableCloseConversationBtn();
+	}
 
 	currentRoomId = panelRoomId;
 }
@@ -414,5 +425,21 @@ function deleteConversation(sendEmail)
 {
 	socket.emit("deleteConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
 	$("#modalEmail").modal("hide");
+
+	currentRoomId = undefined;
+	disableCloseConversationBtn();
 }
 
+//Enables the close conversation button
+function enableCloseConversationBtn()
+{
+	let btnCloseConverstation = document.getElementById("btnCloseConverstation")
+	btnCloseConverstation.removeAttribute("disabled");
+}
+
+disableCloseConversationBtn()
+function disableCloseConversationBtn()
+{
+	let btnCloseConverstation = document.getElementById("btnCloseConverstation")
+	btnCloseConverstation.setAttribute("disabled","disabled");
+}
