@@ -223,6 +223,8 @@ function sendMessage()
 		socket.emit("sendMessage",{roomId: currentRoomId,toSocketId: socketId,message: message})
 		messageInput.value = ""
 
+		setTimeout(()=>messageInput.focus())
+		
 	}
 }
 

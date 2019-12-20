@@ -991,7 +991,6 @@ nspClient.on('connection', function(socket) {
                     //If the user needs to delete the DB entries when leaving
                     if(allRooms[i].deleteDbAfterLeave != undefined)
                     {
-                        console.log("SUPPRESSION DU CONTENU DE LA BD")
                         //Delete all the entries related to this conversation
                         ctrlChat.deleteConversation(roomId);
                     }
@@ -1002,7 +1001,6 @@ nspClient.on('connection', function(socket) {
                     socket.handshake.session.save();
 
                     //Update de database status
-                    
                     ctrlChat.updateRoomStatus(roomId, 0);
 
                 }, 5000);
@@ -1019,6 +1017,23 @@ nspClient.on('connection', function(socket) {
         let ctrlChat = new CtrlChat();
 
         ctrlChat.sendDiscussionByEmail(roomId, email.email);
+    });
+
+    //When the client wants to close the chat
+    socket.on("closeChat",(infos) =>{
+            let ctrlChat = new CtrlChat();
+            let roomId = socket.handshake.session.chatRoomId;
+
+            //Tell the admins the user is disconnected
+            io.of("admin").emit("userDisconnected", { roomId: roomId });
+
+            //Remove his chat room id
+            socket.handshake.session.chatRoomId = undefined;
+            socket.handshake.session.save();
+
+            //Update de database status
+            ctrlChat.updateRoomStatus(roomId, 0);
+
     });
 
 });
