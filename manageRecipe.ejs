@@ -12,7 +12,7 @@
     <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
 </head>
 
-<body>
+<body onload="loading()">
     <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -32,16 +32,24 @@
                                 <div class="">
                                     <div class="">
                                         <label>Produit créé par la recette :</label>
-                                        <select name="" id="">
-                                            <option value="1">Produit Test A</option>
+                                        <select name="" id="produitsCrees" onchange="nameChange(this)">
+                                            
                                         </select>
+                                    </div>
+                                    <div class="wrapper-input-label" id="wrapperDescription">
+                                        <div class="wrapper-label">
+                                            <label>Nom de la recette</label>
+                                        </div>
+                                        <div class="wrapper-input">
+                                            <input class="form-control" id="addname"></input>
+                                        </div>
                                     </div>
                                     <div class="wrapper-input-label" id="wrapperDescription">
                                         <div class="wrapper-label">
                                             <label>Description</label>
                                         </div>
                                         <div class="wrapper-input">
-                                            <textarea class="form-control" id="description"></textarea>
+                                            <textarea class="form-control" id="adddescription"></textarea>
                                         </div>
                                     </div>
                                     <div class="wrapper-input-label" id="wrapperInstructions">
@@ -49,7 +57,7 @@
                                             <label>Instructions</label>
                                         </div>
                                         <div class="wrapper-input">
-                                            <textarea class="form-control" id="instru"></textarea>
+                                            <textarea class="form-control" id="addinstru"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +68,7 @@
                             <div id="categoryWrapper" class="wrapper-inputLabel-productModal categoryList modal-single-wrapper">
                                 <div class="availableTags">
                                     <div class="left-available-wrapper" id="">
-                                        <p>Catégories non-attribuées</p>
+                                        <p>Ingrédients non-attribués</p>
                                         <div class="list-group categoryAvailableList" id="categoryAvailableList">
                                             <!-- INGRÉDIENTS -->
                                         </div>
@@ -73,7 +81,7 @@
                                 </div>
                                 <div class="choosenTags">
                                     <div class="right-choosen-wrapper">
-                                        <p>Catégories attribuées</p>
+                                        <p>Ingrédients attribués</p>
                                         <div class="list-group categoryAttributedList" id="categoryAttributedList">
 
                                         </div>
@@ -83,7 +91,7 @@
                             </div>
                             <div class="wrapper-input-label" id="wrapperVedette">
 
-                                <label><input type="checkbox"id="custom"/><span>Recette personnalisée</span></label>
+                                <label><input type="checkbox"id="addcustom" name="addcustom"/><span>Recette personnalisée</span></label>
                             </div>
                         </div>
 
@@ -104,23 +112,29 @@
             <div class="modal-content">
                 <form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST" id="formProduct">
                     <div class="modal-header">
-                        <h5 class="modal-title">Ajout d'une recette</h5>
+                        <h5 class="modal-title">Modification d'une recette</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                     </div>
                     <div class="modal-body">
                         <div id="addProductSuccessAlert" class="alert alert-success fade" role="alert">
-                            Recette ajoutée avec succès!
+                            Recette modifiée avec succès!
                         </div>
                         <div class="addProductFields">
                             <div class="">
                                 <div class="">
                                     <div class="">
                                         <label>Produit créé par la recette :</label>
-                                        <select name="" id="">
-                                            <option value="1">Produit Test A</option>
-                                        </select>
+                                        <label id="labelName"></label>
+                                    </div>
+                                    <div class="wrapper-input-label" id="wrapperDescription">
+                                        <div class="wrapper-label">
+                                            <label>Nom de la recette</label>
+                                        </div>
+                                        <div class="wrapper-input">
+                                            <input class="form-control" id="name"></input>
+                                        </div>
                                     </div>
                                     <div class="wrapper-input-label" id="wrapperDescription">
                                         <div class="wrapper-label">
@@ -146,7 +160,7 @@
                             <div id="categoryWrapper" class="wrapper-inputLabel-productModal categoryList modal-single-wrapper">
                                 <div class="availableTags">
                                     <div class="left-available-wrapper" id="">
-                                        <p>Catégories non-attribuées</p>
+                                        <p>Ingrédients non-attribués</p>
                                         <div class="list-group categoryAvailableList" id="categoryAvailableList">
                                             <!-- INGRÉDIENTS -->
                                         </div>
@@ -159,7 +173,7 @@
                                 </div>
                                 <div class="choosenTags">
                                     <div class="right-choosen-wrapper">
-                                        <p>Catégories attribuées</p>
+                                        <p>Ingrédients attribués</p>
                                         <div class="list-group categoryAttributedList" id="categoryAttributedList">
 
                                         </div>
@@ -231,8 +245,34 @@
         <script src="./javascript/tableProducts.js"></script>
         <script src="http://malsup.github.com/jquery.form.js"></script>
         <script>
+            function nameChange(select) {
+                console.log(select);
+                let name = select.options[select.selectedIndex];
+                let input = document.getElementById("addname");
+                input.value = name.innerHTML;
+            }
+
             function loading() {
-                /*
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/loadSelectPromo",
+                    method: "POST",
+
+                    success: function(response) {
+                        console.log(response);
+                        $('#produitsCrees').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
+
+                $('.addProduct').submit(function(e) {
+                    e.preventDefault();
+                    addRecipe();
+                });
+
                 $.ajax({
                     url: "http://localhost:5000/ajaxRequest/manageRecipe",
                     method: "POST",
@@ -246,7 +286,43 @@
                         alert("Erreur");
                     }
                 });
-                */
+
+                $('.addProduct').submit(function(e) {
+                    e.preventDefault();
+                    addRecipe();
+                });
+
+            }
+
+            function addRecipe() {
+                let id_product = $("#produitsCrees").children(":selected").attr("id");;
+                let description = document.getElementById("adddescription").value;
+                let instructions = document.getElementById("adddescription").value;
+                console.log($('input[name=addcustom]').prop('checked'));
+                let custom;
+                let name = document.getElementById("addname").value;;
+
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/addRecipeHandler",
+                    method: "POST",
+                    data: {
+                        name: id_product,
+                        desc: description,
+                        instru: instructions,
+                        is_custom: custom,
+                        product: name,
+                        ingre: "ingre"
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
             }
 
             function openRecipe(id) {

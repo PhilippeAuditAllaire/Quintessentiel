@@ -7,13 +7,15 @@ class MgrRecipe {
 
     addRecipe(name, desc, instru, is_custom, product, ingre) {
 
-        let query = "INSERT INTO recipe (description, instruction, isCustom, productName) VALUES (?, ?, b?, ?)";
-        let param = [desc, instru, is_custom, product];
+        let query = "INSERT INTO recipe (id,description, instruction, isCustom, productName) VALUES (?, ?, ?, b?, ?)";
+        let param = [name, desc, instru, is_custom, product];
         let currentQueryEngine = this._queryEngine;
         return this._queryEngine.executeQuery(query, param).then(function(res) {
             let lastid = res.insertId;
             console.log(ingre);
+            console.log(res);
 
+            /*
             ingre.forEach(function(ing) {
                 console.log(lastid);
                 let query2 = "INSERT INTO ta_ingredients_recipe (idIngredient, idRecipe) VALUES (?,?)";
@@ -23,7 +25,7 @@ class MgrRecipe {
                     console.log(res);
                 });
             });
-
+            */
         }).then(function() {
             return true;
         }).catch(function() {
