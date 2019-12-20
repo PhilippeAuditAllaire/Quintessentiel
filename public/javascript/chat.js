@@ -2,6 +2,8 @@ let clientChat = document.getElementById("clientChat");
 let chatTopbar = document.getElementById("chatTopbar");
 let isChatWindowOpened = false;
 let isConversationEnded = false;
+let isConversationStarted = false;
+
 var reText=/^[0-9 a-zàâçéèêëîïôûùüÿñæœ ,.'-]+$/i;
 let sound = new Audio("./audio/notif.mp3");
 
@@ -27,12 +29,14 @@ var socket = io.connect('/client');
 let btnStartChat = document.getElementById("btnStartChat");
 
 btnStartChat.addEventListener("click", () => {
+	
     let startInputName = document.getElementById("startInputName").value;
     let startQuestion = document.getElementById("startQuestion").value;
 
     if (reText.test(startInputName) && reText.test(startQuestion)) {
         socket.emit("startDiscussion", { username: startInputName, question: startQuestion })
         showChatBodyDiscussion();
+        isConversationStarted = true;
         document.getElementById("closeChat").style.display = "block";
     }
 });
