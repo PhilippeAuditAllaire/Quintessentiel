@@ -16,6 +16,7 @@ socket.on("startDiscussion",(data) =>{
 
 socket.on("incomingMessage",(message) =>{
 	insertIncomingMessage(message);
+	generateNotification(message);
 });
 
 
@@ -33,7 +34,6 @@ socket.on("userDisconnected", (infos) => {
 })
 
 socket.on("deleteConversation", (infos) => {
-	console.log("A conversation has been deleted");
 	deleteHTMLConversation(infos);
 })
 
@@ -99,6 +99,9 @@ function addNewDiscussion(userInfos)
 	pActivity.appendChild(spanActivity);
 
 
+	let notifBell = document.createElement("div");
+	notifBell.classList.add("notification-bell")
+    linkTab.appendChild(notifBell)
 
  	//Wrapp it all up
 	pActivity.appendChild(spanActivity);
@@ -128,7 +131,7 @@ function addNewDiscussion(userInfos)
     	socketId: userInfos.socketId,
     	isDisconnected: (userInfos.isActive ? 0 : 1)
     })
-    
+
     if(allConnectedClients.length <= 1)
     {
     	linkTab.click()	
@@ -180,11 +183,12 @@ function switchPane(pane)
 	}
 
 
+
 	let clickedPane = $(pane).closest(".single-contact")[0];
 	clickedPane.classList.add("selectedPane")
 
 	let panelRoomId = clickedPane.getAttribute("data-roomId");
-
+	removeNotificationBell(panelRoomId);
 
 	currentRoomId = panelRoomId;
 }
@@ -211,7 +215,6 @@ document.getElementById("inputMsg").addEventListener('keypress', function(e) {
 //Sends a message
 function sendMessage()
 {
-	console.log("sdf")
 	let messageInput = document.getElementById("inputMsg")
 	let message = messageInput.value;
 
@@ -490,4 +493,47 @@ function disableCloseConversationBtn()
 {
 	let btnCloseConverstation = document.getElementById("btnCloseConverstation")
 	btnCloseConverstation.setAttribute("disabled","disabled");
+}
+
+//Generates the notifications when a new
+//message arrives
+function generateNotification(infos)
+{
+	console.log("INFOS")
+	console.log(infos)
+	let newMsgRoomId = infos.chatRoomId;
+	let sound = new Audio("./audio/notif.mp3");
+	//sound.play();
+	//If the message doesnt go in the panel the
+	//user is currently in
+	if(newMsgRoomId != currentRoomId)
+	{
+		let bloc = document.getElementsByClassName("single-contact");
+
+		for(let i = 0;i < bloc.length;i++)
+		{
+
+			if(bloc[i].getAttribute("data-roomid") == newMsgRoomId){
+				bloc[i].getElementsByClassName("notification-bell")[0].classList.add("show");
+			}
+		}
+	}
+}
+
+
+//Removes the notification bell from the left bloc if any
+function removeNotificationBell(roomId)
+{
+	if(roomId != currentRoomId)
+	{
+		let bloc = document.getElementsByClassName("single-contact");
+
+		for(let i = 0;i < bloc.length;i++)
+		{
+
+			if(bloc[i].getAttribute("data-roomid") == roomId){
+				bloc[i].getElementsByClassName("notification-bell")[0].classList.remove("show");
+			}
+		}
+	}
 }
