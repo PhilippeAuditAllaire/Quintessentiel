@@ -118,7 +118,6 @@ class MgrChat {
     //sent by an admin
     insertNewMessage(infos,isAdmin)
     {
-        console.log(infos)
         let query = `INSERT INTO chatroommessage
                     (id,idChatRoom,idSender,message,isAdmin,dhMsg)
                     VALUES (DEFAULT,?,?,?,?,NOW())`;
@@ -129,6 +128,18 @@ class MgrChat {
 
         let param = [infos.roomId,infos.userId,infos.message,isAdmin]
 
+
+        return this._queryEngine.executeQuery(query,param);
+    }
+
+    //Closes a convesation for the given
+    //roomId
+    //@roomId is the id of the room
+    //that need to be closed
+    closeConversation(roomId)
+    {
+        let query = "UPDATE chatroom SET isClosed = 1 WHERE roomId = ?";
+        let param = [roomId];
 
         return this._queryEngine.executeQuery(query,param);
     }

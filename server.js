@@ -885,8 +885,6 @@ nspClient.on('connection', function(socket) {
 
     //If the user is already in a chat room
     if (chatRoomId != undefined) {
-        console.log("DÉJÀ CONNECTED!")
-        console.log(chatRoomId)
         let ctrlChat = new CtrlChat();
 
         //Emit the new socketID to the admins
@@ -1054,21 +1052,21 @@ nspAdmin.on('connection', function(socket) {
     });
 
     //Deletes the converstaion and can send it by email 
-    socket.on("deleteConversation", (param) => {
+    socket.on("closeConversation", (param) => {
 
         let ctrlChat = new CtrlChat();
 
         //If the admin wants it by email
         if (param.sendEmail) {
-            console.log("SENDING AN EMAIL")
             ctrlChat.sendDiscussionByEmail(param.roomId, param.email).then(function() {
-                //Delete the conversation from the database
-                ctrlChat.deleteConversation(param.roomId);
+                
+                //Closes the conversation
+                ctrlChat.closeConversation(param.roomId);
             })
         } else { //If there is no email to send
 
-            //Delete the conversation from the database
-            ctrlChat.deleteConversation(param.roomId);
+            //Closes the conversation
+            ctrlChat.closeConversation(param.roomId);
         }
 
         //Tells the user the conversation has ended

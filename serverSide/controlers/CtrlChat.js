@@ -221,6 +221,13 @@ class CtrlChat{
 
     }
 
+    //Closes the convesation for 
+    //a given room Id
+    closeConversation(roomId)
+    {
+       return this._mgrChat.closeConversation(roomId);
+    }
+
 
 }
 

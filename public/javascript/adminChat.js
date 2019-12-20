@@ -435,11 +435,11 @@ function deleteHTMLConversation(infos)
 }
 
 
-//Deletes the conversation and sends a copy 
+//Closes the conversation and sends a copy 
 //by email
 function deleteConversation(sendEmail)
 {
-	socket.emit("deleteConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
+	socket.emit("closeConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
 	$("#modalEmail").modal("hide");
 
 	currentRoomId = undefined;
