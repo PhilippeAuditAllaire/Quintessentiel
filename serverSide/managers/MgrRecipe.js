@@ -36,7 +36,7 @@ class MgrRecipe {
     updateRecipe(id, name, desc, instru, is_custom, product, ingre) {
         console.log(id);
         let query = "UPDATE recipe SET description = ?, instruction = ?,  isCustom =b?,  productName = ? WHERE id = ?";
-        let param = [desc, instru, is_custom, product, id];
+        let param = [desc, instru, is_custom, name, id];
         let currentQueryEngine = this._queryEngine;
         return this._queryEngine.executeQuery(query, param).then(function(res) {
             console.log(res);
@@ -45,6 +45,7 @@ class MgrRecipe {
             let paramDel = [id];
             currentQueryEngine.executeQuery(queryDel, paramDel).then(function(res) {
                 console.log("delete ingre");
+                /*
                 ingre.forEach(function(ing) {
 
                     let query2 = "INSERT INTO ta_ingredients_recipe (idIngredient, idRecipe) VALUES (?,?)";
@@ -54,6 +55,7 @@ class MgrRecipe {
                         console.log(res);
                     });
                 });
+                */
             }).then(function() {
                 console.log(res);
 
