@@ -7,6 +7,7 @@ let allConnectedClients = [];
 
 
 socket.on("startDiscussion",(data) =>{
+	console.log(data)
 	data.isActive = 1;
 
 	addNewDiscussion(data);
@@ -125,7 +126,7 @@ function addNewDiscussion(userInfos)
     	roomId: userInfos.roomId,
     	username: userInfos.username,
     	socketId: userInfos.socketId,
-    	isDisconnected: false
+    	isDisconnected: (userInfos.isActive ? 0 : 1)
     })
     
     if(allConnectedClients.length <= 1)
