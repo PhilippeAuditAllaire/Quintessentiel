@@ -320,8 +320,16 @@
     }
 }
 
+.btn-primary{
+    border:0;
+}
+
 .btn-primary:disabled{
     background-color: #e0e0e0;
     border:gray;
+}
+
+.btn-primary:hover{
+    background-color: #453F3F;
 }
 
