@@ -75,7 +75,7 @@ socket.on("incomingMessage", (messageInfos) => {
     console.log("incomingMessage!")
     console.log(messageInfos)
     displayMessage(messageInfos.message, messageInfos.isAdmin)
-    sound.play();
+
 });
 
 socket.on("discussionAlreadyStarted", (informations) => {
@@ -123,6 +123,7 @@ function displayMessage(message, isAdmin) {
     if (isAdmin) {
         pUsername.innerHTML = "Admin"
         divSingleMsg.classList.add("wrapperMsgAdmin");
+        sound.play();
     } else { //If the message comes from the user himself
         pUsername.innerHTML = "Vous"
         divSingleMsg.classList.add("wrapperMsgClient");
