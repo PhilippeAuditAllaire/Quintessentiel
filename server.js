@@ -1058,7 +1058,7 @@ nspAdmin.on('connection', function(socket) {
 
         //If the admin wants it by email
         if (param.sendEmail) {
-            ctrlChat.sendDiscussionByEmail(param.roomId, param.email).then(function() {
+            ctrlChat.sendDiscussionByEmail(param.roomId, param.sendToEmail).then(function() {
                 
                 //Closes the conversation
                 ctrlChat.closeConversation(param.roomId);
