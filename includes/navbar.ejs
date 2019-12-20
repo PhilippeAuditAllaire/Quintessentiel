@@ -11,7 +11,7 @@
     });
 </script>
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <!-- Forgot password modal -->
+    <!-- copy email modal -->
     <div class="modal fade" id="modalEmail" tabindex="-1" role="dialog" >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -41,6 +41,33 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="modal fade" id="modalCloseChat"  role="dialog" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Fermer la conversation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrapper-modal-forgot">
+                    <p class="success-request" id="success-request"></p>
+                    <p class="error-request" id="error-request"></p>
+                    <div class="modal-input-label">
+                        <div class="modal-lbl">
+                            <label>Voulez-vous fermer la conversation?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnResetChat" type="button" class="btn btn-primary btn-success">Oui</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+            </div>
+            </div>
+        </div>
     </div>
     <a class="navbar-brand" href="index"><img src="./images/logo.png" alt="Logo de l'entreprise" /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -305,6 +332,7 @@
 <div id="clientChat"> <!-- Chat -->
     <div id="chatTopbar"> <!-- Chat title bar -->
         Discussion instantannée
+        <a href="#" class="closeChat" id="closeChat">&times;</a>
     </div>
     <div id="chatBody"> <!-- Chat body -->
         <div id="chatBodyStartDiscussion">  <!-- Chat first panel -->
@@ -314,7 +342,7 @@
             </div>
             <div class="chat-labelInput-wrapper">
                 <label>Message/Question</label>
-                <textarea class="form-control" id="startQuestion"></textarea>
+                <textarea class="form-control" id="startQuestion" placeholder="Entrez votre question"></textarea>
             </div>
             <button id="btnStartChat" type="button" class="btn btn-success">Commencer</button>
         </div>  

@@ -177,6 +177,7 @@
 .wrapperSingleMessage {
     display: flex;
     margin-top: 15px;
+    overflow-wrap: break-word;
 }
 
 .wrapperMsgClient {

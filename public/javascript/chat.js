@@ -2,6 +2,7 @@ let clientChat = document.getElementById("clientChat");
 let chatTopbar = document.getElementById("chatTopbar");
 let isChatWindowOpened = false;
 let isConversationEnded = false;
+var reText=/^[0-9 a-zàâçéèêëîïôûùüÿñæœ ,.'-]+$/i;
 
 //When clicking on the chat topbar
 chatTopbar.addEventListener("click", toggleChatWindow)
@@ -28,9 +29,10 @@ btnStartChat.addEventListener("click", () => {
     let startInputName = document.getElementById("startInputName").value;
     let startQuestion = document.getElementById("startQuestion").value;
 
-    if (startInputName != "" && startQuestion != "") {
+    if (reText.test(startInputName) && reText.test(startQuestion)) {
         socket.emit("startDiscussion", { username: startInputName, question: startQuestion })
         showChatBodyDiscussion();
+        document.getElementById("closeChat").style.display = "block";
     }
 });
 
@@ -39,18 +41,26 @@ let btnSendMessage = document.getElementById("btnChatSendMessage");
 
 btnSendMessage.addEventListener("click", () => {
     sendMessage();
+    document.getElementById("sendMessage").focus();
 })
 
 $('#sendMessage').on('keypress', function(e) {
     if (e.which === 13) {
 
+        event.preventDefault();
         //Disable textbox to prevent multiple submit
         $(this).attr("disabled", "disabled");
+        
 
         sendMessage();
 
         //Enable the textbox again if needed.
         $(this).removeAttr("disabled");
+
+        $("#sendMessage").val('');
+        document.getElementById("sendMessage").focus();
+        console.log($("#sendMessage").val());
+
     }
 });
 
@@ -61,7 +71,7 @@ function sendMessage() {
         let message = messageInput.value;
 
         //If the message contains something
-        if (message != "") {
+        if (reText.test(message)) {
             socket.emit("sendMessage", { message: message });
             messageInput.value = "";
         }
@@ -137,6 +147,9 @@ function displayMessage(message, isAdmin) {
     divSingleMsg.appendChild(msgWrapper);
 
     chatWindow.appendChild(divSingleMsg);
+
+    let chatScroll = document.getElementById("chatMessageBox");
+    chatScroll.scrollTop = chatScroll.scrollHeight;
 }
 
 //Shows the chat panel instead of the start discussion panel
@@ -171,4 +184,23 @@ btnSendEmail.addEventListener("click",() =>{
 
 
 	$(modalEmail).modal("hide");
+});
+
+//Modal To close the chat
+let closeChat = document.getElementById("closeChat");
+
+closeChat.addEventListener("click", function(e){
+    e.preventDefault();
+	let modalCloseChat = document.getElementById("modalCloseChat");
+	$(modalCloseChat).modal();
+});
+
+//button reset chat
+let btnResetChat = document.getElementById("btnResetChat");
+
+btnResetChat.addEventListener("click",() =>{
+
+
+	popup("Conversation supprimée!");
+	$(modalCloseChat).modal("hide");
 });
