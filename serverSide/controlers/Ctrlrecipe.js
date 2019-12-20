@@ -25,14 +25,14 @@ class CtrlRecipe {
             let html = [];
 
             val.forEach(function(ingre) {
-                let ele = '<tr onclick="openRecipe(' + ingre.id + ')">';
-                ele += '<th>' + ingre.productName + '</th>';
-                ele += '<th>' + ingre.description + '</th>';
-                ele += '<th>' + ingre.instruction + '</th>';
+                let ele = '<tr onclick="openRecipe(this,' + ingre.id + ')">';
+                ele += '<th class="productName">' + ingre.productName + '</th>';
+                ele += '<th class="desc">' + ingre.description + '</th>';
+                ele += '<th class="instru">' + ingre.instruction + '</th>';
                 if (ingre.isCustom == '0') {
-                    ele += '<th> Non </th>';
+                    ele += '<th class="custom">Non</th>';
                 } else {
-                    ele += '<th> Oui </th>';
+                    ele += '<th class="custom">Oui</th>';
                 }
                 ele += '</tr>';
                 html.push(ele);

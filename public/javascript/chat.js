@@ -2,7 +2,9 @@ let clientChat = document.getElementById("clientChat");
 let chatTopbar = document.getElementById("chatTopbar");
 let isChatWindowOpened = false;
 let isConversationEnded = false;
+
 var reText=/^[0-9 a-zàâçéèêëîïôûùüÿñæœ ,.'-]+$/i;
+let sound = new Audio("./audio/notif.mp3");
 
 //When clicking on the chat topbar
 chatTopbar.addEventListener("click", toggleChatWindow)
@@ -67,7 +69,7 @@ $('#sendMessage').on('keypress', function(e) {
 function sendMessage() {
     if (!isConversationEnded) //If the conversation is still going
     {
-    	let messageInput = document.getElementById("sendMessage")
+        let messageInput = document.getElementById("sendMessage")
         let message = messageInput.value;
 
         //If the message contains something
@@ -81,9 +83,13 @@ function sendMessage() {
 }
 
 socket.on("incomingMessage", (messageInfos) => {
-    console.log("incomingMessage!")
-    console.log(messageInfos)
     displayMessage(messageInfos.message, messageInfos.isAdmin)
+
+    //If the message comes from an admin
+    if(messageInfos.isAdmin){
+    	sound.play();
+    }
+    
 });
 
 socket.on("discussionAlreadyStarted", (informations) => {
@@ -165,22 +171,21 @@ function showChatBodyDiscussion() {
 let emailCopy = document.getElementById("emailCopy");
 
 
-emailCopy.addEventListener("click",() =>{
-	let modalEmail = document.getElementById("modalEmail");
-	$(modalEmail).modal();
+emailCopy.addEventListener("click", () => {
+    let modalEmail = document.getElementById("modalEmail");
+    $(modalEmail).modal();
 });
 
 //Button that
 let btnSendEmail = document.getElementById("btnSendEmail");
 
-btnSendEmail.addEventListener("click",() =>{
-	let sendEmailValue = document.getElementById("sendEmail").value;
+btnSendEmail.addEventListener("click", () => {
+    let sendEmailValue = document.getElementById("sendEmail").value;
 
-	if(sendEmailValue != "")
-	{
-		socket.emit("sendEmailCopy",{email:sendEmailValue})
-		popup("Courriel envoyé!");		
-	}
+    if (sendEmailValue != "") {
+        socket.emit("sendEmailCopy", { email: sendEmailValue })
+        popup("Courriel envoyé!");
+    }
 
 
 	$(modalEmail).modal("hide");
@@ -203,4 +208,5 @@ btnResetChat.addEventListener("click",() =>{
 
 	popup("Conversation supprimée!");
 	$(modalCloseChat).modal("hide");
+    $(modalEmail).modal("hide");
 });
