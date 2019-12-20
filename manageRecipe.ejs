@@ -99,7 +99,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter">
+                        <input type="submit" class="btn btn-success" id="btnSend" value="Ajouter" onclick="addB()">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     </div>
             </div>
@@ -191,7 +191,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-success" id="btnSend" value="Modifier">
+                        <input type="submit" value="f" class="hidden">
+                        <button type="button" class="btn btn-success" id="btnSendUpdate" onclick="update()">Modifier</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     </div>
             </div>
@@ -241,12 +242,13 @@
         <script src="./javascript/renderer.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="./javascript/listbox.js"></script>
-        <script src="./javascript/tableProducts.js"></script>
+
         <script src="http://malsup.github.com/jquery.form.js"></script>
         <script>
+            let openedRecipe;
+
             function nameChange(select) {
-                console.log(select);
+
                 let name = select.options[select.selectedIndex];
                 let input = document.getElementById("addname");
                 input.value = name.innerHTML;
@@ -259,7 +261,7 @@
                     method: "POST",
 
                     success: function(response) {
-                        console.log(response);
+
                         $('#produitsCrees').html(response);
                     },
                     error: function(response) {
@@ -268,24 +270,10 @@
                     }
                 });
 
-                $('.addProduct').submit(function(e) {
-                    e.preventDefault();
-                    addRecipe();
-                });
+                loadAll();
+            }
 
-                $.ajax({
-                    url: "http://localhost:5000/ajaxRequest/manageRecipe",
-                    method: "POST",
-
-                    success: function(response) {
-                        console.log(response);
-                        $('#recipes').html(response);
-                    },
-                    error: function(response) {
-                        console.log(response);
-                        alert("Erreur");
-                    }
-                });
+            function addB() {
 
                 $('.addProduct').submit(function(e) {
                     e.preventDefault();
@@ -294,12 +282,36 @@
 
             }
 
+            function loadAll() {
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/manageRecipe",
+                    method: "POST",
+
+                    success: function(response) {
+
+                        $('#recipes').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
+
+
+            }
+
             function addRecipe() {
                 let id_product = $("#produitsCrees").children(":selected").attr("id");;
                 let description = document.getElementById("adddescription").value;
-                let instructions = document.getElementById("adddescription").value;
-                console.log($('input[name=addcustom]').prop('checked'));
+                let instructions = document.getElementById("addinstru").value;
+
                 let custom;
+                if ($('input[name=addcustom]').prop('checked')) {
+                    custom = 1;
+                } else {
+                    custom = 0;
+                }
                 let name = document.getElementById("addname").value;;
 
 
@@ -325,10 +337,88 @@
                 });
             }
 
-            function openRecipe(id) {
-                console.log(id);
+            function openRecipe(line, id) {
+                console.log(line);
+
+                openedRecipe = id;
                 let updateModal = document.getElementById("updateModal");
                 $("#updateModal").modal();
+                emptyFields();
+                fillFields(line);
+            }
+
+            function emptyFields() {
+                document.getElementById("labelName").value = "";
+                document.getElementById("name").value = "";
+                document.getElementById("description").value = "";
+                document.getElementById("instru").value = "";
+                $("#custom").prop("checked", false);
+            }
+
+            function emptyIngredients() {
+                /*
+                    TODO   
+                */
+            }
+
+            function fillIngredients(id) {
+                /*
+                    TODO
+                */
+            }
+
+            function fillFields(line) {
+                document.getElementById("name").value = line.getElementsByClassName("productName")[0].innerHTML;
+                document.getElementById("description").value = line.getElementsByClassName("desc")[0].innerHTML;
+                document.getElementById("instru").value = line.getElementsByClassName("instru")[0].innerHTML;
+                console.log("d" + line.getElementsByClassName("custom")[0].innerHTML)
+                if (line.getElementsByClassName("custom")[0].innerHTML == 'Oui') {
+                    $("#custom").prop("checked", true);
+                    console.log("hey");
+
+                } else {
+                    $("#custom").prop("checked", false);
+
+                }
+            }
+
+            function update() {
+
+                let description = document.getElementById("description").value;
+                let instructions = document.getElementById("instru").value;
+                console.log($("#custom").prop("checked"));
+
+                let custom;
+                if ($("#custom").prop("checked")) {
+                    custom = 1;
+                } else {
+                    custom = 0;
+                }
+                let name = document.getElementById("name").value;;
+
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/updateRecipeHandler",
+                    method: "POST",
+                    data: {
+                        id: openedRecipe,
+                        name: name,
+                        desc: description,
+                        instru: instructions,
+                        is_custom: custom,
+                        product: name,
+                        ingre: "ingre"
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
+
             }
 
             function add() {

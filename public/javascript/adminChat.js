@@ -125,7 +125,8 @@ function addNewDiscussion(userInfos)
     allConnectedClients.push({
     	roomId: userInfos.roomId,
     	username: userInfos.username,
-    	socketId: userInfos.socketId
+    	socketId: userInfos.socketId,
+    	isDisconnected: (userInfos.isActive ? 0 : 1)
     })
     
     if(allConnectedClients.length <= 1)
@@ -346,10 +347,24 @@ function userDisconnected(infos)
 {
 	let userRoomId = infos.roomId;
 
+
 	showDisconnectedLabel(userRoomId);
 	showUserDisconnectedBanner(userRoomId);
+	setDisconnectedProperty(userRoomId);
 }
 
+
+//Sets the property of the user from the user list
+function setDisconnectedProperty(userRoomId)
+{
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		if(allConnectedClients[i].roomId == userRoomId)
+		{
+			allConnectedClients[i].isDisconnected = true;
+		}
+	}
+}
 
 //Changes the state of the user in the left bloc
 function showDisconnectedLabel(userRoomId)
@@ -439,11 +454,26 @@ function deleteHTMLConversation(infos)
 //by email
 function deleteConversation(sendEmail)
 {
-	socket.emit("closeConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
+	let isSocketDisconnected = getIsDisconnected(currentRoomId);
+
+	socket.emit("closeConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com",deleteDBEntriesAfter:isSocketDisconnected})
 	$("#modalEmail").modal("hide");
 
 	currentRoomId = undefined;
 	disableCloseConversationBtn();
+}
+
+//gets the isDisconnected property from 
+//the given room
+function getIsDisconnected(roomId)
+{
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		if(allConnectedClients[i].roomId == roomId)
+		{
+			return allConnectedClients[i].isDisconnected;
+		}
+	}
 }
 
 //Enables the close conversation button

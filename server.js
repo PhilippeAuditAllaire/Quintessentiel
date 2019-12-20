@@ -971,9 +971,6 @@ nspClient.on('connection', function(socket) {
     //When the conversation has ended
     socket.on("conversationEnded", () => {
 
-        //Delete the chatRoomId Session
-        socket.handshake.session.chatRoomId = undefined;
-        socket.handshake.session.save();
 
     });
 
@@ -986,15 +983,26 @@ nspClient.on('connection', function(socket) {
         for (let i = 0; i < allRooms.length; i++) {
             if (allRooms[i].roomId == roomId) {
                 let timeoutDisconnect = setTimeout(() => {
+                    let ctrlChat = new CtrlChat();
+
                     //Tell the admins the user is disconnected
                     io.of("admin").emit("userDisconnected", { roomId: roomId });
+
+                    //If the user needs to delete the DB entries when leaving
+                    if(allRooms[i].deleteDbAfterLeave != undefined)
+                    {
+                        console.log("SUPPRESSION DU CONTENU DE LA BD")
+                        //Delete all the entries related to this conversation
+                        ctrlChat.deleteConversation(roomId);
+                    }
+
 
                     //Remove his chat room id
                     socket.handshake.session.chatRoomId = undefined;
                     socket.handshake.session.save();
 
                     //Update de database status
-                    let ctrlChat = new CtrlChat();
+                    
                     ctrlChat.updateRoomStatus(roomId, 0);
 
                 }, 5000);
@@ -1068,6 +1076,26 @@ nspAdmin.on('connection', function(socket) {
             //Closes the conversation
             ctrlChat.closeConversation(param.roomId);
         }
+
+        //if the user is still connected, wait for him to leave
+        //before deleting the database entries
+        if(param.deleteDBEntriesAfter == false)
+        {
+            console.log("TELLING THE USER TO DELETE THE CONVERSATION AFTER HE LEAVES")
+            //Tells the user he needs to delete the database entries once he's gone
+            for(let i = 0;i < allRooms.length;i++)
+            {
+                if(allRooms[i].roomId == param.roomId)
+                {
+                    allRooms[i].deleteDbAfterLeave = true;
+                }
+            }            
+        }
+        else{ //If the user is not connected anymore, delte the DB
+            console.log("DELETING THE CONVERSATION")
+            ctrlChat.deleteConversation(param.roomId);
+        }
+
 
         //Tells the user the conversation has ended
         nspClient.to(param.toSocketId).emit("conversationEnded");
