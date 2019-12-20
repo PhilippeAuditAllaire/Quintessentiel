@@ -7,7 +7,6 @@ let allConnectedClients = [];
 
 
 socket.on("startDiscussion",(data) =>{
-	console.log(data)
 	data.isActive = 1;
 
 	addNewDiscussion(data);
@@ -125,7 +124,8 @@ function addNewDiscussion(userInfos)
     allConnectedClients.push({
     	roomId: userInfos.roomId,
     	username: userInfos.username,
-    	socketId: userInfos.socketId
+    	socketId: userInfos.socketId,
+    	isDisconnected: false
     })
     
     if(allConnectedClients.length <= 1)
@@ -346,10 +346,24 @@ function userDisconnected(infos)
 {
 	let userRoomId = infos.roomId;
 
+
 	showDisconnectedLabel(userRoomId);
 	showUserDisconnectedBanner(userRoomId);
+	setDisconnectedProperty(userRoomId);
 }
 
+
+//Sets the property of the user from the user list
+function setDisconnectedProperty(userRoomId)
+{
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		if(allConnectedClients[i].roomId == userRoomId)
+		{
+			allConnectedClients[i].isDisconnected = true;
+		}
+	}
+}
 
 //Changes the state of the user in the left bloc
 function showDisconnectedLabel(userRoomId)
