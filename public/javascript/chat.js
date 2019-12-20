@@ -4,19 +4,17 @@ let isChatWindowOpened = false;
 let isConversationEnded = false;
 
 //When clicking on the chat topbar
-chatTopbar.addEventListener("click",toggleChatWindow)
+chatTopbar.addEventListener("click", toggleChatWindow)
 
 //Opens or closes the chat window
-function toggleChatWindow()
-{
-	if(isChatWindowOpened){ //If the window is opened, close it
-		clientChat.classList.remove("opened");
-		isChatWindowOpened = false;
-	}
-	else{ //if the window is closed, open it
-		clientChat.classList.add("opened");
-		isChatWindowOpened = true;
-	}
+function toggleChatWindow() {
+    if (isChatWindowOpened) { //If the window is opened, close it
+        clientChat.classList.remove("opened");
+        isChatWindowOpened = false;
+    } else { //if the window is closed, open it
+        clientChat.classList.add("opened");
+        isChatWindowOpened = true;
+    }
 }
 
 //Connect to the namespace
@@ -26,117 +24,125 @@ var socket = io.connect('/client');
 //On the start chat button click
 let btnStartChat = document.getElementById("btnStartChat");
 
-btnStartChat.addEventListener("click",() => {
-	let startInputName = document.getElementById("startInputName").value;
-	let startQuestion = document.getElementById("startQuestion").value;
+btnStartChat.addEventListener("click", () => {
+    let startInputName = document.getElementById("startInputName").value;
+    let startQuestion = document.getElementById("startQuestion").value;
 
-	if(startInputName != "" && startQuestion != ""){
-		socket.emit("startDiscussion",{username:startInputName,question:startQuestion})
-		showChatBodyDiscussion();
-	}
+    if (startInputName != "" && startQuestion != "") {
+        socket.emit("startDiscussion", { username: startInputName, question: startQuestion })
+        showChatBodyDiscussion();
+    }
 });
 
 //On the send message button click
 let btnSendMessage = document.getElementById("btnChatSendMessage");
 
-btnSendMessage.addEventListener("click",() => {
-
-	if(!isConversationEnded) //If the converstaion is still going
-	{
-		let message = document.getElementById("sendMessage").value;
-
-		//If the message contains something
-		if(message != ""){
-			socket.emit("sendMessage",{message:message});
-		}
-	}
-	else{ //If it has ended
-		popup("La conversation est fermée.")
-	}
+btnSendMessage.addEventListener("click", () => {
+    sendMessage();
 })
 
+$('#sendMessage').on('keypress', function(e) {
+    if (e.which === 13) {
 
-socket.on("incomingMessage",(messageInfos) =>{
-	console.log("incomingMessage!")
-	console.log(messageInfos)
-	displayMessage(messageInfos.message,messageInfos.isAdmin)
+        //Disable textbox to prevent multiple submit
+        $(this).attr("disabled", "disabled");
+
+        sendMessage();
+
+        //Enable the textbox again if needed.
+        $(this).removeAttr("disabled");
+    }
 });
 
-socket.on("discussionAlreadyStarted",(informations) =>{
-	showChatBodyDiscussion();
-	toggleChatWindow();
-	addAllInformations(informations);
+function sendMessage() {
+    if (!isConversationEnded) //If the converstaion is still going
+    {
+        let message = document.getElementById("sendMessage").value;
+
+        //If the message contains something
+        if (message != "") {
+            socket.emit("sendMessage", { message: message });
+        }
+    } else { //If it has ended
+        popup("La conversation est fermée.")
+    }
+}
+
+socket.on("incomingMessage", (messageInfos) => {
+    console.log("incomingMessage!")
+    console.log(messageInfos)
+    displayMessage(messageInfos.message, messageInfos.isAdmin)
+});
+
+socket.on("discussionAlreadyStarted", (informations) => {
+    showChatBodyDiscussion();
+    toggleChatWindow();
+    addAllInformations(informations);
 })
 
-socket.on("conversationEnded",() =>{
-	
-	socket.emit("conversationEnded");
+socket.on("conversationEnded", () => {
 
-	let p = document.createElement("p");
-	p.classList.add("conversationEndedP")
-	p.innerHTML = "La conversation est terminée.";
+    socket.emit("conversationEnded");
 
-	isConversationEnded = true;
+    let p = document.createElement("p");
+    p.classList.add("conversationEndedP")
+    p.innerHTML = "La conversation est terminée.";
 
-	chatMessageBox.appendChild(p)
+    isConversationEnded = true;
+
+    chatMessageBox.appendChild(p)
 })
 
 //Adds the given informations to the chat window
-function addAllInformations(informations)
-{
-	for(let i = 0;i < informations.messages.length;i++)
-	{
-		let message = informations.messages[i];
-		displayMessage(message.message,message.isAdmin);
-	}
+function addAllInformations(informations) {
+    for (let i = 0; i < informations.messages.length; i++) {
+        let message = informations.messages[i];
+        displayMessage(message.message, message.isAdmin);
+    }
 }
 
 //Displays a message in the chat window
-function displayMessage(message,isAdmin)
-{
-	let chatWindow = document.getElementById("chatMessageBox");
+function displayMessage(message, isAdmin) {
+    let chatWindow = document.getElementById("chatMessageBox");
 
-	let divSingleMsg = document.createElement("div");
-	divSingleMsg.classList.add("wrapperSingleMessage");
-	
-
-	let msgWrapper = document.createElement("div");
-	msgWrapper.classList.add("messageWrapper");
-
-	let pUsername = document.createElement("p");
-	pUsername.classList.add("msgUserName");
-
-	//If the message comes from an admin
-	if(isAdmin){
-		pUsername.innerHTML = "Admin"
-		divSingleMsg.classList.add("wrapperMsgAdmin");
-	}
-	else{ //If the message comes from the user himself
-		pUsername.innerHTML = "Vous"
-		divSingleMsg.classList.add("wrapperMsgClient");
-	}
+    let divSingleMsg = document.createElement("div");
+    divSingleMsg.classList.add("wrapperSingleMessage");
 
 
-	let pMessage = document.createElement("p");
-	pMessage.classList.add("msgUserText");
-	pMessage.innerHTML = message;
+    let msgWrapper = document.createElement("div");
+    msgWrapper.classList.add("messageWrapper");
 
-	msgWrapper.appendChild(pUsername);
-	msgWrapper.appendChild(pMessage);
+    let pUsername = document.createElement("p");
+    pUsername.classList.add("msgUserName");
 
-	divSingleMsg.appendChild(msgWrapper);
+    //If the message comes from an admin
+    if (isAdmin) {
+        pUsername.innerHTML = "Admin"
+        divSingleMsg.classList.add("wrapperMsgAdmin");
+    } else { //If the message comes from the user himself
+        pUsername.innerHTML = "Vous"
+        divSingleMsg.classList.add("wrapperMsgClient");
+    }
 
-	chatWindow.appendChild(divSingleMsg);
+
+    let pMessage = document.createElement("p");
+    pMessage.classList.add("msgUserText");
+    pMessage.innerHTML = message;
+
+    msgWrapper.appendChild(pUsername);
+    msgWrapper.appendChild(pMessage);
+
+    divSingleMsg.appendChild(msgWrapper);
+
+    chatWindow.appendChild(divSingleMsg);
 }
 
 //Shows the chat panel instead of the start discussion panel
 //on the chat bar
-function showChatBodyDiscussion()
-{
-	let chatBodyDiscussion = document.getElementById("chatBodyDiscussion");
-	let chatBodyStartDiscussion = document.getElementById("chatBodyStartDiscussion");
+function showChatBodyDiscussion() {
+    let chatBodyDiscussion = document.getElementById("chatBodyDiscussion");
+    let chatBodyStartDiscussion = document.getElementById("chatBodyStartDiscussion");
 
-	chatBodyStartDiscussion.style.display = "none";
-	chatBodyDiscussion.style.display = "block";
+    chatBodyStartDiscussion.style.display = "none";
+    chatBodyDiscussion.style.display = "block";
 }
-

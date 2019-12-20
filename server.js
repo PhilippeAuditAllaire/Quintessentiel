@@ -103,7 +103,7 @@ website.get("/userConnection", function(req, res) {
     setLang(req);
 
     mgr.getTextByPage("userConnection", req.session.id_lang).then(function(resultat) {
-  
+
         res.render("userConnection.ejs", JSON.parse(resultat));
     });
 });
@@ -197,7 +197,7 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
         let userCustomAddress = req.body.userManualAddressInfos
             //generate the metadata so that we can keep track of what the user bought and at what price
         let metadataPaymentInfos = ctrlCart.generateCartMetadata(JSON.parse(req.session.userCart), req.session.userId, userCustomAddress).then(function(metadata) {
- 
+
             (async() => {
                 const charge = await stripe.charges.create({
                     amount: parseInt(total * 100),
@@ -207,19 +207,14 @@ website.post("/ajaxRequest/stripePayment", function(req, res) {
                     metadata: JSON.parse(metadata),
                 }).then(function() {
                     req.session.userCart = undefined; //reset the user's cart
- 
+
                     res.send(true);
                     res.end();
-<<<<<<< HEAD
-                    console.log("Done!");
+
                 }).catch(function() {
-=======
-           
-                }).catch(function(){
->>>>>>> master
                     res.send(false);
                     res.end();
-                
+
                 });
             })();
         });
@@ -874,55 +869,52 @@ const nspAdmin = io.of('/admin');
 const nspClient = io.of('/client');
 
 
-let allRooms = []; 
+let allRooms = [];
 
 //Shares the session used with express-session
 //to the sockets
 io.of("/client").use(sharedsession(session, {
-    autoSave:true
-})); 
+    autoSave: true
+}));
 
 
 //When the client socket's connected
-nspClient.on('connection', function (socket) {
+nspClient.on('connection', function(socket) {
 
     let chatRoomId = socket.handshake.session.chatRoomId;
 
     //If the user is already in a chat room
-    if(chatRoomId != undefined){
+    if (chatRoomId != undefined) {
         console.log("DÉJÀ CONNECTED!")
         console.log(chatRoomId)
         let ctrlChat = new CtrlChat();
 
         //Emit the new socketID to the admins
-        io.of("admin").emit("updateSocketId",
-        {
+        io.of("admin").emit("updateSocketId", {
             roomId: chatRoomId,
             socketId: socket.id
         });
-        
+
         //Updates the socketId in the DB
-        ctrlChat.updateSocketId(chatRoomId,socket.id);
+        ctrlChat.updateSocketId(chatRoomId, socket.id);
 
         //Load all the informations and messages from the room the user is in
         //and emits it to him (so the chat can keep up through the pages)
-        ctrlChat.getAllRoomInformations(chatRoomId).then(function(infos){
-            socket.emit("discussionAlreadyStarted",infos);  
+        ctrlChat.getAllRoomInformations(chatRoomId).then(function(infos) {
+            socket.emit("discussionAlreadyStarted", infos);
         })
 
         //Tells the server he came back (under a new socket)
-        for(let i = 0;i < allRooms.length;i++)
-        {
-            if(allRooms[i].roomId == chatRoomId)
-            {
-               clearTimeout(allRooms[i].disconnectTimeout);
+        for (let i = 0; i < allRooms.length; i++) {
+            if (allRooms[i].roomId == chatRoomId) {
+                clearTimeout(allRooms[i].disconnectTimeout);
             }
         }
     }
 
 
     //When receiving a start discussion event
-    socket.on("startDiscussion", (data) =>{
+    socket.on("startDiscussion", (data) => {
 
         //Take the user's socket id
         let socketId = socket.id;
@@ -930,7 +922,7 @@ nspClient.on('connection', function (socket) {
 
         //Insert the discussion into the DB
         let ctrlChat = new CtrlChat();
-        ctrlChat.createNewDiscussion({username:data.username,question:data.question,socketId:socketId}).then(function(res){
+        ctrlChat.createNewDiscussion({ username: data.username, question: data.question, socketId: socketId }).then(function(res) {
             //Give the chatroom id to the socket so that it can retrieve it
             //when sending messages
             socket.handshake.session.chatRoomId = res.insertId;
@@ -938,34 +930,33 @@ nspClient.on('connection', function (socket) {
 
 
             //Emit the event to the admins
-            io.of("admin").emit("startDiscussion",
-            {
-                username:data.username,
+            io.of("admin").emit("startDiscussion", {
+                username: data.username,
                 roomId: res.insertId,
-                question:data.question,
-                socketId:socketId
+                question: data.question,
+                socketId: socketId
             });
 
             //Push the created room to the server's room list
-            allRooms.push({roomId: res.insertId,disconnectTimeout:null})
+            allRooms.push({ roomId: res.insertId, disconnectTimeout: null })
         });
 
     });
 
 
     //When receiving a sendMessage event
-    socket.on("sendMessage", (message) =>{
+    socket.on("sendMessage", (message) => {
         let roomId = socket.handshake.session.chatRoomId;
 
         //Emit the even to the admins
-        io.of("admin").emit("incomingMessage",{
+        io.of("admin").emit("incomingMessage", {
             chatRoomId: roomId,
             message: message.message,
             isAdmin: false
         });
 
         //Emits the event to himself
-        socket.emit("incomingMessage",{
+        socket.emit("incomingMessage", {
             message: message.message,
             isAdmin: false
         })
@@ -975,12 +966,12 @@ nspClient.on('connection', function (socket) {
         ctrlChat.insertNewMessage({
             roomId: roomId,
             message: message.message,
-        },false)
+        }, false)
 
     });
 
     //When the conversation has ended
-    socket.on("conversationEnded",() =>{
+    socket.on("conversationEnded", () => {
 
         //Delete the chatRoomId Session
         socket.handshake.session.chatRoomId = undefined;
@@ -989,18 +980,16 @@ nspClient.on('connection', function (socket) {
     });
 
     //When the user disconnects
-    socket.on("disconnect",()=>{
+    socket.on("disconnect", () => {
         let roomId = socket.handshake.session.chatRoomId;
-        
+
         //Find the object that coresponds to this room
         //in the server's list
-        for(let i = 0;i < allRooms.length;i++)
-        {
-            if(allRooms[i].roomId == roomId)
-            {   
+        for (let i = 0; i < allRooms.length; i++) {
+            if (allRooms[i].roomId == roomId) {
                 let timeoutDisconnect = setTimeout(() => {
                     //Tell the admins the user is disconnected
-                    io.of("admin").emit("userDisconnected",{roomId:roomId});
+                    io.of("admin").emit("userDisconnected", { roomId: roomId });
 
                     //Remove his chat room id
                     socket.handshake.session.chatRoomId = undefined;
@@ -1008,9 +997,9 @@ nspClient.on('connection', function (socket) {
 
                     //Update de database status
                     let ctrlChat = new CtrlChat();
-                    ctrlChat.updateRoomStatus(roomId,0);
+                    ctrlChat.updateRoomStatus(roomId, 0);
 
-                },5000);
+                }, 5000);
 
                 allRooms[i].disconnectTimeout = timeoutDisconnect;
             }
@@ -1020,26 +1009,26 @@ nspClient.on('connection', function (socket) {
 });
 
 //When the admin socket's connected
-nspAdmin.on('connection', function (socket) {
-    
+nspAdmin.on('connection', function(socket) {
+
     let ctrlChat = new CtrlChat();
     //Loads all the room that are still active along with all of their
     //informations
-    ctrlChat.getAllActiveRoomsAndInfos().then(function(infos){
-        socket.emit("discussionAlreadyStarted",infos);  
+    ctrlChat.getAllActiveRoomsAndInfos().then(function(infos) {
+        socket.emit("discussionAlreadyStarted", infos);
     })
 
 
-    socket.on("sendMessage",(messageInfos) =>{
+    socket.on("sendMessage", (messageInfos) => {
 
         //Send the message to the client
-        nspClient.to(messageInfos.toSocketId).emit("incomingMessage",{
+        nspClient.to(messageInfos.toSocketId).emit("incomingMessage", {
             message: messageInfos.message,
             isAdmin: true
         });
 
         //Emits the mesage to the admins
-        io.of("admin").emit("incomingMessage",{
+        io.of("admin").emit("incomingMessage", {
             chatRoomId: messageInfos.roomId,
             message: messageInfos.message,
             isAdmin: true
@@ -1052,34 +1041,32 @@ nspAdmin.on('connection', function (socket) {
             roomId: messageInfos.roomId,
             userId: 1, //CHANGE THIS ID TO THE REQ.SESSION.USERID WHEN FINISHED
             message: messageInfos.message,
-        },true)
+        }, true)
     });
 
     //Deletes the converstaion and can send it by email 
-    socket.on("deleteConversation",(param) =>{
+    socket.on("deleteConversation", (param) => {
 
         let ctrlChat = new CtrlChat();
 
         //If the admin wants it by email
-        if(param.sendEmail)
-        {
+        if (param.sendEmail) {
             console.log("SENDING AN EMAIL")
-            ctrlChat.sendDiscussionByEmail(param.roomId,param.email).then(function(){
+            ctrlChat.sendDiscussionByEmail(param.roomId, param.email).then(function() {
                 //Delete the conversation from the database
                 ctrlChat.deleteConversation(param.roomId);
             })
-        }
-        else{ //If there is no email to send
+        } else { //If there is no email to send
 
             //Delete the conversation from the database
             ctrlChat.deleteConversation(param.roomId);
         }
 
         //Tells the user the conversation has ended
-        nspClient.to(param.toSocketId).emit("conversationEnded"); 
+        nspClient.to(param.toSocketId).emit("conversationEnded");
 
         //Emits the mesage to the admins
-        io.of("admin").emit("deleteConversation",{
+        io.of("admin").emit("deleteConversation", {
             roomId: param.roomId,
         });
 
