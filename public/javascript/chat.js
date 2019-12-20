@@ -5,6 +5,8 @@ let isConversationEnded = false;
 let isConversationStarted = false;
 
 var reText=/^[0-9 a-zàâçéèêëîïôûùüÿñæœ ,.'-]+$/i;
+var reEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 let sound = new Audio("./audio/notif.mp3");
 
 //When clicking on the chat topbar
@@ -29,7 +31,7 @@ var socket = io.connect('/client');
 let btnStartChat = document.getElementById("btnStartChat");
 
 btnStartChat.addEventListener("click", () => {
-	
+	isConversationStarted=true;
     let startInputName = document.getElementById("startInputName").value;
     let startQuestion = document.getElementById("startQuestion").value;
 
@@ -38,6 +40,13 @@ btnStartChat.addEventListener("click", () => {
         showChatBodyDiscussion();
         isConversationStarted = true;
         document.getElementById("closeChat").style.display = "block";
+    }else{
+        if(!(reText.test(startInputName))){
+            popup("Entrée éronée dans le champs Nom.")
+        }
+        else if(!(reText.test(startQuestion))){
+            popup("Entrée éronée dans le champs Question.")
+        }
     }
 });
 
@@ -76,7 +85,7 @@ function sendMessage() {
         let message = messageInput.value;
 
         //If the message contains something
-        if (reText.test(message)) {
+        if (message!="") {
             socket.emit("sendMessage", { message: message });
             messageInput.value = "";
         }
@@ -185,12 +194,16 @@ let btnSendEmail = document.getElementById("btnSendEmail");
 btnSendEmail.addEventListener("click", () => {
     let sendEmailValue = document.getElementById("sendEmail").value;
 
-    if (sendEmailValue != "") {
+    if (reEmail.test(sendEmailValue)) {
         socket.emit("sendEmailCopy", { email: sendEmailValue })
         popup("Courriel envoyé!");
+        $(modalEmail).modal("hide");
+    }
+    else{
+        popup("Adresse courriel non-valide.");
     }
 
-	$(modalEmail).modal("hide");
+	
 });
 
 //Modal To close the chat
@@ -207,8 +220,26 @@ let btnResetChat = document.getElementById("btnResetChat");
 
 btnResetChat.addEventListener("click",() =>{
 
-	socket.emit("closeChat");
-	
+    resetChat();
 	popup("Conversation supprimée!");
 	$(modalCloseChat).modal("hide");
 });
+
+function resetChat(){
+    isConversationStarted=false;
+    document.getElementById("chatMessageBox").innerHTML = "";
+    document.getElementById("footerChatBox").innerHTML = "";
+    socket.emit("conversationEnded");
+
+    let p = document.createElement("p");
+    p.classList.add("conversationEndedP")
+    p.innerHTML = "La conversation est terminée. Pour lancer une nouvelle discussion, veuillez recharger la page.";
+
+    isConversationEnded = true;
+    document.getElementById("closeChat").style.display = "none";
+    document.getElementById("sendMessage").style.display = "none";
+
+
+
+    chatMessageBox.appendChild(p)
+};
