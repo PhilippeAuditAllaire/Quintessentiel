@@ -633,12 +633,16 @@ app.post("/ajaxRequest/loadAllText", function(req, res) {
 
 //Application routes
 app.get("/", function(req, res) {
-    //res.redirect("/manageProduct"); //res.redirect("/adminConnection");
-    res.redirect("/adminChat")
+    res.redirect("/adminConnection");
 });
 
 app.get("/adminChat", function(req, res) {
-    res.render("adminChat.ejs");
+    if (req.session.userId != undefined && req.session.isAdmin == 1) {
+        res.render("adminChat.ejs");
+    }
+    else{
+         res.redirect("/adminConnection?pleaseConnect=true");
+    }
 });
 
 app.get("/adminConnection", function(req, res) {

@@ -157,3 +157,9 @@
     width:85%;
     background: #BBD23D;
 }
+
+.msgUserName{
+    text-align: left;
+    position: relative;
+    left:5px;
+}
