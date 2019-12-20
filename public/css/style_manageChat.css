@@ -114,6 +114,7 @@
     padding-left: 5px;
     color: black;
     display: block;
+    transition-duration: 500ms;
 }
 
 .single-contact:hover {
@@ -305,6 +306,12 @@
     font-size:18px;
 }
 
+.selectedPane{
+    transition-duration: 500ms;
+    background-color:#453F3F;
+    color:white;
+}
+
 
 @media screen and (max-width:768px){
 
@@ -312,3 +319,17 @@
         width:300px;
     }
 }
+
+.btn-primary{
+    border:0;
+}
+
+.btn-primary:disabled{
+    background-color: #e0e0e0;
+    border:gray;
+}
+
+.btn-primary:hover{
+    background-color: #453F3F;
+}
+

@@ -18,7 +18,6 @@ socket.on("incomingMessage",(message) =>{
 	insertIncomingMessage(message);
 });
 
-let test;
 
 socket.on("updateSocketId", (infos) => {
 
@@ -26,7 +25,6 @@ socket.on("updateSocketId", (infos) => {
 })
 
 socket.on("discussionAlreadyStarted", (infos) => {
-	test= infos
 	displayAllRoomsAndMessages(infos);
 })
 
@@ -129,6 +127,12 @@ function addNewDiscussion(userInfos)
     	username: userInfos.username,
     	socketId: userInfos.socketId
     })
+    
+    if(allConnectedClients.length <= 1)
+    {
+    	linkTab.click()	
+    }
+    
 }
 
 //Creates the div where all the messages
@@ -157,30 +161,69 @@ function createMessageBox(roomId,isActive){
 //Switches between a discussion to another
 function switchPane(pane)
 {
+	//if there had no selected pane before
+	if(currentRoomId == undefined){
+		enableCloseConversationBtn();
+	}
+	else{ //There was already a selected pane
+
+		//Find the precedently selected pane
+		let allLeftBlocs = document.getElementsByClassName("single-contact");
+		for(let i = 0;i < allLeftBlocs.length;i++)
+		{
+			if(allLeftBlocs[i].getAttribute("data-roomid") == currentRoomId)
+			{
+				allLeftBlocs[i].classList.remove("selectedPane")
+			}
+		}
+	}
+
+
 	let clickedPane = $(pane).closest(".single-contact")[0];
+	clickedPane.classList.add("selectedPane")
+
 	let panelRoomId = clickedPane.getAttribute("data-roomId");
+
 
 	currentRoomId = panelRoomId;
 }
 
 
 //When clicking on the submit button
-let btnSend = document.getElementById("btnSend");
+let wrapperBtnSend = document.getElementById("wrapperBtnSend");
 
-btnSend.addEventListener("click",() =>{
+wrapperBtnSend.addEventListener("click",sendMessage);
 
-	let message = document.getElementById("inputMsg").value;
+document.getElementById("inputMsg").addEventListener('keypress', function(e) {
+    if (e.which === 13) {
+
+        //Disable textbox to prevent multiple submit
+        this.setAttribute("disabled", "disabled");
+
+        sendMessage();
+
+        //Enable the textbox again if needed.
+        this.removeAttribute("disabled");
+    }
+});
+
+//Sends a message
+function sendMessage()
+{
+	console.log("sdf")
+	let messageInput = document.getElementById("inputMsg")
+	let message = messageInput.value;
 
 	//If there is something in the message box
 	if(message != "")
 	{	
 		//Get the socket to which we need to send the message
 		let socketId = getSocketIdFromRoomId(currentRoomId);
-
 		socket.emit("sendMessage",{roomId: currentRoomId,toSocketId: socketId,message: message})
-	}
+		messageInput.value = ""
 
-});
+	}
+}
 
 
 //Gets the socket id from the given
@@ -392,10 +435,27 @@ function deleteHTMLConversation(infos)
 }
 
 
-//Deletes the conversation and sends a copy 
+//Closes the conversation and sends a copy 
 //by email
 function deleteConversation(sendEmail)
 {
-	socket.emit("deleteConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
+	socket.emit("closeConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
 	$("#modalEmail").modal("hide");
+
+	currentRoomId = undefined;
+	disableCloseConversationBtn();
+}
+
+//Enables the close conversation button
+function enableCloseConversationBtn()
+{
+	let btnCloseConverstation = document.getElementById("btnCloseConverstation")
+	btnCloseConverstation.removeAttribute("disabled");
+}
+
+disableCloseConversationBtn()
+function disableCloseConversationBtn()
+{
+	let btnCloseConverstation = document.getElementById("btnCloseConverstation")
+	btnCloseConverstation.setAttribute("disabled","disabled");
 }

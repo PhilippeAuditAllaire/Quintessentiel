@@ -55,13 +55,15 @@ $('#sendMessage').on('keypress', function(e) {
 });
 
 function sendMessage() {
-    if (!isConversationEnded) //If the converstaion is still going
+    if (!isConversationEnded) //If the conversation is still going
     {
-        let message = document.getElementById("sendMessage").value;
+    	let messageInput = document.getElementById("sendMessage")
+        let message = messageInput.value;
 
         //If the message contains something
         if (message != "") {
             socket.emit("sendMessage", { message: message });
+            messageInput.value = "";
         }
     } else { //If it has ended
         popup("La conversation est fermée.")
@@ -146,3 +148,27 @@ function showChatBodyDiscussion() {
     chatBodyStartDiscussion.style.display = "none";
     chatBodyDiscussion.style.display = "block";
 }
+
+let emailCopy = document.getElementById("emailCopy");
+
+
+emailCopy.addEventListener("click",() =>{
+	let modalEmail = document.getElementById("modalEmail");
+	$(modalEmail).modal();
+});
+
+//Button that
+let btnSendEmail = document.getElementById("btnSendEmail");
+
+btnSendEmail.addEventListener("click",() =>{
+	let sendEmailValue = document.getElementById("sendEmail").value;
+
+	if(sendEmailValue != "")
+	{
+		socket.emit("sendEmailCopy",{email:sendEmailValue})
+		popup("Courriel envoyé!");		
+	}
+
+
+	$(modalEmail).modal("hide");
+});

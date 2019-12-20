@@ -155,6 +155,9 @@ class CtrlChat{
     //Send the discussion by email
     sendDiscussionByEmail(roomId,emailAddress)
     {
+      console.log("INFOS TO MAIL")
+      console.log(roomId)
+      console.log(emailAddress)
       return this.getAllRoomInformations(roomId).then((infos) =>{
           let messageHTML = this.formatInfosAsEmail(infos);
 
@@ -219,6 +222,13 @@ class CtrlChat{
 
         return html;
 
+    }
+
+    //Closes the convesation for 
+    //a given room Id
+    closeConversation(roomId)
+    {
+       return this._mgrChat.closeConversation(roomId);
     }
 
 

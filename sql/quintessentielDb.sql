@@ -409,7 +409,8 @@ CREATE TABLE chatroom (
 	username VARCHAR(30),
 	question VARCHAR(100),
 	socketId VARCHAR(500),
-	isActive BOOLEAN DEFAULT 0
+	isActive BOOLEAN DEFAULT 0,
+	isClosed BOOLEAN DEFAULT 0
 );
 
 CREATE TABLE chatroommessage (
