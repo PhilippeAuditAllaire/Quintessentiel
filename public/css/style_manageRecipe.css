@@ -57,3 +57,7 @@ tbody {
 tbody tr:hover {
     background-color: #cfdb8b;
 }
+
+.hidden {
+    display: none;
+}
