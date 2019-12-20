@@ -18,7 +18,6 @@ socket.on("incomingMessage",(message) =>{
 	insertIncomingMessage(message);
 });
 
-let test;
 
 socket.on("updateSocketId", (infos) => {
 
@@ -26,7 +25,6 @@ socket.on("updateSocketId", (infos) => {
 })
 
 socket.on("discussionAlreadyStarted", (infos) => {
-	test= infos
 	displayAllRoomsAndMessages(infos);
 })
 
@@ -165,22 +163,40 @@ function switchPane(pane)
 
 
 //When clicking on the submit button
-let btnSend = document.getElementById("btnSend");
+let wrapperBtnSend = document.getElementById("wrapperBtnSend");
 
-btnSend.addEventListener("click",() =>{
+wrapperBtnSend.addEventListener("click",sendMessage);
 
-	let message = document.getElementById("inputMsg").value;
+document.getElementById("inputMsg").addEventListener('keypress', function(e) {
+    if (e.which === 13) {
+
+        //Disable textbox to prevent multiple submit
+        this.setAttribute("disabled", "disabled");
+
+        sendMessage();
+
+        //Enable the textbox again if needed.
+        this.removeAttribute("disabled");
+    }
+});
+
+//Sends a message
+function sendMessage()
+{
+	console.log("sdf")
+	let messageInput = document.getElementById("inputMsg")
+	let message = messageInput.value;
 
 	//If there is something in the message box
 	if(message != "")
 	{	
 		//Get the socket to which we need to send the message
 		let socketId = getSocketIdFromRoomId(currentRoomId);
-
 		socket.emit("sendMessage",{roomId: currentRoomId,toSocketId: socketId,message: message})
-	}
+		messageInput.value = ""
 
-});
+	}
+}
 
 
 //Gets the socket id from the given
