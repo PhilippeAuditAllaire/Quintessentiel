@@ -71,6 +71,7 @@
 
 .wrapperSingleMessage {
     display: flex;
+    overflow-wrap: break-word;
     margin-top: 15px;
 }
 
@@ -138,4 +139,19 @@
     width: 100%;
     display: flex;
     flex-direction: row-reverse;
+}
+
+.closeChat{
+    display: none;
+    float: right;
+    padding-right:15px;
+    text-decoration: none;
+    color: ivory;
+}
+
+.confirmClose{
+    margin-left: auto;
+    margin-right: auto;
+    width:85%;
+    background: #BBD23D;
 }
