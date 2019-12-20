@@ -1,18 +1,141 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    align-items: center;
+}
+
 #clientChat {
-    border: 1px solid black;
+    width: 15vw;
+    min-width: 300px;
+    position: fixed;
+    z-index: 999;
+    right: 0;
+    bottom: 0;
+    margin-right: 20px;
+    font-size: 20px;
+    text-align: center;
     background-color: white!important;
 }
 
+#chatMessageBox {
+    overflow-y: scroll;
+}
+
+#clientChat.opened #chatBody {
+    max-height: 700px;
+    border-left: 1px solid #453F3F;
+    border-right: 1px solid #453F3F;
+}
+
+#chatBody {
+    max-height: 0;
+    transition-duration: 0.1s;
+}
+
 #chatTopbar {
-    border: 1px solid black;
-    background-color: red;
+    background-color: #453F3F;
+    color: white;
+    cursor: pointer;
 }
 
-#chatBodyStartDiscussion {
-    border: 1px solid black;
+#chatBodyStartDiscussion,
+#chatBodyDiscussion {
+    background-color: white;
+    padding: 10px;
 }
 
-.chat-labelInput-wrapper {
+#chatBodyStartDiscussion .chat-labelInput-wrapper {
     display: flex;
     flex-direction: column;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#chatBodyStartDiscussion button {
+    color: #453f3f;
+}
+
+#chatBodyDiscussion {
+    display: none;
+}
+
+#chatMessageBox {
+    height: 350px;
+    background-color: #ededed;
+}
+
+#btnChatSendMessage {
+    margin-top: 15px;
+}
+
+.wrapperSingleMessage {
+    display: flex;
+    margin-top: 15px;
+}
+
+.wrapperMsgAdmin {
+    justify-content: flex-start;
+}
+
+.wrapperMsgClient .msgUserText {
+    background-color: lightgrey;
+}
+
+.wrapperMsgClient {
+    justify-content: flex-end;
+}
+
+.messageWrapper {
+    width: 70%;
+}
+
+.wrapperMsgAdmin {
+    padding-left: 5%;
+}
+
+.wrapperMsgClient {
+    padding-right: 5%;
+}
+
+.msgUserName {
+    position: relative;
+    left: 10px;
+    color: gray;
+    font-style: italic;
+}
+
+.msgUserText {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #BBD23D;
+}
+
+.messageWrapper p {
+    margin: 0;
+}
+
+.wrapperMsgClient,
+.wrapperMsgAdmin {
+    text-align: left;
+}
+
+.conversationEndedP {
+    color: gray;
+    font-weight: italic;
+}
+
+#btnSaveEmail {
+    background-image: url(./images/icons/email.png);
+    background-size: cover;
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+}
+
+#chatFooter {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
 }

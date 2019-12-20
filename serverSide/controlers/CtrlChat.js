@@ -55,7 +55,7 @@ class CtrlChat{
     {
       //Load all the infos and messages related to the roomId
       return Promise.all([this.getRoomInfos(roomId),this.getMessagesFromRoom(roomId)]).then((infos) =>{
-         
+
           let info = infos[0][0];
           let messages = infos[1];
 
