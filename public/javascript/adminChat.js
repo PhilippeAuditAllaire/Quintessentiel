@@ -454,11 +454,26 @@ function deleteHTMLConversation(infos)
 //by email
 function deleteConversation(sendEmail)
 {
-	socket.emit("closeConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
+	let isSocketDisconnected = getIsDisconnected(currentRoomId);
+
+	socket.emit("closeConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com",deleteDBEntriesAfter:isSocketDisconnected})
 	$("#modalEmail").modal("hide");
 
 	currentRoomId = undefined;
 	disableCloseConversationBtn();
+}
+
+//gets the isDisconnected property from 
+//the given room
+function getIsDisconnected(roomId)
+{
+	for(let i = 0;i < allConnectedClients.length;i++)
+	{
+		if(allConnectedClients[i].roomId == roomId)
+		{
+			return allConnectedClients[i].isDisconnected;
+		}
+	}
 }
 
 //Enables the close conversation button
