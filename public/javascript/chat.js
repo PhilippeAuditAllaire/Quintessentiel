@@ -205,7 +205,8 @@ let btnResetChat = document.getElementById("btnResetChat");
 
 btnResetChat.addEventListener("click",() =>{
 
-
+	socket.emit("closeChat");
+	
 	popup("Conversation supprimée!");
 	$(modalCloseChat).modal("hide");
     $(modalEmail).modal("hide");
