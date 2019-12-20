@@ -2,7 +2,6 @@ let clientChat = document.getElementById("clientChat");
 let chatTopbar = document.getElementById("chatTopbar");
 let isChatWindowOpened = false;
 let isConversationEnded = false;
-
 var reText=/^[0-9 a-zàâçéèêëîïôûùüÿñæœ ,.'-]+$/i;
 let sound = new Audio("./audio/notif.mp3");
 
@@ -187,7 +186,6 @@ btnSendEmail.addEventListener("click", () => {
         popup("Courriel envoyé!");
     }
 
-
 	$(modalEmail).modal("hide");
 });
 
@@ -209,5 +207,4 @@ btnResetChat.addEventListener("click",() =>{
 	
 	popup("Conversation supprimée!");
 	$(modalCloseChat).modal("hide");
-    $(modalEmail).modal("hide");
 });
