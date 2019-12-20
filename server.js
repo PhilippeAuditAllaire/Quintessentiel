@@ -924,6 +924,9 @@ nspClient.on('connection', function(socket) {
 
         //Insert the discussion into the DB
         let ctrlChat = new CtrlChat();
+        data.username = htmlEscape(data.username);
+        data.question = htmlEscape(data.question);
+
         ctrlChat.createNewDiscussion({ username: data.username, question: data.question, socketId: socketId }).then(function(res) {
             //Give the chatroom id to the socket so that it can retrieve it
             //when sending messages
@@ -949,6 +952,7 @@ nspClient.on('connection', function(socket) {
     //When receiving a sendMessage event
     socket.on("sendMessage", (message) => {
         let roomId = socket.handshake.session.chatRoomId;
+        message.message = htmlEscape(message.message);
 
         //Emit the even to the admins
         io.of("admin").emit("incomingMessage", {
@@ -1055,6 +1059,8 @@ nspAdmin.on('connection', function(socket) {
 
     socket.on("sendMessage", (messageInfos) => {
 
+        messageInfos.message = htmlEscape(messageInfos.message);
+
         //Send the message to the client
         nspClient.to(messageInfos.toSocketId).emit("incomingMessage", {
             message: messageInfos.message,
@@ -1100,7 +1106,6 @@ nspAdmin.on('connection', function(socket) {
         //before deleting the database entries
         if(param.deleteDBEntriesAfter == false)
         {
-            console.log("TELLING THE USER TO DELETE THE CONVERSATION AFTER HE LEAVES")
             //Tells the user he needs to delete the database entries once he's gone
             for(let i = 0;i < allRooms.length;i++)
             {
@@ -1111,7 +1116,6 @@ nspAdmin.on('connection', function(socket) {
             }            
         }
         else{ //If the user is not connected anymore, delte the DB
-            console.log("DELETING THE CONVERSATION")
             ctrlChat.deleteConversation(param.roomId);
         }
 
@@ -1128,6 +1132,11 @@ nspAdmin.on('connection', function(socket) {
 
 });
 
-
+function htmlEscape(text) {
+   return text.replace(/&/g, '&amp;').
+     replace(/</g, '&lt;').  // it's not neccessary to escape >
+     replace(/"/g, '&quot;').
+     replace(/'/g, '&#039;');
+}
 
 server.listen(8000);
