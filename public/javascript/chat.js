@@ -229,7 +229,7 @@ function resetChat(){
     isConversationStarted=false;
     document.getElementById("chatMessageBox").innerHTML = "";
     document.getElementById("footerChatBox").innerHTML = "";
-    socket.emit("conversationEnded");
+    socket.emit("closeChat");
 
     let p = document.createElement("p");
     p.classList.add("conversationEndedP")
