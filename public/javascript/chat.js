@@ -2,7 +2,10 @@ let clientChat = document.getElementById("clientChat");
 let chatTopbar = document.getElementById("chatTopbar");
 let isChatWindowOpened = false;
 let isConversationEnded = false;
+
 var reText=/^[0-9 a-zàâçéèêëîïôûùüÿñæœ ,.'-]+$/i;
+var reEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 let sound = new Audio("./audio/notif.mp3");
 
 //When clicking on the chat topbar
@@ -181,7 +184,7 @@ let btnSendEmail = document.getElementById("btnSendEmail");
 btnSendEmail.addEventListener("click", () => {
     let sendEmailValue = document.getElementById("sendEmail").value;
 
-    if (sendEmailValue != "") {
+    if (reEmail.test(sendEmailValue)) {
         socket.emit("sendEmailCopy", { email: sendEmailValue })
         popup("Courriel envoyé!");
     }
@@ -203,7 +206,21 @@ let btnResetChat = document.getElementById("btnResetChat");
 
 btnResetChat.addEventListener("click",() =>{
 
-
+    resetChat();
 	popup("Conversation supprimée!");
 	$(modalCloseChat).modal("hide");
 });
+
+function resetChat(){
+
+    document.getElementById("chatMessageBox").innerHTML = "";
+    socket.emit("conversationEnded");
+
+    let p = document.createElement("p");
+    p.classList.add("conversationEndedP")
+    p.innerHTML = "La conversation est terminée.";
+
+    isConversationEnded = true;
+
+    chatMessageBox.appendChild(p)
+};
