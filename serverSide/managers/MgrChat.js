@@ -55,11 +55,11 @@ class MgrChat {
         return this._queryEngine.executeQuery(query,param);
     }
 
-    //Gets all the active chat rooms
+    //Gets all the active chat rooms (those that arent closed)
     //@Returns a promise
     getAllActiveChats()
     {
-        let query = "SELECT * FROM chatroom";
+        let query = "SELECT * FROM chatroom WHERE isClosed = 0";
 
         return this._queryEngine.executeQuery(query);
     }
@@ -138,10 +138,13 @@ class MgrChat {
     //that need to be closed
     closeConversation(roomId)
     {
-        let query = "UPDATE chatroom SET isClosed = 1 WHERE roomId = ?";
+        console.log("SETTING IT FOR ID: "+roomId)
+        let query = "UPDATE chatroom SET isClosed = 1 WHERE id = ?";
         let param = [roomId];
 
-        return this._queryEngine.executeQuery(query,param);
+        return this._queryEngine.executeQuery(query,param).then(function(res){
+            console.log(res)
+        });
     }
 
 

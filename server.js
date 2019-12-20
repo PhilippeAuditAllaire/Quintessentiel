@@ -971,9 +971,6 @@ nspClient.on('connection', function(socket) {
     //When the conversation has ended
     socket.on("conversationEnded", () => {
 
-        //Delete the chatRoomId Session
-        socket.handshake.session.chatRoomId = undefined;
-        socket.handshake.session.save();
 
     });
 
@@ -1068,6 +1065,8 @@ nspAdmin.on('connection', function(socket) {
             //Closes the conversation
             ctrlChat.closeConversation(param.roomId);
         }
+
+
 
         //Tells the user the conversation has ended
         nspClient.to(param.toSocketId).emit("conversationEnded");
