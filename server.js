@@ -1006,6 +1006,15 @@ nspClient.on('connection', function(socket) {
         }
     })
 
+    //When the user wants to save a copy of
+    //the chat
+    socket.on("sendEmailCopy",(email)=>{
+        let roomId = socket.handshake.session.chatRoomId;
+        let ctrlChat = new CtrlChat();
+
+        ctrlChat.sendDiscussionByEmail(roomId, email.email);
+    });
+
 });
 
 //When the admin socket's connected

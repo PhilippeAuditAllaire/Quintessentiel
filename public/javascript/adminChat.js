@@ -399,3 +399,4 @@ function deleteConversation(sendEmail)
 	socket.emit("deleteConversation",{roomId:currentRoomId,toSocketId:getSocketIdFromRoomId(currentRoomId),sendEmail:sendEmail,sendToEmail: "quebecoisepic@gmail.com"})
 	$("#modalEmail").modal("hide");
 }
+
