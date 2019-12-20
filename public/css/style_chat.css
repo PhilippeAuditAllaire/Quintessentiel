@@ -88,7 +88,7 @@
 }
 
 .messageWrapper {
-    width: 70%;
+    max-width: 70%;
 }
 
 .wrapperMsgAdmin {
@@ -100,13 +100,15 @@
 }
 
 .msgUserName {
+    font-size: 13px;
     position: relative;
-    left: 10px;
+    text-align: end;
     color: gray;
     font-style: italic;
 }
 
 .msgUserText {
+    font-size: 13px;
     padding: 10px;
     border-radius: 10px;
     background-color: #BBD23D;
