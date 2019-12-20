@@ -161,13 +161,29 @@ function createMessageBox(roomId,isActive){
 //Switches between a discussion to another
 function switchPane(pane)
 {
-	let clickedPane = $(pane).closest(".single-contact")[0];
-	let panelRoomId = clickedPane.getAttribute("data-roomId");
-
 	//if there had no selected pane before
 	if(currentRoomId == undefined){
 		enableCloseConversationBtn();
 	}
+	else{ //There was already a selected pane
+
+		//Find the precedently selected pane
+		let allLeftBlocs = document.getElementsByClassName("single-contact");
+		for(let i = 0;i < allLeftBlocs.length;i++)
+		{
+			if(allLeftBlocs[i].getAttribute("data-roomid") == currentRoomId)
+			{
+				allLeftBlocs[i].classList.remove("selectedPane")
+			}
+		}
+	}
+
+
+	let clickedPane = $(pane).closest(".single-contact")[0];
+	clickedPane.classList.add("selectedPane")
+
+	let panelRoomId = clickedPane.getAttribute("data-roomId");
+
 
 	currentRoomId = panelRoomId;
 }
