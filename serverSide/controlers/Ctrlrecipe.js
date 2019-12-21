@@ -118,14 +118,27 @@ class CtrlRecipe {
             let html = [];
 
             val.forEach(function(pro) {
-                let ele = '<a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="' + pro.id + '">';
+                let ele = '<a href="#" class="list-group-item list-group-item-action" onclick="active(this)" id="pro-' + pro.id + '">';
                 ele += pro.value;
-                ele += '<input type="number" id="qty-' + pro.id + '" class="qty-pro" min="0.00" step="1" value="0.00" />';
-                ele += '<label for="">' + 'mg' + '</label>';
                 html.push(ele);
             });
             return html;
         });
+    }
+
+    getMeasureUnits() {
+        let units = this._mgrRecipe.getMeasureUnits();
+
+        return units.then(function(val) {
+            let html = [];
+            html.push('<select class="units">')
+            val.forEach(function(u) {
+                let ele = '<option id="unit-' + u.id + '">' + u.name + '</option>';
+                html.push(ele);
+            });
+            html.push('</select>')
+            return html;
+        })
     }
 
 }

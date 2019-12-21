@@ -488,6 +488,15 @@ app.post("/ajaxRequest/adminConnection", function(req, res) {
 
 });
 
+app.post("/ajaxRequest/getMeasure", function(req, res) {
+    let ctrl = new CtrlRecipe();
+
+    ctrl.getMeasureUnits().then(function(result) {
+        res.send(result);
+    });
+
+});
+
 app.post("/ajaxRequest/getProductsCrees", function(req, res) {
     let ctrl = new CtrlRecipe();
 
@@ -1003,7 +1012,7 @@ nspClient.on('connection', function(socket) {
 
     //When the user wants to save a copy of
     //the chat
-    socket.on("sendEmailCopy",(email)=>{
+    socket.on("sendEmailCopy", (email) => {
         let roomId = socket.handshake.session.chatRoomId;
         let ctrlChat = new CtrlChat();
 
@@ -1056,7 +1065,7 @@ nspAdmin.on('connection', function(socket) {
         //If the admin wants it by email
         if (param.sendEmail) {
             ctrlChat.sendDiscussionByEmail(param.roomId, param.sendToEmail).then(function() {
-                
+
                 //Closes the conversation
                 ctrlChat.closeConversation(param.roomId);
             })

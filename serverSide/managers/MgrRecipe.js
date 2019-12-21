@@ -118,7 +118,12 @@ class MgrRecipe {
     }
 
     getProducts() {
-        let query = "SELECT Product.id , ta_productattribute_language.value FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title'";
+        let query = "SELECT Product.id , ta_productattribute_language.value FROM Product INNER JOIN ta_productattribute_language ON Product.id = ta_productattribute_language.idProduct INNER JOIN productattribute ON ta_productattribute_language.productAttributeId = productattribute.id WHERE productattribute.type = 'title' AND ta_productattribute_language.idLanguage = '1'";
+        return this._queryEngine.executeQuery(query);
+    }
+
+    getMeasureUnits() {
+        let query = "SELECT * FROM measureunit";
         return this._queryEngine.executeQuery(query);
     }
 

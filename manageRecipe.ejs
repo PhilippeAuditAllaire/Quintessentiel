@@ -16,7 +16,7 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST" id="formProduct">
+                <form class="addProduct" enctype="multipart/form-data" action="" method="POST" id="formProduct">
                     <div class="modal-header">
                         <h5 class="modal-title">Ajout d'une recette</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -68,21 +68,21 @@
                             <div id="categoryWrapper" class="wrapper-inputLabel-productModal categoryList modal-single-wrapper">
                                 <div class="availableTags">
                                     <div class="left-available-wrapper" id="">
-                                        <p>Ingrédients non-attribués</p>
-                                        <div class="list-group categoryAvailableList" id="categoryAvailableList">
+                                        <p>produits</p>
+                                        <div class="list-group categoryAvailableList" id="addcategoryAvailableList">
                                             <!-- INGRÉDIENTS -->
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="wrapper-btnChange">
-                                    <button id="categoryRightBtn" class="rightBtn">></button>
-                                    <button id="categoryLeftBtn" class="leftBtn"><</button>
+                                    <button id="categoryRightBtn" class="rightBtn" onclick="addmoveLeft()">></button>
+                                    <button id="categoryLeftBtn" class="leftBtn" onclick="addmoveRight()"><</button>
                                 </div>
                                 <div class="choosenTags">
                                     <div class="right-choosen-wrapper">
                                         <p>Ingrédients attribués</p>
-                                        <div class="list-group categoryAttributedList" id="categoryAttributedList">
+                                        <div class="list-group categoryAttributedList" id="addcategoryAttributedList">
 
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="updateModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="addProduct" enctype="multipart/form-data" action="/addProduct" method="POST" id="formProduct">
+                <form class="addProduct" enctype="multipart/form-data" action="" method="POST" id="formProduct">
                     <div class="modal-header">
                         <h5 class="modal-title">Modification d'une recette</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -160,7 +160,7 @@
                             <div id="categoryWrapper" class="wrapper-inputLabel-productModal categoryList modal-single-wrapper">
                                 <div class="availableTags">
                                     <div class="left-available-wrapper" id="">
-                                        <p>Ingrédients non-attribués</p>
+                                        <p>Produits</p>
                                         <div class="list-group categoryAvailableList" id="categoryAvailableList">
                                             <!-- INGRÉDIENTS -->
                                         </div>
@@ -168,8 +168,8 @@
                                 </div>
 
                                 <div class="wrapper-btnChange">
-                                    <button id="categoryRightBtn" class="rightBtn">></button>
-                                    <button id="categoryLeftBtn" class="leftBtn"><</button>
+                                    <button id="categoryRightBtn" class="rightBtn" onclick="moveRight(true)">></button>
+                                    <button id="categoryLeftBtn" class="leftBtn" onclick="moveLeft()"><</button>
                                 </div>
                                 <div class="choosenTags">
                                     <div class="right-choosen-wrapper">
@@ -191,7 +191,6 @@
                     </div>
 
                     <div class="modal-footer">
-                        <input type="submit" value="f" class="hidden">
                         <button type="button" class="btn btn-success" id="btnSendUpdate" onclick="update()">Modifier</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     </div>
@@ -238,6 +237,9 @@
                 </table>
             </div>
         </div>
+
+
+
         <script src="./javascript/jquery-3.4.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
         <script src="./javascript/renderer.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -246,9 +248,55 @@
         <script src="http://malsup.github.com/jquery.form.js"></script>
         <script>
             let openedRecipe;
+            let oldClicked = "";
+            let idClick = "";
+            let measureSelect = "";
+
+            function active(ele) {
+
+                if (oldClicked == ele) {
+                    /*
+                        
+                    */
+                } else {
+                    ele.classList.add("active");
+                    if (oldClicked != "") {
+                        oldClicked.classList.remove("active");
+                    }
+                    oldClicked = ele;
+                    idClick = ele.id;
+
+                }
+            }
+
+            function moveRight(o) {
+                $('.addProduct').submit(function(e) {
+                    e.preventDefault();
+                    if (o) {
+                        console.log("idclick" + idClick);
+
+                        let name = document.getElementById(idClick).innerHTML;
+                        let list = document.getElementById("categoryAttributedList");
+                        let ele = '<a href="#" class="list-group-item list-group-item-action ingredient" onclick="active(this)" id="ingre-' + idClick + '">' + name + '<input class="qty-ingre" type="number" min="0" step="0.1">' + measureSelect + '</a>';
+                        console.log("ele : " + ele);
+                        let html = list.innerHTML;
+                        console.log("liste : " + html);
+                        list.innerHTML = (html + ele);
+                        ele = '';
+                        o = false;
+                    }
+                });
+            }
+
+            function moveLeft() {
+                $('.addProduct').submit(function(e) {
+                    e.preventDefault();
+                    d = document.getElementById(idClick);
+                    d.parentNode.removeChild(d);
+                });
+            }
 
             function nameChange(select) {
-
                 let name = select.options[select.selectedIndex];
                 let input = document.getElementById("addname");
                 input.value = name.innerHTML;
@@ -271,6 +319,22 @@
                 });
 
                 loadAll();
+                loadProducts();
+
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/getMeasure",
+                    method: "POST",
+
+                    success: function(response) {
+
+                        measureSelect = response;
+                        console.log(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
             }
 
             function addB() {
@@ -297,8 +361,22 @@
                         alert("Erreur");
                     }
                 });
+            }
 
+            function loadProducts() {
+                $.ajax({
+                    url: "http://localhost:5000/ajaxRequest/addRecipeHandlerIngre",
+                    method: "POST",
 
+                    success: function(response) {
+                        $('#addcategoryAvailableList').html(response);
+                        $('#categoryAvailableList').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        alert("Erreur");
+                    }
+                });
             }
 
             function addRecipe() {
@@ -313,6 +391,21 @@
                     custom = 0;
                 }
                 let name = document.getElementById("addname").value;;
+
+                let ingres = document.getElementsByClassName("ingredient");
+                let array;
+                ingres.forEach(element => {
+                    let id_pro = idClick.split("-")[1];
+                    let qty = element.getElementsByClassName("qty-ingre")[0].value;
+                    let id_measure;
+                    let ar = {
+                        pro: id_pro,
+                        qut: qty,
+                        meas: id_measure
+                    };
+                    array.push(ar);
+                });
+
 
 
                 $.ajax({
@@ -344,7 +437,9 @@
                 let updateModal = document.getElementById("updateModal");
                 $("#updateModal").modal();
                 emptyFields();
+                emptyIngredients();
                 fillFields(line);
+
             }
 
             function emptyFields() {
@@ -356,9 +451,8 @@
             }
 
             function emptyIngredients() {
-                /*
-                    TODO   
-                */
+                let list = document.getElementById("categoryAttributedList");
+                list.innerHTML = "";
             }
 
             function fillIngredients(id) {
@@ -380,10 +474,11 @@
                     $("#custom").prop("checked", false);
 
                 }
+
             }
 
             function update() {
-
+                loadProducts()
                 let description = document.getElementById("description").value;
                 let instructions = document.getElementById("instru").value;
                 console.log($("#custom").prop("checked"));
@@ -395,6 +490,7 @@
                     custom = 0;
                 }
                 let name = document.getElementById("name").value;;
+
 
 
                 $.ajax({
