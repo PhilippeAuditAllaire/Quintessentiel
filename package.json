@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/DavidGau/quintessentielApplicationWeb#readme",
   "devDependencies": {
-    "electron": "^6.1.5"
+    "electron": "^15.5.5"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
